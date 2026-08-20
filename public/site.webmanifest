@@ -1,0 +1,20 @@
+{
+  "name": "Deadstock Poster Shop",
+  "short_name": "Deadstock",
+  "icons": [
+    {
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/be1efbc1-4aef-42dd-b8d5-bf8ad511ef76.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/be1efbc1-4aef-42dd-b8d5-bf8ad511ef76.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#FF2E9A",
+  "background_color": "#FFFFFF",
+  "display": "standalone"
+}

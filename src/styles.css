@@ -1,0 +1,321 @@
+/* Another Punk — screen-print visual language.
+ *
+ * The brand's product is hand-pulled screen print, so the interface borrows
+ * that craft's real artefacts rather than generic styling: misregistration
+ * (a colour plate landing a hair off the outline), paper grain, hard
+ * un-rounded edges, ink that sits ON the surface.
+ *
+ * Type: Unbounded (blocky geometric display) + Inter Tight (body/UI).
+ * Colour: warm white ground, near-black ink, one red — sampled from the
+ * logo artwork itself (#ED1C24).
+ *
+ * IMPORTANT: per the CSS spec every @import must precede any other rule, or
+ * the build's CSS processor silently drops it — no error, just a fallback
+ * font on every page. Keep the font import first.
+ */
+@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Inter+Tight:wght@400;500;600;700&display=swap");
+
+@layer reset, theme, base, components, utilities;
+
+@import "tailwindcss" source(none);
+@source "../src";
+
+/* Base token values. Every one is re-stated inside the [data-brand] block
+ * below, which is what actually paints the site — these exist so a stray
+ * element rendered outside the brand scope still lands somewhere sane
+ * rather than on Tailwind's defaults. */
+@theme {
+  --spacing: 0.25rem;
+
+  --font-display: "Unbounded", "Arial Black", sans-serif;
+  --font-body: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-label: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+
+  --color-paper: #f6f4ef;
+  --color-surface: #ffffff;
+  --color-surface-2: #efece5;
+  --color-border: #dcd8cf;
+  --color-ink: #111110;
+  --color-ink-2: #6b6864;
+  --color-pink: #ed1c24;
+
+  --radius-card: 0px;
+}
+
+:root {
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+  }
+
+  * {
+    border-color: var(--color-border);
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-label {
+    font-family: var(--font-label);
+  }
+
+  /* Scroll-reveal: the class is applied immediately, .is-visible added by
+   * IntersectionObserver (see components/reveal.tsx). */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Another Punk brand scope --------------------------------------------
+ *
+ * Hidden brand, /another-punk/* only (see routes/another-punk.tsx). Every
+ * token below is one Deadstock already defines in @theme above, just
+ * overridden inside this selector, so AP components reuse the exact same
+ * utility classes (bg-paper, text-ink, bg-pink, font-display, font-label,
+ * rounded-[var(--radius-card)]...) with completely different values, no
+ * parallel utility vocabulary to maintain. Light ground (not Deadstock's
+ * near-black) on purpose, kept from v1: still an immediate, unmissable
+ * break from Deadstock's dark theme, and per direct feedback the site
+ * should stay "mostly white with red type" rather than flip to a dark
+ * ground. --color-pink is repurposed as AP's red accent (same "primary
+ * accent" role Deadstock uses it for, different hue), now sampled directly
+ * from the real logo file (#ED1C24) rather than an approximation. Sharp
+ * corners (radius 0) read raw/poster-like where Deadstock's rounded cards
+ * read soft. */
+[data-brand="another-punk"] {
+  --font-display: "Unbounded", "Arial Black", sans-serif;
+  --font-body: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-label: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+
+  --color-paper: #f6f4ef;
+  --color-surface: #ffffff;
+  --color-surface-2: #efece5;
+  --color-border: #dcd8cf;
+  --color-ink: #111110;
+  --color-ink-2: #6b6864;
+  --color-pink: #ed1c24;
+
+  --radius-card: 0px;
+
+  color-scheme: light;
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+[data-brand="another-punk"] ::selection {
+  background: var(--color-pink);
+  color: var(--color-paper);
+}
+
+/* Tracked-caps kicker/eyebrow label, replaces v1's Bodoni-italic caption
+ * register now that the type system is all-sans. */
+[data-brand="another-punk"] .ap-eyebrow {
+  font-family: var(--font-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Infinite horizontal ticker: the logo repeated edge-to-edge, a second
+ * copy of the track placed immediately after the first so the loop has no
+ * seam. Respects prefers-reduced-motion via the global rule at the bottom
+ * of this file. */
+[data-brand="another-punk"] .ap-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: ap-marquee 22s linear infinite;
+}
+
+@keyframes ap-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Subtle continuous "signal glitch" on the hero logo: a brief double-take
+ * every few seconds rather than a constant flicker, edgy without being
+ * distracting or nauseating to look at for a whole page visit. */
+[data-brand="another-punk"] .ap-glitch {
+  animation: ap-glitch 6s ease-in-out infinite;
+}
+
+@keyframes ap-glitch {
+  0%,
+  92%,
+  100% {
+    transform: translate(0, 0);
+    filter: none;
+  }
+  93% {
+    transform: translate(-3px, 1px);
+    filter: drop-shadow(2px 0 0 #ed1c24) drop-shadow(-2px 0 0 #111110);
+  }
+  94% {
+    transform: translate(2px, -1px);
+    filter: drop-shadow(-2px 0 0 #ed1c24) drop-shadow(2px 0 0 #111110);
+  }
+  95%,
+  99% {
+    transform: translate(0, 0);
+    filter: none;
+  }
+}
+
+/* One-time entrance: logo snaps in slightly oversized/rotated, settles.
+ * Runs once on mount, the idle .ap-glitch above takes over after. */
+[data-brand="another-punk"] .ap-hero-enter {
+  animation: ap-hero-enter 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes ap-hero-enter {
+  from {
+    opacity: 0;
+    transform: scale(1.08) rotate(-1.5deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* --- Another Punk v3: screen-print visual language -----------------------
+ *
+ * The brand's whole product is hand-pulled screen print, so the interface
+ * borrows that craft's real artefacts rather than generic "edgy" styling:
+ * misregistration (a colour plate landing a hair off the outline), paper
+ * grain, hard un-rounded edges, and ink that sits ON the surface. Every
+ * effect below is one of those, not decoration for its own sake. */
+
+/* Fine paper/film grain over the whole brand surface. Sits above content
+ * but never intercepts clicks. Kept very low opacity — it should read as
+ * stock texture, not as a filter. */
+[data-brand="another-punk"] .ap-grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Misregistered headline: a red plate printed a couple of millimetres off
+ * the black one. Uses a duplicated ::before fed from data-text so there's
+ * no second copy in the DOM for screen readers to announce. */
+[data-brand="another-punk"] .ap-misreg {
+  position: relative;
+  display: inline-block;
+  color: var(--color-ink);
+}
+[data-brand="another-punk"] .ap-misreg::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  color: var(--color-pink);
+  transform: translate(0.14em, 0.07em);
+  z-index: -1;
+}
+
+/* Product tile: red ink floods up over the image on hover, the way a
+ * squeegee pulls colour across a screen. */
+[data-brand="another-punk"] .ap-tile-img {
+  position: relative;
+  overflow: hidden;
+}
+[data-brand="another-punk"] .ap-tile-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-pink);
+  mix-blend-mode: multiply;
+  opacity: 0;
+  transform: translateY(100%);
+  transition:
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 420ms ease;
+  pointer-events: none;
+}
+.group:hover [data-brand="another-punk"] .ap-tile-img::after,
+[data-brand="another-punk"] .group:hover .ap-tile-img::after {
+  opacity: 0.32;
+  transform: translateY(0);
+}
+
+/* Catalogue index, set in the label face and hairline-ruled off the title,
+ * so a ten-piece range reads as a numbered edition rather than a grid. */
+[data-brand="another-punk"] .ap-index {
+  font-family: var(--font-label);
+  font-weight: 600;
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  color: var(--color-pink);
+}
+
+/* Second marquee variant: statements rather than the logo, reversed
+ * direction so the two bands scroll against each other. */
+[data-brand="another-punk"] .ap-marquee-track--rev {
+  animation-name: ap-marquee-rev;
+  animation-duration: 34s;
+}
+@keyframes ap-marquee-rev {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Full-bleed statement type: as large as the viewport will carry, tight
+ * leading, sitting hard against its own edges. */
+[data-brand="another-punk"] .ap-statement {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-size: clamp(2.75rem, 11vw, 11rem);
+}
