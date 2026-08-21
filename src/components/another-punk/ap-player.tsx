@@ -68,7 +68,7 @@ export function ApPlayer() {
         type="button"
         onClick={toggle}
         aria-label={playing ? `Pause ${track.title}` : `Play ${track.title} by Boudicca`}
-        className="font-label flex items-center gap-2.5 px-4 py-3 text-[11px] font-medium tracking-[0.14em] text-ink uppercase transition-colors hover:bg-ink hover:text-paper focus-visible:bg-ink focus-visible:text-paper focus-visible:outline-none"
+        className="font-label flex min-h-11 items-center gap-2.5 px-3.5 py-3 text-[11px] font-medium tracking-[0.14em] text-ink uppercase transition-colors hover:bg-ink hover:text-paper focus-visible:bg-ink focus-visible:text-paper focus-visible:outline-none sm:px-4"
       >
         <span aria-hidden="true" className="text-pink">
           {playing ? "❚❚" : "▶"}
@@ -80,7 +80,7 @@ export function ApPlayer() {
             <i />
           </span>
         ) : null}
-        <span>{started ? track.title : "Sound"}</span>
+        <span className="hidden sm:inline">{started ? track.title : "Sound"}</span>
       </button>
 
       {started ? (
@@ -88,7 +88,7 @@ export function ApPlayer() {
           type="button"
           onClick={next}
           aria-label="Next track"
-          className="font-label border-l border-ink px-3.5 py-3 text-[11px] font-medium tracking-[0.14em] text-ink-2 uppercase transition-colors hover:bg-ink hover:text-paper focus-visible:bg-ink focus-visible:text-paper focus-visible:outline-none"
+          className="font-label hidden min-h-11 border-l border-ink px-3.5 py-3 text-[11px] font-medium tracking-[0.14em] text-ink-2 uppercase transition-colors hover:bg-ink hover:text-paper focus-visible:bg-ink focus-visible:text-paper focus-visible:outline-none sm:block"
         >
           <span aria-hidden="true">{"▶▶"}</span>
         </button>

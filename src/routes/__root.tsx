@@ -90,7 +90,7 @@ function RootComponent() {
                 <nav className="flex items-center gap-8">
                   <Link
                     to="/shop"
-                    className="ap-eyebrow hidden text-ink transition-opacity hover:opacity-60 sm:inline"
+                    className="ap-eyebrow text-ink transition-opacity hover:opacity-60"
                   >
                     Shop
                   </Link>
