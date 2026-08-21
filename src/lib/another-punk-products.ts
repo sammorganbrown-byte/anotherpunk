@@ -37,6 +37,11 @@ export type AnotherPunkProduct = {
   description?: string;
   /** Sizing note. Falls back to DEFAULT_FIT. */
   fit?: string;
+  /** The line the graphic came from, quoted exactly, plus the film it's
+   * from. Only the designs that actually reference a film carry these —
+   * the rest render without a quote block rather than inventing one. */
+  quote?: string;
+  quoteSource?: string;
   sizes: ApSize[];
   /** Backend Shopify product this maps to, null when not yet pushed. */
   shopifyProductId: string | null;
@@ -45,9 +50,9 @@ export type AnotherPunkProduct = {
 };
 
 export const DEFAULT_DESCRIPTION =
-  "Heavyweight cotton, cut boxy, hem left raw on purpose. Hand-drawn graphic, pulled in one colour. Printed after you order it — nothing sits in a box waiting.";
+  "Heavyweight cotton. Cut boxy. Raw hem. Graphic drawn by hand. Printed after you order. Not before.";
 export const DEFAULT_FIT =
-  "Runs oversized. Take your normal size for the fit shown, one down if you want it closer.";
+  "Runs oversized. Your normal size for the fit shown. One down if you want it closer.";
 
 const FOUR: ApSize[] = ["S", "M", "L", "XL"];
 const SIX: ApSize[] = ["S", "M", "L", "XL", "2XL", "3XL"];
@@ -57,6 +62,8 @@ export const AP_PRICE = 60;
 export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
     slug: "bat-country",
+    quote: "We can't stop here. This is bat country.",
+    quoteSource: "Fear and Loathing in Las Vegas, 1998",
     title: "Bat Country",
     eyebrow: "Washed black · raw hem",
     price: AP_PRICE,
@@ -73,6 +80,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   },
   {
     slug: "tongue-box",
+    quote: "I better adjust my tongue box.",
+    quoteSource: "Barbarella, 1968",
     title: "Tongue Box",
     eyebrow: "Washed black · raw hem",
     price: AP_PRICE,
@@ -89,6 +98,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   },
   {
     slug: "the-jesus",
+    quote: "Nobody fucks with the Jesus.",
+    quoteSource: "The Big Lebowski, 1998",
     title: "The Jesus",
     eyebrow: "Washed black · raw hem",
     price: AP_PRICE,
@@ -105,6 +116,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   },
   {
     slug: "surrender-dorothy",
+    quote: "Surrender Dorothy.",
+    quoteSource: "After Hours, 1985",
     title: "Surrender Dorothy",
     eyebrow: "Washed black · raw hem",
     price: AP_PRICE,
@@ -138,7 +151,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
     slug: "saucer-oversized-black",
     description:
-      "Snow-washed heavyweight cotton, oversized through the body with a clean finished hem. Hand-drawn graphic on the chest, brand mark on the sleeve. Printed to order.",
+      "Snow-washed heavyweight cotton. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve. Made to order.",
     title: "Saucer — Oversized, Black",
     eyebrow: "Snow-washed black · sleeve hit",
     price: AP_PRICE,
@@ -158,7 +171,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
     slug: "saucer-oversized-bone",
     description:
-      "Snow-washed heavyweight cotton in bone, oversized through the body with a clean finished hem. Hand-drawn graphic on the chest, brand mark on the sleeve. Printed to order.",
+      "Snow-washed heavyweight cotton in bone. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve. Made to order.",
     title: "Saucer — Oversized, Bone",
     eyebrow: "Snow-washed bone · sleeve hit",
     price: AP_PRICE,
@@ -180,12 +193,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
     slug: "wordmark",
     description:
-      "Snow-washed heavyweight cotton, oversized through the body with a clean finished hem. The wordmark, pulled large across the chest in one colour. Printed to order.",
+      "Snow-washed heavyweight cotton. Oversized through the body, hem finished clean. The wordmark, large across the chest. Made to order.",
     title: "Wordmark",
     eyebrow: "Snow-washed · oversized",
     price: AP_PRICE,
     image:
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/8c8960ef-9235-410b-a992-0ce0ad2190e8.png",
+      "/img/03-wordmark-chest-raking.jpg",
     sizes: SIX,
     shopifyProductId: "15942019613003",
     shopifyVariantIds: {
@@ -200,8 +213,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
     slug: "mesh",
     description:
-      "Open-weave net, cut boxy and deliberately sheer. Hand-drawn graphic pulled straight onto the mesh. Wear it over something, or don't.",
-    fit: "Boxy and loose. Take your normal size.",
+      "Open-weave net. Cut boxy. Sheer on purpose. Graphic drawn by hand, printed straight onto the mesh. Wear it over something. Or don't.",
+    fit: "Boxy and loose. Your normal size.",
     title: "Mesh",
     eyebrow: "Open-weave net · boxy",
     price: AP_PRICE,
@@ -215,8 +228,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
     slug: "leopard-crop",
     description:
-      "Lightweight stretch jersey in a pink leopard print, cut short and close through the body. Hand-drawn slogan pulled in red. Printed to order.",
-    fit: "Fitted and cropped — this one runs true to size, not oversized like the tees.",
+      "Lightweight stretch jersey. Pink leopard. Cut short and close through the body. Slogan drawn by hand, printed in red. Made to order.",
+    fit: "Fitted and cropped. This one runs true to size. Not oversized like the tees.",
     title: "Leopard Crop",
     eyebrow: "Pink leopard · cropped",
     // Priced below the rest of the range on request, it's a lighter
@@ -244,10 +257,10 @@ export const AP_IMAGERY = {
     "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/fc6ac488-ea86-41b1-99ec-79dc0eec4f63.png",
   folded:
     "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/c8282fe8-bb57-4715-97e5-1396e2a7e8d5.png",
-  printing:
-    "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/ee24d75d-acf8-4da0-a6f4-6b3ee8e40005.png",
-  drying:
-    "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/1abcc11b-b834-4475-8881-214671275949.png",
+  motion: "/img/07-mesh-walking-blur.jpg",
+  hemDetail: "/img/11-macro-rawhem-ink.jpg",
+  wide: "/img/09-bats-wide-negativespace.jpg",
+
 } as const;
 
 export function getAnotherPunkProduct(slug: string): AnotherPunkProduct | undefined {

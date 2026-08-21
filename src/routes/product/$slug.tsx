@@ -107,11 +107,22 @@ function AnotherPunkProductPage() {
               </button>
               <p className="mt-3 text-xs text-ink-2">
                 {!TAPSTITCH_FULFILMENT_LIVE
-                  ? "Ordering opens shortly. Everything here is finished and ready to print."
-                  : "This one isn't in production yet. The rest of the range ships now."}
+                  ? "Not for sale yet. It's drawn, printed and ready. We're just not taking money for it today."
+                  : "Not in production yet. The rest of it ships now."}
               </p>
             </div>
           )}
+
+          {product.quote ? (
+            <blockquote className="mt-12 border-t border-ink pt-8">
+              <p className="font-display text-2xl leading-[1.1] font-bold tracking-tight text-pink uppercase sm:text-3xl">
+                <span className="ap-misreg" data-text={product.quote}>
+                  {product.quote}
+                </span>
+              </p>
+              <footer className="ap-eyebrow mt-4 text-ink-2">{product.quoteSource}</footer>
+            </blockquote>
+          ) : null}
 
           <div className="mt-12 flex flex-col gap-4 border-t border-ink pt-8">
             <p className="text-sm leading-relaxed text-ink-2">

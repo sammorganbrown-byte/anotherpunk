@@ -18,7 +18,7 @@ function AnotherPunkShop() {
           </span>
         </h1>
         <p className="ap-eyebrow mt-6 text-ink-2">
-          {ANOTHER_PUNK_PRODUCTS.length} styles · printed to order · shipped worldwide
+          {ANOTHER_PUNK_PRODUCTS.length} styles. Made to order. Shipped worldwide.
         </p>
 
         <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-3">

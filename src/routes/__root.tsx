@@ -11,6 +11,7 @@ import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { CartProvider, useCart } from "../lib/cart-context";
+import { ApPlayer } from "../components/another-punk/ap-player";
 import { CurrencyProvider } from "../lib/currency-context";
 
 const LOGO_URL =
@@ -18,7 +19,7 @@ const LOGO_URL =
 
 const TITLE = "Another Punk";
 const DESCRIPTION =
-  "Hand-drawn graphics, screen-printed in red on heavyweight cotton. Printed to order, shipped worldwide.";
+  "Hand-drawn graphics printed in red on heavyweight cotton. Made when you order it.";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
@@ -103,6 +104,8 @@ function RootComponent() {
               <Outlet />
             </main>
 
+            <ApPlayer />
+
             <footer className="border-t border-ink bg-ink px-6 py-14 sm:px-10">
               <img
                 src={LOGO_URL}
@@ -111,14 +114,14 @@ function RootComponent() {
               />
               <div className="mt-10 grid grid-cols-1 gap-8 border-t border-paper/20 pt-8 sm:grid-cols-3">
                 <p className="font-label text-[11px] leading-relaxed tracking-[0.1em] text-paper/60 uppercase">
-                  Printed to order
+                  Made to order
                   <br />
                   Shipped worldwide
                 </p>
                 <p className="font-label text-[11px] leading-relaxed tracking-[0.1em] text-paper/60 uppercase">
                   Heavyweight cotton
                   <br />
-                  One colour, one pull
+                  Drawn by hand
                 </p>
                 <p className="font-label text-[11px] leading-relaxed tracking-[0.1em] text-paper/60 uppercase sm:text-right">
                   © {new Date().getFullYear()} Another Punk
@@ -135,9 +138,9 @@ function RootComponent() {
 function NotFound() {
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center gap-6 px-6 text-center">
-      <h1 className="ap-statement text-pink">Gone</h1>
+      <h1 className="ap-statement text-pink">Gone.</h1>
       <p className="max-w-sm text-sm text-ink-2">
-        That page isn't here. The rest of the range is where you left it.
+        Not here. The rest of it still is.
       </p>
       <Link
         to="/shop"
@@ -154,8 +157,8 @@ function ErrorView({ error, reset }: { error: Error; reset: () => void }) {
   const router = useRouter();
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center gap-6 px-6 text-center">
-      <h1 className="ap-statement text-pink">Off register</h1>
-      <p className="max-w-sm text-sm text-ink-2">Something didn't load. Try again.</p>
+      <h1 className="ap-statement text-pink">Off register.</h1>
+      <p className="max-w-sm text-sm text-ink-2">That didn't load. Go again.</p>
       <button
         onClick={() => {
           router.invalidate();
@@ -163,7 +166,7 @@ function ErrorView({ error, reset }: { error: Error; reset: () => void }) {
         }}
         className="font-label mt-2 bg-ink px-8 py-4 text-xs font-medium tracking-[0.14em] text-paper uppercase transition-opacity hover:opacity-90"
       >
-        Retry
+        Go again
       </button>
     </div>
   );

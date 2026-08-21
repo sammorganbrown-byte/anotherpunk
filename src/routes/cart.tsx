@@ -11,12 +11,13 @@ function CartPage() {
   if (items.length === 0) {
     return (
       <div className="mx-auto flex min-h-[60vh] max-w-[1500px] flex-col items-center justify-center gap-6 px-6 text-center">
-        <h1 className="ap-statement text-pink">Empty</h1>
+        <h1 className="ap-statement text-pink">Empty.</h1>
+        <p className="text-sm text-ink-2">Nothing in it. That's on you.</p>
         <Link
           to="/shop"
           className="font-label bg-ink px-8 py-4 text-xs font-medium tracking-[0.14em] text-paper uppercase transition-opacity hover:opacity-90"
         >
-          Start looking
+          Go and look
         </Link>
       </div>
     );
@@ -93,7 +94,7 @@ function CartPage() {
         <p className="font-display text-2xl font-bold text-ink uppercase">
           Total {formatPrice(total)}
         </p>
-        <p className="ap-eyebrow text-ink-2">Shipping included · Taxes at checkout</p>
+        <p className="ap-eyebrow text-ink-2">Shipping included. Tax at checkout.</p>
         <Link
           to="/checkout"
           className="font-label mt-4 bg-pink px-10 py-4 text-xs font-medium tracking-[0.14em] text-paper uppercase transition-opacity hover:opacity-90"

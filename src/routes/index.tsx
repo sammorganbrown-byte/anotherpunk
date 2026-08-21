@@ -56,7 +56,7 @@ function AnotherPunkHome() {
     <div className="ap-grain">
       {/* Hero: the mark, oversized and misprinting itself. */}
       <section className="flex min-h-[86vh] flex-col items-center justify-center px-6 py-24 text-center sm:px-10">
-        <p className="ap-eyebrow mb-8 text-ink-2">No stock · No season · No repeat</p>
+        <p className="ap-eyebrow mb-8 text-ink-2">No stock. No season. No repeat.</p>
         <img
           src={LOGO_URL}
           alt="Another Punk"
@@ -79,32 +79,63 @@ function AnotherPunkHome() {
       <ApTextMarquee
         reverse
         invert
-        items={["Ten styles", "Printed to order", "Shipped worldwide", "Nothing sits in a box"]}
+        items={["Ten styles", "Made to order", "Shipped worldwide", "Nothing sits in a box"]}
       />
 
-      {/* Statement: viewport-scale type, misregistered like a bad pull. */}
+      {/* Origin. Deliberately six lines, not an "our story" page — the brand
+          is small enough that a paragraph of backstory would read as padding.
+          Westwood and Repo Man are named as influences only; nothing from
+          either is quoted, reproduced or paraphrased. */}
+      <section className="border-b border-border px-6 py-24 sm:px-10 sm:py-32">
+        <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 lg:grid-cols-[auto_1fr]">
+          <Reveal>
+            <p className="ap-eyebrow text-pink lg:pt-2">Where it came from</p>
+          </Reveal>
+          <Reveal delay={100}>
+            <div className="flex max-w-[52ch] flex-col gap-5 font-display text-xl leading-[1.25] font-bold tracking-tight text-ink uppercase sm:text-2xl">
+              <p>Two things, same week.</p>
+              <p>
+                A panel at a Vivienne Westwood exhibition. Punk as clothing. Made properly, taken
+                seriously — not dressed up as a costume.
+              </p>
+              <p>
+                Then <span className="text-pink">Repo Man</span>. Deadpan. Cheap. Stubbornly strange.
+              </p>
+              <p>They didn't go together. That was the point.</p>
+              <p>No plan after that. Just paint, straight onto a shirt, at the kitchen table.</p>
+              <p>
+                That's Another Punk. Not a mood board.{" "}
+                <span className="text-pink">A compulsion.</span>
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Statement. The lead design's source line, quoted exactly and credited.
+          Sits where the old "not another logo tee" pitch was — the quote does
+          that job without having to claim anything. */}
       <section className="border-b border-border px-6 py-28 sm:px-10 sm:py-36">
         <div className="mx-auto max-w-[1500px]">
           <Reveal>
-            <h2 className="ap-statement text-ink">
-              <span className="ap-misreg" data-text="Not another">
-                Not another
-              </span>
-              <br />
-              <span className="text-pink">logo tee.</span>
-            </h2>
+            <blockquote>
+              <p className="ap-statement text-ink">
+                <span className="ap-misreg" data-text="We can't stop here.">
+                  We can't stop here.
+                </span>
+                <br />
+                <span className="text-pink">This is bat country.</span>
+              </p>
+              <footer className="ap-eyebrow mt-10 text-ink-2">
+                Fear and Loathing in Las Vegas, 1998
+              </footer>
+            </blockquote>
           </Reveal>
           <Reveal delay={120}>
-            <div className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_1fr]">
-              <p className="font-display text-2xl leading-[1.1] font-bold tracking-tight text-ink uppercase sm:text-3xl">
-                Another one, made like it should have been the first time.
-              </p>
-              <p className="max-w-[46ch] self-end text-sm leading-relaxed text-ink-2">
-                Heavyweight cotton, cut boxy, hem left raw on purpose. Every graphic drawn by hand
-                and pulled in one colour. We make it after you buy it — no warehouse, no leftovers,
-                no second run.
-              </p>
-            </div>
+            <p className="mt-14 max-w-[52ch] text-sm leading-relaxed text-ink-2">
+              Heavyweight cotton. Cut boxy. The hem is raw because we left it that way. Nothing
+              exists until you buy it. Nothing is left over.
+            </p>
           </Reveal>
         </div>
       </section>
@@ -140,8 +171,8 @@ function AnotherPunkHome() {
       {/* Process: two production frames, hard against each other. */}
       <section className="grid grid-cols-1 sm:grid-cols-2">
         <img
-          src={AP_IMAGERY.printing}
-          alt="Pulling a screen in the studio"
+          src={AP_IMAGERY.motion}
+          alt="Mesh shirt worn on the street at night"
           className="h-full w-full object-cover"
         />
         <img
@@ -154,20 +185,20 @@ function AnotherPunkHome() {
       <section className="border-b border-border bg-ink px-6 py-24 sm:px-10">
         <div className="mx-auto max-w-[1500px]">
           <h2 className="ap-statement text-paper">
-            One screen.
+            Drawn by hand.
             <br />
-            <span className="text-pink">One colour.</span>
+            <span className="text-pink">Printed to order.</span>
             <br />
-            One pull.
+            Nothing before that.
           </h2>
           <p className="mt-10 max-w-[46ch] text-sm leading-relaxed text-paper/70">
-            Red on black, every time. If the registration drifts a millimetre, that's the print, not
-            a defect.
+            Every graphic starts as paint on paper. No warehouse, no stock sitting in a box, no
+            second run. Your shirt doesn't exist until you buy it.
           </p>
         </div>
       </section>
 
-      <ApTextMarquee items={["Another Punk", "Hand pulled", "Made to order", "Red on black"]} />
+      <ApTextMarquee items={["Another Punk", "Drawn by hand", "Made to order", "Red on black"]} />
 
       {/* Everything else. */}
       <section className="px-6 py-24 sm:px-10">

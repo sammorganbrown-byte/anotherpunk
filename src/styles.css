@@ -319,3 +319,30 @@
   text-transform: uppercase;
   font-size: clamp(2.75rem, 11vw, 11rem);
 }
+
+/* Player equalizer. Three bars, offset so they never read as a single pulse.
+   Pauses entirely under reduced-motion rather than just slowing down. */
+.ap-eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 10px;
+}
+.ap-eq i {
+  width: 2px;
+  height: 100%;
+  background: var(--color-pink);
+  transform-origin: bottom;
+  animation: ap-eq-bar 0.62s ease-in-out infinite alternate;
+}
+.ap-eq i:nth-child(2) { animation-delay: 0.19s; }
+.ap-eq i:nth-child(3) { animation-delay: 0.37s; }
+
+@keyframes ap-eq-bar {
+  from { transform: scaleY(0.28); }
+  to { transform: scaleY(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ap-eq i { animation: none; transform: scaleY(0.6); }
+}
