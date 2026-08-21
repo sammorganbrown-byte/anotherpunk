@@ -4,10 +4,11 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { type ReactNode } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
 import appCss from "../styles.css?url";
 import { CartProvider, useCart } from "../lib/cart-context";
@@ -75,6 +76,76 @@ function BagLink() {
   );
 }
 
+/** Mobile navigation.
+ *
+ * Closes on route change (otherwise the panel stays over the page you just
+ * navigated to), on Escape, and locks body scroll while open so the page
+ * behind doesn't scroll under the overlay. */
+function MobileMenu() {
+  const [open, setOpen] = useState(false);
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { count } = useCart();
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        aria-controls="ap-mobile-nav"
+        aria-label={open ? "Close menu" : "Open menu"}
+        className="flex h-11 w-11 flex-col items-center justify-center gap-[5px] sm:hidden"
+      >
+        <span
+          className={`block h-[2px] w-6 bg-ink transition-transform ${open ? "translate-y-[7px] rotate-45" : ""}`}
+        />
+        <span className={`block h-[2px] w-6 bg-ink transition-opacity ${open ? "opacity-0" : ""}`} />
+        <span
+          className={`block h-[2px] w-6 bg-ink transition-transform ${open ? "-translate-y-[7px] -rotate-45" : ""}`}
+        />
+      </button>
+
+      {open ? (
+        <div
+          id="ap-mobile-nav"
+          className="fixed inset-x-0 top-[69px] z-40 flex h-[calc(100dvh-69px)] flex-col gap-1 overflow-y-auto border-t border-ink bg-paper px-6 py-8 sm:hidden"
+        >
+          <Link to="/shop" className="ap-mobile-link">
+            Shop
+          </Link>
+          <Link to="/" hash="story" className="ap-mobile-link">
+            Story
+          </Link>
+          <Link to="/cart" className="ap-mobile-link">
+            Bag <span className="text-pink">({count})</span>
+          </Link>
+          <p className="ap-eyebrow mt-auto text-ink-2">
+            Drawn by hand. Printed to order.
+          </p>
+        </div>
+      ) : null}
+    </>
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
@@ -87,14 +158,15 @@ function RootComponent() {
                 <Link to="/" className="block">
                   <img src={LOGO_URL} alt="Another Punk" className="h-8 w-auto sm:h-9" />
                 </Link>
-                <nav className="flex items-center gap-8">
+                <nav className="flex items-center gap-5 sm:gap-8">
                   <Link
                     to="/shop"
-                    className="ap-eyebrow text-ink transition-opacity hover:opacity-60"
+                    className="ap-eyebrow hidden text-ink transition-opacity hover:opacity-60 sm:inline"
                   >
                     Shop
                   </Link>
                   <BagLink />
+                  <MobileMenu />
                 </nav>
               </div>
             </header>

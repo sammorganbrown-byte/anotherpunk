@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ANOTHER_PUNK_PRODUCTS } from "../lib/another-punk-products";
 import { useCurrency } from "../lib/currency-context";
+import { ApQuotePlate } from "../components/another-punk/ap-quote-plate";
 
 export const Route = createFileRoute("/shop")({
   component: AnotherPunkShop,
@@ -10,7 +11,8 @@ function AnotherPunkShop() {
   const { formatPrice } = useCurrency();
 
   return (
-    <div className="ap-grain px-6 py-16 sm:px-10 sm:py-24">
+    <>
+      <div className="ap-grain px-6 py-16 sm:px-10 sm:py-24">
       <div className="mx-auto max-w-[1500px]">
         <h1 className="ap-statement text-ink">
           <span className="ap-misreg" data-text="Everything">
@@ -47,6 +49,15 @@ function AnotherPunkShop() {
           ))}
         </div>
       </div>
-    </div>
+      </div>
+
+      <ApQuotePlate
+        quote="Surrender Dorothy."
+        emphasis="Dorothy."
+        source="After Hours, 1985"
+        slug="surrender-dorothy"
+        tone="pink"
+      />
+    </>
   );
 }

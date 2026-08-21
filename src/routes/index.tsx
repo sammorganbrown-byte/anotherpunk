@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { Reveal } from "../components/reveal";
 import { ApMarquee } from "../components/another-punk/ap-marquee";
 import { ApTextMarquee } from "../components/another-punk/ap-text-marquee";
+import { ApQuotePlate } from "../components/another-punk/ap-quote-plate";
 import { ANOTHER_PUNK_PRODUCTS, AP_IMAGERY } from "../lib/another-punk-products";
 import { useCurrency } from "../lib/currency-context";
 
@@ -136,26 +137,20 @@ function AnotherPunkHome() {
           is small enough that a paragraph of backstory would read as padding.
           Westwood and Repo Man are named as influences only; nothing from
           either is quoted, reproduced or paraphrased. */}
-      <section className="border-b border-border px-6 py-24 sm:px-10 sm:py-32">
+      <section id="story" className="border-b border-border px-6 py-24 sm:px-10 sm:py-32">
         <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-10 lg:grid-cols-[auto_1fr]">
           <Reveal>
             <p className="ap-eyebrow text-pink lg:pt-2">Where it came from</p>
           </Reveal>
           <Reveal delay={100}>
-            <div className="flex max-w-[52ch] flex-col gap-5 font-display text-xl leading-[1.25] font-bold tracking-tight text-ink uppercase sm:text-2xl">
-              <p>Two things, same week.</p>
+            <div className="flex max-w-[46ch] flex-col gap-5 font-display text-xl leading-[1.25] font-bold tracking-tight text-ink uppercase sm:text-2xl">
               <p>
-                A panel at a Vivienne Westwood exhibition. Punk as clothing. Made properly, taken
-                seriously — not dressed up as a costume.
+                A Vivienne Westwood exhibition. Then <span className="text-pink">Repo Man</span>.
+                They didn't go together. That was the point.
               </p>
+              <p>Paint straight onto a shirt. No plan.</p>
               <p>
-                Then <span className="text-pink">Repo Man</span>. Deadpan. Cheap. Stubbornly strange.
-              </p>
-              <p>They didn't go together. That was the point.</p>
-              <p>No plan after that. Just paint, straight onto a shirt, at the kitchen table.</p>
-              <p>
-                That's Another Punk. Not a mood board.{" "}
-                <span className="text-pink">A compulsion.</span>
+                Not a mood board. <span className="text-pink">A compulsion.</span>
               </p>
             </div>
           </Reveal>
@@ -217,6 +212,13 @@ function AnotherPunkHome() {
           </div>
         </div>
       </section>
+
+      <ApQuotePlate
+        quote="I better adjust my tongue box."
+        emphasis="tongue box."
+        source="Barbarella, 1968"
+        slug="tongue-box"
+      />
 
       {/* Process: two production frames, hard against each other. */}
       <section className="grid grid-cols-1 sm:grid-cols-2">
@@ -288,6 +290,13 @@ function AnotherPunkHome() {
           </Link>
         </div>
       </section>
+
+      <ApQuotePlate
+        quote="Nobody fucks with the Jesus."
+        emphasis="the Jesus."
+        source="The Big Lebowski, 1998"
+        slug="the-jesus"
+      />
 
       {/* Closing plate. */}
       <section className="bg-pink px-6 py-24 text-center sm:px-10">

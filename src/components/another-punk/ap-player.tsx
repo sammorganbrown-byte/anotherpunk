@@ -25,8 +25,7 @@ export function ApPlayer() {
   const track = TRACKS[index];
 
   // Advancing the track swaps the <audio> src, which pauses it. Resume only
-  // when we were already playing, so a skip keeps going but a first paint
-  // stays silent.
+  // once playback has been started, so a skip keeps going.
   useEffect(() => {
     const el = audioRef.current;
     if (!el || !started) return;
@@ -49,6 +48,55 @@ export function ApPlayer() {
   };
 
   const next = () => setIndex((i) => (i + 1) % TRACKS.length);
+
+  // Autoplay, as far as browsers actually permit it.
+  //
+  // No browser will start audible audio without a user gesture, so a bare
+  // play() on load is rejected on a first visit — silently, which is the
+  // trap. So: try it anyway (Chrome does allow it for returning visitors
+  // with enough media engagement, and it costs nothing when refused), and
+  // otherwise arm one-shot listeners that start playback on the visitor's
+  // very first interaction with the page, whatever that is. In practice
+  // that means the music comes up on their first tap or scroll rather than
+  // requiring them to find this button.
+  useEffect(() => {
+    const el = audioRef.current;
+    if (!el) return;
+
+    let done = false;
+    const start = () => {
+      if (done) return;
+      done = true;
+      setStarted(true);
+      void el
+        .play()
+        .then(() => setPlaying(true))
+        .catch(() => {
+          // Still refused. Leave the control sitting there as-is.
+          done = false;
+          setStarted(false);
+        });
+      cleanup();
+    };
+
+    const events: (keyof WindowEventMap)[] = ["pointerdown", "keydown", "touchstart", "scroll"];
+    const cleanup = () => events.forEach((e) => window.removeEventListener(e, start));
+
+    void el
+      .play()
+      .then(() => {
+        setStarted(true);
+        setPlaying(true);
+        done = true;
+        cleanup();
+      })
+      .catch(() => {
+        // Expected on a first visit. Wait for any gesture instead.
+        events.forEach((e) => window.addEventListener(e, start, { once: true, passive: true }));
+      });
+
+    return cleanup;
+  }, []);
 
   // Bottom-RIGHT on purpose: the product gallery's thumbnail strip runs along
   // the bottom-left, and a bottom-left player sat directly on top of its
