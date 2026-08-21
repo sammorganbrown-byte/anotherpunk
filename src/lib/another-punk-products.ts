@@ -349,6 +349,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     price: 50,
     images: [
       "/img/90-bodysuit-fullbody-flash.jpg",
+      // Straight after the hero: worn as a one-piece so the high-cut leg is
+      // visible. Every other worn shot has it tucked into trousers, where it
+      // reads as an ordinary tee.
+      "/img/130-bodysuit-onepiece-standing.jpg",
+      "/img/131-bodysuit-onepiece-stool.jpg",
       "/img/91-bodysuit-chest-crop.jpg",
       "/img/95-bodysuit-leather-jacket.jpg",
       "/img/92-bodysuit-night-diner.jpg",
