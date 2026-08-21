@@ -236,14 +236,15 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     },
   },
   {
-    slug: "wordmark",
+    slug: "another-punk",
     description:
-      "Snow-washed heavyweight cotton. Oversized through the body, hem finished clean. The wordmark, large across the chest. Made to order.",
-    title: "Wordmark",
+      "Snow-washed heavyweight cotton. Oversized through the body, hem finished clean. The mark, large across the chest. Made to order.",
+    title: "Another Punk",
     eyebrow: "Snow-washed · oversized",
     price: AP_PRICE,
     images: [
-      "/img/03-wordmark-chest-raking.jpg",
+      // Full body first: it's the shop tile and cart thumbnail, so it has to
+      // read the garment's shape. The raking-light crop follows.
       "/img/21-wordmark-fullbody-flash.jpg",
       "/img/03-wordmark-chest-raking.jpg",
       "/img/62-wordmark-jump-kerb.jpg",
