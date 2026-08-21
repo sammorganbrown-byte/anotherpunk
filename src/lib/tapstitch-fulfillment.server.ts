@@ -149,14 +149,25 @@ export async function createTapstitchOrder(
     return {
       variant_id: Number(variantId),
       quantity: line.qty,
-      // Price is set explicitly rather than inherited from the variant: the
-      // customer paid this site's price via Stripe, and the backend store's
-      // own variant prices are catalogue bookkeeping we don't control (the
-      // app lacks write_products). This keeps the Shopify order's value
-      // matching what was actually charged.
-      price: product.price.toFixed(2),
+      // NO price override here, deliberately. It was tried and it does not
+      // work: a draft-order line that carries a variant_id always keeps the
+      // variant's own price, and Shopify silently discards the price you
+      // send (verified against the live API — sent 50.00 for a variant
+      // priced 35.00, the draft stored 35.00 with no error). Overriding
+      // would need write_products, which this app does not have.
+      //
+      // The variant_id has to stay: it is how Tapstitch knows which garment
+      // to print. So the Shopify order's value is the backend catalogue
+      // price, NOT what the customer paid. Stripe is the source of truth
+      // for revenue; the amount actually charged goes in the note below so
+      // an order can still be reconciled.
     };
   });
+
+  const chargedTotal = lines.reduce((sum, line) => {
+    const product = getAnotherPunkProduct(line.slug);
+    return sum + (product ? product.price * line.qty : 0);
+  }, 0);
 
   const body = {
     draft_order: {
@@ -165,7 +176,9 @@ export async function createTapstitchOrder(
       // Tag with the Stripe reference so an order can always be traced back
       // to the payment that created it.
       tags: `another-punk,${orderReference}`,
-      note: `Another Punk — ${orderReference}`,
+      // Carries the real charged total, because the line-item prices above
+      // cannot be made to reflect it.
+      note: `Another Punk — ${orderReference} — customer paid ${chargedTotal.toFixed(2)} EUR via Stripe`,
       shipping_address: {
         first_name: address.name.split(" ")[0] ?? address.name,
         last_name: address.name.split(" ").slice(1).join(" ") || "-",

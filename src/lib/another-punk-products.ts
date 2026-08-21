@@ -314,9 +314,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     slug: "cami",
     title: "Cami",
     eyebrow: "Black · slim fit · thin strap",
-    // PLACEHOLDER PRICE — set to match Leopard Crop, the other lightweight
-    // women's cut. Shopify lists this at 30.00, which reads as a Tapstitch
-    // base cost rather than retail. Confirm before selling.
+    // Matches Leopard Crop, the other lightweight women's cut. Confirmed.
     price: 40,
     images: [
       "/img/80-cami-fullbody-flash.jpg",
@@ -347,8 +345,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     slug: "bodysuit",
     title: "Bodysuit",
     eyebrow: "Mineral wash · ribbed · fitted",
-    // PLACEHOLDER PRICE — Shopify lists this at 35.00, which reads as a
-    // Tapstitch base cost rather than retail. Confirm before selling.
+    // Confirmed. Below the tees — less garment, more construction.
     price: 50,
     images: [
       "/img/90-bodysuit-fullbody-flash.jpg",
