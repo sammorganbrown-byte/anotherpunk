@@ -33,7 +33,21 @@ export const Route = createFileRoute("/api/stripe-webhook")({
         }
 
         const body = await request.text();
-        const stripe = getStripe();
+
+        // getStripe() throws when STRIPE_SECRET_KEY is missing. Keep it
+        // inside a guard: letting it escape produced a raw HTML 500, which
+        // Stripe reads as "retry later" and silently piles up redeliveries
+        // for what is actually a permanent config fault. Fail loudly and
+        // distinctly instead so it shows up as itself in the logs.
+        let stripe: Stripe;
+        try {
+          stripe = getStripe();
+        } catch (err) {
+          return new Response(
+            `Stripe not configured: ${err instanceof Error ? err.message : "unknown error"}`,
+            { status: 500 },
+          );
+        }
 
         let event: Stripe.Event;
         try {
