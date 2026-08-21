@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useRef } from "react";
 import { Reveal } from "../components/reveal";
 import { ApMarquee } from "../components/another-punk/ap-marquee";
 import { ApTextMarquee } from "../components/another-punk/ap-text-marquee";
@@ -47,6 +48,64 @@ function ProductTile({
   );
 }
 
+/** Homepage hero: the campaign film full-bleed, the mark over the top.
+ *
+ * Muted and silent on purpose. The site already plays the Boudicca tracks
+ * through the player, two audio sources would fight, and browsers only
+ * autoplay video that is muted anyway.
+ *
+ * No `autoPlay` attribute: playback is started in an effect so we can honour
+ * prefers-reduced-motion, where the poster frame is left showing instead. */
+function HeroVideo() {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    void el.play().catch(() => {
+      // Autoplay refused (low power mode, data saver). The poster stays up,
+      // which is a perfectly good hero on its own.
+    });
+  }, []);
+
+  return (
+    <section className="relative flex min-h-[86vh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center sm:px-10">
+      <video
+        ref={videoRef}
+        className="absolute inset-0 h-full w-full object-cover"
+        poster="/img/hero-poster.jpg"
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+        tabIndex={-1}
+      >
+        <source src="/video/ap-hero.webm" type="video/webm" />
+        <source src="/video/ap-hero.mp4" type="video/mp4" />
+      </video>
+
+      {/* Scrim. The footage is mid-grey concrete and the mark is red, so
+          without this the logo sits at roughly 2:1 contrast and disappears. */}
+      <div
+        className="absolute inset-0 bg-ink/55"
+        aria-hidden="true"
+      />
+
+      <div className="relative flex flex-col items-center">
+        <p className="ap-eyebrow mb-8 text-paper/80">No stock. No season. No repeat.</p>
+        <img
+          src={LOGO_URL}
+          alt="Another Punk"
+          className="ap-hero-enter ap-glitch w-full max-w-4xl px-2 brightness-0 invert"
+        />
+        <div className="mt-12 h-2 w-28 bg-pink" aria-hidden="true" />
+      </div>
+    </section>
+  );
+}
+
 function AnotherPunkHome() {
   const { formatPrice } = useCurrency();
   const featured = ANOTHER_PUNK_PRODUCTS.filter((p) => FEATURED_SLUGS.includes(p.slug));
@@ -54,16 +113,7 @@ function AnotherPunkHome() {
 
   return (
     <div className="ap-grain">
-      {/* Hero: the mark, oversized and misprinting itself. */}
-      <section className="flex min-h-[86vh] flex-col items-center justify-center px-6 py-24 text-center sm:px-10">
-        <p className="ap-eyebrow mb-8 text-ink-2">No stock. No season. No repeat.</p>
-        <img
-          src={LOGO_URL}
-          alt="Another Punk"
-          className="ap-hero-enter ap-glitch w-full max-w-4xl px-2"
-        />
-        <div className="mt-12 h-2 w-28 bg-pink" aria-hidden="true" />
-      </section>
+      <HeroVideo />
 
       <ApMarquee />
 
