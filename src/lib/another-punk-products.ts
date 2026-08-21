@@ -398,15 +398,26 @@ export function getAnotherPunkProduct(slug: string): AnotherPunkProduct | undefi
   return ANOTHER_PUNK_PRODUCTS.find((p) => p.slug === slug);
 }
 
-/** Master switch for whether Another Punk can take money yet.
+/** Master switch for whether Another Punk can take money.
  *
- * The Tapstitch order path (tapstitch-fulfillment.server.ts) is written but
- * NOT yet wired into stripe-webhook.ts, so a completed checkout would charge
- * the customer and produce nothing. Until that's wired and proven with a
- * real end-to-end test order, the storefront shows the full range but
- * refuses to sell it. Flip to true only once a live order has been watched
- * through to Tapstitch actually producing it. */
-export const TAPSTITCH_FULFILMENT_LIVE = false;
+ * LIVE. The path is wired: stripe-webhook.ts calls createTapstitchOrder on
+ * a paid checkout.session.completed, and that call is proven against the
+ * live Shopify API (correct variant, size and shipping address).
+ *
+ * FULFILMENT IS DELIBERATELY MANUAL. The webhook only creates a HELD DRAFT
+ * order. submitTapstitchOrder — the call that completes a draft into a real
+ * order and starts production — is intentionally NOT wired to anything, so
+ * a bug in the payment path can never silently print and ship garments.
+ *
+ * That means every paid order needs a human: Shopify admin -> Orders ->
+ * Drafts -> open it -> complete. Nothing is produced until you do. Drafts
+ * carry the tag `another-punk` plus the Stripe reference, and the note
+ * records what the customer was actually charged (the line-item price
+ * cannot be overridden — see tapstitch-fulfillment.server.ts).
+ *
+ * Automate it by calling submitTapstitchOrder from the webhook, but only
+ * once real orders have been watched through to printed garments. */
+export const TAPSTITCH_FULFILMENT_LIVE = true;
 
 /** True when the product can actually be produced and shipped today. */
 export function isFulfillable(p: AnotherPunkProduct): boolean {
