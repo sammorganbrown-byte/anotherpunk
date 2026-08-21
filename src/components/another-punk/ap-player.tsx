@@ -49,53 +49,73 @@ export function ApPlayer() {
 
   const next = () => setIndex((i) => (i + 1) % TRACKS.length);
 
-  // Autoplay, as far as browsers actually permit it.
+  // Autoplay, pushed as hard as browsers actually allow.
   //
-  // No browser will start audible audio without a user gesture, so a bare
-  // play() on load is rejected on a first visit — silently, which is the
-  // trap. So: try it anyway (Chrome does allow it for returning visitors
-  // with enough media engagement, and it costs nothing when refused), and
-  // otherwise arm one-shot listeners that start playback on the visitor's
-  // very first interaction with the page, whatever that is. In practice
-  // that means the music comes up on their first tap or scroll rather than
-  // requiring them to find this button.
+  // No browser starts audible audio without a user gesture, and it refuses
+  // silently, so this can't be a single hopeful play() call. Instead:
+  //   1. Try immediately. Chrome does permit this for visitors with enough
+  //      media engagement — i.e. anyone who's played it here before — so
+  //      returning visitors genuinely do get sound on load.
+  //   2. If refused, start on the very first interaction of any kind:
+  //      pointer, key, touch, scroll, wheel.
+  //   3. Keep retrying rather than giving up. A gesture can be rejected
+  //      while the tab is still backgrounded, so listeners are re-armed on
+  //      every failure until a play() actually resolves.
+  //   4. Retry when the tab becomes visible, which covers the case of the
+  //      page being opened in a background tab.
+  //
+  // The audio element uses preload="auto" so the bytes are already there
+  // when permission arrives — with preload="none" the first gesture spent
+  // a network round-trip before anything was audible.
   useEffect(() => {
     const el = audioRef.current;
     if (!el) return;
 
-    let done = false;
-    const start = () => {
-      if (done) return;
-      done = true;
-      setStarted(true);
+    let settled = false;
+    const EVENTS: (keyof WindowEventMap)[] = [
+      "pointerdown",
+      "keydown",
+      "touchstart",
+      "scroll",
+      "wheel",
+    ];
+
+    const disarm = () => EVENTS.forEach((e) => window.removeEventListener(e, onGesture));
+
+    const attempt = () => {
+      if (settled) return;
       void el
         .play()
-        .then(() => setPlaying(true))
+        .then(() => {
+          settled = true;
+          setStarted(true);
+          setPlaying(true);
+          disarm();
+          document.removeEventListener("visibilitychange", onVisible);
+        })
         .catch(() => {
-          // Still refused. Leave the control sitting there as-is.
-          done = false;
-          setStarted(false);
+          // Still not allowed. Re-arm and wait for the next one.
+          if (!settled) arm();
         });
-      cleanup();
     };
 
-    const events: (keyof WindowEventMap)[] = ["pointerdown", "keydown", "touchstart", "scroll"];
-    const cleanup = () => events.forEach((e) => window.removeEventListener(e, start));
+    const onGesture = () => attempt();
+    const onVisible = () => {
+      if (document.visibilityState === "visible") attempt();
+    };
+    const arm = () => {
+      disarm();
+      EVENTS.forEach((e) => window.addEventListener(e, onGesture, { once: true, passive: true }));
+    };
 
-    void el
-      .play()
-      .then(() => {
-        setStarted(true);
-        setPlaying(true);
-        done = true;
-        cleanup();
-      })
-      .catch(() => {
-        // Expected on a first visit. Wait for any gesture instead.
-        events.forEach((e) => window.addEventListener(e, start, { once: true, passive: true }));
-      });
+    attempt();
+    arm();
+    document.addEventListener("visibilitychange", onVisible);
 
-    return cleanup;
+    return () => {
+      disarm();
+      document.removeEventListener("visibilitychange", onVisible);
+    };
   }, []);
 
   // Bottom-RIGHT on purpose: the product gallery's thumbnail strip runs along
@@ -106,7 +126,8 @@ export function ApPlayer() {
       <audio
         ref={audioRef}
         src={track.src}
-        preload="none"
+        autoPlay
+        preload="auto"
         onEnded={next}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
