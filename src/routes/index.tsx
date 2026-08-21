@@ -63,11 +63,41 @@ function HeroVideo() {
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    void el.play().catch(() => {
-      // Autoplay refused (low power mode, data saver). The poster stays up,
-      // which is a perfectly good hero on its own.
-    });
+
+    // Reduced motion: the autoplay attribute below will have started it, so
+    // stop it and leave the poster frame showing.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.pause();
+      el.currentTime = 0;
+      return;
+    }
+
+    // iOS Safari will not reliably start a video from a bare programmatic
+    // play() with no user gesture — it refuses silently. The `autoplay`
+    // attribute IS honoured there for muted + playsinline video, so that
+    // does the real work; this is a nudge for anything that ignored it, and
+    // a gesture fallback for the cases that still refuse (Low Power Mode).
+    let done = false;
+    const start = () => {
+      if (done) return;
+      void el
+        .play()
+        .then(() => {
+          done = true;
+          window.removeEventListener("pointerdown", start);
+          window.removeEventListener("scroll", start);
+        })
+        .catch(() => {
+          // Poster stays up. Perfectly good hero on its own.
+        });
+    };
+    start();
+    window.addEventListener("pointerdown", start, { passive: true });
+    window.addEventListener("scroll", start, { passive: true });
+    return () => {
+      window.removeEventListener("pointerdown", start);
+      window.removeEventListener("scroll", start);
+    };
   }, []);
 
   return (
@@ -76,15 +106,16 @@ function HeroVideo() {
         ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
         poster="/img/hero-poster.jpg"
+        autoPlay
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
         aria-hidden="true"
         tabIndex={-1}
       >
-        <source src="/video/ap-hero.webm" type="video/webm" />
-        <source src="/video/ap-hero.mp4" type="video/mp4" />
+        <source src="/video/ap-hero.webm" type='video/webm; codecs="vp9"' />
+        <source src="/video/ap-hero.mp4" type='video/mp4; codecs="avc1.640028"' />
       </video>
 
       {/* Scrim. The footage is mid-grey concrete and the mark is red, so
