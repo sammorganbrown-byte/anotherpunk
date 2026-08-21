@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
+import { ApGallery } from "../../components/another-punk/ap-gallery";
 import {
   ANOTHER_PUNK_PRODUCTS,
   DEFAULT_DESCRIPTION,
@@ -36,7 +37,7 @@ function AnotherPunkProductPage() {
       {
         slug: product.slug,
         title: product.title,
-        image: product.image,
+        image: product.images[0],
         productType: "tapstitch",
         sizeLabel: size,
         price: product.price,
@@ -50,9 +51,7 @@ function AnotherPunkProductPage() {
   return (
     <div className="ap-grain">
       <div className="mx-auto grid max-w-[1600px] grid-cols-1 lg:grid-cols-2">
-        <div className="aspect-[3/4] w-full overflow-hidden bg-surface-2 lg:aspect-auto lg:h-[calc(100dvh-73px)]">
-          <img src={product.image} alt={product.title} className="h-full w-full object-cover" />
-        </div>
+        <ApGallery images={product.images} title={product.title} />
 
         <div className="flex flex-col justify-center px-6 py-16 sm:px-12 lg:px-16">
           <div className="mb-4 flex items-center gap-3">

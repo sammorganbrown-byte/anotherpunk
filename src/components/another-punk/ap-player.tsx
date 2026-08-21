@@ -50,8 +50,11 @@ export function ApPlayer() {
 
   const next = () => setIndex((i) => (i + 1) % TRACKS.length);
 
+  // Bottom-RIGHT on purpose: the product gallery's thumbnail strip runs along
+  // the bottom-left, and a bottom-left player sat directly on top of its
+  // first thumbnail.
   return (
-    <div className="fixed bottom-0 left-0 z-40 flex items-stretch border-t border-r border-ink bg-paper">
+    <div className="fixed right-0 bottom-0 z-40 flex items-stretch border-t border-l border-ink bg-paper">
       <audio
         ref={audioRef}
         src={track.src}

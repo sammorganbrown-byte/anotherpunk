@@ -29,8 +29,11 @@ export type AnotherPunkProduct = {
   /** EUR. Flat across the range for now, revisited once real unit costs
    * and shipping are confirmed against Tapstitch's actual invoices. */
   price: number;
-  /** Worn model shot, used as the product tile and product-page hero. */
-  image: string;
+  /** Every shot of this garment. images[0] is the hero — it's what the
+   * shop grid, homepage tiles and cart thumbnail use, so it should be the
+   * frame that reads the garment most clearly. The rest fill the
+   * product-page gallery in order. Never empty. */
+  images: string[];
   /** Product-page body copy. Falls back to DEFAULT_DESCRIPTION, which
    * describes the heavyweight boxy raw-hem tee most of the range uses —
    * override it for anything cut differently (crop, mesh, oversized). */
@@ -67,8 +70,15 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Bat Country",
     eyebrow: "Washed black · raw hem",
     price: AP_PRICE,
-    image:
+    images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/746fa1fe-5055-4a02-913a-aba6e38d07de.png",
+      "/img/24-bats-chest-redo.jpg",
+      "/img/33-bats-night-neon.jpg",
+      "/img/09-bats-wide-negativespace.jpg",
+      "/img/44-bats-jump-flash.jpg",
+      "/img/58-bats-chest-daylight.jpg",
+      "/img/60-bats-sprint-night.jpg",
+    ],
     sizes: FOUR,
     shopifyProductId: "15942009225547",
     shopifyVariantIds: {
@@ -85,8 +95,13 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Tongue Box",
     eyebrow: "Washed black · raw hem",
     price: AP_PRICE,
-    image:
+    images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/b738c126-ea64-4245-8130-9b9ca15adccf.png",
+      "/img/51-tonguebox-chest-FIXED.jpg",
+      "/img/45-tonguebox-night-petrol.jpg",
+      "/img/52-tonguebox-fullbody-FIXED.jpg",
+      "/img/68-tonguebox-midturn.jpg",
+    ],
     sizes: FOUR,
     shopifyProductId: "15942008799563",
     shopifyVariantIds: {
@@ -103,8 +118,13 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "The Jesus",
     eyebrow: "Washed black · raw hem",
     price: AP_PRICE,
-    image:
+    images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/ddc73ac6-e5d5-4e0e-8d0e-87380496611f.png",
+      "/img/23-jesus-chest.jpg",
+      "/img/35-jesus-night-rain.jpg",
+      "/img/61-jesus-walking-corridor.jpg",
+      "/img/74-jesus-kerb-night.jpg",
+    ],
     sizes: FOUR,
     shopifyProductId: "15942008832331",
     shopifyVariantIds: {
@@ -121,8 +141,15 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Surrender Dorothy",
     eyebrow: "Washed black · raw hem",
     price: AP_PRICE,
-    image:
+    images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/4ca18e68-84f4-42c7-98a5-f5e547502ce2.png",
+      "/img/26-dorothy-back-full.jpg",
+      "/img/04-dorothy-threequarter-turn.jpg",
+      "/img/36-dorothy-night-takeaway.jpg",
+      "/img/53-dorothy-chest-crop.jpg",
+      "/img/59-dorothy-spin.jpg",
+      "/img/70-dorothy-wide-negspace.jpg",
+    ],
     sizes: FOUR,
     shopifyProductId: "15942008963403",
     shopifyVariantIds: {
@@ -137,8 +164,14 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Saucer",
     eyebrow: "Washed black · raw hem",
     price: AP_PRICE,
-    image:
+    images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/e4e13de6-1f38-408d-bd58-c5588bb875d9.png",
+      "/img/25-saucer-chest.jpg",
+      "/img/05-saucer-profile.jpg",
+      "/img/37-saucer-night-carpark.jpg",
+      "/img/56-saucer-chest-raking.jpg",
+      "/img/63-saucer-turn.jpg",
+    ],
     sizes: FOUR,
     shopifyProductId: "15942009356619",
     shopifyVariantIds: {
@@ -155,8 +188,14 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Saucer — Oversized, Black",
     eyebrow: "Snow-washed black · sleeve hit",
     price: AP_PRICE,
-    image:
+    images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/6c8c1532-1749-44ec-8f53-395ff5643b92.png",
+      "/img/28-bwblack-chest.jpg",
+      "/img/38-bwblack-night-busshelter.jpg",
+      "/img/43-bwblack-night-wide.jpg",
+      "/img/57-bwblack-chest-night.jpg",
+      "/img/66-bwblack-skate-kick.jpg",
+    ],
     sizes: SIX,
     shopifyProductId: "15942009520459",
     shopifyVariantIds: {
@@ -175,8 +214,13 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Saucer — Oversized, Bone",
     eyebrow: "Snow-washed bone · sleeve hit",
     price: AP_PRICE,
-    image:
+    images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/d2036219-e99b-4ceb-8597-37452d66dec3.png",
+      "/img/08-bwwhite-midturn.jpg",
+      "/img/39-bwwhite-night-alley.jpg",
+      "/img/54-bwwhite-chest-crop.jpg",
+      "/img/64-bwwhite-dance.jpg",
+    ],
     sizes: SIX,
     // Same Shopify product as the black colourway above, different colour
     // option, hence the same product id but the Apricot variant ids.
@@ -197,8 +241,13 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Wordmark",
     eyebrow: "Snow-washed · oversized",
     price: AP_PRICE,
-    image:
+    images: [
       "/img/03-wordmark-chest-raking.jpg",
+      "/img/21-wordmark-fullbody-flash.jpg",
+      "/img/03-wordmark-chest-raking.jpg",
+      "/img/62-wordmark-jump-kerb.jpg",
+      "/img/77-wordmark-night-subway-REDO.jpg",
+    ],
     sizes: SIX,
     shopifyProductId: "15942019613003",
     shopifyVariantIds: {
@@ -218,8 +267,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Mesh",
     eyebrow: "Open-weave net · boxy",
     price: AP_PRICE,
-    image:
+    images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/47da1769-eb20-4e33-9204-60503c824ef5.png",
+      "/img/07-mesh-walking-blur.jpg",
+      "/img/27-mesh-chest.jpg",
+    ],
     sizes: FOUR,
     // Not pushed into Tapstitch/Shopify yet.
     shopifyProductId: null,
@@ -235,8 +287,14 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // Priced below the rest of the range on request, it's a lighter
     // cropped body rather than the heavyweight boxy tee.
     price: 40,
-    image:
+    images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/7d1de5e3-2285-4b61-8580-1acba6248e3f.png",
+      "/img/06-leopard-threequarter-night.jpg",
+      "/img/41-leopard-night-launderette.jpg",
+      "/img/31-leopard-nightstreet.jpg",
+      "/img/75-leopard-night-busstop.jpg",
+      "/img/76-leopard-midturn.jpg",
+    ],
     sizes: ["S", "M", "L", "XL", "2XL"],
     shopifyProductId: "15942025118027",
     shopifyVariantIds: {

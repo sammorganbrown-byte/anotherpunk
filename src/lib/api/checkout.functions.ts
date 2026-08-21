@@ -93,7 +93,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         unit_amount: Math.round(r.product.price * factor * 100),
         product_data: {
           name: `${r.product.title} — ${r.sizeLabel}`,
-          images: [r.product.image],
+          images: [r.product.images[0]],
         },
       },
     }));

@@ -157,7 +157,7 @@ function AnotherPunkHome() {
                 <ProductTile
                   slug={p.slug}
                   title={p.title}
-                  image={p.image}
+                  image={p.images[0]}
                   price={p.price}
                   index={i + 1}
                   formatPrice={formatPrice}
@@ -221,7 +221,7 @@ function AnotherPunkHome() {
                 <ProductTile
                   slug={p.slug}
                   title={p.title}
-                  image={p.image}
+                  image={p.images[0]}
                   price={p.price}
                   index={featured.length + i + 1}
                   formatPrice={formatPrice}

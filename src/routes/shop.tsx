@@ -31,7 +31,7 @@ function AnotherPunkShop() {
             >
               <div className="ap-tile-img aspect-[3/4] w-full bg-surface-2">
                 <img
-                  src={p.image}
+                  src={p.images[0]}
                   alt={p.title}
                   className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 />

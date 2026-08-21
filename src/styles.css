@@ -346,3 +346,9 @@
 @media (prefers-reduced-motion: reduce) {
   .ap-eq i { animation: none; transform: scaleY(0.6); }
 }
+
+/* Gallery frame swap. Keyed on src so React remounts the img and the
+   animation actually re-runs on every change. */
+.ap-fade { animation: ap-fade-in 0.32s ease-out; }
+@keyframes ap-fade-in { from { opacity: 0.35; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .ap-fade { animation: none; } }
