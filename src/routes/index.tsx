@@ -130,7 +130,12 @@ function AnotherPunkHome() {
       <ApTextMarquee
         reverse
         invert
-        items={["Ten styles", "Made to order", "Shipped worldwide", "Nothing sits in a box"]}
+        items={[
+          `${ANOTHER_PUNK_PRODUCTS.length} styles`,
+          "Made to order",
+          "Shipped worldwide",
+          "Nothing sits in a box",
+        ]}
       />
 
       {/* Origin. Deliberately six lines, not an "our story" page — the brand

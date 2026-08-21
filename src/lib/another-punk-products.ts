@@ -59,6 +59,7 @@ export const DEFAULT_FIT =
 
 const FOUR: ApSize[] = ["S", "M", "L", "XL"];
 const SIX: ApSize[] = ["S", "M", "L", "XL", "2XL", "3XL"];
+const FIVE: ApSize[] = ["S", "M", "L", "XL", "2XL"];
 
 export const AP_PRICE = 60;
 
@@ -273,9 +274,13 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/27-mesh-chest.jpg",
     ],
     sizes: FOUR,
-    // Not pushed into Tapstitch/Shopify yet.
-    shopifyProductId: null,
-    shopifyVariantIds: {},
+    shopifyProductId: "15943646740811",
+    shopifyVariantIds: {
+      S: "58214043615563",
+      M: "58214043648331",
+      L: "58214043681099",
+      XL: "58214043713867",
+    },
   },
   {
     slug: "leopard-crop",
@@ -303,6 +308,72 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       L: "58204730851659",
       XL: "58204730884427",
       "2XL": "58204730917195",
+    },
+  },
+  {
+    slug: "cami",
+    title: "Cami",
+    eyebrow: "Black · slim fit · thin strap",
+    // PLACEHOLDER PRICE — set to match Leopard Crop, the other lightweight
+    // women's cut. Shopify lists this at 30.00, which reads as a Tapstitch
+    // base cost rather than retail. Confirm before selling.
+    price: 40,
+    images: [
+      "/img/80-cami-fullbody-flash.jpg",
+      "/img/81-cami-chest-crop.jpg",
+      "/img/86-cami-leather-jacket.jpg",
+      "/img/82-cami-night-neon.jpg",
+      "/img/83-cami-midturn.jpg",
+      "/img/84-cami-profile.jpg",
+      "/img/87-cami-night-carpark.jpg",
+      "/img/121-cami-cafe.jpg",
+      "/img/88-cami-wide-negspace.jpg",
+      "/img/FLOAT-109-cami.jpg",
+      "/img/89-cami-strap-detail.jpg",
+    ],
+    description:
+      "Lightweight stretch cotton. Cut slim and close through the body. Thin straps, open back. Graphic drawn by hand, printed in red. Made to order.",
+    fit: "Fitted and close. This one runs true to size. Not oversized like the tees.",
+    sizes: FOUR,
+    shopifyProductId: "15944344109387",
+    shopifyVariantIds: {
+      S: "58217310323019",
+      M: "58217310355787",
+      L: "58217310388555",
+      XL: "58217310421323",
+    },
+  },
+  {
+    slug: "bodysuit",
+    title: "Bodysuit",
+    eyebrow: "Mineral wash · ribbed · fitted",
+    // PLACEHOLDER PRICE — Shopify lists this at 35.00, which reads as a
+    // Tapstitch base cost rather than retail. Confirm before selling.
+    price: 50,
+    images: [
+      "/img/90-bodysuit-fullbody-flash.jpg",
+      "/img/91-bodysuit-chest-crop.jpg",
+      "/img/95-bodysuit-leather-jacket.jpg",
+      "/img/92-bodysuit-night-diner.jpg",
+      "/img/93-bodysuit-midturn.jpg",
+      "/img/94-bodysuit-profile.jpg",
+      "/img/96-bodysuit-stairwell.jpg",
+      "/img/122-bodysuit-fireescape.jpg",
+      "/img/97-bodysuit-wide-negspace.jpg",
+      "/img/FLOAT-110-bodysuit.jpg",
+      "/img/98-bodysuit-rib-detail.jpg",
+    ],
+    description:
+      "Mineral-washed ribbed cotton. Fitted through the body, short sleeve, high-cut leg. Graphic drawn by hand, printed in red. Made to order.",
+    fit: "Fitted and stretchy. Take your normal size. Wear it with everything.",
+    sizes: FIVE,
+    shopifyProductId: "15944857846091",
+    shopifyVariantIds: {
+      S: "58218230546763",
+      M: "58218230579531",
+      L: "58218230612299",
+      XL: "58218230645067",
+      "2XL": "58218230677835",
     },
   },
 ];
