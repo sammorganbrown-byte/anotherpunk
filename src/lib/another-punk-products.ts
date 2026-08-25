@@ -243,12 +243,20 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "Snow-washed · oversized",
     price: AP_PRICE,
     images: [
-      // Full body first: it's the shop tile and cart thumbnail, so it has to
-      // read the garment's shape. The raking-light crop follows.
-      "/img/21-wordmark-fullbody-flash.jpg",
-      "/img/03-wordmark-chest-raking.jpg",
-      "/img/62-wordmark-jump-kerb.jpg",
-      "/img/77-wordmark-night-subway-REDO.jpg",
+      // REAL GARMENT PHOTOS, from the Shopify product this maps to.
+      //
+      // The campaign mockups that were here (21-wordmark-*, 03-wordmark-*,
+      // 62-wordmark-*, 77-wordmark-*) were generated from the Brand1
+      // reference, which is the washed black tee with a RAW DISTRESSED HEM.
+      // This product is Shopify's "Snow Washed Oversized Cotton T-Shirt" —
+      // a clean-hem blank. So those shots showed a garment the customer
+      // would not receive, and had to come out.
+      //
+      // These packshots are plainer than the rest of the range. Replace them
+      // with campaign shots built from a reference element made from THIS
+      // garment, not the raw-hem one.
+      "/img/AP-real-front-black.jpg",
+      "/img/AP-real-back-black.jpg",
     ],
     sizes: SIX,
     shopifyProductId: "15942019613003",
@@ -349,12 +357,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // Confirmed. Below the tees — less garment, more construction.
     price: 50,
     images: [
-      "/img/90-bodysuit-fullbody-flash.jpg",
-      // Straight after the hero: worn as a one-piece so the high-cut leg is
-      // visible. Every other worn shot has it tucked into trousers, where it
-      // reads as an ordinary tee.
+      // HERO is the one-piece shot on purpose. Every shot with it tucked into
+      // trousers reads as an ordinary fitted tee in the shop grid, which is
+      // the one thing a bodysuit tile cannot do.
       "/img/130-bodysuit-onepiece-standing.jpg",
       "/img/131-bodysuit-onepiece-stool.jpg",
+      "/img/90-bodysuit-fullbody-flash.jpg",
       "/img/91-bodysuit-chest-crop.jpg",
       "/img/95-bodysuit-leather-jacket.jpg",
       "/img/92-bodysuit-night-diner.jpg",
