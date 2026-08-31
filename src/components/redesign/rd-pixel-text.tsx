@@ -37,6 +37,8 @@ export function RdPixelText({
 }) {
   const [rows, setRows] = useState<string[]>([]);
   const raf = useRef(0);
+  const hostRef = useRef<HTMLElement | null>(null);
+  const preRef = useRef<HTMLPreElement | null>(null);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -126,10 +128,39 @@ export function RdPixelText({
     return () => cancelAnimationFrame(raf.current);
   }, [text, cols, scramble]);
 
+  // Scale the block type to its container instead of letting it overflow.
+  // A fixed font-size meant a long title ran past the column and got clipped
+  // ("THE JI"), because the grid is not allowed to grow to fit it. Monospace
+  // makes this exact: width = columns x advance, so the size that fits is
+  // simple arithmetic, redone whenever the column resizes.
+  useEffect(() => {
+    const host = hostRef.current;
+    const pre = preRef.current;
+    if (!host || !pre || rows.length === 0) return;
+
+    const fit = () => {
+      const avail = host.clientWidth;
+      if (!avail) return;
+      const chars = rows[0]?.length || 1;
+      // Measure this font's real advance once, at a known size.
+      pre.style.fontSize = "100px";
+      const advance = pre.scrollWidth / chars / 100;
+      const size = Math.max(1.4, (avail / chars / advance) * 0.985);
+      pre.style.fontSize = `${size}px`;
+    };
+
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(host);
+    return () => ro.disconnect();
+  }, [rows]);
+
   return (
-    <Tag className={`rd-pixtext ${className ?? ""}`}>
+    <Tag className={`rd-pixtext ${className ?? ""}`} ref={hostRef as never}>
       <span className="rd-sr">{text}</span>
-      <pre aria-hidden="true">{rows.join("\n")}</pre>
+      <pre ref={preRef} aria-hidden="true">
+        {rows.join("\n")}
+      </pre>
     </Tag>
   );
 }

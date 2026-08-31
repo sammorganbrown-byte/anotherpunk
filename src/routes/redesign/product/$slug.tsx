@@ -53,8 +53,8 @@ function RedesignProduct() {
   ];
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_1fr]">
-      <div className="border-b border-[var(--rd-rule)] lg:border-r lg:border-b-0">
+    <div className="rd-pdp">
+      <div className="rd-pdp-media">
         <div
           className="rd-plate aspect-[4/3] w-full"
           data-lit={lit}
@@ -85,7 +85,7 @@ function RedesignProduct() {
         ) : null}
       </div>
 
-      <div className="flex flex-col gap-8 p-4 sm:p-8">
+      <div className="rd-pdp-spec flex flex-col gap-8 p-4 sm:p-8">
         <div>
           <p className="rd-label mb-3">
             JOB {String(idx).padStart(3, "0")} <span className="rd-key">/</span> SPEC

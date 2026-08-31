@@ -12,7 +12,10 @@ import { LOGO_URL } from "../../routes/redesign/route";
  * field rather than as an overlay bolted on top.
  */
 
-const GLITCH = "█▓▒░#%@*+=×";
+// Solid block or nothing. Half-tone glyphs (▓▒░) put a grey texture inside
+// the letters; the mark should be one flat colour, pixelated only by the
+// grid it is drawn on.
+const GLITCH_ON = "█";
 
 /** The wordmark sampled to block characters, re-corrupting itself forever.
  *
@@ -120,7 +123,8 @@ export function RdLogoCard() {
         let line = "";
         for (let x = 0; x < C; x++) {
           const a = data[(y * C + x) * 4 + 3] / 255;
-          line += a > 0.5 ? "█" : a > 0.2 ? "▓" : " ";
+          // Binary threshold — solid or empty, never a shade between.
+          line += a > 0.45 ? "█" : " ";
         }
         rows.push(line);
       }
@@ -132,12 +136,15 @@ export function RdLogoCard() {
       timer.current = window.setInterval(() => {
         setFrame(() => {
           const next = rows.slice();
-          const hits = 6 + Math.floor(Math.random() * 10);
+          // The glitch drops cells out of the mark and fills cells just
+          // outside it — misregistration, not a change of texture. Every
+          // cell is still either solid or empty.
+          const hits = 8 + Math.floor(Math.random() * 12);
           for (let i = 0; i < hits; i++) {
             const y = (Math.random() * rows.length) | 0;
             const line = next[y].split("");
             const x = (Math.random() * line.length) | 0;
-            if (line[x] !== " ") line[x] = GLITCH[(Math.random() * GLITCH.length) | 0];
+            line[x] = line[x] === " " ? (Math.random() < 0.35 ? GLITCH_ON : " ") : " ";
             next[y] = line.join("");
           }
           return next;

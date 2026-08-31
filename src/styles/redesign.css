@@ -148,13 +148,17 @@ body:has([data-ap-rd]) {
 /* ---- chrome ----------------------------------------------------------- */
 
 .rd-bar {
-  position: sticky;
+  /* Locked, not sticky: the field is a fixed-height canvas you drag inside,
+     so the chrome should never travel with anything. */
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 40;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  justify-content: center;
+  gap: 18px;
   padding: 9px 14px;
   border-bottom: 1px solid var(--rd-rule);
   background: color-mix(in srgb, var(--rd-void) 88%, transparent);
@@ -648,14 +652,12 @@ body:has([data-ap-rd]) {
 .rd-pixtext pre {
   margin: 0;
   font-family: var(--rd-mono);
-  font-size: clamp(4px, 1.15vw, 10px);
   line-height: 0.98;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
   white-space: pre;
   color: var(--rd-paper);
   max-width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: hidden;
 }
 .rd-pixtext.rd-pix-red pre {
   color: var(--rd-red);
@@ -918,5 +920,121 @@ body:has([data-ap-rd]) {
 @media (prefers-reduced-motion: reduce) {
   .rd-backfilm {
     display: none;
+  }
+}
+
+
+/* ---- locked chrome ---------------------------------------------------- */
+
+[data-ap-rd] {
+  --rd-bar-h: 42px;
+  --rd-foot-h: 34px;
+}
+
+/* Both bars are fixed, so the page content has to be inset past them. */
+[data-ap-rd] main {
+  padding-top: var(--rd-bar-h);
+  padding-bottom: var(--rd-foot-h);
+}
+
+[data-ap-rd] > footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  padding: 8px 14px;
+  border-top: 1px solid var(--rd-rule);
+  background: color-mix(in srgb, var(--rd-void) 88%, transparent);
+  backdrop-filter: blur(6px);
+}
+[data-ap-rd] > footer > div {
+  justify-content: center;
+  text-align: center;
+}
+
+/* The field fills what is left between the two locked bars. */
+.rd-sky {
+  height: calc(100dvh - var(--rd-bar-h) - var(--rd-foot-h));
+}
+
+/* The hint would sit under the locked footer. */
+.rd-hint {
+  bottom: calc(var(--rd-foot-h) + 8px);
+}
+.rd-pin-shop {
+  bottom: calc(var(--rd-foot-h) + 12px);
+}
+
+@media (max-width: 700px) {
+  .rd-sky {
+    height: calc(100dvh - var(--rd-bar-h) - var(--rd-foot-h));
+  }
+  .rd-pin-shop {
+    bottom: calc(var(--rd-foot-h) + 10px);
+  }
+}
+
+
+/* The panned world. One transform moves the whole field; pieces inside only
+   carry their own drift. */
+.rd-world {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+/* ---- product page ----------------------------------------------------- */
+
+.rd-pdp {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 1024px) {
+  .rd-pdp {
+    /* Image gets the larger share. */
+    grid-template-columns: 1.45fr 1fr;
+  }
+}
+
+/* THE fix. A grid item defaults to min-width:auto and will not shrink below
+   its content — and the spec column contains a <pre> that is 150-380
+   characters on one line. So the spec column grew to fit its widest line and
+   crushed the photograph down to a sliver. Both columns must be allowed to
+   shrink; the pixel headings then scroll inside their own box instead of
+   pushing the page around. */
+.rd-pdp > * {
+  min-width: 0;
+}
+.rd-pdp-spec {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.rd-pdp-media {
+  border-bottom: 1px solid var(--rd-rule);
+  min-width: 0;
+}
+@media (min-width: 1024px) {
+  .rd-pdp-media {
+    border-bottom: 0;
+    border-right: 1px solid var(--rd-rule);
+    /* Fill the screen height between the locked bars. */
+    position: sticky;
+    top: var(--rd-bar-h);
+    align-self: start;
+  }
+}
+
+/* Bigger image. It was a 4:3 letterbox; the garment shots are portrait, so
+   the plate now takes the full column and a tall aspect. */
+.rd-plate {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+}
+@media (min-width: 1024px) {
+  .rd-plate {
+    aspect-ratio: auto;
+    height: calc(100dvh - var(--rd-bar-h) - var(--rd-foot-h) - 46px);
   }
 }

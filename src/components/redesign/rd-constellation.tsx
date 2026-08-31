@@ -109,6 +109,7 @@ export function RdConstellation({
 }) {
   const [pieces, setPieces] = useState<Piece[]>([]);
   const skyRef = useRef<HTMLDivElement | null>(null);
+  const worldRef = useRef<HTMLDivElement | null>(null);
   const nodes = useRef<(HTMLDivElement | null)[]>([]);
 
   // Sized from the number of photographs, so adding products spreads the
@@ -121,6 +122,11 @@ export function RdConstellation({
     null,
   );
   const [dragging, setDragging] = useState(false);
+  // The opening pan, rendered as an inline style so the field is correctly
+  // positioned before a single animation frame runs. The loop then writes
+  // straight to the node. Without this the whole world sat at its raw
+  // coordinates until the first frame landed.
+  const [pan0, setPan0] = useState({ x: 0, y: 0 });
   // Survives pointerup. `drag` is cleared on release, which happens BEFORE
   // the click event, so checking it in the click handler always saw null and
   // the suppression never fired — meaning a pan ended by navigating to
@@ -128,14 +134,30 @@ export function RdConstellation({
   const suppressClick = useRef(false);
 
   useEffect(() => {
-    const count = products.reduce((n, p) => n + p.images.length, 0);
-    const area = count * 340 * 300;
-    const ratio = 1.45;
+    // Size the world against the VIEWPORT, not just the photo count. Sizing
+    // it from the count alone made it several screens wide on a laptop and
+    // enormous on a phone, so the field opened on a near-empty view and you
+    // had to go looking for the clothes. Roughly two and a half screens in
+    // each direction is enough to reward panning while still filling the
+    // first one.
+    const el = skyRef.current;
+    const vw = el?.clientWidth || window.innerWidth;
+    const vh = el?.clientHeight || window.innerHeight;
     world.current = {
-      w: Math.max(1800, Math.round(Math.sqrt(area * ratio))),
-      h: Math.max(1300, Math.round(Math.sqrt(area / ratio))),
+      w: Math.max(1500, Math.round(vw * 2.4)),
+      h: Math.max(1200, Math.round(vh * 2.6)),
     };
     setPieces(buildPieces(products, world.current));
+
+    // Open on the middle of the field, not its top-left corner. The pan
+    // started at 0,0, which put the viewport in the empty corner of a world
+    // several screens wide — and with the mark clearing a hole in the centre
+    // the first thing you saw was mostly nothing.
+    pan.current = {
+      x: (vw - world.current.w) / 2,
+      y: (vh - world.current.h) / 2,
+    };
+    setPan0({ ...pan.current });
   }, [products]);
 
   useEffect(() => {
@@ -171,6 +193,11 @@ export function RdConstellation({
       }
       clamp();
 
+      // One transform for the whole field.
+      if (worldRef.current) {
+        worldRef.current.style.transform = `translate3d(${pan.current.x}px, ${pan.current.y}px, 0)`;
+      }
+
       const PULL = 250;
 
       // The wordmark holds the middle of the screen and photographs are not
@@ -182,7 +209,7 @@ export function RdConstellation({
       const mx = mark ? mark.left + mark.width / 2 : 0;
       const my = mark ? mark.top + mark.height / 2 : 0;
       // A circle around the mark, sized to its longest edge plus breathing room.
-      const markR = mark ? Math.max(mark.width, mark.height) * 0.5 + 26 : 0;
+      const markR = mark ? Math.max(mark.width, mark.height) * 0.5 + 6 : 0;
 
       pieces.forEach((s, i) => {
         const el = nodes.current[i];
@@ -214,7 +241,9 @@ export function RdConstellation({
         const dist = Math.hypot(cursor.current.x - cx, cursor.current.y - cy);
         const near = Math.max(0, 1 - dist / PULL);
 
-        el.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${1 + near * 0.14})`;
+        el.style.transform = `translate3d(${dx - pan.current.x}px, ${
+          dy - pan.current.y
+        }px, 0) scale(${1 + near * 0.14})`;
         el.style.zIndex = String(10 + Math.round(near * 30));
         const im = el.querySelector("img") as HTMLElement | null;
         if (im) {
@@ -259,6 +288,13 @@ export function RdConstellation({
       data-drag={dragging}
       onPointerDown={(e) => {
         // Start a drag wherever the pointer lands, links included.
+        //
+        // NOTE: no setPointerCapture here, deliberately. Capturing on press
+        // retargets the whole gesture to this element, so the click that
+        // follows a simple tap was being delivered to the canvas instead of
+        // the link under the finger — which is why nothing opened. Capture
+        // is taken lazily in onPointerMove, only once the pointer has
+        // travelled far enough to count as a drag.
         drag.current = {
           x: e.clientX,
           y: e.clientY,
@@ -268,7 +304,6 @@ export function RdConstellation({
         };
         vel.current = { x: 0, y: 0 };
         setDragging(true);
-        skyRef.current?.setPointerCapture(e.pointerId);
       }}
       onPointerMove={(e) => {
         cursor.current = { x: e.clientX, y: e.clientY };
@@ -276,7 +311,17 @@ export function RdConstellation({
         if (!d) return;
         const ddx = e.clientX - d.x;
         const ddy = e.clientY - d.y;
-        if (!d.moved && Math.hypot(ddx, ddy) > DRAG_SLOP) d.moved = true;
+        if (!d.moved && Math.hypot(ddx, ddy) > DRAG_SLOP) {
+          d.moved = true;
+          // Now it is genuinely a drag, so take the pointer.
+          try {
+            skyRef.current?.setPointerCapture(e.pointerId);
+          } catch {
+            // Pointer already gone; panning still works without capture.
+          }
+        }
+        // Nothing to pan until the gesture clears the slop threshold.
+        if (!d.moved) return;
         const nx = d.px + ddx;
         const ny = d.py + ddy;
         vel.current = { x: nx - pan.current.x, y: ny - pan.current.y };
@@ -286,7 +331,13 @@ export function RdConstellation({
         suppressClick.current = drag.current?.moved ?? false;
         drag.current = null;
         setDragging(false);
-        skyRef.current?.releasePointerCapture(e.pointerId);
+        try {
+          if (skyRef.current?.hasPointerCapture(e.pointerId)) {
+            skyRef.current.releasePointerCapture(e.pointerId);
+          }
+        } catch {
+          // Never captured — a tap. Nothing to release.
+        }
       }}
       onPointerCancel={() => {
         drag.current = null;
@@ -317,7 +368,12 @@ export function RdConstellation({
       role="group"
       aria-label="Product field. Drag, scroll or use arrow keys to move around."
     >
-      {pieces.map((s, i) => (
+      <div
+        ref={worldRef}
+        className="rd-world"
+        style={{ transform: `translate3d(${pan0.x}px, ${pan0.y}px, 0)` }}
+      >
+        {pieces.map((s, i) => (
         // The ref lives on this div, NOT on the Link. TanStack's Link does
         // not forward a ref to its underlying <a>, so the animation loop was
         // reading null for every piece and skipping all of them — which is
@@ -358,7 +414,8 @@ export function RdConstellation({
             ) : null}
           </Link>
         </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
