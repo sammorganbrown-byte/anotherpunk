@@ -78,14 +78,22 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
     const cx = (i % cols) * cw;
     const cy = Math.floor(i / cols) * ch;
     const w = 150 + rnd() * 130;
+    const h = w * 0.75;
+    // A piece may spill up to ~10% of its own size into the neighbouring
+    // cell, in either direction. Enough that the field reads as a strewn
+    // contact sheet rather than a disguised grid, without pieces burying
+    // each other the way pure random placement did.
+    const OVERLAP = 0.1;
+    const spanX = Math.max(10, cw - w) + w * OVERLAP * 2;
+    const spanY = Math.max(10, ch - h) + h * OVERLAP * 2;
     return {
       key: `${r.p.slug}-${i}`,
       p: r.p,
       src: r.src,
       label: r.label,
       w,
-      x: cx + rnd() * Math.max(10, cw - w),
-      y: cy + rnd() * Math.max(10, ch - w * 0.8),
+      x: cx - w * OVERLAP + rnd() * spanX,
+      y: cy - h * OVERLAP + rnd() * spanY,
       phase: rnd() * Math.PI * 2,
       amp: 3 + rnd() * 8,
     };
@@ -113,6 +121,11 @@ export function RdConstellation({
     null,
   );
   const [dragging, setDragging] = useState(false);
+  // Survives pointerup. `drag` is cleared on release, which happens BEFORE
+  // the click event, so checking it in the click handler always saw null and
+  // the suppression never fired — meaning a pan ended by navigating to
+  // whichever product you happened to let go over.
+  const suppressClick = useRef(false);
 
   useEffect(() => {
     const count = products.reduce((n, p) => n + p.images.length, 0);
@@ -240,6 +253,7 @@ export function RdConstellation({
         pan.current = { x: nx, y: ny };
       }}
       onPointerUp={(e) => {
+        suppressClick.current = drag.current?.moved ?? false;
         drag.current = null;
         setDragging(false);
         skyRef.current?.releasePointerCapture(e.pointerId);
@@ -249,9 +263,11 @@ export function RdConstellation({
         setDragging(false);
       }}
       onPointerLeave={() => (cursor.current = { x: -9999, y: -9999 })}
-      // A pan that ended in movement must not also open a product.
+      // A pan that ended in movement must not also open a product; a press
+      // that never travelled must still open it.
       onClickCapture={(e) => {
-        if (drag.current?.moved) {
+        if (suppressClick.current) {
+          suppressClick.current = false;
           e.preventDefault();
           e.stopPropagation();
         }
