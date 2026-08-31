@@ -126,7 +126,10 @@ function RedesignLayout() {
           Another Punk
         </Link>
 
-        <nav className="flex items-center gap-4 sm:gap-6" aria-label="Redesign">
+        {/* Separated by a single red pixel rather than by space alone, so the
+            bar reads as one continuous terminal line. The separators are
+            drawn by CSS between items and are decoration only. */}
+        <nav className="rd-nav" aria-label="Redesign">
           <Link
             to="/redesign/shop"
             className="rd-link"
@@ -134,6 +137,9 @@ function RedesignLayout() {
           >
             Shop
           </Link>
+          <a href="mailto:hello@anotherpunk.com" className="rd-link">
+            Contact
+          </a>
           <Link to="/redesign/cart" className="rd-link" data-on={path.startsWith("/redesign/cart")}>
             Bag [{count}]
           </Link>
@@ -147,7 +153,7 @@ function RedesignLayout() {
 
       <footer className="border-t border-[var(--rd-rule)] px-4 py-6">
         <div className="rd-log flex flex-wrap items-center justify-between gap-3">
-          <span>DRAWN BY HAND · PRINTED TO ORDER · SHIPPED WORLDWIDE</span>
+          <span>SHIPPED WORLDWIDE</span>
           <span>
             <a href="/" className="rd-link underline underline-offset-4">
               ← Return to live site

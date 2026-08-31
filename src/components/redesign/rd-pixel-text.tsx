@@ -96,6 +96,20 @@ export function RdPixelText({
       solved.push(line);
     }
 
+    // Trim columns that are blank all the way down. fillText leaves side
+    // bearing at both ends, and every one of those empty cells is real width
+    // under `white-space: pre` — so the grid was wider than the letters and
+    // the fit below sized the type to the padding rather than to the word.
+    // That is what pushed the last characters past the right edge.
+    let c0 = 0;
+    let c1 = C - 1;
+    const blankCol = (x: number) => solved.every((l) => l[x] === " ");
+    while (c0 < c1 && blankCol(c0)) c0++;
+    while (c1 > c0 && blankCol(c1)) c1--;
+    if (c0 > 0 || c1 < C - 1) {
+      for (let y = 0; y < solved.length; y++) solved[y] = solved[y].slice(c0, c1 + 1);
+    }
+
     // Paint the finished text FIRST, always. The scramble is a flourish on
     // top of a correct heading, never the thing that produces it — if the
     // first animation frame is delayed (background tab, slow boot) the
@@ -103,7 +117,9 @@ export function RdPixelText({
     setRows(solved);
     if (!scramble || reduced) return;
 
-    const total = solved.length * C;
+    // Width AFTER the trim above, not the grid it was sampled on.
+    const W = solved[0]?.length || C;
+    const total = solved.length * W;
     const start = performance.now();
     const DUR = 560;
     const step = () => {
@@ -114,7 +130,7 @@ export function RdPixelText({
           line
             .split("")
             .map((ch, x) =>
-              y * C + x < done || ch === " "
+              y * W + x < done || ch === " "
                 ? ch
                 : NOISE[(Math.random() * NOISE.length) | 0],
             )
@@ -152,7 +168,18 @@ export function RdPixelText({
     fit();
     const ro = new ResizeObserver(fit);
     ro.observe(host);
-    return () => ro.disconnect();
+    // The advance is measured from the rendered <pre>, so a fit that runs
+    // before the mono webfont arrives is measured against the fallback and
+    // the real face then comes in wider — the heading overflows to the right
+    // and gets clipped. Re-fit once the fonts are actually in.
+    let live = true;
+    document.fonts?.ready.then(() => {
+      if (live) fit();
+    });
+    return () => {
+      live = false;
+      ro.disconnect();
+    };
   }, [rows]);
 
   return (

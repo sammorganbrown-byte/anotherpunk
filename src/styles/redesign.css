@@ -1203,3 +1203,85 @@ body:has([data-ap-rd]) {
   position: relative;
   z-index: 2;
 }
+
+/* ---- product page: locked to the viewport ----------------------------- */
+
+/* Everything else in the redesign sits between the two fixed bars and does
+   not scroll the page; the product page was the one screen that did. The
+   media column was already sized to the gap between the bars, but the spec
+   column is whatever height its content happens to be (783px against 644px
+   of room on a 720px window), so IT was what pushed the document taller than
+   the screen and produced the sideways/vertical drift.
+   Lock the grid to the same height the field uses, and let the spec column
+   scroll inside its own box instead of moving the page. */
+@media (min-width: 1024px) {
+  .rd-pdp {
+    height: calc(100dvh - var(--rd-bar-h) - var(--rd-foot-h));
+  }
+  .rd-pdp-media {
+    /* Sticky was a workaround for the page scrolling. It no longer does. */
+    position: static;
+    height: 100%;
+    min-height: 0;
+  }
+  .rd-pdp-spec {
+    height: 100%;
+    min-height: 0;
+    /* overflow-x stays hidden: the block headings clip rather than widen the
+       column. Only the vertical axis becomes scrollable. */
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--rd-rule) transparent;
+  }
+}
+
+/* ---- top bar: one red terminal line ----------------------------------- */
+
+/* The whole bar is set in the brand red — brand, links and clock alike — so
+   it reads as a single printed line across the top rather than as a logo
+   with grey navigation hung off it. Paper is the hover state, which inverts
+   the usual arrangement and keeps the resting bar quiet. */
+.rd-bar .rd-link,
+.rd-bar .rd-log {
+  color: var(--rd-red);
+}
+.rd-bar .rd-link:hover,
+.rd-bar .rd-link:focus-visible {
+  color: var(--rd-paper);
+}
+
+/* A touch smaller — it is a label up here, not the mark. The mark is the
+   painted thing in the middle of the field. */
+.rd-brand {
+  font-size: 9.5px;
+}
+
+.rd-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+@media (min-width: 640px) {
+  .rd-nav {
+    gap: 14px;
+  }
+}
+/* One red pixel between items. Square, unscaled, on the same grid as the
+   CRT overlay, so it reads as part of the screen rather than as punctuation. */
+.rd-nav > * + *::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  margin-right: 10px;
+  margin-bottom: 2px;
+  vertical-align: middle;
+  background: var(--rd-red);
+}
+@media (min-width: 640px) {
+  .rd-nav > * + *::before {
+    margin-right: 14px;
+  }
+}
