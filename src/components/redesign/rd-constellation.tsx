@@ -115,6 +115,8 @@ export function RdConstellation({
   // Sized from the number of photographs, so adding products spreads the
   // field out instead of crowding it.
   const world = useRef({ w: 2400, h: 1700 });
+  // Read inside the animation loop, which is not re-created when crt flips.
+  const crtRef = useRef(false);
   const pan = useRef({ x: 0, y: 0 });
   const vel = useRef({ x: 0, y: 0 });
   const cursor = useRef({ x: -9999, y: -9999 });
@@ -122,6 +124,32 @@ export function RdConstellation({
     null,
   );
   const [dragging, setDragging] = useState(false);
+
+  // CRT mode. Off by default — this is an experiment, and the toggle is the
+  // whole point: both states live, judged on a real screen at real size.
+  const [crt, setCrt] = useState(false);
+  useEffect(() => {
+    try {
+      setCrt(window.localStorage.getItem("ap-rd-crt") === "1");
+    } catch {
+      // Private mode. Stays off.
+    }
+  }, []);
+  useEffect(() => {
+    crtRef.current = crt;
+  }, [crt]);
+
+  const toggleCrt = () => {
+    setCrt((v) => {
+      const next = !v;
+      try {
+        window.localStorage.setItem("ap-rd-crt", next ? "1" : "0");
+      } catch {
+        // Not persisted; still works for this session.
+      }
+      return next;
+    });
+  };
   // The opening pan, rendered as an inline style so the field is correctly
   // positioned before a single animation frame runs. The loop then writes
   // straight to the node. Without this the whole world sat at its raw
@@ -247,6 +275,21 @@ export function RdConstellation({
         el.style.zIndex = String(10 + Math.round(near * 30));
         const im = el.querySelector("img") as HTMLElement | null;
         if (im) {
+          // Resolution as a state, not a skin: the field rests as a 90s
+          // screen and SHARPENS toward whatever you move at. The pixel
+          // quantisation is done by rendering the image small and scaling it
+          // back up with nearest-neighbour, which is genuine blockiness
+          // rather than a blur pretending to be it.
+          if (crtRef.current) {
+            const f = 1 + (1 - near) * 7;
+            im.style.width = `${100 / f}%`;
+            im.style.height = `${100 / f}%`;
+            im.style.transform = `scale(${f})`;
+          } else if (im.style.width) {
+            im.style.width = "";
+            im.style.height = "";
+            im.style.transform = "";
+          }
           // Rest at partly-desaturated, resolve to full colour under the
           // cursor. Matches the CSS resting state so there is no jump on the
           // first frame.
@@ -284,6 +327,7 @@ export function RdConstellation({
     <div
       ref={skyRef}
       className="rd-sky"
+      data-crt={crt}
       style={{ touchAction: "none" }}
       data-drag={dragging}
       onPointerDown={(e) => {
@@ -416,6 +460,19 @@ export function RdConstellation({
         </div>
         ))}
       </div>
+
+      {crt ? <div className="rd-crt-lines" aria-hidden="true" /> : null}
+      {crt ? <div className="rd-crt-vig" aria-hidden="true" /> : null}
+
+      <button
+        type="button"
+        className="rd-crt-btn"
+        onClick={toggleCrt}
+        aria-pressed={crt}
+        onPointerDown={(e) => e.stopPropagation()}
+      >
+        CRT {crt ? "ON" : "OFF"}
+      </button>
     </div>
   );
 }

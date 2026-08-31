@@ -1057,3 +1057,99 @@ body:has([data-ap-rd]) {
     height: calc(100dvh - var(--rd-bar-h) - var(--rd-foot-h) - 46px);
   }
 }
+
+/* ---- CRT mode (experiment, toggled) ----------------------------------- */
+
+/* The field at rest is a 90s screen; anything you move toward resolves.
+   Two ingredients, and it needs BOTH — hard quantised blocks alone read as a
+   broken image, and a blur alone reads as an out-of-focus photograph. A real
+   tube did both: the signal was pixel-quantised, then the phosphor bled and
+   softened it. That bleed is what keeps it legible. */
+
+.rd-sky[data-crt="true"] .rd-star img {
+  /* Nearest-neighbour, so scaling the small render back up gives real blocks
+     rather than a smooth interpolation. */
+  image-rendering: pixelated;
+  transform-origin: top left;
+  /* The RESTING quantisation lives here, not only in the animation loop.
+     Driven purely from JS it would not appear until the first frame landed —
+     the same trap that has bitten the layout, the pan and the pixel headings
+     already. The loop only modulates this as the cursor nears. */
+  width: 12.5%;
+  height: 12.5%;
+  transform: scale(8);
+}
+
+/* The phosphor bloom, applied to the scaled result rather than the source. */
+.rd-sky[data-crt="true"] .rd-star {
+  filter: blur(0.35px) saturate(1.15) contrast(1.05);
+}
+
+/* Scanlines, heavier than the ambient ones and locked to the field. */
+.rd-crt-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 34;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.34) 0px,
+    rgba(0, 0, 0, 0.34) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  /* A very slow roll, like a tube that never quite locks its sync. */
+  animation: rd-roll 9s linear infinite;
+}
+@keyframes rd-roll {
+  to {
+    background-position-y: 3px;
+  }
+}
+
+/* Tube vignette — the corners of a curved screen falling away. */
+.rd-crt-vig {
+  position: absolute;
+  inset: 0;
+  z-index: 35;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    transparent 42%,
+    rgba(8, 8, 7, 0.5) 88%,
+    rgba(8, 8, 7, 0.8) 100%
+  );
+}
+
+.rd-crt-btn {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  z-index: 36;
+  font-family: var(--rd-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 6px 9px;
+  min-height: 30px;
+  border: 1px solid var(--rd-rule);
+  background: color-mix(in srgb, var(--rd-void) 80%, transparent);
+  color: var(--rd-dim);
+  cursor: pointer;
+}
+.rd-crt-btn:hover,
+.rd-crt-btn:focus-visible {
+  color: var(--rd-red);
+  border-color: var(--rd-red);
+  outline: none;
+}
+.rd-crt-btn[aria-pressed="true"] {
+  color: var(--rd-red);
+  border-color: var(--rd-red);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rd-crt-lines {
+    animation: none;
+  }
+}
