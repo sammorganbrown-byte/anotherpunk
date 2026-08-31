@@ -1154,3 +1154,52 @@ body:has([data-ap-rd]) {
     animation: none;
   }
 }
+
+
+/* ---- field piece frame ------------------------------------------------ */
+
+/* Fixed box. The photograph inside is absolutely positioned, so whatever CRT
+   mode does to its dimensions cannot change the piece's footprint or push
+   the caption around. */
+.rd-shot {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--rd-void-2);
+  border: 1px solid var(--rd-rule);
+}
+.rd-shot img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+}
+
+/* CRT quantisation applies to the floating image only. */
+.rd-sky[data-crt="true"] .rd-shot img {
+  image-rendering: pixelated;
+  transform-origin: top left;
+  width: 12.5%;
+  height: 12.5%;
+  transform: scale(8);
+}
+
+/* Bloom on the photograph, NOT on the whole piece — blurring the piece blurred
+   its caption too, which is half of why the words became unreadable. */
+.rd-sky[data-crt="true"] .rd-star {
+  filter: none;
+}
+.rd-sky[data-crt="true"] .rd-shot {
+  filter: blur(0.35px) saturate(1.15) contrast(1.05);
+}
+
+/* Captions stay sharp and sit above the frame in every mode. */
+.rd-star figcaption {
+  position: relative;
+  z-index: 2;
+}

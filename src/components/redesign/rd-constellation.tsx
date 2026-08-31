@@ -273,7 +273,7 @@ export function RdConstellation({
           dy - pan.current.y
         }px, 0) scale(${1 + near * 0.14})`;
         el.style.zIndex = String(10 + Math.round(near * 30));
-        const im = el.querySelector("img") as HTMLElement | null;
+        const im = el.querySelector(".rd-shot img") as HTMLElement | null;
         if (im) {
           // Resolution as a state, not a skin: the field rests as a 90s
           // screen and SHARPENS toward whatever you move at. The pixel
@@ -437,20 +437,27 @@ export function RdConstellation({
             draggable={false}
             aria-label={`${s.p.title}, \u20ac${s.p.price}`}
           >
-            <img
-              src={s.src}
-              alt=""
-              aria-hidden="true"
-              // The first handful are the ones on screen at load. Lazy-loading
-              // those meant the field appeared as empty outlines and filled in
-              // afterwards; the rest stay lazy so 76 photographs do not all
-              // fetch at once.
-              loading={i < 10 ? "eager" : "lazy"}
-              fetchPriority={i < 6 ? "high" : "auto"}
-              decoding="async"
-              className="aspect-[4/3]"
-              draggable={false}
-            />
+            {/* The frame holds the layout; the photograph floats inside it.
+                CRT mode quantises by rendering the image small and scaling it
+                back up — and while that image was still the sizing element,
+                shrinking it shrank the whole piece and let the scaled-up
+                result cover the caption. That is what made the pieces jump
+                in size and lose their words. */}
+            <span className="rd-shot">
+              <img
+                src={s.src}
+                alt=""
+                aria-hidden="true"
+                // The first handful are the ones on screen at load. Lazy-loading
+                // those meant the field appeared as empty outlines and filled in
+                // afterwards; the rest stay lazy so 76 photographs do not all
+                // fetch at once.
+                loading={i < 10 ? "eager" : "lazy"}
+                fetchPriority={i < 6 ? "high" : "auto"}
+                decoding="async"
+                draggable={false}
+              />
+            </span>
             {s.label ? (
               <figcaption>
                 {s.p.title} <span aria-hidden="true">·</span> €{s.p.price}
