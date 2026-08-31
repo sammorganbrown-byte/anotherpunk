@@ -785,7 +785,11 @@ body:has([data-ap-rd]) {
 
 .rd-pin {
   position: fixed;
-  z-index: 25;
+  /* Above the photographs, which the animation loop lifts as high as 40 as
+     the cursor approaches them. The pieces travel underneath the mark now
+     rather than being pushed around it, so this has to clear their ceiling —
+     while still sitting under the locked bars at 60. */
+  z-index: 45;
   pointer-events: none;
 }
 .rd-pin-logo {

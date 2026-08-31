@@ -66,6 +66,10 @@ type Piece = {
 /** How far past the edge a piece travels before it comes round the other
  * side. Must exceed the widest piece, or one would pop back into view while
  * still partly on screen. */
+/** Where the CRT slider starts, 0..1. This is the shipped look — change THIS
+ * to change what every visitor sees. Chosen on the slider, then baked in. */
+const CRT_DEFAULT = 0.5;
+
 const WRAP_MARGIN = 560;
 
 /** Fold a coordinate onto a torus: `v` brought into [-margin, size - margin).
@@ -141,17 +145,16 @@ export function RdConstellation({
   const [dragging, setDragging] = useState(false);
 
   // CRT intensity, 0..1. The on/off switch is gone: the effect is the look
-  // now, not an experiment to compare against. 0 is what used to be "ON" —
-  // the floor, not an absence — and the slider only goes up from there.
-  const [crt, setCrt] = useState(0);
-  useEffect(() => {
-    try {
-      const v = window.localStorage.getItem("ap-rd-crt-level");
-      if (v !== null) setCrt(Math.min(1, Math.max(0, Number(v) || 0)));
-    } catch {
-      // Private mode. Stays at the floor.
-    }
-  }, []);
+  // now, not an experiment to compare against. 0 on the slider is what used
+  // to be "ON" — the floor, not an absence — and it only goes up from there.
+  // The site ships at CRT_DEFAULT, which is not the floor.
+  //
+  // Deliberately NOT persisted. It was, and the result was that whoever had
+  // dragged it once never saw the shipped look again — their own browser kept
+  // handing them their old experiment back, which reads as the site booting
+  // at the wrong level. The slider is for choosing a value to bake in as
+  // CRT_DEFAULT above, not for remembering one per visitor.
+  const [crt, setCrt] = useState(CRT_DEFAULT);
   useEffect(() => {
     crtRef.current = crt;
     // The bloom is CSS, so it is handed over as a custom property rather than
@@ -161,14 +164,7 @@ export function RdConstellation({
     sky?.style.setProperty("--rd-crt-f", (8 + crt * 16).toFixed(2));
   }, [crt]);
 
-  const setCrtLevel = (next: number) => {
-    setCrt(next);
-    try {
-      window.localStorage.setItem("ap-rd-crt-level", String(next));
-    } catch {
-      // Not persisted; still works for this session.
-    }
-  };
+  const setCrtLevel = (next: number) => setCrt(next);
   // The opening placement is written imperatively in a layout effect below,
   // NOT as an inline style prop. It used to be a prop on .rd-world, which
   // meant every re-render — and `dragging` state toggles one on every single
@@ -250,24 +246,13 @@ export function RdConstellation({
 
       const PULL = 250;
 
-      // The wordmark holds the middle of the screen and photographs are not
-      // allowed to cross it. Read its box once per frame (not per piece) and
-      // treat it as an exclusion zone: anything that would land on top of it
-      // gets pushed radially outwards just far enough to clear.
-      const markEl = document.querySelector(".rd-pin-logo") as HTMLElement | null;
-      const mark = markEl?.getBoundingClientRect() ?? null;
-      const mx = mark ? mark.left + mark.width / 2 : 0;
-      const my = mark ? mark.top + mark.height / 2 : 0;
-      // An ELLIPSE around the mark, matching its own proportions, not a
-      // circle sized to its longest edge. The mark is about twice as wide as
-      // it is tall, so a circle forced as much clearance above and below as
-      // it did at the sides — and with the mark riding high at top: 46%, the
-      // half of that band which fell below stayed on screen while the half
-      // above ran into the bar. Which is exactly the reported symptom: too
-      // much room under the logo, correct room over it.
-      const markRX = mark ? mark.width * 0.5 + 6 : 0;
-      const markRY = mark ? mark.height * 0.5 + 6 : 0;
-
+      // The wordmark no longer pushes photographs out of the way. It used to
+      // clear an ellipse in the middle of the field, which meant the one part
+      // of the screen you always look at was the one part with nothing in it.
+      // The pieces pass underneath it instead — the mark simply sits above
+      // them in the stack — so the field stays dense all the way through the
+      // centre and the mark reads as printed ON the field rather than as a
+      // hole punched in it.
       pieces.forEach((s, i) => {
         const el = nodes.current[i];
         if (!el) return;
@@ -284,29 +269,6 @@ export function RdConstellation({
         let cx = s.x + dx + s.w / 2;
         let cy = s.y + dy + s.w * 0.375;
 
-        if (mark) {
-          // The piece's own half-extents, which are not square either.
-          const prX = s.w * 0.5;
-          const prY = s.w * 0.375;
-          const vx = cx - mx;
-          const vy = cy - my;
-          // Normalise each axis by its own clearance, so "inside the zone" is
-          // d < 1 on an ellipse rather than on a circle.
-          const nx = vx / (markRX + prX);
-          const ny = vy / (markRY + prY);
-          const d = Math.hypot(nx, ny) || 0.0001;
-          if (d < 1) {
-            // Push straight out along the line from the mark to the piece,
-            // far enough to land on the ellipse.
-            const k = (1 - d) / d;
-            const ox = vx * k;
-            const oy = vy * k;
-            dx += ox;
-            dy += oy;
-            cx += ox;
-            cy += oy;
-          }
-        }
         const dist = Math.hypot(cursor.current.x - cx, cursor.current.y - cy);
         const near = Math.max(0, 1 - dist / PULL);
 
