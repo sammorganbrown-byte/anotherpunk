@@ -1,66 +1,54 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
 import { ANOTHER_PUNK_PRODUCTS } from "../../lib/another-punk-products";
 import { useCurrency } from "../../lib/currency-context";
-import { useReducedMotion } from "./route";
 
 export const Route = createFileRoute("/redesign/shop")({ component: RedesignIndexView });
 
-/** The index: the whole range as a fast, scannable list.
+/** The plain index.
  *
- * The field is for browsing; this is for finding. Names, prices, sizes —
- * nothing else. Imagery appears only under the cursor, so the page stays a
- * list rather than becoming a second grid.
+ * The field is the store — this is the escape hatch: a straight grid, every
+ * garment, one image each, sorted, no motion, no drag, no reveal. It exists
+ * because a field is a lovely way to browse and a poor way to find a thing
+ * you already know the name of, and because anyone who cannot or does not
+ * want to drag a canvas still needs the whole range.
+ *
+ * Deliberately undersold in the navigation: it is a fallback, not the front
+ * door. No hero, no big type, just the goods.
  */
 function RedesignIndexView() {
   const { formatPrice } = useCurrency();
-  const reduced = useReducedMotion();
-  const [peek, setPeek] = useState<{ src: string | null; x: number; y: number }>({
-    src: null,
-    x: 0,
-    y: 0,
-  });
 
   return (
     <>
-      {!reduced && peek.src ? (
-        <img
-          src={peek.src}
-          alt=""
-          aria-hidden="true"
-          className="rd-peek"
-          data-on="true"
-          style={{ left: peek.x, top: peek.y }}
-        />
-      ) : null}
-
       <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-[var(--rd-rule)] px-4 py-3">
         <h1 className="rd-label">Index</h1>
-        <p className="rd-log">{ANOTHER_PUNK_PRODUCTS.length} styles</p>
+        <p className="rd-log">
+          {ANOTHER_PUNK_PRODUCTS.length} styles <span aria-hidden="true">·</span>{" "}
+          <Link to="/redesign" className="rd-link underline underline-offset-4">
+            back to the field
+          </Link>
+        </p>
       </div>
 
-      <ol className="mx-auto max-w-[1100px]">
-        {ANOTHER_PUNK_PRODUCTS.map((p, i) => (
+      <ul className="grid grid-cols-2 gap-px p-px sm:grid-cols-3 lg:grid-cols-4">
+        {ANOTHER_PUNK_PRODUCTS.map((p) => (
           <li key={p.slug}>
-            <Link
-              to="/redesign/product/$slug"
-              params={{ slug: p.slug }}
-              className="rd-row"
-              onMouseMove={(ev) =>
-                reduced ? null : setPeek({ src: p.images[0], x: ev.clientX, y: ev.clientY })
-              }
-              onMouseLeave={() => setPeek((v) => ({ ...v, src: null }))}
-            >
-              <span className="rd-row-idx">{String(i + 1).padStart(2, "0")}</span>
-              <span>
-                <span className="rd-row-name">{p.title}</span>
-                <span className="rd-log ml-3 hidden sm:inline">{p.sizes.join(" · ")}</span>
+            <Link to="/redesign/product/$slug" params={{ slug: p.slug }} className="rd-tile">
+              <img
+                src={p.images[0]}
+                alt={p.title}
+                loading="lazy"
+                decoding="async"
+                className="aspect-[4/5] w-full object-cover"
+              />
+              <span className="rd-tile-cap">
+                <span className="rd-ok">{p.title}</span>
+                <span className="rd-log">{formatPrice(p.price)}</span>
               </span>
-              <span className="rd-row-meta">{formatPrice(p.price)}</span>
             </Link>
           </li>
         ))}
-      </ol>
+      </ul>
     </>
   );
 }

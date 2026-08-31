@@ -9,6 +9,7 @@ import {
 } from "../../../lib/another-punk-products";
 import { useCart } from "../../../lib/cart-context";
 import { useCurrency } from "../../../lib/currency-context";
+import { RdPixelText } from "../../../components/redesign/rd-pixel-text";
 
 export const Route = createFileRoute("/redesign/product/$slug")({
   loader: ({ params }) => {
@@ -48,7 +49,7 @@ function RedesignProduct() {
     ["PRICE", formatPrice(product.price)],
     ["SIZES", product.sizes.join(" / ")],
     ["METHOD", "PRINTED TO ORDER"],
-    ["STOCK", "NONE"],
+    ["SHIPPING", "WORLDWIDE"],
   ];
 
   return (
@@ -89,7 +90,7 @@ function RedesignProduct() {
           <p className="rd-label mb-3">
             JOB {String(idx).padStart(3, "0")} <span className="rd-key">/</span> SPEC
           </p>
-          <h1 className="rd-mid">{product.title}</h1>
+          <RdPixelText as="h1" text={product.title.toUpperCase()} cols={44} />
         </div>
 
         <dl className="flex flex-col gap-[3px]">
@@ -109,7 +110,7 @@ function RedesignProduct() {
 
         {product.quote ? (
           <blockquote className="border-l-2 border-[var(--rd-red)] pl-4">
-            <p className="rd-mid text-[var(--rd-paper)]">{product.quote}</p>
+            <RdPixelText text={product.quote.toUpperCase()} cols={52} data-red="true" />
             <footer className="rd-label mt-3">{product.quoteSource}</footer>
           </blockquote>
         ) : null}
@@ -169,9 +170,14 @@ function RedesignProduct() {
 
         <p className="rd-log max-w-[56ch]">{product.description ?? ""}</p>
 
-        <Link to="/redesign/shop" className="rd-link underline underline-offset-4">
-          ← Back to the field
-        </Link>
+        <div className="flex flex-wrap gap-5">
+          <Link to="/redesign" className="rd-link underline underline-offset-4">
+            ← Back to the field
+          </Link>
+          <Link to="/redesign/shop" className="rd-link underline underline-offset-4">
+            Full index
+          </Link>
+        </div>
       </div>
     </div>
   );

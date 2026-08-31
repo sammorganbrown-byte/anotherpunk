@@ -2,29 +2,36 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import type { AnotherPunkProduct } from "../../lib/another-punk-products";
 
-/** The field. Navigation dissolved into a scattered constellation you move
- * through rather than a grid you scan — Cipher's move, applied to the range.
+/** The field: the store and the homepage, one object.
  *
- * Interaction, in layers:
- *   - drag to pan, with real momentum: release and the field keeps going,
- *     decaying on a friction curve rather than stopping dead
- *   - the cursor has a pull radius: pieces near it rise, scale up and gain
- *     their colour back, so moving the mouse feels like a light source
- *     passing over the field rather than a hover state firing
- *   - each piece drifts on its own slow orbit so the field is never still
- *   - wheel scrolls the field vertically instead of the page
+ * Fixes over the first pass, all of them things that made it unusable:
  *
- * Placement is seeded from the slug, not random: identical on server and
- * client (no hydration mismatch), and a given shirt is always in the same
- * place, which is what makes the space learnable instead of merely chaotic.
+ *  - DRAG WAS DEAD. The old handler bailed out whenever the pointer landed
+ *    on a link, and the pieces ARE links covering most of the screen, so a
+ *    drag almost never started. Now a drag begins anywhere; the link click
+ *    is suppressed only if the pointer actually travelled (DRAG_SLOP), so
+ *    press-and-move pans and press-and-release still opens the product.
  *
- * Reduced motion gets a plain static list — the same links, no field.
+ *  - THE ABYSS. Panning was unbounded, so you could sail off into empty
+ *    black and lose the range entirely. Pieces now live in a finite world
+ *    and the pan is clamped to it with a little overscan, so the field
+ *    always stays on screen.
+ *
+ *  - PILE-UPS. Positions were pure random, which stacks things. They are
+ *    now scattered within cells of a jittered grid sized to the number of
+ *    pieces, which guarantees breathing room while still looking strewn.
+ *
+ *  - ONE PICTURE PER PRODUCT. The field showed only images[0]. It now
+ *    floats several frames per garment, so the same shirt recurs in
+ *    different shots as you move.
  */
 
-function seeded(slug: string) {
+const DRAG_SLOP = 6;
+
+function seeded(key: string) {
   let h = 2166136261;
-  for (let i = 0; i < slug.length; i++) {
-    h ^= slug.charCodeAt(i);
+  for (let i = 0; i < key.length; i++) {
+    h ^= key.charCodeAt(i);
     h = Math.imul(h, 16777619);
   }
   return () => {
@@ -36,14 +43,54 @@ function seeded(slug: string) {
   };
 }
 
-type Placed = {
+type Piece = {
+  key: string;
   p: AnotherPunkProduct;
+  src: string;
+  /** World-space px. */
   x: number;
   y: number;
   w: number;
   phase: number;
   amp: number;
+  /** Only the lead frame of each garment carries its name. */
+  label: boolean;
 };
+
+/** EVERY frame of every garment. A shirt recurring in three different shots
+ * is the point — it reads as a contact sheet strewn across a table rather
+ * than a catalogue with one hero each. The world grows with the count so
+ * density stays constant however many photographs exist. */
+function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: number }): Piece[] {
+  const raw: { p: AnotherPunkProduct; src: string; label: boolean }[] = [];
+  products.forEach((p) => {
+    p.images.forEach((src, i) => raw.push({ p, src, label: i === 0 }));
+  });
+
+  // Jittered grid: roughly square, one cell per piece, scattered inside it.
+  const cols = Math.ceil(Math.sqrt(raw.length * (world.w / world.h)));
+  const rows = Math.ceil(raw.length / cols);
+  const cw = world.w / cols;
+  const ch = world.h / rows;
+
+  return raw.map((r, i) => {
+    const rnd = seeded(r.src + i);
+    const cx = (i % cols) * cw;
+    const cy = Math.floor(i / cols) * ch;
+    const w = 150 + rnd() * 130;
+    return {
+      key: `${r.p.slug}-${i}`,
+      p: r.p,
+      src: r.src,
+      label: r.label,
+      w,
+      x: cx + rnd() * Math.max(10, cw - w),
+      y: cy + rnd() * Math.max(10, ch - w * 0.8),
+      phase: rnd() * Math.PI * 2,
+      amp: 3 + rnd() * 8,
+    };
+  });
+}
 
 export function RdConstellation({
   products,
@@ -52,76 +99,84 @@ export function RdConstellation({
   products: AnotherPunkProduct[];
   reduced: boolean;
 }) {
-  const [placed, setPlaced] = useState<Placed[]>([]);
+  const [pieces, setPieces] = useState<Piece[]>([]);
   const skyRef = useRef<HTMLDivElement | null>(null);
+  const nodes = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Kept in refs and written straight to the DOM in the animation loop.
-  // Driving 12 transforms through React state at 60fps would re-render the
-  // whole field every frame for no reason.
+  // Sized from the number of photographs, so adding products spreads the
+  // field out instead of crowding it.
+  const world = useRef({ w: 2400, h: 1700 });
   const pan = useRef({ x: 0, y: 0 });
   const vel = useRef({ x: 0, y: 0 });
   const cursor = useRef({ x: -9999, y: -9999 });
-  const drag = useRef<{ x: number; y: number; px: number; py: number } | null>(null);
-  const nodes = useRef<(HTMLAnchorElement | null)[]>([]);
+  const drag = useRef<{ x: number; y: number; px: number; py: number; moved: boolean } | null>(
+    null,
+  );
   const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
-    setPlaced(
-      products.map((p) => {
-        const r = seeded(p.slug);
-        return {
-          p,
-          x: 6 + r() * 100,
-          y: 8 + r() * 74,
-          w: 130 + r() * 120,
-          phase: r() * Math.PI * 2,
-          amp: 4 + r() * 10,
-        };
-      }),
-    );
+    const count = products.reduce((n, p) => n + p.images.length, 0);
+    const area = count * 340 * 300;
+    const ratio = 1.45;
+    world.current = {
+      w: Math.max(1800, Math.round(Math.sqrt(area * ratio))),
+      h: Math.max(1300, Math.round(Math.sqrt(area / ratio))),
+    };
+    setPieces(buildPieces(products, world.current));
   }, [products]);
 
   useEffect(() => {
-    if (reduced || placed.length === 0) return;
+    if (reduced || pieces.length === 0) return;
     let raf = 0;
     let alive = true;
     let t = 0;
+
+    const clamp = () => {
+      const el = skyRef.current;
+      if (!el) return;
+      const vw = el.clientWidth;
+      const vh = el.clientHeight;
+      // Overscan so the edge of the field never snaps hard against the frame.
+      const pad = 160;
+      const minX = Math.min(0, vw - world.current.w - pad);
+      const minY = Math.min(0, vh - world.current.h - pad);
+      pan.current.x = Math.min(pad, Math.max(minX, pan.current.x));
+      pan.current.y = Math.min(pad, Math.max(minY, pan.current.y));
+    };
 
     const loop = () => {
       if (!alive) return;
       t += 0.008;
 
-      // Momentum: only while not actively dragging.
       if (!drag.current) {
         pan.current.x += vel.current.x;
         pan.current.y += vel.current.y;
-        vel.current.x *= 0.94;
-        vel.current.y *= 0.94;
-        if (Math.abs(vel.current.x) < 0.01) vel.current.x = 0;
-        if (Math.abs(vel.current.y) < 0.01) vel.current.y = 0;
+        vel.current.x *= 0.93;
+        vel.current.y *= 0.93;
+        if (Math.abs(vel.current.x) < 0.02) vel.current.x = 0;
+        if (Math.abs(vel.current.y) < 0.02) vel.current.y = 0;
       }
+      clamp();
 
-      const PULL = 260;
-      placed.forEach((s, i) => {
+      const PULL = 250;
+      pieces.forEach((s, i) => {
         const el = nodes.current[i];
         if (!el) return;
         const dx = pan.current.x + Math.sin(t + s.phase) * s.amp;
         const dy = pan.current.y + Math.cos(t * 0.8 + s.phase) * s.amp;
 
-        // Proximity to the cursor, measured against where the piece has
-        // actually landed this frame.
-        const r = el.getBoundingClientRect();
-        const cx = r.left + r.width / 2;
-        const cy = r.top + r.height / 2;
+        // Screen position = CSS layout (s.x/s.y) + the delta we apply here.
+        const cx = s.x + dx + s.w / 2;
+        const cy = s.y + dy + s.w * 0.375;
         const dist = Math.hypot(cursor.current.x - cx, cursor.current.y - cy);
         const near = Math.max(0, 1 - dist / PULL);
 
-        el.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${1 + near * 0.13})`;
-        el.style.zIndex = String(10 + Math.round(near * 20));
-        const im = el.firstElementChild as HTMLElement | null;
+        el.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${1 + near * 0.14})`;
+        el.style.zIndex = String(10 + Math.round(near * 30));
+        const im = el.querySelector("img") as HTMLElement | null;
         if (im) {
           im.style.filter = `grayscale(${1 - near}) contrast(${1.3 - near * 0.3}) brightness(${
-            0.78 + near * 0.32
+            0.72 + near * 0.4
           })`;
         }
       });
@@ -133,7 +188,7 @@ export function RdConstellation({
       alive = false;
       cancelAnimationFrame(raf);
     };
-  }, [placed, reduced]);
+  }, [pieces, reduced]);
 
   if (reduced) {
     return (
@@ -150,44 +205,59 @@ export function RdConstellation({
     );
   }
 
-  const onDown = (e: React.PointerEvent) => {
-    if ((e.target as HTMLElement).closest("a")) return;
-    drag.current = { x: e.clientX, y: e.clientY, px: pan.current.x, py: pan.current.y };
-    vel.current = { x: 0, y: 0 };
-    setDragging(true);
-    skyRef.current?.setPointerCapture(e.pointerId);
-  };
-  const onMove = (e: React.PointerEvent) => {
-    cursor.current = { x: e.clientX, y: e.clientY };
-    const d = drag.current;
-    if (!d) return;
-    const nx = d.px + (e.clientX - d.x);
-    const ny = d.py + (e.clientY - d.y);
-    vel.current = { x: nx - pan.current.x, y: ny - pan.current.y };
-    pan.current = { x: nx, y: ny };
-  };
-  const onUp = (e: React.PointerEvent) => {
-    drag.current = null;
-    setDragging(false);
-    skyRef.current?.releasePointerCapture(e.pointerId);
-  };
-
   return (
     <div
       ref={skyRef}
       className="rd-sky"
       data-drag={dragging}
-      onPointerDown={onDown}
-      onPointerMove={onMove}
-      onPointerUp={onUp}
-      onPointerCancel={onUp}
+      onPointerDown={(e) => {
+        // Start a drag wherever the pointer lands, links included.
+        drag.current = {
+          x: e.clientX,
+          y: e.clientY,
+          px: pan.current.x,
+          py: pan.current.y,
+          moved: false,
+        };
+        vel.current = { x: 0, y: 0 };
+        setDragging(true);
+        skyRef.current?.setPointerCapture(e.pointerId);
+      }}
+      onPointerMove={(e) => {
+        cursor.current = { x: e.clientX, y: e.clientY };
+        const d = drag.current;
+        if (!d) return;
+        const ddx = e.clientX - d.x;
+        const ddy = e.clientY - d.y;
+        if (!d.moved && Math.hypot(ddx, ddy) > DRAG_SLOP) d.moved = true;
+        const nx = d.px + ddx;
+        const ny = d.py + ddy;
+        vel.current = { x: nx - pan.current.x, y: ny - pan.current.y };
+        pan.current = { x: nx, y: ny };
+      }}
+      onPointerUp={(e) => {
+        drag.current = null;
+        setDragging(false);
+        skyRef.current?.releasePointerCapture(e.pointerId);
+      }}
+      onPointerCancel={() => {
+        drag.current = null;
+        setDragging(false);
+      }}
       onPointerLeave={() => (cursor.current = { x: -9999, y: -9999 })}
+      // A pan that ended in movement must not also open a product.
+      onClickCapture={(e) => {
+        if (drag.current?.moved) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }}
       onWheel={(e) => {
-        vel.current.y -= e.deltaY * 0.12;
-        vel.current.x -= e.deltaX * 0.12;
+        vel.current.y -= e.deltaY * 0.1;
+        vel.current.x -= e.deltaX * 0.1;
       }}
       onKeyDown={(e) => {
-        const s = 14;
+        const s = 16;
         if (e.key === "ArrowLeft") vel.current.x += s;
         if (e.key === "ArrowRight") vel.current.x -= s;
         if (e.key === "ArrowUp") vel.current.y += s;
@@ -197,22 +267,42 @@ export function RdConstellation({
       role="group"
       aria-label="Product field. Drag, scroll or use arrow keys to move around."
     >
-      {placed.map(({ p, x, y, w }, i) => (
-        <Link
-          key={p.slug}
+      {pieces.map((s, i) => (
+        // The ref lives on this div, NOT on the Link. TanStack's Link does
+        // not forward a ref to its underlying <a>, so the animation loop was
+        // reading null for every piece and skipping all of them — which is
+        // why nothing drifted and dragging appeared dead.
+        <div
+          key={s.key}
           ref={(el) => {
             nodes.current[i] = el;
           }}
-          to="/redesign/product/$slug"
-          params={{ slug: p.slug }}
           className="rd-star"
-          style={{ left: `${x}%`, top: `${y}%`, width: `${w}px` }}
+          style={{ left: `${s.x}px`, top: `${s.y}px`, width: `${s.w}px` }}
         >
-          <img src={p.images[0]} alt={p.title} className="aspect-[4/3]" />
-          <figcaption>
-            {p.title} <span aria-hidden="true">·</span> €{p.price}
-          </figcaption>
-        </Link>
+          <Link
+            to="/redesign/product/$slug"
+            params={{ slug: s.p.slug }}
+            className="rd-star-link"
+            draggable={false}
+            aria-label={`${s.p.title}, \u20ac${s.p.price}`}
+          >
+            <img
+              src={s.src}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+              className="aspect-[4/3]"
+              draggable={false}
+            />
+            {s.label ? (
+              <figcaption>
+                {s.p.title} <span aria-hidden="true">\u00b7</span> \u20ac{s.p.price}
+              </figcaption>
+            ) : null}
+          </Link>
+        </div>
       ))}
     </div>
   );

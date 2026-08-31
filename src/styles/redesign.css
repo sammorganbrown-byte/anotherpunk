@@ -628,3 +628,88 @@ body:has([data-ap-rd]) {
     transition: none;
   }
 }
+
+/* ---- pixel headings --------------------------------------------------- */
+
+/* Headings as block-character bitmaps. This IS the display voice — the type
+   degraded through the same process as the logo, rather than another
+   grotesque swapped in for the last one. */
+.rd-pixtext pre {
+  margin: 0;
+  font-family: var(--rd-mono);
+  font-size: clamp(4px, 1.15vw, 10px);
+  line-height: 0.98;
+  letter-spacing: 0.08em;
+  white-space: pre;
+  color: var(--rd-paper);
+  overflow-x: auto;
+}
+.rd-pixtext[data-red="true"] pre {
+  color: var(--rd-red);
+}
+
+/* Screen readers get the words; the block art is decoration. */
+.rd-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Pieces must not be draggable as images, or the browser's own
+   drag-and-drop hijacks the pan. */
+.rd-star img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+.rd-sky {
+  user-select: none;
+}
+
+/* ---- plain index grid ------------------------------------------------- */
+
+.rd-tile {
+  display: block;
+  position: relative;
+  background: var(--rd-void-2);
+  text-decoration: none;
+}
+.rd-tile img {
+  filter: grayscale(1) contrast(1.2) brightness(0.8);
+  transition:
+    filter 0.18s linear,
+    transform 0.18s linear;
+  display: block;
+}
+.rd-tile:hover img,
+.rd-tile:focus-visible img {
+  filter: none;
+}
+.rd-tile-cap {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border-top: 1px solid var(--rd-rule);
+  font-family: var(--rd-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.rd-tile:hover .rd-tile-cap .rd-ok,
+.rd-tile:focus-visible .rd-tile-cap .rd-ok {
+  color: var(--rd-red);
+}
+
+
+/* The positioned piece is the div; the link fills it. */
+.rd-star-link {
+  display: block;
+  text-decoration: none;
+}
