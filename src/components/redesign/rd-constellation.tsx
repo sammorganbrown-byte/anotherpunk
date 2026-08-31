@@ -113,7 +113,10 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
       x: cx - w * OVERLAP + rnd() * spanX,
       y: cy - h * OVERLAP + rnd() * spanY,
       phase: rnd() * Math.PI * 2,
-      amp: 3 + rnd() * 8,
+      // Drift amplitude. Raised now that the wordmark no longer pushes
+      // pieces around: with the exclusion zone gone that was the only large
+      // movement in the middle of the field, so the drift has to carry it.
+      amp: 7 + rnd() * 16,
     };
   });
 }
