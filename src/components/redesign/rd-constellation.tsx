@@ -175,9 +175,12 @@ export function RdConstellation({
         el.style.zIndex = String(10 + Math.round(near * 30));
         const im = el.querySelector("img") as HTMLElement | null;
         if (im) {
-          im.style.filter = `grayscale(${1 - near}) contrast(${1.3 - near * 0.3}) brightness(${
-            0.72 + near * 0.4
-          })`;
+          // Rest at partly-desaturated, resolve to full colour under the
+          // cursor. Matches the CSS resting state so there is no jump on the
+          // first frame.
+          im.style.filter = `grayscale(${0.55 - near * 0.55}) contrast(${
+            1.15 - near * 0.1
+          }) brightness(${0.85 + near * 0.25}) saturate(${1.1 + near * 0.15})`;
         }
       });
 

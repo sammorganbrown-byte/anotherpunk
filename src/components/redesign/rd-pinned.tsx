@@ -24,6 +24,34 @@ export function RdLogoCard() {
   const [base, setBase] = useState<string[] | null>(null);
   const [frame, setFrame] = useState<string[] | null>(null);
   const timer = useRef(0);
+  const box = useRef<HTMLDivElement | null>(null);
+
+  // Drift, like everything else in the field — but anchored. The mark is one
+  // of the floating objects rather than a label pasted over them, and it is
+  // also the thing you navigate back to, so it never wanders off centre.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let raf = 0;
+    let alive = true;
+    let t = Math.random() * 10;
+    const loop = () => {
+      if (!alive) return;
+      t += 0.006;
+      const el = box.current;
+      if (el) {
+        const x = Math.sin(t) * 16;
+        const y = Math.cos(t * 0.78) * 11;
+        const r = Math.sin(t * 0.5) * 0.5;
+        el.style.transform = `translate(-50%, -50%) translate3d(${x}px, ${y}px, 0) rotate(${r}deg)`;
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => {
+      alive = false;
+      cancelAnimationFrame(raf);
+    };
+  }, []);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -78,7 +106,7 @@ export function RdLogoCard() {
   }, []);
 
   return (
-    <div className="rd-pin rd-pin-logo">
+    <div className="rd-pin rd-pin-logo" ref={box}>
       <div className="rd-pin-box">
         {frame ? (
           <pre aria-hidden="true">{frame.join("\n")}</pre>

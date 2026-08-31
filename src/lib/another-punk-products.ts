@@ -335,7 +335,6 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/87-cami-night-carpark.jpg",
       "/img/121-cami-cafe.jpg",
       "/img/88-cami-wide-negspace.jpg",
-      "/img/FLOAT-109-cami.jpg",
       "/img/89-cami-strap-detail.jpg",
     ],
     description:
@@ -371,8 +370,6 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/96-bodysuit-stairwell.jpg",
       "/img/122-bodysuit-fireescape.jpg",
       "/img/97-bodysuit-wide-negspace.jpg",
-      "/img/FLOAT-110-bodysuit.jpg",
-      "/img/98-bodysuit-rib-detail.jpg",
     ],
     description:
       "Mineral-washed ribbed cotton. Fitted through the body, short sleeve, high-cut leg. Graphic drawn by hand, printed in red. Made to order.",
