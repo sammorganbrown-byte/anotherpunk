@@ -17,7 +17,7 @@ import { useEffect, useRef, useState } from "react";
  * one (still the Boudicca tracks) for /classic only, so there is never a
  * second <audio> playing underneath.
  */
-const TRACKS = [{ src: "/audio/kingdom-fall.mp3", title: "Kingdom Fall", artist: "OLLiGAN" }] as const;
+const TRACKS = [{ src: "/audio/turbo-power.mp3", title: "Turbo Power", artist: "2050" }] as const;
 
 export function RdPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
