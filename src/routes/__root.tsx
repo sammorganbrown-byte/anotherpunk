@@ -146,6 +146,20 @@ function MobileMenu() {
   );
 }
 
+/** The shipping chrome's player, scoped to /classic.
+ *
+ * This used to be hidden with CSS while a redesign page was mounted, which
+ * hid the control but not the sound — so the redesign layout also had to hold
+ * every <audio> paused for as long as it stayed mounted. Now the current site
+ * has a player of its own, that hold would silence it too. Not rendering the
+ * old one at all is the honest version of what the CSS was pretending to do.
+ */
+function ClassicOnlyPlayer() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  if (!pathname.startsWith("/classic")) return null;
+  return <ApPlayer />;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
@@ -176,7 +190,11 @@ function RootComponent() {
               <Outlet />
             </main>
 
-            <ApPlayer />
+            {/* The old skin's player, for the old site only. The current
+                site renders its own in the top bar (RdPlayer) — mounting both
+                would put two <audio> elements on the page, one of them
+                invisible and still audible. */}
+            <ClassicOnlyPlayer />
 
             <footer className="border-t border-ink bg-ink px-6 py-14 sm:px-10">
               <img

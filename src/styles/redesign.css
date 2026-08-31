@@ -1328,3 +1328,39 @@ body:has([data-ap-rd]) {
 .rd-confirm .rd-pixtext {
   max-width: 340px;
 }
+
+/* ---- the player, as a line in the bar ---------------------------------- */
+
+.rd-player {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.rd-player-btn,
+.rd-player-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: none;
+  border: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+/* The glyph is the part that always survives — on a narrow screen the title
+   drops and the transport still works, it just stops narrating itself. */
+.rd-player-glyph {
+  font-size: 0.9em;
+  line-height: 1;
+}
+@media (max-width: 860px) {
+  .rd-player-title {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  .rd-player-next {
+    display: none;
+  }
+}
