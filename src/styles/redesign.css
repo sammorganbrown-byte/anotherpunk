@@ -147,22 +147,22 @@ body:has([data-ap-rd]) {
 
 /* ---- chrome ----------------------------------------------------------- */
 
-.rd-bar {
-  /* Locked, not sticky: the field is a fixed-height canvas you drag inside,
+[data-ap-rd] .rd-bar {
+  /* Above the CRT overlays, which are now viewport-wide.
+     Locked, not sticky: the field is a fixed-height canvas you drag inside,
      so the chrome should never travel with anything. */
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 40;
+  z-index: 60;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 18px;
   padding: 9px 14px;
   border-bottom: 1px solid var(--rd-rule);
-  background: color-mix(in srgb, var(--rd-void) 88%, transparent);
-  backdrop-filter: blur(6px);
+  background: var(--rd-void);
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -789,14 +789,13 @@ body:has([data-ap-rd]) {
   pointer-events: none;
 }
 .rd-pin-logo {
-  /* A little below centre — dead centre sat high once the locked bars were
-     added, because the visible field is the space between them. */
-  top: 56%;
+  /* Just above the middle — weighted a touch toward the top. */
+  top: 46%;
   left: 50%;
   /* The drift loop overwrites this with the same translate plus its offset;
      this value is what shows before the first frame. */
   transform: translate(-50%, -50%);
-  width: min(56vw, 560px);
+  width: min(48vw, 480px);
   will-change: transform;
 }
 .rd-pin-shop {
@@ -961,11 +960,10 @@ body:has([data-ap-rd]) {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 40;
+  z-index: 60;
   padding: 8px 14px;
   border-top: 1px solid var(--rd-rule);
-  background: color-mix(in srgb, var(--rd-void) 88%, transparent);
-  backdrop-filter: blur(6px);
+  background: var(--rd-void);
 }
 [data-ap-rd] > footer > div {
   justify-content: center;
@@ -1087,7 +1085,10 @@ body:has([data-ap-rd]) {
 
 /* Scanlines, heavier than the ambient ones and locked to the field. */
 .rd-crt-lines {
-  position: absolute;
+  /* Fixed to the viewport, not to the field. Bounded to the field they ended
+     just under the top bar and just above the bottom one, and that edge read
+     as a hard line across the screen — the effect visibly stopping. */
+  position: fixed;
   inset: 0;
   z-index: 34;
   pointer-events: none;
@@ -1109,7 +1110,7 @@ body:has([data-ap-rd]) {
 
 /* Tube vignette — the corners of a curved screen falling away. */
 .rd-crt-vig {
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: 35;
   pointer-events: none;

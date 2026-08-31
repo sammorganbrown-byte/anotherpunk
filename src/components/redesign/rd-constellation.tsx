@@ -125,14 +125,14 @@ export function RdConstellation({
   );
   const [dragging, setDragging] = useState(false);
 
-  // CRT mode. Off by default — this is an experiment, and the toggle is the
-  // whole point: both states live, judged on a real screen at real size.
-  const [crt, setCrt] = useState(false);
+  // CRT mode, ON by default. The toggle stays so it can be compared and
+  // turned off; only an explicit "0" in storage keeps it off.
+  const [crt, setCrt] = useState(true);
   useEffect(() => {
     try {
-      setCrt(window.localStorage.getItem("ap-rd-crt") === "1");
+      setCrt(window.localStorage.getItem("ap-rd-crt") !== "0");
     } catch {
-      // Private mode. Stays off.
+      // Private mode. Stays on.
     }
   }, []);
   useEffect(() => {

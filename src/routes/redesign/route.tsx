@@ -121,7 +121,7 @@ function RedesignLayout() {
       {reduced ? null : <RdField />}
       <div className="rd-scan" aria-hidden="true" />
 
-      <header className="rd-bar rd-above">
+      <header className="rd-bar">
         <Link to="/redesign" className="rd-brand">
           Another Punk
         </Link>
@@ -145,7 +145,7 @@ function RedesignLayout() {
         <Outlet />
       </main>
 
-      <footer className="rd-above border-t border-[var(--rd-rule)] px-4 py-6">
+      <footer className="border-t border-[var(--rd-rule)] px-4 py-6">
         <div className="rd-log flex flex-wrap items-center justify-between gap-3">
           <span>DRAWN BY HAND · PRINTED TO ORDER · SHIPPED WORLDWIDE</span>
           <span>
