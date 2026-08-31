@@ -103,7 +103,10 @@ export function RdLogoCard() {
       const bw = x1 - x0 + 1;
       const bh = y1 - y0 + 1;
 
-      const C = 76;
+      // Higher resolution than before. At 76 columns the mark was a coarse
+      // approximation; this is fine enough that the painted brush edges and
+      // the drips read, while still obviously built from cells.
+      const C = 168;
       const R = Math.max(4, Math.round((bh / bw) * C * 0.5));
       const cv = document.createElement("canvas");
       cv.width = C;
@@ -139,7 +142,7 @@ export function RdLogoCard() {
           // The glitch drops cells out of the mark and fills cells just
           // outside it — misregistration, not a change of texture. Every
           // cell is still either solid or empty.
-          const hits = 8 + Math.floor(Math.random() * 12);
+          const hits = 26 + Math.floor(Math.random() * 34);
           for (let i = 0; i < hits; i++) {
             const y = (Math.random() * rows.length) | 0;
             const line = next[y].split("");
@@ -153,6 +156,27 @@ export function RdLogoCard() {
     };
     return () => window.clearInterval(timer.current);
   }, []);
+
+  // Size the cells to the box rather than guessing in CSS — the column count
+  // can change and the mark must always fill its width exactly.
+  useEffect(() => {
+    const host = box.current;
+    const pre = host?.querySelector("pre") as HTMLPreElement | null;
+    if (!host || !pre || !frame) return;
+    const fit = () => {
+      const avail = host.clientWidth;
+      const chars = frame[0]?.length || 1;
+      if (!avail || !chars) return;
+      pre.style.fontSize = "100px";
+      const advance = pre.scrollWidth / chars / 100;
+      pre.style.fontSize = `${Math.max(0.8, (avail / chars / advance) * 0.99)}px`;
+    };
+    fit();
+    const ro = new ResizeObserver(fit);
+    ro.observe(host);
+    return () => ro.disconnect();
+    // Only refit when the grid's dimensions change, not on every glitch tick.
+  }, [frame?.[0]?.length, frame?.length]);
 
   return (
     <div className="rd-pin rd-pin-logo" ref={box}>

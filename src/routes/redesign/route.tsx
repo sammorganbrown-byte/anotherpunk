@@ -122,8 +122,8 @@ function RedesignLayout() {
       <div className="rd-scan" aria-hidden="true" />
 
       <header className="rd-bar rd-above">
-        <Link to="/redesign" className="rd-brand" aria-label="Another Punk — home">
-          <img src={LOGO_URL} alt="Another Punk" />
+        <Link to="/redesign" className="rd-brand">
+          Another Punk
         </Link>
 
         <nav className="flex items-center gap-4 sm:gap-6" aria-label="Redesign">

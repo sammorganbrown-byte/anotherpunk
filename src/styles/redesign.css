@@ -517,13 +517,21 @@ body:has([data-ap-rd]) {
 /* The wordmark is the logo — hand-painted, never typeset. It is the only
    place the brand name appears as an image, in the bar and over the field. */
 .rd-brand {
-  display: block;
-  line-height: 0;
+  /* The painted mark now lives only in the middle of the field. Up here it
+     is set as text, in the brand red, so the bar stays a terminal line
+     rather than carrying a second copy of the logo. */
+  font-family: var(--rd-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rd-red);
+  text-decoration: none;
+  white-space: nowrap;
 }
-.rd-brand img {
-  height: 22px;
-  width: auto;
-  display: block;
+.rd-brand:hover,
+.rd-brand:focus-visible {
+  color: var(--rd-paper);
+  outline: none;
 }
 
 .rd-mark {
@@ -781,12 +789,14 @@ body:has([data-ap-rd]) {
   pointer-events: none;
 }
 .rd-pin-logo {
-  top: 50%;
+  /* A little below centre — dead centre sat high once the locked bars were
+     added, because the visible field is the space between them. */
+  top: 56%;
   left: 50%;
   /* The drift loop overwrites this with the same translate plus its offset;
      this value is what shows before the first frame. */
   transform: translate(-50%, -50%);
-  width: min(46vw, 460px);
+  width: min(56vw, 560px);
   will-change: transform;
 }
 .rd-pin-shop {
@@ -817,23 +827,32 @@ body:has([data-ap-rd]) {
   justify-content: center;
 }
 .rd-pin-logo .rd-pin-box pre {
+  /* The full-block glyph fills neither its line box nor its advance width, so
+     the mark came out ruled with thin gaps in both directions. Rows are
+     pulled together, columns are tightened, and a same-colour shadow smears
+     each cell a fraction to close what is left. Solid ink, still built from
+     cells. */
+  line-height: 0.82;
+  letter-spacing: -0.045em;
   /* The block art is narrower than the box it sits in, and a <pre> is
      left-aligned by default, so the mark was hanging off to the left of the
      screen centre even though its container was centred. */
   /* Kept: with no plate behind it, the mark still has to survive drifting
      over a pale photograph. */
   text-shadow:
+    0.6px 0 0 currentColor,
+    -0.6px 0 0 currentColor,
+    0 0.6px 0 currentColor,
     0 0 10px rgba(8, 8, 7, 0.9),
     0 0 3px rgba(8, 8, 7, 0.95);
   margin: 0;
   font-family: var(--rd-mono);
-  font-size: clamp(3px, 0.72vw, 7px);
   line-height: 1;
-  letter-spacing: 0.055em;
+  letter-spacing: 0;
   white-space: pre;
   /* White, per the brief — the mark reads as ink on the black rather than
      as the red it is everywhere else. */
-  color: var(--rd-paper);
+  color: var(--rd-red);
 }
 
 .rd-pin-link {
