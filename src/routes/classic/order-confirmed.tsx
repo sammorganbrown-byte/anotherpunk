@@ -1,9 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { getSessionStatus } from "../lib/api/checkout.functions";
-import { useCart } from "../lib/cart-context";
+import { getSessionStatus } from "../../lib/api/checkout.functions";
+import { useCart } from "../../lib/cart-context";
 
-export const Route = createFileRoute("/order-confirmed")({
+export const Route = createFileRoute("/classic/order-confirmed")({
+  head: () => ({
+    // Kept for rollback, not for visitors: the current site lives at /.
+    meta: [{ name: "robots", content: "noindex, nofollow" }],
+  }),
   validateSearch: (search: Record<string, unknown>) => ({
     session_id: typeof search.session_id === "string" ? search.session_id : undefined,
   }),
@@ -64,7 +68,7 @@ function OrderConfirmed() {
       )}
 
       <Link
-        to="/shop"
+        to="/classic/shop"
         className="font-label mt-2 bg-ink px-8 py-4 text-xs font-medium tracking-[0.14em] text-paper uppercase transition-opacity hover:opacity-90"
       >
         Back to the range

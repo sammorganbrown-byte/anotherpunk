@@ -1,35 +1,39 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { useCart } from "../../lib/cart-context";
-import { RdField } from "../../components/redesign/rd-field";
-import rdCss from "../../styles/redesign.css?url";
+import { useCart } from "../lib/cart-context";
+import { RdField } from "../components/redesign/rd-field";
+import rdCss from "../styles/redesign.css?url";
 
 /** The official hand-painted wordmark — the brand mark, not a typeface.
  * Same asset the live site uses. */
 export const LOGO_URL =
   "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/00048e3d-cede-4c1a-a65e-222abb97d9a9.png";
 
-/** Layout route for the whole /redesign tree.
+/** Layout route for the whole site.
  *
- * This is the parallel design direction. It renders its own chrome and loads
- * its own stylesheet; the live site at `/` is untouched and shares nothing
- * with it but the data layer and the commerce logic.
+ * This was built as a parallel direction under /redesign and is now the site
+ * itself, so it owns the clean paths: /, /shop, /product/$slug, /cart,
+ * /checkout, /order-confirmed. It is a PATHLESS layout (the leading
+ * underscore), which is what lets it wrap those routes without adding a
+ * segment of its own to any URL.
  *
- * The `data-ap-rd` attribute is what scopes every rule in redesign.css, and
- * is also what the stylesheet's :has() rule keys off to hide the shipping
- * header/footer/player while a redesign page is mounted — chosen over
- * editing __root.tsx, which is off-limits.
+ * The previous site is kept intact under /classic for rollback, noindexed so
+ * only one version is in search. Both trees share the same data layer, cart
+ * and Stripe path.
+ *
+ * The `data-ap-rd` attribute scopes every rule in redesign.css, and is also
+ * what the stylesheet's :has() rule keys off to hide the old header, footer
+ * and music player — they still render from __root.tsx for /classic, and are
+ * simply not shown here.
  */
-export const Route = createFileRoute("/redesign")({
+export const Route = createFileRoute("/_shell")({
   head: () => ({
     meta: [
-      { title: "Another Punk // Job Queue" },
+      { title: "Another Punk" },
       {
         name: "description",
         content: "Nothing exists until you run the job. Drawn by hand, printed to order.",
       },
-      // A parallel direction under evaluation — keep it out of search.
-      { name: "robots", content: "noindex, nofollow" },
     ],
     links: [{ rel: "stylesheet", href: rdCss }],
   }),
@@ -122,7 +126,7 @@ function RedesignLayout() {
       <div className="rd-scan" aria-hidden="true" />
 
       <header className="rd-bar">
-        <Link to="/redesign" className="rd-brand">
+        <Link to="/" className="rd-brand">
           Another Punk
         </Link>
 
@@ -131,16 +135,16 @@ function RedesignLayout() {
             drawn by CSS between items and are decoration only. */}
         <nav className="rd-nav" aria-label="Redesign">
           <Link
-            to="/redesign/shop"
+            to="/shop"
             className="rd-link"
-            data-on={path.startsWith("/redesign/shop")}
+            data-on={path.startsWith("/shop")}
           >
             Shop
           </Link>
           <a href="mailto:hello@anotherpunk.com" className="rd-link">
             Contact
           </a>
-          <Link to="/redesign/cart" className="rd-link" data-on={path.startsWith("/redesign/cart")}>
+          <Link to="/cart" className="rd-link" data-on={path.startsWith("/cart")}>
             Bag [{count}]
           </Link>
           <Clock />
@@ -155,8 +159,8 @@ function RedesignLayout() {
         <div className="rd-log flex flex-wrap items-center justify-between gap-3">
           <span>SHIPPED WORLDWIDE</span>
           <span>
-            <a href="/" className="rd-link underline underline-offset-4">
-              ← Return to live site
+            <a href="/classic" className="rd-link underline underline-offset-4">
+              ← Previous version
             </a>
           </span>
         </div>

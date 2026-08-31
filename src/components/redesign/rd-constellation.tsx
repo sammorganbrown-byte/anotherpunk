@@ -326,7 +326,7 @@ export function RdConstellation({
       <ul className="grid grid-cols-2 gap-px sm:grid-cols-3 lg:grid-cols-4">
         {products.map((p) => (
           <li key={p.slug}>
-            <Link to="/redesign/product/$slug" params={{ slug: p.slug }} className="rd-star block">
+            <Link to="/product/$slug" params={{ slug: p.slug }} className="rd-star block">
               <img src={p.images[0]} alt={p.title} className="aspect-[4/3] w-full" />
               <figcaption>{p.title}</figcaption>
             </Link>
@@ -444,7 +444,7 @@ export function RdConstellation({
           style={{ left: `${s.x}px`, top: `${s.y}px`, width: `${s.w}px` }}
         >
           <Link
-            to="/redesign/product/$slug"
+            to="/product/$slug"
             params={{ slug: s.p.slug }}
             className="rd-star-link"
             draggable={false}

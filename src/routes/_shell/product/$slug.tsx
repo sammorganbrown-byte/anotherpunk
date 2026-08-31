@@ -11,7 +11,7 @@ import { useCart } from "../../../lib/cart-context";
 import { useCurrency } from "../../../lib/currency-context";
 import { RdPixelText } from "../../../components/redesign/rd-pixel-text";
 
-export const Route = createFileRoute("/redesign/product/$slug")({
+export const Route = createFileRoute("/_shell/product/$slug")({
   loader: ({ params }) => {
     const product = getAnotherPunkProduct(params.slug);
     if (!product) throw notFound();
@@ -171,10 +171,10 @@ function RedesignProduct() {
         <p className="rd-log max-w-[56ch]">{product.description ?? ""}</p>
 
         <div className="flex flex-wrap gap-5">
-          <Link to="/redesign" className="rd-link underline underline-offset-4">
+          <Link to="/" className="rd-link underline underline-offset-4">
             ← Back to the field
           </Link>
-          <Link to="/redesign/shop" className="rd-link underline underline-offset-4">
+          <Link to="/shop" className="rd-link underline underline-offset-4">
             Shop
           </Link>
         </div>

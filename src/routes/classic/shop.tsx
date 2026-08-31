@@ -1,9 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ANOTHER_PUNK_PRODUCTS } from "../lib/another-punk-products";
-import { useCurrency } from "../lib/currency-context";
-import { ApQuotePlate } from "../components/another-punk/ap-quote-plate";
+import { ANOTHER_PUNK_PRODUCTS } from "../../lib/another-punk-products";
+import { useCurrency } from "../../lib/currency-context";
+import { ApQuotePlate } from "../../components/another-punk/ap-quote-plate";
 
-export const Route = createFileRoute("/shop")({
+export const Route = createFileRoute("/classic/shop")({
+  head: () => ({
+    // Kept for rollback, not for visitors: the current site lives at /.
+    meta: [{ name: "robots", content: "noindex, nofollow" }],
+  }),
   component: AnotherPunkShop,
 });
 
@@ -27,7 +31,7 @@ function AnotherPunkShop() {
           {ANOTHER_PUNK_PRODUCTS.map((p, i) => (
             <Link
               key={p.slug}
-              to="/product/$slug"
+              to="/classic/product/$slug"
               params={{ slug: p.slug }}
               className="group block"
             >

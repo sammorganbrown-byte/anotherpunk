@@ -66,7 +66,7 @@ function BagLink() {
   const { count } = useCart();
   return (
     <Link
-      to="/cart"
+      to="/classic/cart"
       aria-label={`View bag, ${count} item${count === 1 ? "" : "s"}`}
       className="ap-eyebrow flex items-center gap-2 text-ink transition-opacity hover:opacity-60"
     >
@@ -128,13 +128,13 @@ function MobileMenu() {
           id="ap-mobile-nav"
           className="fixed inset-x-0 top-[69px] z-40 flex h-[calc(100dvh-69px)] flex-col gap-1 overflow-y-auto border-t border-ink bg-paper px-6 py-8 sm:hidden"
         >
-          <Link to="/shop" className="ap-mobile-link">
+          <Link to="/classic/shop" className="ap-mobile-link">
             Shop
           </Link>
-          <Link to="/" hash="story" className="ap-mobile-link">
+          <Link to="/classic" hash="story" className="ap-mobile-link">
             Story
           </Link>
-          <Link to="/cart" className="ap-mobile-link">
+          <Link to="/classic/cart" className="ap-mobile-link">
             Bag <span className="text-pink">({count})</span>
           </Link>
           <p className="ap-eyebrow mt-auto text-ink-2">
@@ -155,12 +155,12 @@ function RootComponent() {
           <div className="flex min-h-dvh flex-col">
             <header className="sticky top-0 z-30 border-b border-border bg-paper/95 backdrop-blur">
               <div className="mx-auto flex max-w-[1500px] items-center justify-between px-6 py-4 sm:px-10">
-                <Link to="/" className="block">
+                <Link to="/classic" className="block">
                   <img src={LOGO_URL} alt="Another Punk" className="h-8 w-auto sm:h-9" />
                 </Link>
                 <nav className="flex items-center gap-5 sm:gap-8">
                   <Link
-                    to="/shop"
+                    to="/classic/shop"
                     className="ap-eyebrow hidden text-ink transition-opacity hover:opacity-60 sm:inline"
                   >
                     Shop
@@ -215,7 +215,7 @@ function NotFound() {
         Not here. The rest of it still is.
       </p>
       <Link
-        to="/shop"
+        to="/classic/shop"
         className="font-label mt-2 bg-pink px-8 py-4 text-xs font-medium tracking-[0.14em] text-paper uppercase transition-opacity hover:opacity-90"
       >
         Everything else

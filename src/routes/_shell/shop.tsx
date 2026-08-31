@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ANOTHER_PUNK_PRODUCTS } from "../../lib/another-punk-products";
 import { useCurrency } from "../../lib/currency-context";
 
-export const Route = createFileRoute("/redesign/shop")({ component: RedesignIndexView });
+export const Route = createFileRoute("/_shell/shop")({ component: RedesignIndexView });
 
 /** The plain index.
  *
@@ -24,7 +24,7 @@ function RedesignIndexView() {
         <h1 className="rd-label">Shop</h1>
         <p className="rd-log">
           {ANOTHER_PUNK_PRODUCTS.length} styles <span aria-hidden="true">·</span>{" "}
-          <Link to="/redesign" className="rd-link underline underline-offset-4">
+          <Link to="/" className="rd-link underline underline-offset-4">
             back to the field
           </Link>
         </p>
@@ -33,7 +33,7 @@ function RedesignIndexView() {
       <ul className="grid grid-cols-2 gap-px p-px sm:grid-cols-3 lg:grid-cols-4">
         {ANOTHER_PUNK_PRODUCTS.map((p) => (
           <li key={p.slug}>
-            <Link to="/redesign/product/$slug" params={{ slug: p.slug }} className="rd-tile">
+            <Link to="/product/$slug" params={{ slug: p.slug }} className="rd-tile">
               <img
                 src={p.images[0]}
                 alt={p.title}

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { LOGO_URL } from "../../routes/redesign/route";
+import { LOGO_URL } from "../../routes/_shell";
 
 /** The wordmark, rendered as ASCII from its own pixels — then resolving
  * into the real thing.

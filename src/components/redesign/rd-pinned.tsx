@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { LOGO_URL } from "../../routes/redesign/route";
+import { LOGO_URL } from "../../routes/_shell";
 
 /** The two things in the field that do NOT drift away: the mark, and the way
  * into the shop.
@@ -197,7 +197,7 @@ export function RdLogoCard() {
 export function RdShopCard() {
   return (
     <div className="rd-pin rd-pin-shop">
-      <Link to="/redesign/shop" className="rd-pin-box rd-pin-link">
+      <Link to="/shop" className="rd-pin-box rd-pin-link">
         <span className="rd-pin-kicker">All 12 styles</span>
         <span className="rd-pin-title">SHOP →</span>
       </Link>

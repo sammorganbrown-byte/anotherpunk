@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { ApGallery } from "../../components/another-punk/ap-gallery";
+import { ApGallery } from "../../../components/another-punk/ap-gallery";
 import {
   ANOTHER_PUNK_PRODUCTS,
   DEFAULT_DESCRIPTION,
@@ -9,11 +9,15 @@ import {
   isFulfillable,
   TAPSTITCH_FULFILMENT_LIVE,
   type ApSize,
-} from "../../lib/another-punk-products";
-import { useCart } from "../../lib/cart-context";
-import { useCurrency } from "../../lib/currency-context";
+} from "../../../lib/another-punk-products";
+import { useCart } from "../../../lib/cart-context";
+import { useCurrency } from "../../../lib/currency-context";
 
-export const Route = createFileRoute("/product/$slug")({
+export const Route = createFileRoute("/classic/product/$slug")({
+  head: () => ({
+    // Kept for rollback, not for visitors: the current site lives at /.
+    meta: [{ name: "robots", content: "noindex, nofollow" }],
+  }),
   loader: ({ params }) => {
     const product = getAnotherPunkProduct(params.slug);
     if (!product) throw notFound();
@@ -129,7 +133,7 @@ function AnotherPunkProductPage() {
             </p>
             <p className="text-sm leading-relaxed text-ink-2">{product.fit ?? DEFAULT_FIT}</p>
             <Link
-              to="/shop"
+              to="/classic/shop"
               className="ap-eyebrow mt-2 text-ink transition-opacity hover:opacity-60"
             >
               ← Everything else

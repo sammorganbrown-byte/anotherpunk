@@ -1,10 +1,14 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { useCart } from "../lib/cart-context";
-import { useCurrency } from "../lib/currency-context";
-import { createCheckoutSession } from "../lib/api/checkout.functions";
+import { useCart } from "../../lib/cart-context";
+import { useCurrency } from "../../lib/currency-context";
+import { createCheckoutSession } from "../../lib/api/checkout.functions";
 
-export const Route = createFileRoute("/checkout")({ component: CheckoutPage });
+export const Route = createFileRoute("/classic/checkout")({
+  head: () => ({
+    // Kept for rollback, not for visitors: the current site lives at /.
+    meta: [{ name: "robots", content: "noindex, nofollow" }],
+  }), component: CheckoutPage });
 
 const COUNTRIES = [
   ["GB", "United Kingdom"],
@@ -82,7 +86,7 @@ function CheckoutPage() {
       <div className="mx-auto flex min-h-[60vh] max-w-[900px] flex-col items-center justify-center gap-6 px-6 text-center">
         <h1 className="ap-statement text-pink">Empty</h1>
         <Link
-          to="/shop"
+          to="/classic/shop"
           className="font-label bg-ink px-8 py-4 text-xs font-medium tracking-[0.14em] text-paper uppercase transition-opacity hover:opacity-90"
         >
           Start looking

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCart } from "../../lib/cart-context";
 import { useCurrency } from "../../lib/currency-context";
 
-export const Route = createFileRoute("/redesign/cart")({ component: RedesignCart });
+export const Route = createFileRoute("/_shell/cart")({ component: RedesignCart });
 
 /** The cart as a print queue.
  *
@@ -21,7 +21,7 @@ function RedesignCart() {
           Queue <span className="text-[var(--rd-red)]">empty.</span>
         </p>
         <p className="rd-log">No jobs. Nothing to print.</p>
-        <Link to="/redesign/shop" className="rd-btn" data-primary="true">
+        <Link to="/shop" className="rd-btn" data-primary="true">
           Open the field
         </Link>
       </div>
@@ -99,7 +99,7 @@ function RedesignCart() {
           Total <span className="text-[var(--rd-red)]">{formatPrice(total)}</span>
         </p>
         <p className="rd-log">Shipping included. Tax at checkout.</p>
-        <Link to="/redesign/checkout" className="rd-btn mt-4" data-primary="true">
+        <Link to="/checkout" className="rd-btn mt-4" data-primary="true">
           Dispatch →
         </Link>
       </div>

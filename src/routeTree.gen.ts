@@ -9,232 +9,241 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as CartRouteImport } from './routes/cart'
-import { Route as CheckoutRouteImport } from './routes/checkout'
-import { Route as OrderConfirmedRouteImport } from './routes/order-confirmed'
-import { Route as RedesignRouteRouteImport } from './routes/redesign/route'
-import { Route as ShopRouteImport } from './routes/shop'
+import { Route as ShellRouteImport } from './routes/_shell'
+import { Route as ShellIndexRouteImport } from './routes/_shell/index'
+import { Route as ShellCartRouteImport } from './routes/_shell/cart'
+import { Route as ShellCheckoutRouteImport } from './routes/_shell/checkout'
+import { Route as ShellOrderConfirmedRouteImport } from './routes/_shell/order-confirmed'
+import { Route as ShellShopRouteImport } from './routes/_shell/shop'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe-webhook'
-import { Route as ProductSlugRouteImport } from './routes/product/$slug'
-import { Route as RedesignIndexRouteImport } from './routes/redesign/index'
-import { Route as RedesignCartRouteImport } from './routes/redesign/cart'
-import { Route as RedesignCheckoutRouteImport } from './routes/redesign/checkout'
-import { Route as RedesignShopRouteImport } from './routes/redesign/shop'
-import { Route as RedesignProductSlugRouteImport } from './routes/redesign/product/$slug'
+import { Route as ClassicIndexRouteImport } from './routes/classic/index'
+import { Route as ClassicCartRouteImport } from './routes/classic/cart'
+import { Route as ClassicCheckoutRouteImport } from './routes/classic/checkout'
+import { Route as ClassicOrderConfirmedRouteImport } from './routes/classic/order-confirmed'
+import { Route as ClassicShopRouteImport } from './routes/classic/shop'
+import { Route as ShellProductSlugRouteImport } from './routes/_shell/product/$slug'
+import { Route as ClassicProductSlugRouteImport } from './routes/classic/product/$slug'
 
-const IndexRoute = IndexRouteImport.update({
+const ShellRoute = ShellRouteImport.update({
+  id: '/_shell',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShellIndexRoute = ShellIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => ShellRoute,
 } as any)
-const CartRoute = CartRouteImport.update({
+const ShellCartRoute = ShellCartRouteImport.update({
   id: '/cart',
   path: '/cart',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => ShellRoute,
 } as any)
-const CheckoutRoute = CheckoutRouteImport.update({
+const ShellCheckoutRoute = ShellCheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => ShellRoute,
 } as any)
-const OrderConfirmedRoute = OrderConfirmedRouteImport.update({
+const ShellOrderConfirmedRoute = ShellOrderConfirmedRouteImport.update({
   id: '/order-confirmed',
   path: '/order-confirmed',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => ShellRoute,
 } as any)
-const RedesignRouteRoute = RedesignRouteRouteImport.update({
-  id: '/redesign',
-  path: '/redesign',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ShopRoute = ShopRouteImport.update({
+const ShellShopRoute = ShellShopRouteImport.update({
   id: '/shop',
   path: '/shop',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => ShellRoute,
 } as any)
 const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
   id: '/api/stripe-webhook',
   path: '/api/stripe-webhook',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProductSlugRoute = ProductSlugRouteImport.update({
-  id: '/product/$slug',
-  path: '/product/$slug',
+const ClassicIndexRoute = ClassicIndexRouteImport.update({
+  id: '/classic/',
+  path: '/classic/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RedesignIndexRoute = RedesignIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => RedesignRouteRoute,
+const ClassicCartRoute = ClassicCartRouteImport.update({
+  id: '/classic/cart',
+  path: '/classic/cart',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const RedesignCartRoute = RedesignCartRouteImport.update({
-  id: '/cart',
-  path: '/cart',
-  getParentRoute: () => RedesignRouteRoute,
+const ClassicCheckoutRoute = ClassicCheckoutRouteImport.update({
+  id: '/classic/checkout',
+  path: '/classic/checkout',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const RedesignCheckoutRoute = RedesignCheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
-  getParentRoute: () => RedesignRouteRoute,
+const ClassicOrderConfirmedRoute = ClassicOrderConfirmedRouteImport.update({
+  id: '/classic/order-confirmed',
+  path: '/classic/order-confirmed',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const RedesignShopRoute = RedesignShopRouteImport.update({
-  id: '/shop',
-  path: '/shop',
-  getParentRoute: () => RedesignRouteRoute,
+const ClassicShopRoute = ClassicShopRouteImport.update({
+  id: '/classic/shop',
+  path: '/classic/shop',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const RedesignProductSlugRoute = RedesignProductSlugRouteImport.update({
+const ShellProductSlugRoute = ShellProductSlugRouteImport.update({
   id: '/product/$slug',
   path: '/product/$slug',
-  getParentRoute: () => RedesignRouteRoute,
+  getParentRoute: () => ShellRoute,
+} as any)
+const ClassicProductSlugRoute = ClassicProductSlugRouteImport.update({
+  id: '/classic/product/$slug',
+  path: '/classic/product/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/redesign': typeof RedesignRouteRouteWithChildren
-  '/cart': typeof CartRoute
-  '/checkout': typeof CheckoutRoute
-  '/order-confirmed': typeof OrderConfirmedRoute
-  '/shop': typeof ShopRoute
+  '/': typeof ShellIndexRoute
+  '/cart': typeof ShellCartRoute
+  '/checkout': typeof ShellCheckoutRoute
+  '/order-confirmed': typeof ShellOrderConfirmedRoute
+  '/shop': typeof ShellShopRoute
   '/api/stripe-webhook': typeof ApiStripeWebhookRoute
-  '/product/$slug': typeof ProductSlugRoute
-  '/redesign/cart': typeof RedesignCartRoute
-  '/redesign/checkout': typeof RedesignCheckoutRoute
-  '/redesign/shop': typeof RedesignShopRoute
-  '/redesign/': typeof RedesignIndexRoute
-  '/redesign/product/$slug': typeof RedesignProductSlugRoute
+  '/classic/cart': typeof ClassicCartRoute
+  '/classic/checkout': typeof ClassicCheckoutRoute
+  '/classic/order-confirmed': typeof ClassicOrderConfirmedRoute
+  '/classic/shop': typeof ClassicShopRoute
+  '/classic/': typeof ClassicIndexRoute
+  '/product/$slug': typeof ShellProductSlugRoute
+  '/classic/product/$slug': typeof ClassicProductSlugRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/cart': typeof CartRoute
-  '/checkout': typeof CheckoutRoute
-  '/order-confirmed': typeof OrderConfirmedRoute
-  '/shop': typeof ShopRoute
+  '/cart': typeof ShellCartRoute
+  '/checkout': typeof ShellCheckoutRoute
+  '/order-confirmed': typeof ShellOrderConfirmedRoute
+  '/shop': typeof ShellShopRoute
   '/api/stripe-webhook': typeof ApiStripeWebhookRoute
-  '/product/$slug': typeof ProductSlugRoute
-  '/redesign/cart': typeof RedesignCartRoute
-  '/redesign/checkout': typeof RedesignCheckoutRoute
-  '/redesign/shop': typeof RedesignShopRoute
-  '/redesign': typeof RedesignIndexRoute
-  '/redesign/product/$slug': typeof RedesignProductSlugRoute
+  '/classic/cart': typeof ClassicCartRoute
+  '/classic/checkout': typeof ClassicCheckoutRoute
+  '/classic/order-confirmed': typeof ClassicOrderConfirmedRoute
+  '/classic/shop': typeof ClassicShopRoute
+  '/': typeof ShellIndexRoute
+  '/classic': typeof ClassicIndexRoute
+  '/product/$slug': typeof ShellProductSlugRoute
+  '/classic/product/$slug': typeof ClassicProductSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/redesign': typeof RedesignRouteRouteWithChildren
-  '/cart': typeof CartRoute
-  '/checkout': typeof CheckoutRoute
-  '/order-confirmed': typeof OrderConfirmedRoute
-  '/shop': typeof ShopRoute
+  '/_shell': typeof ShellRouteWithChildren
+  '/_shell/cart': typeof ShellCartRoute
+  '/_shell/checkout': typeof ShellCheckoutRoute
+  '/_shell/order-confirmed': typeof ShellOrderConfirmedRoute
+  '/_shell/shop': typeof ShellShopRoute
   '/api/stripe-webhook': typeof ApiStripeWebhookRoute
-  '/product/$slug': typeof ProductSlugRoute
-  '/redesign/cart': typeof RedesignCartRoute
-  '/redesign/checkout': typeof RedesignCheckoutRoute
-  '/redesign/shop': typeof RedesignShopRoute
-  '/redesign/': typeof RedesignIndexRoute
-  '/redesign/product/$slug': typeof RedesignProductSlugRoute
+  '/classic/cart': typeof ClassicCartRoute
+  '/classic/checkout': typeof ClassicCheckoutRoute
+  '/classic/order-confirmed': typeof ClassicOrderConfirmedRoute
+  '/classic/shop': typeof ClassicShopRoute
+  '/_shell/': typeof ShellIndexRoute
+  '/classic/': typeof ClassicIndexRoute
+  '/_shell/product/$slug': typeof ShellProductSlugRoute
+  '/classic/product/$slug': typeof ClassicProductSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/redesign'
     | '/cart'
     | '/checkout'
     | '/order-confirmed'
     | '/shop'
     | '/api/stripe-webhook'
+    | '/classic/cart'
+    | '/classic/checkout'
+    | '/classic/order-confirmed'
+    | '/classic/shop'
+    | '/classic/'
     | '/product/$slug'
-    | '/redesign/cart'
-    | '/redesign/checkout'
-    | '/redesign/shop'
-    | '/redesign/'
-    | '/redesign/product/$slug'
+    | '/classic/product/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/cart'
     | '/checkout'
     | '/order-confirmed'
     | '/shop'
     | '/api/stripe-webhook'
+    | '/classic/cart'
+    | '/classic/checkout'
+    | '/classic/order-confirmed'
+    | '/classic/shop'
+    | '/'
+    | '/classic'
     | '/product/$slug'
-    | '/redesign/cart'
-    | '/redesign/checkout'
-    | '/redesign/shop'
-    | '/redesign'
-    | '/redesign/product/$slug'
+    | '/classic/product/$slug'
   id:
     | '__root__'
-    | '/'
-    | '/redesign'
-    | '/cart'
-    | '/checkout'
-    | '/order-confirmed'
-    | '/shop'
+    | '/_shell'
+    | '/_shell/cart'
+    | '/_shell/checkout'
+    | '/_shell/order-confirmed'
+    | '/_shell/shop'
     | '/api/stripe-webhook'
-    | '/product/$slug'
-    | '/redesign/cart'
-    | '/redesign/checkout'
-    | '/redesign/shop'
-    | '/redesign/'
-    | '/redesign/product/$slug'
+    | '/classic/cart'
+    | '/classic/checkout'
+    | '/classic/order-confirmed'
+    | '/classic/shop'
+    | '/_shell/'
+    | '/classic/'
+    | '/_shell/product/$slug'
+    | '/classic/product/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  RedesignRouteRoute: typeof RedesignRouteRouteWithChildren
-  CartRoute: typeof CartRoute
-  CheckoutRoute: typeof CheckoutRoute
-  OrderConfirmedRoute: typeof OrderConfirmedRoute
-  ShopRoute: typeof ShopRoute
+  ShellRoute: typeof ShellRouteWithChildren
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
-  ProductSlugRoute: typeof ProductSlugRoute
+  ClassicCartRoute: typeof ClassicCartRoute
+  ClassicCheckoutRoute: typeof ClassicCheckoutRoute
+  ClassicOrderConfirmedRoute: typeof ClassicOrderConfirmedRoute
+  ClassicShopRoute: typeof ClassicShopRoute
+  ClassicIndexRoute: typeof ClassicIndexRoute
+  ClassicProductSlugRoute: typeof ClassicProductSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_shell': {
+      id: '/_shell'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ShellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_shell/': {
+      id: '/_shell/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ShellIndexRouteImport
+      parentRoute: typeof ShellRoute
     }
-    '/cart': {
-      id: '/cart'
+    '/_shell/cart': {
+      id: '/_shell/cart'
       path: '/cart'
       fullPath: '/cart'
-      preLoaderRoute: typeof CartRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ShellCartRouteImport
+      parentRoute: typeof ShellRoute
     }
-    '/checkout': {
-      id: '/checkout'
+    '/_shell/checkout': {
+      id: '/_shell/checkout'
       path: '/checkout'
       fullPath: '/checkout'
-      preLoaderRoute: typeof CheckoutRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ShellCheckoutRouteImport
+      parentRoute: typeof ShellRoute
     }
-    '/order-confirmed': {
-      id: '/order-confirmed'
+    '/_shell/order-confirmed': {
+      id: '/_shell/order-confirmed'
       path: '/order-confirmed'
       fullPath: '/order-confirmed'
-      preLoaderRoute: typeof OrderConfirmedRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ShellOrderConfirmedRouteImport
+      parentRoute: typeof ShellRoute
     }
-    '/redesign': {
-      id: '/redesign'
-      path: '/redesign'
-      fullPath: '/redesign'
-      preLoaderRoute: typeof RedesignRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/shop': {
-      id: '/shop'
+    '/_shell/shop': {
+      id: '/_shell/shop'
       path: '/shop'
       fullPath: '/shop'
-      preLoaderRoute: typeof ShopRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof ShellShopRouteImport
+      parentRoute: typeof ShellRoute
     }
     '/api/stripe-webhook': {
       id: '/api/stripe-webhook'
@@ -243,80 +252,87 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiStripeWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/product/$slug': {
-      id: '/product/$slug'
-      path: '/product/$slug'
-      fullPath: '/product/$slug'
-      preLoaderRoute: typeof ProductSlugRouteImport
+    '/classic/': {
+      id: '/classic/'
+      path: '/classic'
+      fullPath: '/classic/'
+      preLoaderRoute: typeof ClassicIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/redesign/': {
-      id: '/redesign/'
-      path: '/'
-      fullPath: '/redesign/'
-      preLoaderRoute: typeof RedesignIndexRouteImport
-      parentRoute: typeof RedesignRouteRoute
+    '/classic/cart': {
+      id: '/classic/cart'
+      path: '/classic/cart'
+      fullPath: '/classic/cart'
+      preLoaderRoute: typeof ClassicCartRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/redesign/cart': {
-      id: '/redesign/cart'
-      path: '/cart'
-      fullPath: '/redesign/cart'
-      preLoaderRoute: typeof RedesignCartRouteImport
-      parentRoute: typeof RedesignRouteRoute
+    '/classic/checkout': {
+      id: '/classic/checkout'
+      path: '/classic/checkout'
+      fullPath: '/classic/checkout'
+      preLoaderRoute: typeof ClassicCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/redesign/checkout': {
-      id: '/redesign/checkout'
-      path: '/checkout'
-      fullPath: '/redesign/checkout'
-      preLoaderRoute: typeof RedesignCheckoutRouteImport
-      parentRoute: typeof RedesignRouteRoute
+    '/classic/order-confirmed': {
+      id: '/classic/order-confirmed'
+      path: '/classic/order-confirmed'
+      fullPath: '/classic/order-confirmed'
+      preLoaderRoute: typeof ClassicOrderConfirmedRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/redesign/shop': {
-      id: '/redesign/shop'
-      path: '/shop'
-      fullPath: '/redesign/shop'
-      preLoaderRoute: typeof RedesignShopRouteImport
-      parentRoute: typeof RedesignRouteRoute
+    '/classic/shop': {
+      id: '/classic/shop'
+      path: '/classic/shop'
+      fullPath: '/classic/shop'
+      preLoaderRoute: typeof ClassicShopRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/redesign/product/$slug': {
-      id: '/redesign/product/$slug'
+    '/_shell/product/$slug': {
+      id: '/_shell/product/$slug'
       path: '/product/$slug'
-      fullPath: '/redesign/product/$slug'
-      preLoaderRoute: typeof RedesignProductSlugRouteImport
-      parentRoute: typeof RedesignRouteRoute
+      fullPath: '/product/$slug'
+      preLoaderRoute: typeof ShellProductSlugRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/classic/product/$slug': {
+      id: '/classic/product/$slug'
+      path: '/classic/product/$slug'
+      fullPath: '/classic/product/$slug'
+      preLoaderRoute: typeof ClassicProductSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface RedesignRouteRouteChildren {
-  RedesignCartRoute: typeof RedesignCartRoute
-  RedesignCheckoutRoute: typeof RedesignCheckoutRoute
-  RedesignShopRoute: typeof RedesignShopRoute
-  RedesignIndexRoute: typeof RedesignIndexRoute
-  RedesignProductSlugRoute: typeof RedesignProductSlugRoute
+interface ShellRouteChildren {
+  ShellCartRoute: typeof ShellCartRoute
+  ShellCheckoutRoute: typeof ShellCheckoutRoute
+  ShellOrderConfirmedRoute: typeof ShellOrderConfirmedRoute
+  ShellShopRoute: typeof ShellShopRoute
+  ShellIndexRoute: typeof ShellIndexRoute
+  ShellProductSlugRoute: typeof ShellProductSlugRoute
 }
 
-const RedesignRouteRouteChildren: RedesignRouteRouteChildren = {
-  RedesignCartRoute: RedesignCartRoute,
-  RedesignCheckoutRoute: RedesignCheckoutRoute,
-  RedesignShopRoute: RedesignShopRoute,
-  RedesignIndexRoute: RedesignIndexRoute,
-  RedesignProductSlugRoute: RedesignProductSlugRoute,
+const ShellRouteChildren: ShellRouteChildren = {
+  ShellCartRoute: ShellCartRoute,
+  ShellCheckoutRoute: ShellCheckoutRoute,
+  ShellOrderConfirmedRoute: ShellOrderConfirmedRoute,
+  ShellShopRoute: ShellShopRoute,
+  ShellIndexRoute: ShellIndexRoute,
+  ShellProductSlugRoute: ShellProductSlugRoute,
 }
 
-const RedesignRouteRouteWithChildren = RedesignRouteRoute._addFileChildren(
-  RedesignRouteRouteChildren,
-)
+const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  RedesignRouteRoute: RedesignRouteRouteWithChildren,
-  CartRoute: CartRoute,
-  CheckoutRoute: CheckoutRoute,
-  OrderConfirmedRoute: OrderConfirmedRoute,
-  ShopRoute: ShopRoute,
+  ShellRoute: ShellRouteWithChildren,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
-  ProductSlugRoute: ProductSlugRoute,
+  ClassicCartRoute: ClassicCartRoute,
+  ClassicCheckoutRoute: ClassicCheckoutRoute,
+  ClassicOrderConfirmedRoute: ClassicOrderConfirmedRoute,
+  ClassicShopRoute: ClassicShopRoute,
+  ClassicIndexRoute: ClassicIndexRoute,
+  ClassicProductSlugRoute: ClassicProductSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

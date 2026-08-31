@@ -1,13 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
-import { Reveal } from "../components/reveal";
-import { ApMarquee } from "../components/another-punk/ap-marquee";
-import { ApTextMarquee } from "../components/another-punk/ap-text-marquee";
-import { ApQuotePlate } from "../components/another-punk/ap-quote-plate";
-import { ANOTHER_PUNK_PRODUCTS, AP_IMAGERY } from "../lib/another-punk-products";
-import { useCurrency } from "../lib/currency-context";
+import { Reveal } from "../../components/reveal";
+import { ApMarquee } from "../../components/another-punk/ap-marquee";
+import { ApTextMarquee } from "../../components/another-punk/ap-text-marquee";
+import { ApQuotePlate } from "../../components/another-punk/ap-quote-plate";
+import { ANOTHER_PUNK_PRODUCTS, AP_IMAGERY } from "../../lib/another-punk-products";
+import { useCurrency } from "../../lib/currency-context";
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/classic/")({
+  head: () => ({
+    // Kept for rollback, not for visitors: the current site lives at /.
+    meta: [{ name: "robots", content: "noindex, nofollow" }],
+  }),
   component: AnotherPunkHome,
 });
 
@@ -32,7 +36,7 @@ function ProductTile({
   formatPrice: (n: number) => string;
 }) {
   return (
-    <Link to="/product/$slug" params={{ slug }} className="group block">
+    <Link to="/classic/product/$slug" params={{ slug }} className="group block">
       <div className="ap-tile-img aspect-[3/4] w-full bg-surface-2">
         <img
           src={image}
@@ -296,7 +300,7 @@ function AnotherPunkHome() {
               The rest
             </h2>
             <Link
-              to="/shop"
+              to="/classic/shop"
               className="ap-eyebrow hidden text-ink transition-opacity hover:opacity-60 sm:inline"
             >
               View all →
@@ -319,7 +323,7 @@ function AnotherPunkHome() {
           </div>
 
           <Link
-            to="/shop"
+            to="/classic/shop"
             className="ap-eyebrow mt-10 inline-block text-ink transition-opacity hover:opacity-60 sm:hidden"
           >
             View all →

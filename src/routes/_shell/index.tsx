@@ -4,9 +4,9 @@ import { ANOTHER_PUNK_PRODUCTS } from "../../lib/another-punk-products";
 import { RdConstellation } from "../../components/redesign/rd-constellation";
 import { RdBoot, hasBooted } from "../../components/redesign/rd-boot";
 import { RdLogoCard, RdShopCard } from "../../components/redesign/rd-pinned";
-import { useReducedMotion } from "./route";
+import { useReducedMotion } from "../_shell";
 
-export const Route = createFileRoute("/redesign/")({ component: RedesignHome });
+export const Route = createFileRoute("/_shell/")({ component: RedesignHome });
 
 /** The homepage is the field, and the field is the store.
  *

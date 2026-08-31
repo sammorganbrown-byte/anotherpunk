@@ -4,7 +4,7 @@ import { useCart } from "../../lib/cart-context";
 import { useCurrency } from "../../lib/currency-context";
 import { createCheckoutSession } from "../../lib/api/checkout.functions";
 
-export const Route = createFileRoute("/redesign/checkout")({ component: RedesignCheckout });
+export const Route = createFileRoute("/_shell/checkout")({ component: RedesignCheckout });
 
 /** Dispatch. Entirely new UI over the existing, real Stripe flow — same
  * server function, same payload shape, same hosted Stripe hand-off as the
@@ -71,7 +71,7 @@ function RedesignCheckout() {
         <p className="rd-huge">
           Queue <span className="text-[var(--rd-red)]">empty.</span>
         </p>
-        <Link to="/redesign/shop" className="rd-btn" data-primary="true">
+        <Link to="/shop" className="rd-btn" data-primary="true">
           Open the field
         </Link>
       </div>

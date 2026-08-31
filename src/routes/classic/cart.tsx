@@ -1,8 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useCart } from "../lib/cart-context";
-import { useCurrency } from "../lib/currency-context";
+import { useCart } from "../../lib/cart-context";
+import { useCurrency } from "../../lib/currency-context";
 
-export const Route = createFileRoute("/cart")({ component: CartPage });
+export const Route = createFileRoute("/classic/cart")({
+  head: () => ({
+    // Kept for rollback, not for visitors: the current site lives at /.
+    meta: [{ name: "robots", content: "noindex, nofollow" }],
+  }), component: CartPage });
 
 function CartPage() {
   const { items, updateQty, removeItem, subtotal, discount, total } = useCart();
@@ -14,7 +18,7 @@ function CartPage() {
         <h1 className="ap-statement text-pink">Empty.</h1>
         <p className="text-sm text-ink-2">Nothing in it. That's on you.</p>
         <Link
-          to="/shop"
+          to="/classic/shop"
           className="font-label bg-ink px-8 py-4 text-xs font-medium tracking-[0.14em] text-paper uppercase transition-opacity hover:opacity-90"
         >
           Go and look
@@ -96,7 +100,7 @@ function CartPage() {
         </p>
         <p className="ap-eyebrow text-ink-2">Shipping included. Tax at checkout.</p>
         <Link
-          to="/checkout"
+          to="/classic/checkout"
           className="font-label mt-4 bg-pink px-10 py-4 text-xs font-medium tracking-[0.14em] text-paper uppercase transition-opacity hover:opacity-90"
         >
           Checkout

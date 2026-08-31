@@ -32,7 +32,7 @@ export function ApQuotePlate({
   return (
     <section className={onInk ? "border-b border-border bg-ink" : "bg-pink"}>
       <Link
-        to="/product/$slug"
+        to="/classic/product/$slug"
         params={{ slug }}
         className="group block px-6 py-24 transition-opacity hover:opacity-90 sm:px-10 sm:py-28"
       >

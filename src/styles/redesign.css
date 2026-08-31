@@ -4,7 +4,7 @@
  * live site, and every rule is scoped under [data-ap-rd] so it cannot reach
  * the shipping [data-brand="another-punk"] tree even if both were mounted.
  *
- * Loaded only by src/routes/redesign/route.tsx.
+ * Loaded only by src/routes/_shell.tsx, the layout for the whole site.
  *
  * DARK ON PURPOSE. The live site's own comment records a deliberate choice
  * of a light paper ground; this direction reverses it. See the summary.
@@ -1303,4 +1303,28 @@ body:has([data-ap-rd]) {
   .rd-bar .rd-log.tabular-nums {
     display: none;
   }
+}
+
+/* ---- order confirmed --------------------------------------------------- */
+
+.rd-confirm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100dvh - var(--rd-bar-h) - var(--rd-foot-h));
+  padding: 24px;
+  /* min-width:0 so the block heading can shrink rather than widen the page —
+     the same trap that bit the product page. */
+  min-width: 0;
+}
+@media (min-width: 640px) {
+  .rd-confirm {
+    padding: 48px;
+  }
+}
+/* A block heading's height is its text's own aspect times the width it is
+   given, so a four-letter word across a full-width page comes out enormous.
+   Cap the width and the height follows. */
+.rd-confirm .rd-pixtext {
+  max-width: 340px;
 }
