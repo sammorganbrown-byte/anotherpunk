@@ -1062,7 +1062,9 @@ body:has([data-ap-rd]) {
   transform: scale(8);
 }
 
-/* The phosphor bloom, applied to the scaled result rather than the source. */
+/* The phosphor bloom, applied to the scaled result rather than the source.
+   NOTE: superseded further down — the bloom moved off the piece and onto the
+   photograph inside it, so this rule no longer decides anything. */
 .rd-sky[data-crt="true"] .rd-star {
   filter: blur(0.35px) saturate(1.15) contrast(1.05);
 }
@@ -1106,32 +1108,64 @@ body:has([data-ap-rd]) {
   );
 }
 
-.rd-crt-btn {
+.rd-crt-ctl {
   position: absolute;
-  left: 12px;
   top: 12px;
+  left: 12px;
   z-index: 36;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 9px;
+  border: 1px solid var(--rd-red);
+  background: color-mix(in srgb, var(--rd-void) 76%, transparent);
   font-family: var(--rd-mono);
-  font-size: 9.5px;
-  letter-spacing: 0.2em;
+  font-size: 9px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  padding: 6px 9px;
-  min-height: 30px;
-  border: 1px solid var(--rd-rule);
-  background: color-mix(in srgb, var(--rd-void) 80%, transparent);
-  color: var(--rd-dim);
+  color: var(--rd-red);
   cursor: pointer;
 }
-.rd-crt-btn:hover,
-.rd-crt-btn:focus-visible {
-  color: var(--rd-red);
-  border-color: var(--rd-red);
-  outline: none;
+.rd-crt-ctl-label {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
-.rd-crt-btn[aria-pressed="true"] {
-  color: var(--rd-red);
-  border-color: var(--rd-red);
+/* A bare track and a square handle — a fader on a machine, not an OS
+   control. Both vendor pseudo-elements are needed; neither inherits. */
+.rd-crt-ctl input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 86px;
+  height: 3px;
+  background: color-mix(in srgb, var(--rd-red) 34%, transparent);
+  cursor: pointer;
 }
+.rd-crt-ctl input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 7px;
+  height: 13px;
+  background: var(--rd-red);
+  border: 0;
+  border-radius: 0;
+}
+.rd-crt-ctl input[type="range"]::-moz-range-thumb {
+  width: 7px;
+  height: 13px;
+  background: var(--rd-red);
+  border: 0;
+  border-radius: 0;
+}
+.rd-crt-ctl input[type="range"]:focus-visible {
+  outline: 1px solid var(--rd-paper);
+  outline-offset: 3px;
+}
+@media (max-width: 700px) {
+  .rd-crt-ctl input[type="range"] {
+    width: 62px;
+  }
+}
+
 
 @media (prefers-reduced-motion: reduce) {
   .rd-crt-lines {
@@ -1165,12 +1199,18 @@ body:has([data-ap-rd]) {
 }
 
 /* CRT quantisation applies to the floating image only. */
+/* Both the block size and the bloom come from the intensity slider, as
+   custom properties rather than per-frame JS writes: the resting look is then
+   correct from the first paint instead of waiting for an animation frame, and
+   the slider keeps working even if the loop is not running (reduced motion).
+   The fallbacks are the floor — exactly the look this had as an on/off
+   switch, which is what the slider's 0 means. */
 .rd-sky[data-crt="true"] .rd-shot img {
   image-rendering: pixelated;
   transform-origin: top left;
-  width: 12.5%;
-  height: 12.5%;
-  transform: scale(8);
+  width: calc(100% / var(--rd-crt-f, 8));
+  height: calc(100% / var(--rd-crt-f, 8));
+  transform: scale(var(--rd-crt-f, 8));
 }
 
 /* Bloom on the photograph, NOT on the whole piece — blurring the piece blurred
@@ -1179,7 +1219,7 @@ body:has([data-ap-rd]) {
   filter: none;
 }
 .rd-sky[data-crt="true"] .rd-shot {
-  filter: blur(0.35px) saturate(1.15) contrast(1.05);
+  filter: blur(var(--rd-crt-blur, 0.35px)) saturate(1.15) contrast(1.05);
 }
 
 /* Captions stay sharp and sit above the frame in every mode. */

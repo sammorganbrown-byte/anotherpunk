@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { AnotherPunkProduct } from "../../lib/another-punk-products";
 
 /** The field: the store and the homepage, one object.
@@ -13,9 +13,11 @@ import type { AnotherPunkProduct } from "../../lib/another-punk-products";
  *    press-and-move pans and press-and-release still opens the product.
  *
  *  - THE ABYSS. Panning was unbounded, so you could sail off into empty
- *    black and lose the range entirely. Pieces now live in a finite world
- *    and the pan is clamped to it with a little overscan, so the field
- *    always stays on screen.
+ *    black and lose the range entirely. That was first fixed by clamping the
+ *    pan to a finite world, which stopped the loss but put a wall at the edge
+ *    of it. The field is now a TORUS instead: each piece is folded back into
+ *    the world's width and height every frame, so what leaves behind you
+ *    comes round in front. No wall, no abyss, and no end to the scroll.
  *
  *  - PILE-UPS. Positions were pure random, which stacks things. They are
  *    now scattered within cells of a jittered grid sized to the number of
@@ -61,6 +63,18 @@ type Piece = {
  * is the point — it reads as a contact sheet strewn across a table rather
  * than a catalogue with one hero each. The world grows with the count so
  * density stays constant however many photographs exist. */
+/** How far past the edge a piece travels before it comes round the other
+ * side. Must exceed the widest piece, or one would pop back into view while
+ * still partly on screen. */
+const WRAP_MARGIN = 560;
+
+/** Fold a coordinate onto a torus: `v` brought into [-margin, size - margin).
+ * The double modulo is not superstition — JS `%` keeps the sign of the left
+ * operand, so a negative pan would otherwise place pieces off the wrong end. */
+function wrapAxis(v: number, size: number, margin: number) {
+  return ((((v + margin) % size) + size) % size) - margin;
+}
+
 function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: number }): Piece[] {
   const raw: { p: AnotherPunkProduct; src: string; label: boolean }[] = [];
   products.forEach((p) => {
@@ -115,8 +129,9 @@ export function RdConstellation({
   // Sized from the number of photographs, so adding products spreads the
   // field out instead of crowding it.
   const world = useRef({ w: 2400, h: 1700 });
-  // Read inside the animation loop, which is not re-created when crt flips.
-  const crtRef = useRef(false);
+  // Read inside the animation loop, which is not re-created when the level
+  // changes.
+  const crtRef = useRef(0);
   const pan = useRef({ x: 0, y: 0 });
   const vel = useRef({ x: 0, y: 0 });
   const cursor = useRef({ x: -9999, y: -9999 });
@@ -125,36 +140,41 @@ export function RdConstellation({
   );
   const [dragging, setDragging] = useState(false);
 
-  // CRT mode, ON by default. The toggle stays so it can be compared and
-  // turned off; only an explicit "0" in storage keeps it off.
-  const [crt, setCrt] = useState(true);
+  // CRT intensity, 0..1. The on/off switch is gone: the effect is the look
+  // now, not an experiment to compare against. 0 is what used to be "ON" —
+  // the floor, not an absence — and the slider only goes up from there.
+  const [crt, setCrt] = useState(0);
   useEffect(() => {
     try {
-      setCrt(window.localStorage.getItem("ap-rd-crt") !== "0");
+      const v = window.localStorage.getItem("ap-rd-crt-level");
+      if (v !== null) setCrt(Math.min(1, Math.max(0, Number(v) || 0)));
     } catch {
-      // Private mode. Stays on.
+      // Private mode. Stays at the floor.
     }
   }, []);
   useEffect(() => {
     crtRef.current = crt;
+    // The bloom is CSS, so it is handed over as a custom property rather than
+    // written per-frame — it only changes when the slider does.
+    const sky = skyRef.current;
+    sky?.style.setProperty("--rd-crt-blur", `${(0.35 + crt * 1.15).toFixed(2)}px`);
+    sky?.style.setProperty("--rd-crt-f", (8 + crt * 16).toFixed(2));
   }, [crt]);
 
-  const toggleCrt = () => {
-    setCrt((v) => {
-      const next = !v;
-      try {
-        window.localStorage.setItem("ap-rd-crt", next ? "1" : "0");
-      } catch {
-        // Not persisted; still works for this session.
-      }
-      return next;
-    });
+  const setCrtLevel = (next: number) => {
+    setCrt(next);
+    try {
+      window.localStorage.setItem("ap-rd-crt-level", String(next));
+    } catch {
+      // Not persisted; still works for this session.
+    }
   };
-  // The opening pan, rendered as an inline style so the field is correctly
-  // positioned before a single animation frame runs. The loop then writes
-  // straight to the node. Without this the whole world sat at its raw
-  // coordinates until the first frame landed.
-  const [pan0, setPan0] = useState({ x: 0, y: 0 });
+  // The opening placement is written imperatively in a layout effect below,
+  // NOT as an inline style prop. It used to be a prop on .rd-world, which
+  // meant every re-render — and `dragging` state toggles one on every single
+  // drag — re-applied the opening transform over whatever the animation loop
+  // had just written. The rule this cost us: nothing the loop animates may
+  // also be set from React, or React wins at the worst possible moment.
   // Survives pointerup. `drag` is cleared on release, which happens BEFORE
   // the click event, so checking it in the click handler always saw null and
   // the suppression never fired — meaning a pan ended by navigating to
@@ -185,27 +205,30 @@ export function RdConstellation({
       x: (vw - world.current.w) / 2,
       y: (vh - world.current.h) / 2,
     };
-    setPan0({ ...pan.current });
   }, [products]);
+
+  // The first correct frame, painted before the browser gets a chance to show
+  // the raw layout. The pieces sit at their world coordinates in CSS — the
+  // top-left corner of something several screens wide — so without this the
+  // field flashes at the wrong offset until the first animation frame lands.
+  useLayoutEffect(() => {
+    if (pieces.length === 0) return;
+    const W = world.current.w;
+    const H = world.current.h;
+    pieces.forEach((s, i) => {
+      const el = nodes.current[i];
+      if (!el) return;
+      const wx = wrapAxis(s.x + pan.current.x, W, WRAP_MARGIN);
+      const wy = wrapAxis(s.y + pan.current.y, H, WRAP_MARGIN);
+      el.style.transform = `translate3d(${wx - s.x}px, ${wy - s.y}px, 0)`;
+    });
+  }, [pieces]);
 
   useEffect(() => {
     if (reduced || pieces.length === 0) return;
     let raf = 0;
     let alive = true;
     let t = 0;
-
-    const clamp = () => {
-      const el = skyRef.current;
-      if (!el) return;
-      const vw = el.clientWidth;
-      const vh = el.clientHeight;
-      // Overscan so the edge of the field never snaps hard against the frame.
-      const pad = 160;
-      const minX = Math.min(0, vw - world.current.w - pad);
-      const minY = Math.min(0, vh - world.current.h - pad);
-      pan.current.x = Math.min(pad, Math.max(minX, pan.current.x));
-      pan.current.y = Math.min(pad, Math.max(minY, pan.current.y));
-    };
 
     const loop = () => {
       if (!alive) return;
@@ -219,12 +242,11 @@ export function RdConstellation({
         if (Math.abs(vel.current.x) < 0.02) vel.current.x = 0;
         if (Math.abs(vel.current.y) < 0.02) vel.current.y = 0;
       }
-      clamp();
 
-      // One transform for the whole field.
-      if (worldRef.current) {
-        worldRef.current.style.transform = `translate3d(${pan.current.x}px, ${pan.current.y}px, 0)`;
-      }
+      // The world container is stationary — each piece is placed individually
+      // now (see the wrap below).
+      const W = world.current.w;
+      const H = world.current.h;
 
       const PULL = 250;
 
@@ -249,8 +271,14 @@ export function RdConstellation({
       pieces.forEach((s, i) => {
         const el = nodes.current[i];
         if (!el) return;
-        let dx = pan.current.x + Math.sin(t + s.phase) * s.amp;
-        let dy = pan.current.y + Math.cos(t * 0.8 + s.phase) * s.amp;
+        // The field is a torus. Rather than sliding one finite world under
+        // the viewport and stopping at its edge, every piece is folded back
+        // into the world's own width and height — so whatever leaves behind
+        // you comes round in front, and there is no edge to reach.
+        const wx = wrapAxis(s.x + pan.current.x, W, WRAP_MARGIN);
+        const wy = wrapAxis(s.y + pan.current.y, H, WRAP_MARGIN);
+        let dx = wx - s.x + Math.sin(t + s.phase) * s.amp;
+        let dy = wy - s.y + Math.cos(t * 0.8 + s.phase) * s.amp;
 
         // Screen position = CSS layout (s.x/s.y) + the delta we apply here.
         let cx = s.x + dx + s.w / 2;
@@ -282,9 +310,9 @@ export function RdConstellation({
         const dist = Math.hypot(cursor.current.x - cx, cursor.current.y - cy);
         const near = Math.max(0, 1 - dist / PULL);
 
-        el.style.transform = `translate3d(${dx - pan.current.x}px, ${
-          dy - pan.current.y
-        }px, 0) scale(${1 + near * 0.14})`;
+        // dx/dy are already the full offset from the layout position, the
+        // pan included, because the world underneath is stationary.
+        el.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${1 + near * 0.14})`;
         el.style.zIndex = String(10 + Math.round(near * 30));
         const im = el.querySelector(".rd-shot img") as HTMLElement | null;
         if (im) {
@@ -293,16 +321,16 @@ export function RdConstellation({
           // quantisation is done by rendering the image small and scaling it
           // back up with nearest-neighbour, which is genuine blockiness
           // rather than a blur pretending to be it.
-          if (crtRef.current) {
-            const f = 1 + (1 - near) * 7;
-            im.style.width = `${100 / f}%`;
-            im.style.height = `${100 / f}%`;
-            im.style.transform = `scale(${f})`;
-          } else if (im.style.width) {
-            im.style.width = "";
-            im.style.height = "";
-            im.style.transform = "";
-          }
+          // The resting block size is the ceiling; moving toward a piece
+          // walks it back down to 1 (full resolution). The slider raises the
+          // ceiling only — the sharpening under the cursor is untouched, so
+          // turning it up makes the field coarser without making the thing
+          // you are looking at harder to see.
+          const ceiling = 8 + crtRef.current * 16;
+          const f = 1 + (1 - near) * (ceiling - 1);
+          im.style.width = `${100 / f}%`;
+          im.style.height = `${100 / f}%`;
+          im.style.transform = `scale(${f})`;
           // Rest at partly-desaturated, resolve to full colour under the
           // cursor. Matches the CSS resting state so there is no jump on the
           // first frame.
@@ -340,7 +368,7 @@ export function RdConstellation({
     <div
       ref={skyRef}
       className="rd-sky"
-      data-crt={crt}
+      data-crt="true"
       style={{ touchAction: "none" }}
       data-drag={dragging}
       onPointerDown={(e) => {
@@ -425,11 +453,7 @@ export function RdConstellation({
       role="group"
       aria-label="Product field. Drag, scroll or use arrow keys to move around."
     >
-      <div
-        ref={worldRef}
-        className="rd-world"
-        style={{ transform: `translate3d(${pan0.x}px, ${pan0.y}px, 0)` }}
-      >
+      <div ref={worldRef} className="rd-world">
         {pieces.map((s, i) => (
         // The ref lives on this div, NOT on the Link. TanStack's Link does
         // not forward a ref to its underlying <a>, so the animation loop was
@@ -481,18 +505,21 @@ export function RdConstellation({
         ))}
       </div>
 
-      {crt ? <div className="rd-crt-lines" aria-hidden="true" /> : null}
-      {crt ? <div className="rd-crt-vig" aria-hidden="true" /> : null}
+      <div className="rd-crt-lines" aria-hidden="true" />
+      <div className="rd-crt-vig" aria-hidden="true" />
 
-      <button
-        type="button"
-        className="rd-crt-btn"
-        onClick={toggleCrt}
-        aria-pressed={crt}
-        onPointerDown={(e) => e.stopPropagation()}
-      >
-        CRT {crt ? "ON" : "OFF"}
-      </button>
+      <label className="rd-crt-ctl" onPointerDown={(e) => e.stopPropagation()}>
+        <span className="rd-crt-ctl-label">CRT {String(Math.round(crt * 100)).padStart(2, "0")}</span>
+        <input
+          type="range"
+          min={0}
+          max={1}
+          step={0.01}
+          value={crt}
+          onChange={(e) => setCrtLevel(Number(e.currentTarget.value))}
+          aria-label="CRT intensity"
+        />
+      </label>
     </div>
   );
 }

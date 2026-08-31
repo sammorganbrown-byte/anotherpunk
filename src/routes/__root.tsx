@@ -155,9 +155,24 @@ function MobileMenu() {
  * old one at all is the honest version of what the CSS was pretending to do.
  */
 function ClassicOnlyPlayer() {
+  return <ClassicOnlyChrome>{<ApPlayer />}</ClassicOnlyChrome>;
+}
+
+/** Renders the old site's chrome only where the old site is.
+ *
+ * This header, footer and player used to render on every route and be hidden
+ * on the current site by a `body:has([data-ap-rd])` rule in redesign.css —
+ * chosen back when __root.tsx was off limits. Hiding is not the same as not
+ * rendering: the markup is in the HTML either way, so if redesign.css has not
+ * applied yet (it is a second stylesheet, and it can lose the race on a cold
+ * load) the old design paints for a frame or two before disappearing. That is
+ * the flash. There is no rule that can win a race it starts late; the fix is
+ * for the markup not to be there at all.
+ */
+function ClassicOnlyChrome({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   if (!pathname.startsWith("/classic")) return null;
-  return <ApPlayer />;
+  return <>{children}</>;
 }
 
 function RootComponent() {
@@ -167,6 +182,7 @@ function RootComponent() {
       <CurrencyProvider>
         <CartProvider>
           <div className="flex min-h-dvh flex-col">
+            <ClassicOnlyChrome>
             <header className="sticky top-0 z-30 border-b border-border bg-paper/95 backdrop-blur">
               <div className="mx-auto flex max-w-[1500px] items-center justify-between px-6 py-4 sm:px-10">
                 <Link to="/classic" className="block">
@@ -184,6 +200,7 @@ function RootComponent() {
                 </nav>
               </div>
             </header>
+            </ClassicOnlyChrome>
 
             <main className="flex-1">
               {/* Required: nested routes render here. */}
@@ -196,6 +213,7 @@ function RootComponent() {
                 invisible and still audible. */}
             <ClassicOnlyPlayer />
 
+            <ClassicOnlyChrome>
             <footer className="border-t border-ink bg-ink px-6 py-14 sm:px-10">
               <img
                 src={LOGO_URL}
@@ -218,6 +236,7 @@ function RootComponent() {
                 </p>
               </div>
             </footer>
+            </ClassicOnlyChrome>
           </div>
         </CartProvider>
       </CurrencyProvider>
