@@ -4,6 +4,11 @@ import { useCart } from "../../lib/cart-context";
 import { RdField } from "../../components/redesign/rd-field";
 import rdCss from "../../styles/redesign.css?url";
 
+/** The official hand-painted wordmark — the brand mark, not a typeface.
+ * Same asset the live site uses. */
+export const LOGO_URL =
+  "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/00048e3d-cede-4c1a-a65e-222abb97d9a9.png";
+
 /** Layout route for the whole /redesign tree.
  *
  * This is the parallel design direction. It renders its own chrome and loads
@@ -117,8 +122,8 @@ function RedesignLayout() {
       <div className="rd-scan" aria-hidden="true" />
 
       <header className="rd-bar rd-above">
-        <Link to="/redesign" className="rd-link" data-on={path === "/redesign"}>
-          <span className="rd-key">▮</span> ANOTHER&nbsp;PUNK
+        <Link to="/redesign" className="rd-brand" aria-label="Another Punk — home">
+          <img src={LOGO_URL} alt="Another Punk" />
         </Link>
 
         <nav className="flex items-center gap-4 sm:gap-6" aria-label="Redesign">
@@ -127,10 +132,10 @@ function RedesignLayout() {
             className="rd-link"
             data-on={path.startsWith("/redesign/shop")}
           >
-            Field
+            Index
           </Link>
           <Link to="/redesign/cart" className="rd-link" data-on={path.startsWith("/redesign/cart")}>
-            Queue [{count}]
+            Bag [{count}]
           </Link>
           <Clock />
         </nav>
@@ -142,7 +147,7 @@ function RedesignLayout() {
 
       <footer className="rd-above border-t border-[var(--rd-rule)] px-4 py-6">
         <div className="rd-log flex flex-wrap items-center justify-between gap-3">
-          <span>DRAWN BY HAND · PRINTED TO ORDER · NOTHING BEFORE THAT</span>
+          <span>DRAWN BY HAND · PRINTED TO ORDER · SHIPPED WORLDWIDE</span>
           <span>
             <a href="/" className="rd-link underline underline-offset-4">
               ← Return to live site

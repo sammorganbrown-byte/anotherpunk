@@ -2,21 +2,23 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import type { AnotherPunkProduct } from "../../lib/another-punk-products";
 
-/** The shop as a field you move through rather than a grid you scan.
+/** The field. Navigation dissolved into a scattered constellation you move
+ * through rather than a grid you scan — Cipher's move, applied to the range.
  *
- * Cipher's move: navigation dissolves into a scattered constellation of
- * imagery. Products are placed on a deterministic pseudo-random field, each
- * drifting on its own slow sine, and the whole field pans with drag or
- * arrow keys. Nothing is sorted, nothing is ranked, there is no first row.
+ * Interaction, in layers:
+ *   - drag to pan, with real momentum: release and the field keeps going,
+ *     decaying on a friction curve rather than stopping dead
+ *   - the cursor has a pull radius: pieces near it rise, scale up and gain
+ *     their colour back, so moving the mouse feels like a light source
+ *     passing over the field rather than a hover state firing
+ *   - each piece drifts on its own slow orbit so the field is never still
+ *   - wheel scrolls the field vertically instead of the page
  *
- * Deterministic placement matters — a seeded hash rather than Math.random()
- * so the field is identical on server and client (no hydration mismatch)
- * and a given shirt is always in the same place, which is what makes the
- * space learnable instead of merely chaotic.
+ * Placement is seeded from the slug, not random: identical on server and
+ * client (no hydration mismatch), and a given shirt is always in the same
+ * place, which is what makes the space learnable instead of merely chaotic.
  *
- * Accessibility: every item is a real link in DOM order, reachable and
- * operable by keyboard with a visible focus ring, and the whole field is
- * replaced by a plain list under prefers-reduced-motion.
+ * Reduced motion gets a plain static list — the same links, no field.
  */
 
 function seeded(slug: string) {
@@ -51,11 +53,17 @@ export function RdConstellation({
   reduced: boolean;
 }) {
   const [placed, setPlaced] = useState<Placed[]>([]);
-  const [pan, setPan] = useState({ x: 0, y: 0 });
-  const [dragging, setDragging] = useState(false);
-  const drag = useRef<{ x: number; y: number; px: number; py: number } | null>(null);
   const skyRef = useRef<HTMLDivElement | null>(null);
-  const [t, setT] = useState(0);
+
+  // Kept in refs and written straight to the DOM in the animation loop.
+  // Driving 12 transforms through React state at 60fps would re-render the
+  // whole field every frame for no reason.
+  const pan = useRef({ x: 0, y: 0 });
+  const vel = useRef({ x: 0, y: 0 });
+  const cursor = useRef({ x: -9999, y: -9999 });
+  const drag = useRef<{ x: number; y: number; px: number; py: number } | null>(null);
+  const nodes = useRef<(HTMLAnchorElement | null)[]>([]);
+  const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
     setPlaced(
@@ -63,25 +71,61 @@ export function RdConstellation({
         const r = seeded(p.slug);
         return {
           p,
-          // Spread wider than the viewport on purpose: some of the range is
-          // always just off-screen, so panning is rewarded.
-          x: 4 + r() * 108,
-          y: 6 + r() * 78,
-          w: 132 + r() * 118,
+          x: 6 + r() * 100,
+          y: 8 + r() * 74,
+          w: 130 + r() * 120,
           phase: r() * Math.PI * 2,
-          amp: 4 + r() * 9,
+          amp: 4 + r() * 10,
         };
       }),
     );
   }, [products]);
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || placed.length === 0) return;
     let raf = 0;
     let alive = true;
+    let t = 0;
+
     const loop = () => {
       if (!alive) return;
-      setT((v) => v + 0.008);
+      t += 0.008;
+
+      // Momentum: only while not actively dragging.
+      if (!drag.current) {
+        pan.current.x += vel.current.x;
+        pan.current.y += vel.current.y;
+        vel.current.x *= 0.94;
+        vel.current.y *= 0.94;
+        if (Math.abs(vel.current.x) < 0.01) vel.current.x = 0;
+        if (Math.abs(vel.current.y) < 0.01) vel.current.y = 0;
+      }
+
+      const PULL = 260;
+      placed.forEach((s, i) => {
+        const el = nodes.current[i];
+        if (!el) return;
+        const dx = pan.current.x + Math.sin(t + s.phase) * s.amp;
+        const dy = pan.current.y + Math.cos(t * 0.8 + s.phase) * s.amp;
+
+        // Proximity to the cursor, measured against where the piece has
+        // actually landed this frame.
+        const r = el.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dist = Math.hypot(cursor.current.x - cx, cursor.current.y - cy);
+        const near = Math.max(0, 1 - dist / PULL);
+
+        el.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${1 + near * 0.13})`;
+        el.style.zIndex = String(10 + Math.round(near * 20));
+        const im = el.firstElementChild as HTMLElement | null;
+        if (im) {
+          im.style.filter = `grayscale(${1 - near}) contrast(${1.3 - near * 0.3}) brightness(${
+            0.78 + near * 0.32
+          })`;
+        }
+      });
+
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
@@ -89,11 +133,9 @@ export function RdConstellation({
       alive = false;
       cancelAnimationFrame(raf);
     };
-  }, [reduced]);
+  }, [placed, reduced]);
 
   if (reduced) {
-    // Honest static fallback: the same products, same links, laid out
-    // plainly. Not a degraded constellation — a list.
     return (
       <ul className="grid grid-cols-2 gap-px sm:grid-cols-3 lg:grid-cols-4">
         {products.map((p) => (
@@ -110,14 +152,19 @@ export function RdConstellation({
 
   const onDown = (e: React.PointerEvent) => {
     if ((e.target as HTMLElement).closest("a")) return;
-    drag.current = { x: e.clientX, y: e.clientY, px: pan.x, py: pan.y };
+    drag.current = { x: e.clientX, y: e.clientY, px: pan.current.x, py: pan.current.y };
+    vel.current = { x: 0, y: 0 };
     setDragging(true);
     skyRef.current?.setPointerCapture(e.pointerId);
   };
   const onMove = (e: React.PointerEvent) => {
+    cursor.current = { x: e.clientX, y: e.clientY };
     const d = drag.current;
     if (!d) return;
-    setPan({ x: d.px + (e.clientX - d.x), y: d.py + (e.clientY - d.y) });
+    const nx = d.px + (e.clientX - d.x);
+    const ny = d.py + (e.clientY - d.y);
+    vel.current = { x: nx - pan.current.x, y: ny - pan.current.y };
+    pan.current = { x: nx, y: ny };
   };
   const onUp = (e: React.PointerEvent) => {
     drag.current = null;
@@ -134,31 +181,32 @@ export function RdConstellation({
       onPointerMove={onMove}
       onPointerUp={onUp}
       onPointerCancel={onUp}
+      onPointerLeave={() => (cursor.current = { x: -9999, y: -9999 })}
+      onWheel={(e) => {
+        vel.current.y -= e.deltaY * 0.12;
+        vel.current.x -= e.deltaX * 0.12;
+      }}
       onKeyDown={(e) => {
-        const s = 60;
-        if (e.key === "ArrowLeft") setPan((v) => ({ ...v, x: v.x + s }));
-        if (e.key === "ArrowRight") setPan((v) => ({ ...v, x: v.x - s }));
-        if (e.key === "ArrowUp") setPan((v) => ({ ...v, y: v.y + s }));
-        if (e.key === "ArrowDown") setPan((v) => ({ ...v, y: v.y - s }));
+        const s = 14;
+        if (e.key === "ArrowLeft") vel.current.x += s;
+        if (e.key === "ArrowRight") vel.current.x -= s;
+        if (e.key === "ArrowUp") vel.current.y += s;
+        if (e.key === "ArrowDown") vel.current.y -= s;
       }}
       tabIndex={0}
       role="group"
-      aria-label="Product field. Drag or use arrow keys to move around."
+      aria-label="Product field. Drag, scroll or use arrow keys to move around."
     >
-      {placed.map(({ p, x, y, w, phase, amp }) => (
+      {placed.map(({ p, x, y, w }, i) => (
         <Link
           key={p.slug}
+          ref={(el) => {
+            nodes.current[i] = el;
+          }}
           to="/redesign/product/$slug"
           params={{ slug: p.slug }}
           className="rd-star"
-          style={{
-            left: `${x}%`,
-            top: `${y}%`,
-            width: `${w}px`,
-            transform: `translate3d(${pan.x + Math.sin(t + phase) * amp}px, ${
-              pan.y + Math.cos(t * 0.8 + phase) * amp
-            }px, 0)`,
-          }}
+          style={{ left: `${x}%`, top: `${y}%`, width: `${w}px` }}
         >
           <img src={p.images[0]} alt={p.title} className="aspect-[4/3]" />
           <figcaption>

@@ -10,6 +10,18 @@
  * of a light paper ground; this direction reverses it. See the summary.
  */
 
+/* Display face. Unbounded (the live site's) is round and geometric — next to
+   a hand-painted wordmark and a terminal it reads friendly, which is the one
+   thing this direction is not. Anton is a condensed heavy grotesque: gig
+   poster, flyposted, all caps, tight. It also has a single weight, so it
+   cannot be accidentally rendered in a soft one.
+
+   Swap candidates, one line each:
+     Archivo Black    — squarer, more corporate-brutal, wider
+     Big Shoulders    — narrower and more industrial, less shouty
+     Bebas Neue       — lighter condensed caps, closer to fashion editorial */
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+
 [data-ap-rd] {
   /* Ground is near-black but not #000 — a real black crushes the film grain
      and the dither field into nothing. */
@@ -22,7 +34,7 @@
   --rd-rule: #1e1c1a;
 
   --rd-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  --rd-display: var(--font-display, "Unbounded", "Arial Black", sans-serif);
+  --rd-display: "Anton", "Arial Narrow", "Haettenschweiler", sans-serif;
 
   background: var(--rd-void);
   color: var(--rd-paper);
@@ -74,24 +86,24 @@ body:has([data-ap-rd]) {
 }
 .rd-huge {
   font-family: var(--rd-display);
-  font-weight: 900;
+  font-weight: 400;
   text-transform: uppercase;
   line-height: 0.86;
-  letter-spacing: -0.03em;
+  letter-spacing: 0.005em;
   /* 9vw, not 13 — Unbounded is wide, and a single long word ("COMPULSION.")
      at 13vw pushed past the viewport and gave the page a horizontal scroll.
      overflow-wrap is the belt to that braces: a word longer than the line
      breaks instead of escaping the page. */
-  font-size: clamp(2rem, 9vw, 9rem);
+  font-size: clamp(2.6rem, 12vw, 11rem);
   overflow-wrap: anywhere;
 }
 .rd-mid {
   font-family: var(--rd-display);
-  font-weight: 800;
+  font-weight: 400;
   text-transform: uppercase;
   line-height: 0.95;
-  letter-spacing: -0.02em;
-  font-size: clamp(1.4rem, 4vw, 2.6rem);
+  letter-spacing: 0.01em;
+  font-size: clamp(1.5rem, 4.4vw, 3rem);
 }
 .rd-label {
   font-family: var(--rd-mono);
@@ -206,10 +218,10 @@ body:has([data-ap-rd]) {
 }
 .rd-row-name {
   font-family: var(--rd-display);
-  font-weight: 800;
+  font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: -0.01em;
-  font-size: clamp(0.95rem, 2.6vw, 1.4rem);
+  letter-spacing: 0.02em;
+  font-size: clamp(1.05rem, 2.8vw, 1.55rem);
   transition: color 0.12s linear;
 }
 .rd-row-meta {
@@ -244,7 +256,7 @@ body:has([data-ap-rd]) {
 .rd-sky {
   position: relative;
   width: 100%;
-  height: calc(100dvh - 84px);
+  height: calc(100dvh - 42px);
   overflow: hidden;
   touch-action: pan-y;
   cursor: grab;
@@ -275,11 +287,23 @@ body:has([data-ap-rd]) {
   transform: scale(1.03);
 }
 .rd-star figcaption {
+  /* Pieces overlap by design, so captions were landing on top of each
+     other and on neighbouring photographs. A solid chip and a single
+     clipped line keeps every name readable without tidying the collage
+     into a grid. */
+  display: inline-block;
   margin-top: 6px;
+  max-width: 100%;
+  padding: 3px 6px;
+  background: var(--rd-void);
+  border: 1px solid var(--rd-rule);
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--rd-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .rd-star:hover figcaption,
 .rd-star:focus-visible figcaption {
@@ -477,5 +501,130 @@ body:has([data-ap-rd]) {
   }
   .rd-caret::after {
     animation: none;
+  }
+}
+
+
+/* ---- brand mark ------------------------------------------------------- */
+
+/* The wordmark is the logo — hand-painted, never typeset. It is the only
+   place the brand name appears as an image, in the bar and over the field. */
+.rd-brand {
+  display: block;
+  line-height: 0;
+}
+.rd-brand img {
+  height: 22px;
+  width: auto;
+  display: block;
+}
+
+.rd-mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  pointer-events: none;
+  width: min(52vw, 560px);
+  opacity: 0.14;
+  mix-blend-mode: screen;
+}
+.rd-mark img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.rd-boot-mark {
+  width: min(70vw, 520px);
+  height: auto;
+  display: block;
+  animation: rd-in 0.5s ease-out both;
+}
+@keyframes rd-in {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+.rd-hint {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  pointer-events: none;
+  font-family: var(--rd-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--rd-dimmer);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rd-boot-mark {
+    animation: none;
+  }
+  .rd-mark {
+    display: none;
+  }
+}
+
+/* ---- ascii mark ------------------------------------------------------- */
+
+/* The wordmark sampled from its own pixels, then resolving into the real
+   artwork. Both states occupy the same box so nothing reflows on the swap. */
+.rd-asciimark {
+  position: relative;
+  display: block;
+}
+.rd-asciimark .rd-ascii {
+  margin: 0;
+  font-family: var(--rd-mono);
+  font-size: clamp(3px, 0.95vw, 8px);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  white-space: pre;
+  color: var(--rd-red);
+  animation: rd-flicker 0.9s steps(2) 1;
+}
+.rd-asciimark-real {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: 0;
+  transition: opacity 0.45s ease-out;
+}
+.rd-asciimark-real[data-on="true"] {
+  opacity: 1;
+  position: static;
+}
+.rd-asciimark .rd-ascii + .rd-asciimark-real {
+  position: absolute;
+  inset: 0;
+}
+
+@keyframes rd-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rd-asciimark .rd-ascii {
+    animation: none;
+  }
+  .rd-asciimark-real {
+    transition: none;
   }
 }
