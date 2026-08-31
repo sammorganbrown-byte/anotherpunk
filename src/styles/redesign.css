@@ -825,33 +825,17 @@ body:has([data-ap-rd]) {
   display: flex;
   justify-content: center;
 }
-.rd-pin-logo .rd-pin-box pre {
-  /* The full-block glyph fills neither its line box nor its advance width, so
-     the mark came out ruled with thin gaps in both directions. Rows are
-     pulled together, columns are tightened, and a same-colour shadow smears
-     each cell a fraction to close what is left. Solid ink, still built from
-     cells. */
-  line-height: 0.82;
-  letter-spacing: -0.045em;
-  /* The block art is narrower than the box it sits in, and a <pre> is
-     left-aligned by default, so the mark was hanging off to the left of the
-     screen centre even though its container was centred. */
-  /* Kept: with no plate behind it, the mark still has to survive drifting
-     over a pale photograph. */
-  text-shadow:
-    0.6px 0 0 currentColor,
-    -0.6px 0 0 currentColor,
-    0 0.6px 0 currentColor,
-    0 0 10px rgba(8, 8, 7, 0.9),
-    0 0 3px rgba(8, 8, 7, 0.95);
-  margin: 0;
-  font-family: var(--rd-mono);
-  line-height: 1;
-  letter-spacing: 0;
-  white-space: pre;
-  /* White, per the brief — the mark reads as ink on the black rather than
-     as the red it is everywhere else. */
-  color: var(--rd-red);
+/* The mark is a canvas of filled rectangles now, not block characters, so
+   none of the old glyph-metric hacks (squeezed line-height, negative
+   letter-spacing, a same-colour text-shadow smearing each cell) are needed
+   or wanted — they were all attempts to close seams that no longer exist.
+   One canvas pixel per cell, scaled up with nearest-neighbour: adjacent
+   cells share an edge, so the ink is solid and the blocks stay hard. */
+.rd-logo-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: pixelated;
 }
 
 .rd-pin-link {

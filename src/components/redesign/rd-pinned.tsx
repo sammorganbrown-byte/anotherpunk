@@ -12,22 +12,30 @@ import { LOGO_URL } from "../../routes/redesign/route";
  * field rather than as an overlay bolted on top.
  */
 
-// Solid block or nothing. Half-tone glyphs (▓▒░) put a grey texture inside
-// the letters; the mark should be one flat colour, pixelated only by the
-// grid it is drawn on.
-const GLITCH_ON = "█";
-
-/** The wordmark sampled to block characters, re-corrupting itself forever.
+/** The wordmark, drawn as rectangles on a canvas.
  *
- * The logo image is read once into a character grid; from then on a handful
- * of cells are randomly replaced each tick and restored on the next, so it
- * sits there permanently misprinting. That is the brand's own idea — a
- * print that drifts out of register — as a loop rather than a still. */
+ * This was built out of block characters (█) in a <pre> for a long time, and
+ * it was never going to be solid: that glyph fills neither its line box nor
+ * its advance width, so the mark came out ruled with hairlines in both
+ * directions, and how bad it looked depended on whichever mono font the
+ * browser had. Every fix was a metric hack — negative letter-spacing, a
+ * squeezed line-height, a same-colour text-shadow smearing each cell — and
+ * the vertical seams survived all of it.
+ *
+ * So: no font. The logo is sampled to a grid once, then painted as filled
+ * rectangles at exactly one canvas pixel per cell and scaled up with
+ * `image-rendering: pixelated`. Adjacent cells share an edge by definition,
+ * so the ink is solid, and the blocks stay hard-edged at any size.
+ */
+
+/** Columns across the mark. High enough that the painted brush edges and the
+ * drips read; low enough that it is still obviously built from cells. */
+const LOGO_COLS = 260;
+
 export function RdLogoCard() {
-  const [base, setBase] = useState<string[] | null>(null);
-  const [frame, setFrame] = useState<string[] | null>(null);
-  const timer = useRef(0);
   const box = useRef<HTMLDivElement | null>(null);
+  const canvas = useRef<HTMLCanvasElement | null>(null);
+  const [ready, setReady] = useState(false);
 
   // Drift, like everything else in the field — but anchored. The mark is one
   // of the floating objects rather than a label pasted over them, and it is
@@ -57,7 +65,6 @@ export function RdLogoCard() {
   }, []);
 
   useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const img = new Image();
     img.crossOrigin = "anonymous";
     img.src = LOGO_URL;
@@ -67,7 +74,7 @@ export function RdLogoCard() {
       // own grid. Find the actual ink first and sample only that box, which
       // makes the centring independent of however the file was exported.
       const probe = document.createElement("canvas");
-      const PW = Math.min(600, img.width);
+      const PW = Math.min(900, img.width);
       const PH = Math.max(1, Math.round((img.height / img.width) * PW));
       probe.width = PW;
       probe.height = PH;
@@ -103,87 +110,53 @@ export function RdLogoCard() {
       const bw = x1 - x0 + 1;
       const bh = y1 - y0 + 1;
 
-      // Higher resolution than before. At 76 columns the mark was a coarse
-      // approximation; this is fine enough that the painted brush edges and
-      // the drips read, while still obviously built from cells.
-      const C = 168;
-      const R = Math.max(4, Math.round((bh / bw) * C * 0.5));
-      const cv = document.createElement("canvas");
-      cv.width = C;
-      cv.height = R;
-      const g = cv.getContext("2d", { willReadFrequently: true });
-      if (!g) return;
-      // Draw ONLY the inked region, scaled to fill the grid exactly.
-      g.drawImage(probe, x0, y0, bw, bh, 0, 0, C, R);
+      // Canvas pixels are square, so the row count follows the ink box's own
+      // aspect directly. (The old half-height factor existed only to undo a
+      // mono cell being twice as tall as it is wide.)
+      const C = LOGO_COLS;
+      const R = Math.max(4, Math.round((bh / bw) * C));
+
+      // Sample at grid resolution, thresholded — solid or empty, never a
+      // shade between.
+      const samp = document.createElement("canvas");
+      samp.width = C;
+      samp.height = R;
+      const sg = samp.getContext("2d", { willReadFrequently: true });
+      if (!sg) return;
+      sg.drawImage(probe, x0, y0, bw, bh, 0, 0, C, R);
       let data: Uint8ClampedArray;
       try {
-        data = g.getImageData(0, 0, C, R).data;
+        data = sg.getImageData(0, 0, C, R).data;
       } catch {
         return;
       }
-      const rows: string[] = [];
+
+      const out = canvas.current;
+      if (!out) return;
+      out.width = C;
+      out.height = R;
+      const g = out.getContext("2d");
+      if (!g) return;
+      g.clearRect(0, 0, C, R);
+      // Read the brand red off the cascade so there is one source for it.
+      g.fillStyle =
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--rd-red")
+          .trim() || "#ed1c24";
       for (let y = 0; y < R; y++) {
-        let line = "";
         for (let x = 0; x < C; x++) {
-          const a = data[(y * C + x) * 4 + 3] / 255;
-          // Binary threshold — solid or empty, never a shade between.
-          line += a > 0.45 ? "█" : " ";
+          if (data[(y * C + x) * 4 + 3] / 255 > 0.45) g.fillRect(x, y, 1, 1);
         }
-        rows.push(line);
       }
-      setBase(rows);
-      setFrame(rows);
-
-      if (reduced) return;
-      // Corrupt a few cells, then put them back. Never settles.
-      timer.current = window.setInterval(() => {
-        setFrame(() => {
-          const next = rows.slice();
-          // The glitch drops cells out of the mark and fills cells just
-          // outside it — misregistration, not a change of texture. Every
-          // cell is still either solid or empty.
-          const hits = 26 + Math.floor(Math.random() * 34);
-          for (let i = 0; i < hits; i++) {
-            const y = (Math.random() * rows.length) | 0;
-            const line = next[y].split("");
-            const x = (Math.random() * line.length) | 0;
-            line[x] = line[x] === " " ? (Math.random() < 0.35 ? GLITCH_ON : " ") : " ";
-            next[y] = line.join("");
-          }
-          return next;
-        });
-      }, 110);
+      setReady(true);
     };
-    return () => window.clearInterval(timer.current);
   }, []);
-
-  // Size the cells to the box rather than guessing in CSS — the column count
-  // can change and the mark must always fill its width exactly.
-  useEffect(() => {
-    const host = box.current;
-    const pre = host?.querySelector("pre") as HTMLPreElement | null;
-    if (!host || !pre || !frame) return;
-    const fit = () => {
-      const avail = host.clientWidth;
-      const chars = frame[0]?.length || 1;
-      if (!avail || !chars) return;
-      pre.style.fontSize = "100px";
-      const advance = pre.scrollWidth / chars / 100;
-      pre.style.fontSize = `${Math.max(0.8, (avail / chars / advance) * 0.99)}px`;
-    };
-    fit();
-    const ro = new ResizeObserver(fit);
-    ro.observe(host);
-    return () => ro.disconnect();
-    // Only refit when the grid's dimensions change, not on every glitch tick.
-  }, [frame?.[0]?.length, frame?.length]);
 
   return (
     <div className="rd-pin rd-pin-logo" ref={box}>
       <div className="rd-pin-box">
-        {frame ? (
-          <pre aria-hidden="true">{frame.join("\n")}</pre>
-        ) : (
+        <canvas ref={canvas} className="rd-logo-canvas" aria-hidden="true" />
+        {ready ? null : (
           <img src={LOGO_URL} alt="" aria-hidden="true" className="w-full" />
         )}
         <span className="rd-sr">Another Punk</span>
