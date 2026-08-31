@@ -808,10 +808,18 @@ body:has([data-ap-rd]) {
   border: 0;
   padding: 0;
   backdrop-filter: none;
+  /* Centres the block art inside the box. Doing this here rather than with
+     auto margins on the <pre>, because the rule below also sets margin:0 and
+     was silently cancelling them. */
+  display: flex;
+  justify-content: center;
 }
 .rd-pin-logo .rd-pin-box pre {
-  /* Without the plate behind it the mark has to survive drifting over a pale
-     photograph, so it carries its own shadow rather than a box. */
+  /* The block art is narrower than the box it sits in, and a <pre> is
+     left-aligned by default, so the mark was hanging off to the left of the
+     screen centre even though its container was centred. */
+  /* Kept: with no plate behind it, the mark still has to survive drifting
+     over a pale photograph. */
   text-shadow:
     0 0 10px rgba(8, 8, 7, 0.9),
     0 0 3px rgba(8, 8, 7, 0.95);

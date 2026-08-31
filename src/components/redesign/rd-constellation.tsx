@@ -172,15 +172,45 @@ export function RdConstellation({
       clamp();
 
       const PULL = 250;
+
+      // The wordmark holds the middle of the screen and photographs are not
+      // allowed to cross it. Read its box once per frame (not per piece) and
+      // treat it as an exclusion zone: anything that would land on top of it
+      // gets pushed radially outwards just far enough to clear.
+      const markEl = document.querySelector(".rd-pin-logo") as HTMLElement | null;
+      const mark = markEl?.getBoundingClientRect() ?? null;
+      const mx = mark ? mark.left + mark.width / 2 : 0;
+      const my = mark ? mark.top + mark.height / 2 : 0;
+      // A circle around the mark, sized to its longest edge plus breathing room.
+      const markR = mark ? Math.max(mark.width, mark.height) * 0.5 + 26 : 0;
+
       pieces.forEach((s, i) => {
         const el = nodes.current[i];
         if (!el) return;
-        const dx = pan.current.x + Math.sin(t + s.phase) * s.amp;
-        const dy = pan.current.y + Math.cos(t * 0.8 + s.phase) * s.amp;
+        let dx = pan.current.x + Math.sin(t + s.phase) * s.amp;
+        let dy = pan.current.y + Math.cos(t * 0.8 + s.phase) * s.amp;
 
         // Screen position = CSS layout (s.x/s.y) + the delta we apply here.
-        const cx = s.x + dx + s.w / 2;
-        const cy = s.y + dy + s.w * 0.375;
+        let cx = s.x + dx + s.w / 2;
+        let cy = s.y + dy + s.w * 0.375;
+
+        if (mark) {
+          const pr = Math.max(s.w, s.w * 0.75) * 0.5;
+          const vx = cx - mx;
+          const vy = cy - my;
+          const d = Math.hypot(vx, vy) || 0.0001;
+          const need = markR + pr;
+          if (d < need) {
+            // Push straight out along the line from the mark to the piece.
+            const k = (need - d) / d;
+            const ox = vx * k;
+            const oy = vy * k;
+            dx += ox;
+            dy += oy;
+            cx += ox;
+            cy += oy;
+          }
+        }
         const dist = Math.hypot(cursor.current.x - cx, cursor.current.y - cy);
         const near = Math.max(0, 1 - dist / PULL);
 

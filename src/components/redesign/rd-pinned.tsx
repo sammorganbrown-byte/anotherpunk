@@ -59,14 +59,56 @@ export function RdLogoCard() {
     img.crossOrigin = "anonymous";
     img.src = LOGO_URL;
     img.onload = () => {
+      // The source PNG carries transparent padding — noticeably more on the
+      // right — so sampling the whole file put the mark off-centre inside its
+      // own grid. Find the actual ink first and sample only that box, which
+      // makes the centring independent of however the file was exported.
+      const probe = document.createElement("canvas");
+      const PW = Math.min(600, img.width);
+      const PH = Math.max(1, Math.round((img.height / img.width) * PW));
+      probe.width = PW;
+      probe.height = PH;
+      const pg = probe.getContext("2d", { willReadFrequently: true });
+      if (!pg) return;
+      pg.drawImage(img, 0, 0, PW, PH);
+
+      let x0 = PW;
+      let y0 = PH;
+      let x1 = -1;
+      let y1 = -1;
+      try {
+        const pd = pg.getImageData(0, 0, PW, PH).data;
+        for (let y = 0; y < PH; y++) {
+          for (let x = 0; x < PW; x++) {
+            if (pd[(y * PW + x) * 4 + 3] > 24) {
+              if (x < x0) x0 = x;
+              if (x > x1) x1 = x;
+              if (y < y0) y0 = y;
+              if (y > y1) y1 = y;
+            }
+          }
+        }
+      } catch {
+        return;
+      }
+      if (x1 < x0 || y1 < y0) {
+        x0 = 0;
+        y0 = 0;
+        x1 = PW - 1;
+        y1 = PH - 1;
+      }
+      const bw = x1 - x0 + 1;
+      const bh = y1 - y0 + 1;
+
       const C = 76;
-      const R = Math.max(4, Math.round((img.height / img.width) * C * 0.5));
+      const R = Math.max(4, Math.round((bh / bw) * C * 0.5));
       const cv = document.createElement("canvas");
       cv.width = C;
       cv.height = R;
       const g = cv.getContext("2d", { willReadFrequently: true });
       if (!g) return;
-      g.drawImage(img, 0, 0, C, R);
+      // Draw ONLY the inked region, scaled to fill the grid exactly.
+      g.drawImage(probe, x0, y0, bw, bh, 0, 0, C, R);
       let data: Uint8ClampedArray;
       try {
         data = g.getImageData(0, 0, C, R).data;
