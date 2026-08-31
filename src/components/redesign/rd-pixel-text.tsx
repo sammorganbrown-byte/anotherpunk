@@ -21,6 +21,37 @@ import { useEffect, useRef, useState } from "react";
 
 const NOISE = "█▓▒░#%@*+=";
 
+/** Break long headings over several lines.
+ *
+ * A block-type heading's height is fixed by geometry, not by the grid it is
+ * sampled on: the cells are half as wide as they are tall, so the rendered
+ * height always works out to the text's own aspect ratio times the column
+ * width, whatever the column count. Which means a 25-character title in a
+ * 520px column is 29px tall and unreadable — and no amount of resampling
+ * changes that. The only lever is the length of the longest LINE. So wrap.
+ *
+ * All the lines share one bitmap and therefore one scale, rather than each
+ * being fitted separately and coming out a different size.
+ */
+const MAX_LINE = 15;
+
+function wrapText(text: string, max: number): string[] {
+  const words = text.split(/\s+/).filter(Boolean);
+  if (!words.length) return [text];
+  const lines: string[] = [];
+  let cur = "";
+  for (const w of words) {
+    if (!cur) cur = w;
+    else if (cur.length + 1 + w.length <= max) cur += " " + w;
+    else {
+      lines.push(cur);
+      cur = w;
+    }
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+
 export function RdPixelText({
   text,
   cols,
@@ -42,9 +73,12 @@ export function RdPixelText({
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    // ~14 columns per character. Below about 10 the counters inside letters
-    // close up and the whole thing turns into a bar code.
-    const C = cols ?? Math.min(260, Math.max(56, Math.round(text.length * 14)));
+    const lines = wrapText(text, MAX_LINE);
+    // ~14 columns per character of the LONGEST line. Below about 10 the
+    // counters inside letters close up and the whole thing turns into a bar
+    // code.
+    const longest = lines.reduce((a, l) => Math.max(a, l.length), 1);
+    const C = cols ?? Math.min(260, Math.max(56, Math.round(longest * 14)));
 
     const cv = document.createElement("canvas");
     const ctx = cv.getContext("2d", { willReadFrequently: true });
@@ -54,13 +88,15 @@ export function RdPixelText({
     const FS = 120;
     const font = `${FS}px Anton, "Arial Narrow", Impact, "Haettenschweiler", sans-serif`;
     ctx.font = font;
-    const m = ctx.measureText(text);
-    const wpx = Math.max(1, m.width);
+    const metrics = lines.map((l) => ctx.measureText(l));
+    const wpx = Math.max(1, ...metrics.map((m) => m.width));
     // Cap height from the metrics where available, so descenders and the
     // cap line do not leave a band of empty rows top and bottom.
-    const asc = m.actualBoundingBoxAscent || FS * 0.72;
-    const desc = m.actualBoundingBoxDescent || FS * 0.05;
-    const hpx = Math.max(1, asc + desc);
+    const asc = metrics[0].actualBoundingBoxAscent || FS * 0.72;
+    const desc =
+      metrics[metrics.length - 1].actualBoundingBoxDescent || FS * 0.05;
+    const leading = FS * 0.92;
+    const hpx = Math.max(1, asc + desc + (lines.length - 1) * leading);
 
     // A mono cell is about twice as tall as it is wide, so the row count is
     // half what a square-pixel grid would need to keep the proportions.
@@ -75,7 +111,7 @@ export function RdPixelText({
     g.fillStyle = "#fff";
     g.textBaseline = "alphabetic";
     g.setTransform(C / wpx, 0, 0, R / hpx, 0, 0);
-    g.fillText(text, 0, asc);
+    lines.forEach((l, i) => g.fillText(l, 0, asc + i * leading));
     g.setTransform(1, 0, 0, 1, 0, 0);
 
     let data: Uint8ClampedArray;
