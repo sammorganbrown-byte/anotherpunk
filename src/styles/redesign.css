@@ -1283,7 +1283,15 @@ body:has([data-ap-rd]) {
   pointer-events: none;
   width: 100%;
   height: 100%;
+  /* Nearest-neighbour up from the 180x103 bitmap gives 8px blocks, matching
+     the CRT's 12.5%-then-scale(8) quantisation exactly. */
   image-rendering: pixelated;
+  /* But the CRT also bleeds the scaled result — a real tube quantised the
+     signal and THEN let the phosphor soften it. Without the same bleed these
+     cells were the only hard-edged thing on the screen, which is what made
+     them sit on top of the picture rather than in it. Same radius, applied
+     the same way: after the scale, not to the source. */
+  filter: blur(0.35px);
 }
 @media (prefers-reduced-motion: reduce) {
   .rd-stray {
