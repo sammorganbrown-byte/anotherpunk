@@ -21,9 +21,13 @@ import { useEffect, useRef } from "react";
 
 /** Matches the CRT overlay's quantisation. */
 const CELL = 8;
-/** Roughly one lit cell per 450, so it stays sparse at any screen size. */
-const DENSITY = 1 / 450;
-const TICK_MS = 110;
+/** Roughly one lit cell per 2000, so it stays sparse at any screen size.
+ * At 1440x820 that is about ten cells lit at a time — noise at the edge of
+ * the eye, not a starfield. The first pass was four times this and read as
+ * confetti over the photographs. */
+const DENSITY = 1 / 2000;
+/** Slow enough to register as an intermittent fault rather than a flicker. */
+const TICK_MS = 190;
 
 export function RdStrayPixels() {
   const ref = useRef<HTMLCanvasElement | null>(null);
@@ -58,11 +62,11 @@ export function RdStrayPixels() {
         const y = (Math.random() * rows) | 0;
         // Varying alpha so the field has depth rather than reading as one
         // flat scatter of identical dots.
-        g.globalAlpha = 0.3 + Math.random() * 0.7;
+        g.globalAlpha = 0.25 + Math.random() * 0.5;
         g.fillStyle = red;
         // Occasionally a two-cell run, which looks like a dropped sample
         // rather than a speck of dust.
-        g.fillRect(x, y, Math.random() < 0.18 ? 2 : 1, 1);
+        g.fillRect(x, y, Math.random() < 0.1 ? 2 : 1, 1);
       }
       g.globalAlpha = 1;
     };
