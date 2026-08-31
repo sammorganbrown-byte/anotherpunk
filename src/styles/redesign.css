@@ -1,0 +1,481 @@
+/* ANOTHER PUNK // JOB QUEUE — parallel design direction, /redesign/*
+ *
+ * Entirely separate from src/styles.css. Nothing here is imported by the
+ * live site, and every rule is scoped under [data-ap-rd] so it cannot reach
+ * the shipping [data-brand="another-punk"] tree even if both were mounted.
+ *
+ * Loaded only by src/routes/redesign/route.tsx.
+ *
+ * DARK ON PURPOSE. The live site's own comment records a deliberate choice
+ * of a light paper ground; this direction reverses it. See the summary.
+ */
+
+[data-ap-rd] {
+  /* Ground is near-black but not #000 — a real black crushes the film grain
+     and the dither field into nothing. */
+  --rd-void: #080807;
+  --rd-void-2: #0e0d0c;
+  --rd-paper: #ece8e0;
+  --rd-dim: #77716a;
+  --rd-dimmer: #443f3a;
+  --rd-red: #ed1c24;
+  --rd-rule: #1e1c1a;
+
+  --rd-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --rd-display: var(--font-display, "Unbounded", "Arial Black", sans-serif);
+
+  background: var(--rd-void);
+  color: var(--rd-paper);
+  font-family: var(--rd-mono);
+  font-size: 13px;
+  line-height: 1.55;
+  min-height: 100dvh;
+  position: relative;
+  isolation: isolate;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* The live root shell renders its own header/footer/audio player around
+   every route. This direction supplies its own chrome, so the shipping
+   chrome is hidden WHILE a redesign page is mounted — via :has(), from this
+   stylesheet, rather than by editing __root.tsx (which is off-limits and
+   must keep rendering `/` byte-for-byte). No redesign page mounted, no
+   attribute, no effect. */
+body:has([data-ap-rd]) > div > header,
+body:has([data-ap-rd]) > div > footer,
+body:has([data-ap-rd]) > div > div.fixed {
+  display: none !important;
+}
+body:has([data-ap-rd]) {
+  background: var(--rd-void);
+}
+
+[data-ap-rd] ::selection {
+  background: var(--rd-red);
+  color: var(--rd-void);
+}
+
+/* ---- type ------------------------------------------------------------- */
+
+.rd-mono {
+  font-family: var(--rd-mono);
+}
+.rd-log {
+  font-family: var(--rd-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--rd-dim);
+}
+.rd-key {
+  color: var(--rd-red);
+}
+.rd-ok {
+  color: var(--rd-paper);
+}
+.rd-huge {
+  font-family: var(--rd-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.86;
+  letter-spacing: -0.03em;
+  /* 9vw, not 13 — Unbounded is wide, and a single long word ("COMPULSION.")
+     at 13vw pushed past the viewport and gave the page a horizontal scroll.
+     overflow-wrap is the belt to that braces: a word longer than the line
+     breaks instead of escaping the page. */
+  font-size: clamp(2rem, 9vw, 9rem);
+  overflow-wrap: anywhere;
+}
+.rd-mid {
+  font-family: var(--rd-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
+}
+.rd-label {
+  font-family: var(--rd-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--rd-dim);
+}
+
+/* ---- the dither field ------------------------------------------------- */
+
+.rd-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Scanline veil. Cheap, static, sells the terminal more than any animation. */
+.rd-scan {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.028) 0px,
+    rgba(255, 255, 255, 0.028) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+}
+
+[data-ap-rd] main,
+[data-ap-rd] .rd-above {
+  position: relative;
+  z-index: 2;
+}
+
+/* ---- chrome ----------------------------------------------------------- */
+
+.rd-bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--rd-rule);
+  background: color-mix(in srgb, var(--rd-void) 88%, transparent);
+  backdrop-filter: blur(6px);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rd-link {
+  color: var(--rd-dim);
+  text-decoration: none;
+  padding: 4px 2px;
+  transition: color 0.12s linear;
+}
+.rd-link:hover,
+.rd-link:focus-visible {
+  color: var(--rd-red);
+  outline: none;
+}
+.rd-link[data-on="true"] {
+  color: var(--rd-paper);
+}
+
+[data-ap-rd] a:focus-visible,
+[data-ap-rd] button:focus-visible,
+[data-ap-rd] input:focus-visible,
+[data-ap-rd] select:focus-visible {
+  outline: 2px solid var(--rd-red);
+  outline-offset: 2px;
+}
+
+/* ---- job rows (homepage log + cart) ----------------------------------- */
+
+.rd-row {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr auto;
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--rd-rule);
+  color: var(--rd-paper);
+  text-decoration: none;
+  position: relative;
+  transition:
+    background-color 0.12s linear,
+    color 0.12s linear;
+}
+.rd-row:hover,
+.rd-row:focus-visible {
+  background: var(--rd-void-2);
+  outline: none;
+}
+.rd-row:hover .rd-row-name,
+.rd-row:focus-visible .rd-row-name {
+  color: var(--rd-red);
+}
+.rd-row-idx {
+  color: var(--rd-dimmer);
+  font-variant-numeric: tabular-nums;
+}
+.rd-row-name {
+  font-family: var(--rd-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  font-size: clamp(0.95rem, 2.6vw, 1.4rem);
+  transition: color 0.12s linear;
+}
+.rd-row-meta {
+  color: var(--rd-dim);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Thumbnail that only exists on hover — browsing as reveal, not as a grid. */
+.rd-peek {
+  position: fixed;
+  width: 210px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  pointer-events: none;
+  z-index: 30;
+  border: 1px solid var(--rd-rule);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.96);
+  transition:
+    opacity 0.14s linear,
+    transform 0.14s linear;
+  filter: grayscale(1) contrast(1.25) brightness(0.92);
+}
+.rd-peek[data-on="true"] {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ---- constellation ---------------------------------------------------- */
+
+.rd-sky {
+  position: relative;
+  width: 100%;
+  height: calc(100dvh - 84px);
+  overflow: hidden;
+  touch-action: pan-y;
+  cursor: grab;
+}
+.rd-sky[data-drag="true"] {
+  cursor: grabbing;
+}
+.rd-star {
+  position: absolute;
+  display: block;
+  text-decoration: none;
+  will-change: transform;
+}
+.rd-star img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.3) brightness(0.8);
+  transition:
+    filter 0.18s linear,
+    transform 0.18s linear;
+  border: 1px solid var(--rd-rule);
+}
+.rd-star:hover img,
+.rd-star:focus-visible img {
+  filter: none;
+  transform: scale(1.03);
+}
+.rd-star figcaption {
+  margin-top: 6px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rd-dim);
+}
+.rd-star:hover figcaption,
+.rd-star:focus-visible figcaption {
+  color: var(--rd-red);
+}
+
+/* ---- controls --------------------------------------------------------- */
+
+.rd-btn {
+  font-family: var(--rd-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 14px 18px;
+  border: 1px solid var(--rd-paper);
+  background: transparent;
+  color: var(--rd-paper);
+  cursor: pointer;
+  transition:
+    background-color 0.12s linear,
+    color 0.12s linear,
+    border-color 0.12s linear;
+}
+.rd-btn:hover:not(:disabled),
+.rd-btn:focus-visible:not(:disabled) {
+  background: var(--rd-paper);
+  color: var(--rd-void);
+}
+.rd-btn[data-primary="true"] {
+  border-color: var(--rd-red);
+  background: var(--rd-red);
+  color: var(--rd-void);
+  font-weight: 700;
+}
+.rd-btn[data-primary="true"]:hover:not(:disabled) {
+  background: var(--rd-paper);
+  border-color: var(--rd-paper);
+}
+.rd-btn:disabled {
+  color: var(--rd-dimmer);
+  border-color: var(--rd-rule);
+  cursor: not-allowed;
+}
+
+.rd-cell {
+  font-family: var(--rd-mono);
+  font-size: 11px;
+  min-width: 46px;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid var(--rd-rule);
+  background: transparent;
+  color: var(--rd-dim);
+  cursor: pointer;
+  transition:
+    border-color 0.12s linear,
+    color 0.12s linear;
+}
+.rd-cell:hover {
+  border-color: var(--rd-paper);
+  color: var(--rd-paper);
+}
+.rd-cell[aria-pressed="true"] {
+  border-color: var(--rd-red);
+  color: var(--rd-red);
+}
+
+.rd-input {
+  width: 100%;
+  font-family: var(--rd-mono);
+  font-size: 13px;
+  padding: 11px 12px;
+  background: var(--rd-void-2);
+  border: 1px solid var(--rd-rule);
+  color: var(--rd-paper);
+  min-height: 44px;
+}
+.rd-input::placeholder {
+  color: var(--rd-dimmer);
+}
+.rd-input:focus {
+  border-color: var(--rd-red);
+  outline: none;
+}
+
+/* ---- boot ------------------------------------------------------------- */
+
+.rd-boot {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--rd-void);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 18px;
+  overflow: hidden;
+}
+.rd-ascii {
+  font-family: var(--rd-mono);
+  font-size: clamp(4px, 1.35vw, 11px);
+  line-height: 1.02;
+  white-space: pre;
+  color: var(--rd-red);
+  margin: 0 0 22px;
+}
+.rd-bootline {
+  display: block;
+  font-size: clamp(10px, 2.4vw, 12px);
+  color: var(--rd-dim);
+  letter-spacing: 0.05em;
+}
+
+.rd-caret::after {
+  content: "\2588";
+  color: var(--rd-red);
+  animation: rd-blink 1s steps(1) infinite;
+}
+@keyframes rd-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ---- product ---------------------------------------------------------- */
+
+.rd-plate {
+  position: relative;
+  background: var(--rd-void-2);
+  overflow: hidden;
+}
+.rd-plate img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.22) brightness(0.86);
+  transition: filter 0.25s linear;
+}
+.rd-plate[data-lit="true"] img {
+  filter: none;
+}
+/* Red duotone wash, lifted off on hover — the print colour applied to the
+   photograph rather than sitting next to it. */
+.rd-plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--rd-red);
+  mix-blend-mode: color;
+  opacity: 0.32;
+  pointer-events: none;
+  transition: opacity 0.25s linear;
+}
+.rd-plate[data-lit="true"]::after {
+  opacity: 0;
+}
+
+.rd-marq {
+  border-block: 1px solid var(--rd-rule);
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 7px 0;
+}
+.rd-marq > span {
+  display: inline-block;
+  padding-right: 2rem;
+  animation: rd-slide 26s linear infinite;
+  color: var(--rd-dimmer);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+@keyframes rd-slide {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---- reduced motion: honest static fallback --------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ap-rd] *,
+  [data-ap-rd] *::before,
+  [data-ap-rd] *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .rd-field {
+    display: none;
+  }
+  .rd-scan {
+    display: none;
+  }
+  .rd-caret::after {
+    animation: none;
+  }
+}
