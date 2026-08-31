@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useCart } from "../../lib/cart-context";
 import { RdField } from "../../components/redesign/rd-field";
 import rdCss from "../../styles/redesign.css?url";
-import { RdStrayPixels } from "../../components/redesign/rd-stray";
 
 /** The official hand-painted wordmark — the brand mark, not a typeface.
  * Same asset the live site uses. */
@@ -121,7 +120,6 @@ function RedesignLayout() {
     <div data-ap-rd className="min-h-dvh">
       {reduced ? null : <RdField />}
       <div className="rd-scan" aria-hidden="true" />
-      <RdStrayPixels />
 
       <header className="rd-bar">
         <Link to="/redesign" className="rd-brand">

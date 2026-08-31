@@ -131,21 +131,49 @@ export function RdLogoCard() {
         return;
       }
 
+      // Which cells actually get ink. Do this BEFORE sizing the canvas: the
+      // bounding box above is found at alpha > 24/255, but a cell is only
+      // filled at alpha > 0.45, and the painted logo's drips fade out well
+      // below that. So the box ran past the last painted row and left a band
+      // of empty cells under the mark — which, with the whole thing centred
+      // on its box, read as more padding below the logo than above it.
+      // Crop to the cells that are really drawn.
+      const on: boolean[] = new Array(C * R);
+      let ix0 = C;
+      let iy0 = R;
+      let ix1 = -1;
+      let iy1 = -1;
+      for (let y = 0; y < R; y++) {
+        for (let x = 0; x < C; x++) {
+          const lit = data[(y * C + x) * 4 + 3] / 255 > 0.45;
+          on[y * C + x] = lit;
+          if (lit) {
+            if (x < ix0) ix0 = x;
+            if (x > ix1) ix1 = x;
+            if (y < iy0) iy0 = y;
+            if (y > iy1) iy1 = y;
+          }
+        }
+      }
+      if (ix1 < ix0 || iy1 < iy0) return;
+      const CW = ix1 - ix0 + 1;
+      const CH = iy1 - iy0 + 1;
+
       const out = canvas.current;
       if (!out) return;
-      out.width = C;
-      out.height = R;
+      out.width = CW;
+      out.height = CH;
       const g = out.getContext("2d");
       if (!g) return;
-      g.clearRect(0, 0, C, R);
+      g.clearRect(0, 0, CW, CH);
       // Read the brand red off the cascade so there is one source for it.
       g.fillStyle =
         getComputedStyle(document.documentElement)
           .getPropertyValue("--rd-red")
           .trim() || "#ed1c24";
-      for (let y = 0; y < R; y++) {
-        for (let x = 0; x < C; x++) {
-          if (data[(y * C + x) * 4 + 3] / 255 > 0.45) g.fillRect(x, y, 1, 1);
+      for (let y = iy0; y <= iy1; y++) {
+        for (let x = ix0; x <= ix1; x++) {
+          if (on[y * C + x]) g.fillRect(x - ix0, y - iy0, 1, 1);
         }
       }
       setReady(true);

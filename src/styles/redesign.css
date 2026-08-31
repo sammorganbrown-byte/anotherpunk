@@ -795,7 +795,7 @@ body:has([data-ap-rd]) {
   /* The drift loop overwrites this with the same translate plus its offset;
      this value is what shows before the first frame. */
   transform: translate(-50%, -50%);
-  width: min(40vw, 396px);
+  width: min(32vw, 318px);
   will-change: transform;
 }
 .rd-pin-shop {
@@ -892,7 +892,7 @@ body:has([data-ap-rd]) {
 
 @media (max-width: 700px) {
   .rd-pin-logo {
-    width: 74vw;
+    width: 56vw;
   }
   .rd-pin-shop {
     right: 10px;
@@ -1270,31 +1270,37 @@ body:has([data-ap-rd]) {
   }
 }
 
-/* ---- stray pixels ------------------------------------------------------ */
 
-/* Red cells flicking on and off across the whole screen. Drawn on the same
-   8px grid the CRT quantises to, so they read as noise in the signal rather
-   than as elements floating over the page. Decoration only: it never takes
-   a pointer, and it sits under both locked bars. */
-.rd-stray {
-  position: fixed;
-  inset: 0;
-  z-index: 55;
-  pointer-events: none;
-  width: 100%;
-  height: 100%;
-  /* Nearest-neighbour up from the 180x103 bitmap gives 8px blocks, matching
-     the CRT's 12.5%-then-scale(8) quantisation exactly. */
-  image-rendering: pixelated;
-  /* But the CRT also bleeds the scaled result — a real tube quantised the
-     signal and THEN let the phosphor soften it. Without the same bleed these
-     cells were the only hard-edged thing on the screen, which is what made
-     them sit on top of the picture rather than in it. Same radius, applied
-     the same way: after the scale, not to the source. */
-  filter: blur(0.35px);
-}
-@media (prefers-reduced-motion: reduce) {
-  .rd-stray {
+/* ---- top bar on a phone ------------------------------------------------ */
+
+/* Five items at desktop size do not fit across 390px: the bar wrapped to two
+   lines and the separators ended up orphaned at the start of the second row,
+   which is what made it read as broken rather than as tight. Shrink the type,
+   tighten the gaps, forbid the wrap outright, and drop the clock — it is
+   atmosphere, and it is the one item that costs width without carrying a
+   destination. */
+@media (max-width: 700px) {
+  [data-ap-rd] .rd-bar {
+    gap: 10px;
+    padding: 8px 10px;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    flex-wrap: nowrap;
+  }
+  .rd-brand {
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+  }
+  .rd-nav {
+    gap: 7px;
+  }
+  .rd-nav > * + *::before {
+    width: 2px;
+    height: 2px;
+    margin-right: 7px;
+  }
+  /* The clock goes. Everything left is somewhere you can get to. */
+  .rd-bar .rd-log.tabular-nums {
     display: none;
   }
 }

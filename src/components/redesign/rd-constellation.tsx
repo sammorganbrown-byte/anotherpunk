@@ -236,8 +236,15 @@ export function RdConstellation({
       const mark = markEl?.getBoundingClientRect() ?? null;
       const mx = mark ? mark.left + mark.width / 2 : 0;
       const my = mark ? mark.top + mark.height / 2 : 0;
-      // A circle around the mark, sized to its longest edge plus breathing room.
-      const markR = mark ? Math.max(mark.width, mark.height) * 0.5 + 6 : 0;
+      // An ELLIPSE around the mark, matching its own proportions, not a
+      // circle sized to its longest edge. The mark is about twice as wide as
+      // it is tall, so a circle forced as much clearance above and below as
+      // it did at the sides — and with the mark riding high at top: 46%, the
+      // half of that band which fell below stayed on screen while the half
+      // above ran into the bar. Which is exactly the reported symptom: too
+      // much room under the logo, correct room over it.
+      const markRX = mark ? mark.width * 0.5 + 6 : 0;
+      const markRY = mark ? mark.height * 0.5 + 6 : 0;
 
       pieces.forEach((s, i) => {
         const el = nodes.current[i];
@@ -250,14 +257,20 @@ export function RdConstellation({
         let cy = s.y + dy + s.w * 0.375;
 
         if (mark) {
-          const pr = Math.max(s.w, s.w * 0.75) * 0.5;
+          // The piece's own half-extents, which are not square either.
+          const prX = s.w * 0.5;
+          const prY = s.w * 0.375;
           const vx = cx - mx;
           const vy = cy - my;
-          const d = Math.hypot(vx, vy) || 0.0001;
-          const need = markR + pr;
-          if (d < need) {
-            // Push straight out along the line from the mark to the piece.
-            const k = (need - d) / d;
+          // Normalise each axis by its own clearance, so "inside the zone" is
+          // d < 1 on an ellipse rather than on a circle.
+          const nx = vx / (markRX + prX);
+          const ny = vy / (markRY + prY);
+          const d = Math.hypot(nx, ny) || 0.0001;
+          if (d < 1) {
+            // Push straight out along the line from the mark to the piece,
+            // far enough to land on the ellipse.
+            const k = (1 - d) / d;
             const ox = vx * k;
             const oy = vy * k;
             dx += ox;
