@@ -90,7 +90,7 @@ function RedesignProduct() {
           <p className="rd-label mb-3">
             JOB {String(idx).padStart(3, "0")} <span className="rd-key">/</span> SPEC
           </p>
-          <RdPixelText as="h1" text={product.title.toUpperCase()} cols={44} />
+          <RdPixelText as="h1" text={product.title.toUpperCase()} />
         </div>
 
         <dl className="flex flex-col gap-[3px]">
@@ -110,7 +110,7 @@ function RedesignProduct() {
 
         {product.quote ? (
           <blockquote className="border-l-2 border-[var(--rd-red)] pl-4">
-            <RdPixelText text={product.quote.toUpperCase()} cols={52} data-red="true" />
+            <RdPixelText text={product.quote.toUpperCase()} className="rd-pix-red" />
             <footer className="rd-label mt-3">{product.quoteSource}</footer>
           </blockquote>
         ) : null}
@@ -175,7 +175,7 @@ function RedesignProduct() {
             ← Back to the field
           </Link>
           <Link to="/redesign/shop" className="rd-link underline underline-offset-4">
-            Full index
+            Shop
           </Link>
         </div>
       </div>

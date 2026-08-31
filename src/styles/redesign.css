@@ -644,7 +644,7 @@ body:has([data-ap-rd]) {
   color: var(--rd-paper);
   overflow-x: auto;
 }
-.rd-pixtext[data-red="true"] pre {
+.rd-pixtext.rd-pix-red pre {
   color: var(--rd-red);
 }
 
@@ -712,4 +712,169 @@ body:has([data-ap-rd]) {
 .rd-star-link {
   display: block;
   text-decoration: none;
+}
+
+/* ---- background film -------------------------------------------------- */
+
+/* The campaign film under the grain. Crushed to near-monochrome and held at
+   low opacity — this is movement in the room, not something to watch. */
+.rd-backfilm {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  /* Pushed much further down than it first was. At 0.22 with only a mild
+     brightness cut, a big high-contrast frame from the film (a shirt back
+     filling the screen) read louder than the products in front of it —
+     especially on a phone, where the pieces are small. It has to be
+     movement you notice at the edge of vision, never a competing image. */
+  opacity: 0.14;
+  filter: grayscale(1) contrast(1.15) brightness(0.28);
+}
+
+/* Scrim between the film and everything else, so no single bright frame can
+   ever wash out the pieces sitting on top of it. */
+.rd-backfilm + * {
+  position: relative;
+}
+[data-ap-rd]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    rgba(8, 8, 7, 0.55) 0%,
+    rgba(8, 8, 7, 0.82) 60%,
+    rgba(8, 8, 7, 0.94) 100%
+  );
+}
+
+/* ---- pinned cards ----------------------------------------------------- */
+
+.rd-pin {
+  position: fixed;
+  z-index: 25;
+  pointer-events: none;
+}
+.rd-pin-logo {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(46vw, 460px);
+}
+.rd-pin-shop {
+  right: 14px;
+  bottom: 46px;
+  pointer-events: auto;
+}
+
+.rd-pin-box {
+  display: block;
+  background: color-mix(in srgb, var(--rd-void) 82%, transparent);
+  border: 1px solid var(--rd-paper);
+  padding: 14px 16px;
+  backdrop-filter: blur(2px);
+}
+.rd-pin-logo .rd-pin-box pre {
+  margin: 0;
+  font-family: var(--rd-mono);
+  font-size: clamp(3px, 0.72vw, 7px);
+  line-height: 1;
+  letter-spacing: 0.055em;
+  white-space: pre;
+  /* White, per the brief — the mark reads as ink on the black rather than
+     as the red it is everywhere else. */
+  color: var(--rd-paper);
+}
+
+.rd-pin-link {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition:
+    background-color 0.14s linear,
+    border-color 0.14s linear;
+}
+.rd-pin-link:hover,
+.rd-pin-link:focus-visible {
+  background: var(--rd-red);
+  border-color: var(--rd-red);
+}
+.rd-pin-kicker {
+  font-family: var(--rd-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rd-dim);
+}
+.rd-pin-link:hover .rd-pin-kicker,
+.rd-pin-link:focus-visible .rd-pin-kicker {
+  color: var(--rd-void);
+}
+.rd-pin-title {
+  font-family: var(--rd-mono);
+  font-size: 15px;
+  letter-spacing: 0.16em;
+  color: var(--rd-paper);
+}
+.rd-pin-link:hover .rd-pin-title,
+.rd-pin-link:focus-visible .rd-pin-title {
+  color: var(--rd-void);
+}
+
+/* ---- the grid keeps its colour ---------------------------------------- */
+
+/* Photographs in the grid are shown as shot. The field is where they are
+   drained and only regain colour under the cursor; the grid is the place
+   you go to actually look at the clothes. */
+.rd-tile img {
+  filter: none;
+}
+.rd-tile:hover img,
+.rd-tile:focus-visible img {
+  filter: contrast(1.06) saturate(1.05);
+  transform: scale(1.015);
+}
+
+/* ---- mobile ----------------------------------------------------------- */
+
+@media (max-width: 700px) {
+  .rd-pin-logo {
+    width: 74vw;
+  }
+  .rd-pin-shop {
+    right: 10px;
+    bottom: 54px;
+  }
+  .rd-pin-box {
+    padding: 10px 12px;
+  }
+  /* Give the field more of the screen — the bar is the only chrome above it. */
+  .rd-sky {
+    height: calc(100dvh - 42px);
+  }
+  .rd-star figcaption {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 2px 5px;
+  }
+  .rd-backfilm {
+    opacity: 0.09;
+  }
+  /* Block type needs the width it needs; let it scroll rather than wrap. */
+  .rd-pixtext pre {
+    font-size: 3.4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rd-backfilm {
+    display: none;
+  }
 }

@@ -2,118 +2,127 @@ import { useEffect, useRef, useState } from "react";
 
 /** Headings rendered as block-character bitmaps.
  *
- * The same idea as the ASCII wordmark, turned into the site's display voice
- * rather than a one-off on the start-up screen. Text is drawn to an
- * offscreen canvas in a heavy condensed face, sampled on a character grid,
- * and re-emitted as block glyphs — so every heading is the type degraded
- * through the same process as the logo.
+ * The first version was unreadable, and the reason was resolution, not
+ * taste: at 44 columns a word like BAT COUNTRY got about four columns per
+ * letter, which is well below what a letterform needs to survive. Two
+ * changes fix it:
  *
- * This is also the answer to the font question. Swapping one grotesque for
- * another was never going to read as a change; making the display face a
- * bitmap of itself does.
+ *   1. Columns are derived from the string — ~9 per character — so the grid
+ *      grows with the text instead of squeezing it. A short word gets a
+ *      small grid, a long one a wide grid, and both stay legible.
+ *   2. The ramp is gone. Anti-aliased mid-tones smeared the edges into
+ *      mush; coverage is now thresholded to solid block or space, with a
+ *      single lighter glyph for the in-between. Crisp beats subtle here.
  *
- * `scramble` runs a short resolve: random glyphs settling into the real
- * shape, cell by cell. Off under reduced motion, where it renders solved.
- *
- * Accessibility: the <pre> is aria-hidden and the real string is carried by
- * a visually-hidden element, so screen readers get "BAT COUNTRY" and not
- * four hundred block characters.
+ * `scramble` resolves the text out of noise on mount. Off under reduced
+ * motion. The real string is carried for screen readers; the block art is
+ * aria-hidden.
  */
 
-const RAMP = "█▓▒░ ";
-const NOISE = "█▓▒░#%@*+=-·";
+const NOISE = "█▓▒░#%@*+=";
 
 export function RdPixelText({
   text,
-  cols = 46,
+  cols,
   scramble = true,
   className,
   as: Tag = "div",
 }: {
   text: string;
-  /** Character columns. Higher = finer and more DOM text. */
+  /** Override the derived column count. Rarely needed. */
   cols?: number;
   scramble?: boolean;
   className?: string;
   as?: "div" | "h1" | "h2";
 }) {
   const [rows, setRows] = useState<string[]>([]);
-  const target = useRef<string[]>([]);
   const raf = useRef(0);
 
   useEffect(() => {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // ~14 columns per character. Below about 10 the counters inside letters
+    // close up and the whole thing turns into a bar code.
+    const C = cols ?? Math.min(260, Math.max(56, Math.round(text.length * 14)));
 
-    // --- render the string, then read it back as coverage ---------------
-    const probe = document.createElement("canvas");
-    const ctx = probe.getContext("2d", { willReadFrequently: true });
+    const cv = document.createElement("canvas");
+    const ctx = cv.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    const FS = 100;
-    ctx.font = `${FS}px Anton, "Arial Narrow", Impact, sans-serif`;
-    const wpx = Math.max(1, ctx.measureText(text).width);
-    const ratio = FS / wpx;
-    // Characters are about twice as tall as they are wide.
-    const r = Math.max(3, Math.round(cols * ratio * 1.25 * 0.5));
+    // Measure at a workable size, then scale the bitmap to exactly C wide.
+    const FS = 120;
+    const font = `${FS}px Anton, "Arial Narrow", Impact, "Haettenschweiler", sans-serif`;
+    ctx.font = font;
+    const m = ctx.measureText(text);
+    const wpx = Math.max(1, m.width);
+    // Cap height from the metrics where available, so descenders and the
+    // cap line do not leave a band of empty rows top and bottom.
+    const asc = m.actualBoundingBoxAscent || FS * 0.72;
+    const desc = m.actualBoundingBoxDescent || FS * 0.05;
+    const hpx = Math.max(1, asc + desc);
 
-    probe.width = cols;
-    probe.height = r;
-    ctx.font = `${FS}px Anton, "Arial Narrow", Impact, sans-serif`;
-    ctx.fillStyle = "#fff";
-    ctx.textBaseline = "middle";
-    const scale = cols / wpx;
-    ctx.setTransform(scale, 0, 0, (r / (FS * 1.0)) * 1.0, 0, 0);
-    ctx.fillText(text, 0, FS * 0.5);
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    // A mono cell is about twice as tall as it is wide, so the row count is
+    // half what a square-pixel grid would need to keep the proportions.
+    const R = Math.max(6, Math.round((hpx / wpx) * C * 0.5));
+
+    cv.width = C;
+    cv.height = R;
+    const g = cv.getContext("2d", { willReadFrequently: true });
+    if (!g) return;
+    g.clearRect(0, 0, C, R);
+    g.font = font;
+    g.fillStyle = "#fff";
+    g.textBaseline = "alphabetic";
+    g.setTransform(C / wpx, 0, 0, R / hpx, 0, 0);
+    g.fillText(text, 0, asc);
+    g.setTransform(1, 0, 0, 1, 0, 0);
 
     let data: Uint8ClampedArray;
     try {
-      data = ctx.getImageData(0, 0, cols, r).data;
+      data = g.getImageData(0, 0, C, R).data;
     } catch {
       return;
     }
 
     const solved: string[] = [];
-    for (let y = 0; y < r; y++) {
+    for (let y = 0; y < R; y++) {
       let line = "";
-      for (let x = 0; x < cols; x++) {
-        const a = data[(y * cols + x) * 4 + 3] / 255;
-        line += RAMP[Math.min(RAMP.length - 1, Math.floor((1 - a) * RAMP.length))];
+      for (let x = 0; x < C; x++) {
+        const a = data[(y * C + x) * 4 + 3] / 255;
+        // Thresholded, not ramped. Mid-tones were what made it mush.
+        line += a > 0.55 ? "█" : a > 0.22 ? "▓" : " ";
       }
       solved.push(line);
     }
-    target.current = solved;
 
-    if (!scramble || reduced) {
-      setRows(solved);
-      return;
-    }
+    // Paint the finished text FIRST, always. The scramble is a flourish on
+    // top of a correct heading, never the thing that produces it — if the
+    // first animation frame is delayed (background tab, slow boot) the
+    // heading must still be there and readable.
+    setRows(solved);
+    if (!scramble || reduced) return;
 
-    // --- resolve: noise settling into the shape, left to right ----------
-    const total = solved.length * cols;
-    let done = 0;
+    const total = solved.length * C;
     const start = performance.now();
-    const DUR = 620;
-
+    const DUR = 560;
     const step = () => {
       const p = Math.min(1, (performance.now() - start) / DUR);
-      done = Math.floor(p * total);
-      const out = solved.map((line, y) =>
-        line
-          .split("")
-          .map((ch, x) => {
-            const idx = y * cols + x;
-            if (idx < done) return ch;
-            return ch === " " ? " " : NOISE[(Math.random() * NOISE.length) | 0];
-          })
-          .join(""),
+      const done = Math.floor(p * total);
+      setRows(
+        solved.map((line, y) =>
+          line
+            .split("")
+            .map((ch, x) =>
+              y * C + x < done || ch === " "
+                ? ch
+                : NOISE[(Math.random() * NOISE.length) | 0],
+            )
+            .join(""),
+        ),
       );
-      setRows(out);
       if (p < 1) raf.current = requestAnimationFrame(step);
       else setRows(solved);
     };
     raf.current = requestAnimationFrame(step);
-
     return () => cancelAnimationFrame(raf.current);
   }, [text, cols, scramble]);
 

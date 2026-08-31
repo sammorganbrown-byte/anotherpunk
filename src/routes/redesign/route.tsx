@@ -131,9 +131,8 @@ function RedesignLayout() {
             to="/redesign/shop"
             className="rd-link"
             data-on={path.startsWith("/redesign/shop")}
-            style={{ opacity: 0.65, fontSize: "10px" }}
           >
-            Index
+            Shop
           </Link>
           <Link to="/redesign/cart" className="rd-link" data-on={path.startsWith("/redesign/cart")}>
             Bag [{count}]

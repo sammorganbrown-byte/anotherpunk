@@ -21,7 +21,7 @@ function RedesignIndexView() {
   return (
     <>
       <div className="flex flex-wrap items-baseline justify-between gap-2 border-b border-[var(--rd-rule)] px-4 py-3">
-        <h1 className="rd-label">Index</h1>
+        <h1 className="rd-label">Shop</h1>
         <p className="rd-log">
           {ANOTHER_PUNK_PRODUCTS.length} styles <span aria-hidden="true">·</span>{" "}
           <Link to="/redesign" className="rd-link underline underline-offset-4">

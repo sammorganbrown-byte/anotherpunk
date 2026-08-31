@@ -53,7 +53,7 @@ type Piece = {
   w: number;
   phase: number;
   amp: number;
-  /** Only the lead frame of each garment carries its name. */
+  /** Every frame carries the garment's name and price. */
   label: boolean;
 };
 
@@ -64,7 +64,7 @@ type Piece = {
 function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: number }): Piece[] {
   const raw: { p: AnotherPunkProduct; src: string; label: boolean }[] = [];
   products.forEach((p) => {
-    p.images.forEach((src, i) => raw.push({ p, src, label: i === 0 }));
+    p.images.forEach((src) => raw.push({ p, src, label: true }));
   });
 
   // Jittered grid: roughly square, one cell per piece, scattered inside it.
@@ -209,6 +209,7 @@ export function RdConstellation({
     <div
       ref={skyRef}
       className="rd-sky"
+      style={{ touchAction: "none" }}
       data-drag={dragging}
       onPointerDown={(e) => {
         // Start a drag wherever the pointer lands, links included.
@@ -291,14 +292,19 @@ export function RdConstellation({
               src={s.src}
               alt=""
               aria-hidden="true"
-              loading="lazy"
+              // The first handful are the ones on screen at load. Lazy-loading
+              // those meant the field appeared as empty outlines and filled in
+              // afterwards; the rest stay lazy so 76 photographs do not all
+              // fetch at once.
+              loading={i < 10 ? "eager" : "lazy"}
+              fetchPriority={i < 6 ? "high" : "auto"}
               decoding="async"
               className="aspect-[4/3]"
               draggable={false}
             />
             {s.label ? (
               <figcaption>
-                {s.p.title} <span aria-hidden="true">\u00b7</span> \u20ac{s.p.price}
+                {s.p.title} <span aria-hidden="true">·</span> €{s.p.price}
               </figcaption>
             ) : null}
           </Link>
