@@ -1,22 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 
-/** The Boudicca tracks, set as a line in the top bar.
+/** The soundtrack, set as a line in the top bar.
  *
- * Same three files and the same autoplay strategy as the player this
- * replaces — that logic is hard-won and is reproduced deliberately rather
- * than simplified (see the long comment on the effect below). What changes is
- * only the skin: the old control is a paper-coloured pill fixed to the bottom
- * right, which would have sat on the field like a sticker. Here it is another
- * item in the terminal line at the top, alongside SHOP and BAG.
+ * The autoplay strategy is the hard-won part and is carried over intact from
+ * the player this replaces (see the long comment on the effect below); what
+ * changed was the skin, and now the track. The old control is a
+ * paper-coloured pill fixed to the bottom right, which would have sat on the
+ * field like a sticker. Here it is another item in the terminal line at the
+ * top, alongside SHOP and BAG.
  *
- * Only one of the two players is ever mounted: __root.tsx renders the old one
- * for /classic only, so there is never a second <audio> playing underneath.
+ * The list is still a list, and the transport still cycles it, so adding a
+ * second track is a one-line change — the skip control simply hides itself
+ * while there is only one thing to skip to.
+ *
+ * Only one of the two players is ever mounted: __root.tsx renders the old
+ * one (still the Boudicca tracks) for /classic only, so there is never a
+ * second <audio> playing underneath.
  */
-const TRACKS = [
-  { src: "/audio/on-my-level.mp3", title: "On My Level" },
-  { src: "/audio/quick.mp3", title: "Quick" },
-  { src: "/audio/encore.mp3", title: "Encore" },
-] as const;
+const TRACKS = [{ src: "/audio/kingdom-fall.mp3", title: "Kingdom Fall", artist: "OLLiGAN" }] as const;
 
 export function RdPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -121,6 +122,11 @@ export function RdPlayer() {
         src={track.src}
         autoPlay
         preload="auto"
+        // With one track, onEnded advances to the same index, so the resume
+        // effect (keyed on index) never re-fires and the music just stops at
+        // the end. Loop instead, and let onEnded do its job once there is
+        // something else to move to.
+        loop={TRACKS.length === 1}
         onEnded={next}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
@@ -130,7 +136,7 @@ export function RdPlayer() {
         type="button"
         onClick={toggle}
         className="rd-link rd-player-btn"
-        aria-label={playing ? `Pause ${track.title}` : `Play ${track.title} by Boudicca`}
+        aria-label={playing ? `Pause ${track.title}` : `Play ${track.title} by ${track.artist}`}
       >
         <span aria-hidden="true" className="rd-player-glyph">
           {playing ? "❚❚" : "▶"}
@@ -142,7 +148,7 @@ export function RdPlayer() {
         </span>
       </button>
 
-      {started ? (
+      {started && TRACKS.length > 1 ? (
         <button type="button" onClick={next} className="rd-link rd-player-next" aria-label="Next track">
           <span aria-hidden="true">▶▶</span>
         </button>
