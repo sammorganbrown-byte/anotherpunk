@@ -4,6 +4,7 @@ import { useCart } from "../../lib/cart-context";
 import { useCurrency } from "../../lib/currency-context";
 import { createCheckoutSession } from "../../lib/api/checkout.functions";
 import { findPromoCode } from "../../lib/promo-codes";
+import { SHIPPING_COUNTRIES } from "../../lib/shipping";
 
 export const Route = createFileRoute("/_shell/checkout")({ component: RedesignCheckout });
 
@@ -72,6 +73,20 @@ function RedesignCheckout() {
   });
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  /** Errors reaching a customer must be readable. A schema failure arrives as
+   * a JSON array of issues, which was being rendered straight onto the page —
+   * so a mistyped country produced a wall of `{"code":"too_big"...}` above
+   * the Pay button. Anything that does not look like a sentence we wrote is
+   * replaced by one that says what to do about it. */
+  const readable = (raw: string): string => {
+    const looksStructured = /^[[{]/.test(raw.trim()) || /"code":|zod|expected string/i.test(raw);
+    if (!looksStructured) return raw;
+    if (/"path":\s*\[\s*"country"/.test(raw) || /country/i.test(raw)) {
+      return "Please choose your country from the list.";
+    }
+    return "Some of these details weren't accepted. Check the address fields and try again.";
+  };
   const [promo, setPromo] = useState("");
 
   const promoFound = findPromoCode(promo);
@@ -129,11 +144,11 @@ function RedesignCheckout() {
       if (result.configured) {
         window.location.href = result.redirectUrl;
       } else {
-        setError(result.reason);
+        setError(readable(result.reason));
         setBusy(false);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+      setError(readable(err instanceof Error ? err.message : "Something went wrong."));
       setBusy(false);
     }
   }
@@ -209,12 +224,25 @@ function RedesignCheckout() {
               required={false}
               autoComplete="address-level1"
             />
-            <Field
-              label="Country"
-              value={form.country}
-              onChange={set("country")}
-              autoComplete="country"
-            />
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="rd-country" className="rd-label">
+                Country
+              </label>
+              <select
+                id="rd-country"
+                className="rd-input rd-select-field"
+                value={form.country}
+                onChange={(e) => set("country")(e.target.value)}
+                autoComplete="country"
+                required
+              >
+                {SHIPPING_COUNTRIES.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           {error ? (

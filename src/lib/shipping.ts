@@ -28,3 +28,32 @@ export function computeShipping(count: number): number {
   if (count <= 0) return 0;
   return SHIPPING_BASE + SHIPPING_PER_EXTRA_ITEM * (count - 1);
 }
+
+/** Where orders can be sent.
+ *
+ * One list, used both to build the country picker at checkout and to set
+ * Stripe's allowed countries, so the two cannot drift apart. Codes are ISO
+ * 3166-1 alpha-2, which is what Stripe and Tapstitch both expect — the
+ * checkout used to take the country as free text, so it was possible to type
+ * a city into it and be handed a validation error instead of a payment page.
+ */
+export const SHIPPING_COUNTRIES: { code: string; name: string }[] = [
+  { code: "PT", name: "Portugal" },
+  { code: "GB", name: "United Kingdom" },
+  { code: "IE", name: "Ireland" },
+  { code: "ES", name: "Spain" },
+  { code: "FR", name: "France" },
+  { code: "DE", name: "Germany" },
+  { code: "IT", name: "Italy" },
+  { code: "NL", name: "Netherlands" },
+  { code: "BE", name: "Belgium" },
+  { code: "AT", name: "Austria" },
+  { code: "SE", name: "Sweden" },
+  { code: "DK", name: "Denmark" },
+  { code: "PL", name: "Poland" },
+  { code: "CZ", name: "Czechia" },
+  { code: "US", name: "United States" },
+  { code: "CA", name: "Canada" },
+  { code: "AU", name: "Australia" },
+  { code: "NZ", name: "New Zealand" },
+];

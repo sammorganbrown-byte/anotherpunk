@@ -1,9 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
+import type Stripe from "stripe";
 import { z } from "zod";
 import { getStripe, type CheckoutSessionMetadata } from "../stripe.server";
 import { getAnotherPunkProduct, isFulfillable } from "../another-punk-products";
 import { computeDiscount, computeShippingDiscount } from "../promo-codes";
-import { computeShipping } from "../shipping";
+import { computeShipping, SHIPPING_COUNTRIES } from "../shipping";
 
 // Where the site lives, used to build Stripe's return URLs. Set SITE_URL in
 // the host's env; falls back to localhost so `vite dev` works untouched.
@@ -147,26 +148,11 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         // form. The webhook treats THIS as the shipping-of-record, not the
         // free-text fields above.
         shipping_address_collection: {
-          allowed_countries: [
-            "GB",
-            "IE",
-            "PT",
-            "ES",
-            "FR",
-            "DE",
-            "IT",
-            "NL",
-            "BE",
-            "AT",
-            "SE",
-            "DK",
-            "PL",
-            "CZ",
-            "US",
-            "CA",
-            "AU",
-            "NZ",
-          ],
+          // Same list the checkout's country picker is built from, so the
+          // form can never offer somewhere Stripe will refuse.
+          allowed_countries: SHIPPING_COUNTRIES.map(
+            (c) => c.code,
+          ) as Stripe.Checkout.SessionCreateParams.ShippingAddressCollection["allowed_countries"],
         },
         success_url: `${siteUrl()}/order-confirmed?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${siteUrl()}/checkout`,

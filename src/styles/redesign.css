@@ -1616,3 +1616,21 @@ body:has(.rd-pdp) .rd-np {
   background: var(--rd-bg);
   color: var(--rd-ink);
 }
+
+/* The country picker is a <select> sitting in a row of <input>s, so it has to
+   match them exactly — a native select is a different height and font by
+   default and the row would step. Options are coloured explicitly because the
+   OS menu does not inherit the page. */
+[data-ap-rd] select.rd-input {
+  appearance: none;
+  padding-right: 26px;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 15px) 54%, calc(100% - 10px) 54%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+[data-ap-rd] select.rd-input option {
+  background: var(--rd-bg);
+  color: var(--rd-ink);
+}

@@ -319,7 +319,14 @@ export function RdPlayer() {
         id = window.setTimeout(poll, 200);
         return;
       }
-      id = window.setTimeout(() => setAsking(true), ASK_DELAY_MS);
+      id = window.setTimeout(() => {
+        // Never over the money pages. The prompt is a panel near the middle
+        // of the screen, so on checkout it lands on top of the address form —
+        // an invitation to play music covering the fields someone is trying
+        // to pay with. It can wait until they are browsing again.
+        if (/^\/(checkout|cart|order-confirmed)/.test(window.location.pathname)) return;
+        setAsking(true);
+      }, ASK_DELAY_MS);
     };
     poll();
     return () => window.clearTimeout(id);
