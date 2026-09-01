@@ -59,34 +59,57 @@ export const DEFAULT_FIT =
 
 const FOUR: ApSize[] = ["S", "M", "L", "XL"];
 const SIX: ApSize[] = ["S", "M", "L", "XL", "2XL", "3XL"];
+/** The jersey stops at 2XL — there is no 3XL variant in Shopify, so offering
+ * one would sell a size that cannot be fulfilled. */
 const FIVE: ApSize[] = ["S", "M", "L", "XL", "2XL"];
 
 export const AP_PRICE = 60;
+/** The jersey is priced below the rest of the range — read from Shopify, not
+ * assumed. Anything here that is not AP_PRICE must come from the store. */
+export const JERSEY_PRICE = 50;
 
 export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
-    slug: "westwood-69",
+    slug: "westwood-69-pink",
     description:
-      "Boxy football jersey, striped jacquard, contrast collar. Saucer on the front, WESTWOOD 69 across the back. Pink or black. Made to order.",
+      "Boxy football jersey, striped jacquard, navy collar. Saucer on the front, WESTWOOD 69 across the back. Made to order.",
     fit: "Boxy and oversized. Your normal size.",
-    title: "Westwood 69",
-    eyebrow: "Football jersey · pink or black",
-    price: AP_PRICE,
+    title: "Westwood 69 — Pink",
+    eyebrow: "Football jersey · pink",
+    price: JERSEY_PRICE,
+    images: ["/img/140-jersey-pink-chest-flash.jpg", "/img/141-jersey-pink-back-69.jpg"],
+    sizes: FIVE,
+    shopifyProductId: "15966414274891",
+    shopifyVariantIds: {
+      S: "58321109549387",
+      M: "58321109582155",
+      L: "58321109614923",
+      XL: "58321109647691",
+      "2XL": "58321109680459",
+    },
+  },
+  {
+    slug: "westwood-69-black",
+    description:
+      "Boxy football jersey, striped jacquard, white collar. Saucer on the front, WESTWOOD 69 across the back. Made to order.",
+    fit: "Boxy and oversized. Your normal size.",
+    title: "Westwood 69 — Black",
+    eyebrow: "Football jersey · black",
+    price: JERSEY_PRICE,
     images: [
-      "/img/140-jersey-pink-chest-flash.jpg",
       "/img/142-jersey-black-chest-flash.jpg",
-      "/img/141-jersey-pink-back-69.jpg",
       "/img/143-jersey-black-football.jpg",
       "/img/144-jersey-black-slide.jpg",
     ],
-    sizes: SIX,
-    // NOT WIRED YET. The product exists in Shopify but its id and per-size
-    // variant ids are not here, so isFulfillable() returns false and the page
-    // shows "Not for sale yet" rather than taking money for something that
-    // cannot be fulfilled. Fill these in and it goes on sale with no other
-    // change.
-    shopifyProductId: null,
-    shopifyVariantIds: {},
+    sizes: FIVE,
+    shopifyProductId: "15966414274891",
+    shopifyVariantIds: {
+      S: "58321109713227",
+      M: "58321109745995",
+      L: "58321109778763",
+      XL: "58321109811531",
+      "2XL": "58321109844299",
+    },
   },
   {
     slug: "bat-country",
