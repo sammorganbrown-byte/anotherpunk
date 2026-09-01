@@ -4,6 +4,7 @@ import { getStripe, type CheckoutSessionMetadata } from "../../lib/stripe.server
 import { decodeOrderLines } from "../../lib/order-lines";
 import {
   createTapstitchOrder,
+  submitTapstitchOrder,
   type TapstitchOrderLine,
   type ShippingAddress,
 } from "../../lib/tapstitch-fulfillment.server";
@@ -140,9 +141,16 @@ export const Route = createFileRoute("/api/stripe-webhook")({
         const orderReference = `stripe-${session.id}`;
 
         try {
-          // Lands as a HELD Shopify draft order, which Tapstitch's app does
-          // NOT see until it's completed into a real order. Nothing is
-          // produced by this call alone — see submitTapstitchOrder.
+          // Creates the draft, then completes it so Tapstitch can see it and
+          // produce it. Automatic by explicit choice — the alternative is
+          // that nothing ships until someone opens Shopify, which is worse
+          // for a customer who ordered at 2am.
+          //
+          // This is only safe because createTapstitchOrder now refuses to
+          // create a second order for a payment it has already handled.
+          // Without that, one €1 test payment produced FIVE identical
+          // drafts; automating submission on top of that would have printed
+          // and posted five garments for one sale.
           const result = await createTapstitchOrder(
             lines,
             address,
@@ -154,6 +162,23 @@ export const Route = createFileRoute("/api/stripe-webhook")({
               status: 500,
             });
           }
+
+          // A draft that exists but was never completed is recoverable by
+          // hand; telling Stripe the whole thing failed would have it
+          // redeliver, and the duplicate check would then return this same
+          // draft and try again. So a submit failure is reported as its own
+          // thing, loudly, rather than being folded into the order failure.
+          try {
+            await submitTapstitchOrder(result.id);
+          } catch (err) {
+            return new Response(
+              `Draft ${result.id} created but not submitted: ${
+                err instanceof Error ? err.message : "unknown error"
+              }`,
+              { status: 500 },
+            );
+          }
+
           return new Response("ok", { status: 200 });
         } catch (err) {
           // Non-2xx tells Stripe to retry later, which is right for a

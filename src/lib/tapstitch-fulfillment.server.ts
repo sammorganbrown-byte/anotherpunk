@@ -44,6 +44,47 @@ export type ShippingAddress = {
   country: string;
 };
 
+/** Looks for a draft already created for this payment.
+ *
+ * Stripe redelivers. It retries on failure, it retries on timeout, and a
+ * manual resend produces another delivery — one €1 test payment produced
+ * FIVE identical drafts, because each successful delivery created a new one.
+ * The reference tag was supposed to prevent that by hitting "Shopify's own
+ * idempotency", which does not exist: Shopify will happily create any number
+ * of drafts carrying the same tag.
+ *
+ * So the check is explicit. It matters far more once fulfilment is automatic
+ * — five drafts is a tidy-up, five submitted orders is five garments printed
+ * and posted for one payment.
+ */
+async function findDraftByReference(reference: string): Promise<{ id: number } | null> {
+  const tag = shortTag(reference);
+  // The tag goes in as a variable, not interpolated into the query string:
+  // search syntax has its own quoting rules and a tag is untrusted input as
+  // far as this is concerned.
+  const res = await shopifyFetch("/graphql.json", {
+    method: "POST",
+    body: JSON.stringify({
+      // Both draft orders AND completed orders. Once a draft is submitted it
+      // stops being a draft, so a lookup that only searched drafts would find
+      // nothing on a later redelivery and place the order a second time —
+      // which, with submission automated, means a second garment printed and
+      // posted for one payment.
+      query:
+        "query($q: String!) { draftOrders(first: 1, query: $q) { edges { node { id } } } orders(first: 1, query: $q) { edges { node { id } } } }",
+      variables: { q: `tag:${tag}` },
+    }),
+  });
+  if (!res.ok) return null; // Never block a paid order on a failed lookup.
+  type Edges = { edges?: { node?: { id?: string } }[] };
+  const json = (await res.json()) as { data?: { draftOrders?: Edges; orders?: Edges } };
+  const gid =
+    json.data?.draftOrders?.edges?.[0]?.node?.id ?? json.data?.orders?.edges?.[0]?.node?.id;
+  if (!gid) return null;
+  const numeric = Number(gid.split("/").pop());
+  return Number.isFinite(numeric) ? { id: numeric } : null;
+}
+
 /** A Shopify-safe tag: at most 40 characters, keeping the distinctive tail.
  * Anything already short enough is returned untouched. */
 function shortTag(reference: string): string {
@@ -139,6 +180,16 @@ export async function createTapstitchOrder(
 ): Promise<{ id: string }> {
   if (lines.length === 0) {
     throw new Error("createTapstitchOrder called with no line items.");
+  }
+
+  // Redeliveries are normal, not exceptional — so this runs before anything
+  // is created, and returns the draft that already exists for this payment
+  // rather than adding another. Deliberately fails open: if the lookup itself
+  // errors, the order is still created. A possible duplicate is recoverable;
+  // a paid order that was never placed is not.
+  const already = await findDraftByReference(orderReference);
+  if (already) {
+    return { id: String(already.id) };
   }
 
   const lineItems = lines.map((line) => {
