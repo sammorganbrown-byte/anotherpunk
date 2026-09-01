@@ -106,8 +106,12 @@ const invIds = [
 ].filter(Boolean);
 const costs = new Map();
 let costScope = true;
-for (let i = 0; i < invIds.length; i += 100) {
-  const res = await api(`/inventory_items.json?ids=${invIds.slice(i, i + 100).join(",")}`, true);
+// Shopify caps how many inventory items it returns per call, and asking for
+// more than it will give back silently returns a short list rather than an
+// error — which shows up as products with "no cost" that plainly have one.
+// Batches of 50, and the count is checked below.
+for (let i = 0; i < invIds.length; i += 50) {
+  const res = await api(`/inventory_items.json?ids=${invIds.slice(i, i + 50).join(",")}`, true);
   if (!res) {
     costScope = false;
     break;
