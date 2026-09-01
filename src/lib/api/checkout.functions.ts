@@ -4,6 +4,7 @@ import { z } from "zod";
 import { getStripe, type CheckoutSessionMetadata } from "../stripe.server";
 import { getAnotherPunkProduct, isFulfillable } from "../another-punk-products";
 import { computeDiscount, computeShippingDiscount } from "../promo-codes";
+import { encodeOrderLines } from "../order-lines";
 import { computeShipping, SHIPPING_COUNTRIES } from "../shipping";
 
 // Where the site lives, used to build Stripe's return URLs. Set SITE_URL in
@@ -160,7 +161,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
     }
 
     const metadata: CheckoutSessionMetadata = {
-      itemsJson: JSON.stringify(
+      itemsJson: encodeOrderLines(
         resolved.map((r) => ({ slug: r.product.slug, sizeLabel: r.sizeLabel, qty: r.qty })),
       ),
       promoCode: data.promoCode ?? "",

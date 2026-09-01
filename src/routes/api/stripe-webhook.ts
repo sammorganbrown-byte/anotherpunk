@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Stripe from "stripe";
 import { getStripe, type CheckoutSessionMetadata } from "../../lib/stripe.server";
+import { decodeOrderLines } from "../../lib/order-lines";
 import {
   createTapstitchOrder,
   type TapstitchOrderLine,
@@ -79,15 +80,15 @@ export const Route = createFileRoute("/api/stripe-webhook")({
 
         let lines: TapstitchOrderLine[];
         try {
-          lines = (
-            JSON.parse(metadata.itemsJson) as Array<{
-              slug: string;
-              sizeLabel: string;
-              qty: number;
-            }>
-          ).map((i) => ({ slug: i.slug, sizeLabel: i.sizeLabel, qty: i.qty }));
+          lines = decodeOrderLines(metadata.itemsJson);
         } catch {
           return new Response("Couldn't parse order metadata", { status: 400 });
+        }
+        if (lines.length === 0) {
+          // Paid, but nothing to make. Better to fail loudly here — Stripe
+          // will retry and the failure is visible in its dashboard — than to
+          // acknowledge and silently drop a paid order.
+          return new Response("Order metadata contained no items", { status: 400 });
         }
 
         // Stripe's own collected address is the shipping-of-record: it has
