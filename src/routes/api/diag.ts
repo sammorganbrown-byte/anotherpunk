@@ -14,8 +14,21 @@ export const Route = createFileRoute("/api/diag")({
       GET: async () => {
         const out: Record<string, unknown> = {
           hasSecretKey: Boolean(process.env.STRIPE_SECRET_KEY),
-          keyNeededTrimming:
-            process.env.STRIPE_SECRET_KEY !== process.env.STRIPE_SECRET_KEY?.trim(),
+          // Structural facts only. Never the key, never a fragment of it.
+          ...(() => {
+            const k = process.env.STRIPE_SECRET_KEY ?? "";
+            return {
+              keyLength: k.length,
+              keyPrefixLooksRight: /^(sk|rk)_(live|test)_/.test(k),
+              keyIsAllLegalHeaderChars: /^[\x21-\x7E]*$/.test(k),
+              keyHasInnerWhitespace: /\s/.test(k),
+              keyHasNonAscii: /[^\x00-\x7F]/.test(k),
+              keyCharCodesOutsideRange: [...k]
+                .map((c, i) => (c.charCodeAt(0) < 0x21 || c.charCodeAt(0) > 0x7e ? i : -1))
+                .filter((i) => i >= 0)
+                .slice(0, 5),
+            };
+          })(),
           hasWebhookSecret: Boolean(process.env.STRIPE_WEBHOOK_SECRET),
           siteUrl: process.env.SITE_URL ?? null,
           runtimeHasNodeHttp: (() => {
@@ -47,7 +60,11 @@ export const Route = createFileRoute("/api/diag")({
           });
           out.authedRawFetch = r.status;
         } catch (e) {
-          out.authedRawFetch = `threw: ${e instanceof Error ? e.name : "unknown"}`;
+          out.authedRawFetch = `threw ${e instanceof Error ? e.name : "unknown"}: ${
+            e instanceof Error
+              ? e.message.replace(/[a-z]{2}_(live|test)_[A-Za-z0-9]+/g, "[redacted]").slice(0, 160)
+              : ""
+          }`;
         }
 
         // The SDK path the checkout actually uses.
