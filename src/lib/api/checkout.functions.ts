@@ -179,6 +179,21 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       const session = await stripe.checkout.sessions.create({
         mode: "payment",
         customer_email: data.email,
+        // This Stripe account also serves another shop, so the account-level
+        // business name cannot correctly label both. Naming the charge per
+        // session means an Another Punk order reads as Another Punk on the
+        // customer's statement whatever the account is called — and renaming
+        // the account for one shop stops mislabelling the other.
+        //
+        // The suffix is what follows the account's own prefix on a card
+        // statement; Stripe caps the whole descriptor at 22 characters and
+        // rejects <>\"' outright. An unrecognised statement line is one of
+        // the most common causes of a chargeback, so this is worth the two
+        // fields it costs.
+        payment_intent_data: {
+          description: "Another Punk — anotherpunk.com",
+          statement_descriptor_suffix: "ANOTHERPUNK",
+        },
         line_items: lineItems,
         metadata: metadata as unknown as Record<string, string>,
         // Stripe's own address element — a real country/postal-format-aware
