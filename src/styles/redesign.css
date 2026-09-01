@@ -1380,8 +1380,7 @@ body:has([data-ap-rd]) {
   align-items: center;
   gap: 8px;
 }
-.rd-player-btn,
-.rd-player-next {
+.rd-player-btn {
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -1400,11 +1399,6 @@ body:has([data-ap-rd]) {
 }
 @media (max-width: 860px) {
   .rd-player-title {
-    display: none;
-  }
-}
-@media (max-width: 700px) {
-  .rd-player-next {
     display: none;
   }
 }
