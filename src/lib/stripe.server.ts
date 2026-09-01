@@ -18,7 +18,20 @@ export function getStripe(): Stripe {
   if (!key) {
     throw new Error("Stripe is not connected yet — set STRIPE_SECRET_KEY to enable payment.");
   }
-  return new Stripe(key);
+  return new Stripe(key, {
+    // The SDK defaults to Node's http module, which is not available in every
+    // serverless runtime a build like this can land on. When it is missing,
+    // every API call fails as "An error occurred with our connection to
+    // Stripe. Request was retried 2 times" — a connection error rather than
+    // an auth error, which is what made it look like a network or key
+    // problem. fetch exists in both runtimes, so this works either way.
+    httpClient: Stripe.createFetchHttpClient(),
+    // Retries are the SDK's own; two extra attempts on a transient failure,
+    // and a timeout well inside a serverless function's budget so a hanging
+    // request fails with something we can report rather than being killed.
+    maxNetworkRetries: 2,
+    timeout: 20_000,
+  });
 }
 
 export type CheckoutLineItem = {
