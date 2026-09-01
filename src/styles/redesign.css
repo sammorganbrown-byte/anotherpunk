@@ -1471,3 +1471,39 @@ body:has([data-ap-rd]) {
     max-width: none;
   }
 }
+
+/* ---- the Spotify embed -------------------------------------------------- */
+
+/* Bottom-left, above the locked footer. It has to be visible — a hidden embed
+   is unreliable and is not what Spotify permits — so it is treated as another
+   panel in the field rather than something to apologise for. */
+.rd-embed {
+  position: fixed;
+  left: 12px;
+  bottom: calc(var(--rd-foot-h) + 12px);
+  z-index: 58;
+  width: min(86vw, 330px);
+  border: 1px solid var(--rd-red);
+  background: var(--rd-void);
+  padding: 3px;
+}
+.rd-embed[data-failed="true"] {
+  padding: 10px 12px;
+}
+.rd-embed iframe {
+  display: block;
+  width: 100%;
+  border: 0;
+}
+
+@media (max-width: 700px) {
+  .rd-embed {
+    left: 10px;
+    right: 10px;
+    width: auto;
+  }
+  /* The drag hint sits here on a phone; the player wins. */
+  .rd-hint {
+    display: none;
+  }
+}
