@@ -125,7 +125,7 @@ const rows = site.map((s) => {
   const shopifyPrice = variants.length ? Number(variants[0].price) : null;
   const cs = variants.map((v) => costs.get(v.inventory_item_id)).filter((c) => c != null);
   const cost = cs.length ? Math.max(...cs) : null;
-  const margin = cost == null ? null : s.price - cost;
+  const margin = cost == null ? null : Math.round((s.price - cost) * 100) / 100;
   return {
     product: s.title,
     slug: s.slug,

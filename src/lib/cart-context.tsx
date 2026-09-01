@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { computeDiscount, findPromoCode, normalizePromoCode } from "./promo-codes";
 import { computeShipping } from "./shipping";
+import { getAnotherPunkProduct } from "./another-punk-products";
 
 // Another Punk sells one kind of thing: apparel produced by Tapstitch via
 // the headless Shopify bridge (see lib/tapstitch-fulfillment.server.ts).
@@ -95,7 +96,19 @@ function readStoredCart(): CartItem[] {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed.filter(isValidCartItem) : [];
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(isValidCartItem).flatMap((line: CartItem) => {
+      // A bag can outlive a price change, or a product being withdrawn. The
+      // stored price is therefore treated as a stale copy, never as the
+      // truth: the catalogue is re-read on every hydration and the line is
+      // corrected to today's price. Without this the cart would quote what
+      // the shirt cost the day it was added while checkout charged the
+      // current price, because the server prices from the catalogue too.
+      const current = getAnotherPunkProduct(line.slug);
+      if (!current) return [];
+      if (!current.sizes.includes(line.sizeLabel as never)) return [];
+      return [{ ...line, price: current.price, title: current.title }];
+    });
   } catch {
     return [];
   }

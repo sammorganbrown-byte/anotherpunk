@@ -23,12 +23,12 @@ const LINES: [string, string][] = [
 
 const KEY = "ap-rd-booted";
 
-/** The sequence runs for about five seconds end to end: four lines at STEP_MS
- * apart, then TAIL_MS holding the completed list before it clears. It was
- * ~0.8s, which was over before you had registered it was there. Still
- * skippable by any input, so nobody who does not want it has to wait. */
-const STEP_MS = 1100;
-const TAIL_MS = 600;
+/** About 2.6s end to end: four lines at STEP_MS apart, then TAIL_MS holding
+ * the completed list before it clears. It ran at five seconds, which was long
+ * enough to read as a wait rather than a start-up — the lines still land one
+ * at a time, they just do not linger. Still skippable by any input. */
+const STEP_MS = 560;
+const TAIL_MS = 360;
 
 export function RdBoot({ onDone }: { onDone: () => void }) {
   const [n, setN] = useState(0);

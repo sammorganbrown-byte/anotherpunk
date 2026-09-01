@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "../../lib/cart-context";
 import { useCurrency } from "../../lib/currency-context";
 import { createCheckoutSession } from "../../lib/api/checkout.functions";
-import { computeDiscount, findPromoCode } from "../../lib/promo-codes";
+import { findPromoCode } from "../../lib/promo-codes";
 
 export const Route = createFileRoute("/_shell/checkout")({ component: RedesignCheckout });
 
@@ -48,7 +48,8 @@ function Field({
 }
 
 function RedesignCheckout() {
-  const { items, shipping, total } = useCart();
+  const { items, subtotal, discount, shipping, total, applyPromoCode, removePromoCode } =
+    useCart();
   const { formatPrice } = useCurrency();
 
   const [form, setForm] = useState({
@@ -65,13 +66,24 @@ function RedesignCheckout() {
   const [error, setError] = useState<string | null>(null);
   const [promo, setPromo] = useState("");
 
-  // Display only. The server recomputes the discount from the items before it
-  // creates the session, so nothing here can change what is actually charged.
   const promoFound = findPromoCode(promo);
-  const discount = computeDiscount(
-    promo,
-    items.map((i) => ({ price: i.price, qty: i.qty, slug: i.slug })),
-  );
+
+  // The field feeds the cart rather than being read straight into this page.
+  // It used to be display-only: the code was recognised and its saving shown,
+  // but the Pay button still quoted the undiscounted total while the server
+  // charged the discounted one — the customer saw one number and their card
+  // saw another. Going through the cart means the summary here, the total on
+  // /cart and the amount sent to Stripe are all the same figure.
+  //
+  // The server still recomputes the discount from the items before it creates
+  // the session, so nothing typed here decides what is actually charged.
+  useEffect(() => {
+    const code = promo.trim();
+    if (code && findPromoCode(code)) applyPromoCode(code);
+    else removePromoCode();
+    // applyPromoCode/removePromoCode are stable for the provider's lifetime.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [promo]);
 
   const set = (k: keyof typeof form) => (v: string) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -231,8 +243,20 @@ function RedesignCheckout() {
               </li>
             ))}
           </ul>
+          {discount > 0 ? (
+            <>
+              <p className="rd-log mt-4 flex justify-between">
+                <span>Subtotal</span>
+                <span className="rd-ok">{formatPrice(subtotal)}</span>
+              </p>
+              <p className="rd-log flex justify-between text-[var(--rd-red)]">
+                <span>Discount</span>
+                <span>−{formatPrice(discount)}</span>
+              </p>
+            </>
+          ) : null}
           {shipping > 0 ? (
-            <p className="rd-log mt-4 flex justify-between">
+            <p className={`rd-log flex justify-between ${discount > 0 ? "" : "mt-4"}`}>
               <span>Shipping</span>
               <span className="rd-ok">{formatPrice(shipping)}</span>
             </p>
