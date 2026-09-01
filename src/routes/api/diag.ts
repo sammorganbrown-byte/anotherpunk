@@ -26,6 +26,14 @@ export const Route = createFileRoute("/api/diag")({
               // 8226 is the bullet character that masked the API key.
               containsBullets: raw.includes("•"),
               neededTrimming: raw !== trimmed,
+              // Fulfilment runs on the server too, and needs its own
+              // credentials there — presence only, never values.
+              shopify: {
+                domain: Boolean(process.env.SHOPIFY_STORE_DOMAIN),
+                clientId: Boolean(process.env.SHOPIFY_CLIENT_ID),
+                clientSecret: Boolean(process.env.SHOPIFY_CLIENT_SECRET),
+                adminToken: Boolean(process.env.SHOPIFY_ADMIN_TOKEN),
+              },
               // Where it looks wrong, which positions — never which characters.
               illegalPositions: [...trimmed]
                 .map((c, i) => (c.charCodeAt(0) < 0x21 || c.charCodeAt(0) > 0x7e ? i : -1))
