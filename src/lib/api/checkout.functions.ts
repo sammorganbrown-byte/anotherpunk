@@ -186,7 +186,12 @@ export const getSessionStatus = createServerFn({ method: "POST" })
       const session = await stripe.checkout.sessions.retrieve(data.sessionId);
       return {
         found: true,
-        paid: session.payment_status === "paid",
+        // A zero-total order — a 100%-off code — completes with
+        // "no_payment_required" rather than "paid". Treating only "paid" as
+        // success would show a real, completed order as unconfirmed.
+        paid:
+          session.payment_status === "paid" ||
+          session.payment_status === "no_payment_required",
         amountTotal: session.amount_total != null ? session.amount_total / 100 : null,
       };
     } catch {

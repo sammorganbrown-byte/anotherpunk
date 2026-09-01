@@ -24,7 +24,20 @@ type PromoCode = {
   label?: string;
 };
 
-const PROMO_CODES: PromoCode[] = [];
+const PROMO_CODES: PromoCode[] = [
+  // TEST CODE — remove it once the purchase path has been proved. While it
+  // exists, anyone who guesses it buys at 1%.
+  //
+  // 99% leaves a real charge, which matters: Stripe reports a zero-total
+  // order as "no_payment_required" rather than "paid", so a 100% test would
+  // exercise a different path from a real sale. A small live charge proves
+  // the actual one.
+  //
+  // WATCH THE FLOOR. Stripe will not take a EUR charge below €0.50, so this
+  // needs an order over €50: a €60 tee leaves €0.60 and works, a €40 cami
+  // leaves €0.40 and Stripe refuses to create the session.
+  { code: "DRYRUN99", percentOff: 99, label: "Dry run" },
+];
 
 export function normalizePromoCode(input: string): string {
   return input.trim().toUpperCase();

@@ -65,7 +65,10 @@ export const Route = createFileRoute("/api/stripe-webhook")({
         }
 
         const session = event.data.object as Stripe.Checkout.Session;
-        if (session.payment_status !== "paid") {
+        // "no_payment_required" is what a zero-total order reports — a
+        // 100%-off code. It is a completed order and must still be
+        // fulfilled; dropping it here would take the order and never print it.
+        if (session.payment_status !== "paid" && session.payment_status !== "no_payment_required") {
           return new Response("ok (not paid)", { status: 200 });
         }
 

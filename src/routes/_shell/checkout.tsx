@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useCart } from "../../lib/cart-context";
 import { useCurrency } from "../../lib/currency-context";
 import { createCheckoutSession } from "../../lib/api/checkout.functions";
+import { computeDiscount, findPromoCode } from "../../lib/promo-codes";
 
 export const Route = createFileRoute("/_shell/checkout")({ component: RedesignCheckout });
 
@@ -62,6 +63,15 @@ function RedesignCheckout() {
   });
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [promo, setPromo] = useState("");
+
+  // Display only. The server recomputes the discount from the items before it
+  // creates the session, so nothing here can change what is actually charged.
+  const promoFound = findPromoCode(promo);
+  const discount = computeDiscount(
+    promo,
+    items.map((i) => ({ price: i.price, qty: i.qty, slug: i.slug })),
+  );
 
   const set = (k: keyof typeof form) => (v: string) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -92,7 +102,7 @@ function RedesignCheckout() {
             price: i.price,
             qty: i.qty,
           })),
-          promoCode: null,
+          promoCode: promo.trim() || null,
           ...form,
         },
       });
@@ -131,6 +141,25 @@ function RedesignCheckout() {
             onChange={set("address")}
             autoComplete="address-line1"
           />
+          <Field
+            label="Discount code"
+            value={promo}
+            onChange={setPromo}
+            required={false}
+            autoComplete="off"
+          />
+          {promo.trim() ? (
+            <p className="rd-log">
+              {promoFound ? (
+                <span className="rd-ok">
+                  {promoFound.label ?? promoFound.code} — {promoFound.percentOff}% off,
+                  −{formatPrice(discount)}
+                </span>
+              ) : (
+                <span className="rd-key">No such code.</span>
+              )}
+            </p>
+          ) : null}
           <Field
             label="Address line 2"
             value={form.addressLine2}
