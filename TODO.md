@@ -22,11 +22,34 @@ Ordered by what bites soonest.
 
 ## Decisions worth making early
 
-- [ ] **Does Tapstitch auto-pay?** Every order lands as "On Hold" until you
-      pay them per order, so the pipeline is automatic right up to that point
-      and then waits for you. If Tapstitch offers a wallet or auto-charge,
-      turning it on is what makes an overnight order ship without you. If it
-      does not, that manual step is simply part of the job.
+- [ ] **Turn on the Tapstitch wallet — this is the one to do first.**
+      Researched 2026-09-01. Tapstitch has both pieces already, no
+      application needed:
+
+      - **A wallet you can top up in advance.** Payment is attempted against
+        the wallet balance first, then your default card, then any other
+        linked cards (up to 5). So the €500 float belongs *here*, not in the
+        bank — same money, but it also removes the manual step.
+      - **Auto Payments + Auto Order Submission.** Enabled together, an
+        order is submitted and charged with no action from you. Auto Payments
+        only fires on an auto-submitted order, so both must be on.
+
+      This solves the cashflow question and the "On Hold until you pay" step
+      at once, and makes the Stripe Issuing application unnecessary unless
+      you specifically want the money to stay inside Stripe.
+
+      **One real trade-off.** Auto-submission removes the gate that has been
+      protecting you all evening: nothing currently prints until you press
+      Pay now. Given that one test payment produced five drafts before the
+      duplicate check existed, do not enable it on day one. Run a handful of
+      real orders through by hand, confirm the garments come out right —
+      especially products nobody has ordered yet, the bodysuit, the mesh, the
+      oversized fits — and turn it on once you trust the pipeline.
+
+      Also note a wallet balance is money held with Tapstitch rather than by
+      you. Keep it to roughly a week of orders, not a large reserve.
+
+      Source: https://www.tapstitch.com/help-center/faq/detail/How-to-set-up-auto-payments
 
 - [ ] **Can Stripe's balance pay Tapstitch directly?** Tapstitch charges per
       order at "Pay now", but Stripe holds the takings for about three days
