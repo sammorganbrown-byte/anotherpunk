@@ -1402,3 +1402,72 @@ body:has([data-ap-rd]) {
     display: none;
   }
 }
+
+/* ---- the sound prompt -------------------------------------------------- */
+
+/* Sits over the field but under nothing else it needs to reach — above the
+   locked bars, because while it is up it is the only thing being asked. It is
+   NOT a modal: the page behind stays usable, since being asked about music
+   should never be a gate on shopping. Hence no backdrop and no focus trap. */
+.rd-ask {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--rd-foot-h) + 18px);
+  transform: translateX(-50%);
+  /* Above the boot screen's 90 — it only ever appears once the boot has gone,
+     but nothing about this should depend on that ordering holding. */
+  z-index: 95;
+  max-width: min(92vw, 420px);
+}
+.rd-ask-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 18px;
+  border: 1px solid var(--rd-red);
+  background: color-mix(in srgb, var(--rd-void) 94%, transparent);
+  backdrop-filter: blur(3px);
+}
+.rd-ask-q {
+  margin: 0;
+  font-family: var(--rd-mono);
+  font-size: 13px;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+  color: var(--rd-paper);
+}
+.rd-ask-meta {
+  margin: 0;
+}
+.rd-ask-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 2px;
+}
+.rd-ask-row .rd-btn {
+  flex: 0 0 auto;
+  padding-inline: 20px;
+}
+.rd-ask-no {
+  background: none;
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.rd-ask-alt {
+  font-size: 10px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 700px) {
+  .rd-ask {
+    left: 10px;
+    right: 10px;
+    transform: none;
+    max-width: none;
+  }
+}

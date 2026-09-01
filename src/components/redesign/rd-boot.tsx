@@ -6,7 +6,7 @@ import { RdAsciiMark } from "./rd-ascii-mark";
  * The earlier version spelled the brand's inventory position out as a list
  * of NONEs. That read as an argument about stock rather than a shop that is
  * open, so it's gone. What's left is the mark resolving out of its own ASCII
- * and four lines that say the storefront is ready — a second and a bit,
+ * and four lines that say the storefront is ready — about five seconds,
  * skippable by any input, once per session, never on cart or checkout.
  */
 
@@ -18,6 +18,13 @@ const LINES: [string, string][] = [
 ];
 
 const KEY = "ap-rd-booted";
+
+/** The sequence runs for about five seconds end to end: four lines at STEP_MS
+ * apart, then TAIL_MS holding the completed list before it clears. It was
+ * ~0.8s, which was over before you had registered it was there. Still
+ * skippable by any input, so nobody who does not want it has to wait. */
+const STEP_MS = 1100;
+const TAIL_MS = 600;
 
 export function RdBoot({ onDone }: { onDone: () => void }) {
   const [n, setN] = useState(0);
@@ -44,12 +51,12 @@ export function RdBoot({ onDone }: { onDone: () => void }) {
       setN((v) => {
         if (v >= LINES.length) {
           window.clearInterval(id);
-          window.setTimeout(finish, 260);
+          window.setTimeout(finish, TAIL_MS);
           return v;
         }
         return v + 1;
       });
-    }, 130);
+    }, STEP_MS);
 
     return () => {
       window.clearInterval(id);
