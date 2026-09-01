@@ -143,7 +143,12 @@ export const Route = createFileRoute("/api/stripe-webhook")({
           // Lands as a HELD Shopify draft order, which Tapstitch's app does
           // NOT see until it's completed into a real order. Nothing is
           // produced by this call alone — see submitTapstitchOrder.
-          const result = await createTapstitchOrder(lines, address, orderReference);
+          const result = await createTapstitchOrder(
+            lines,
+            address,
+            orderReference,
+            typeof session.amount_total === "number" ? session.amount_total / 100 : undefined,
+          );
           if (!result.id) {
             return new Response("Shopify accepted the request but returned no draft id", {
               status: 500,

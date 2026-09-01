@@ -134,6 +134,8 @@ export async function createTapstitchOrder(
   lines: TapstitchOrderLine[],
   address: ShippingAddress,
   orderReference: string,
+  /** Actual amount charged, in euros. Falls back to list prices if absent. */
+  amountPaidEur?: number,
 ): Promise<{ id: string }> {
   if (lines.length === 0) {
     throw new Error("createTapstitchOrder called with no line items.");
@@ -171,10 +173,19 @@ export async function createTapstitchOrder(
     };
   });
 
-  const chargedTotal = lines.reduce((sum, line) => {
-    const product = getAnotherPunkProduct(line.slug);
-    return sum + (product ? product.price * line.qty : 0);
-  }, 0);
+  // What the customer was ACTUALLY charged, passed in from the Stripe
+  // session, not re-derived from list prices. The note previously summed the
+  // catalogue price and so recorded "paid 40.00 EUR" for an order that came
+  // to €1.00 under a discount code — a record that reads as a real sale at
+  // full price, which is the wrong number to have in the one place anyone
+  // would look to reconcile a payment.
+  const chargedTotal =
+    typeof amountPaidEur === "number"
+      ? amountPaidEur
+      : lines.reduce((sum, line) => {
+          const product = getAnotherPunkProduct(line.slug);
+          return sum + (product ? product.price * line.qty : 0);
+        }, 0);
 
   const body = {
     draft_order: {
