@@ -44,6 +44,13 @@ export type ShippingAddress = {
   country: string;
 };
 
+/** A Shopify-safe tag: at most 40 characters, keeping the distinctive tail.
+ * Anything already short enough is returned untouched. */
+function shortTag(reference: string): string {
+  if (reference.length <= 40) return reference;
+  return `stripe-${reference.slice(-24)}`;
+}
+
 function storeDomain(): string {
   const domain = process.env.SHOPIFY_STORE_DOMAIN;
   if (!domain) {
@@ -175,7 +182,14 @@ export async function createTapstitchOrder(
       email: address.email,
       // Tag with the Stripe reference so an order can always be traced back
       // to the payment that created it.
-      tags: `another-punk,${orderReference}`,
+      // Shopify caps a tag at 40 characters and rejects the whole draft
+      // order if one is longer — a Stripe session id alone is 66, so the
+      // reference has to be shortened for the tag. The tail is kept rather
+      // than the head: session ids share a long "cs_live_" prefix and differ
+      // at the end, so the last 24 characters are what actually identify the
+      // order. The full reference still goes in the note below, untruncated,
+      // which is where anyone looking for it would read it.
+      tags: `another-punk,${shortTag(orderReference)}`,
       // Carries the real charged total, because the line-item prices above
       // cannot be made to reflect it.
       note: `Another Punk — ${orderReference} — customer paid ${chargedTotal.toFixed(2)} EUR via Stripe`,
