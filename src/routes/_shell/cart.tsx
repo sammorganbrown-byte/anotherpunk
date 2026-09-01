@@ -12,7 +12,7 @@ export const Route = createFileRoute("/_shell/cart")({ component: RedesignCart }
  */
 function RedesignCart() {
   const { items, updateQty, removeItem, subtotal, discount, shipping, total } = useCart();
-  const { formatPrice } = useCurrency();
+  const { formatPrice, formatEur, converted } = useCurrency();
 
   if (items.length === 0) {
     return (
@@ -99,6 +99,9 @@ function RedesignCart() {
         <p className="rd-mid mt-1">
           Total <span className="text-[var(--rd-red)]">{formatPrice(total)}</span>
         </p>
+        {converted ? (
+          <p className="rd-log opacity-70">Charged in euros — {formatEur(total)}</p>
+        ) : null}
         <p className="rd-log">Worldwide. Duties, where they apply, are yours.</p>
         <Link to="/checkout" className="rd-btn mt-4" data-primary="true">
           Dispatch →

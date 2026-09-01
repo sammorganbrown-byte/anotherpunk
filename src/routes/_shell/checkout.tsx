@@ -50,7 +50,7 @@ function Field({
 function RedesignCheckout() {
   const { items, subtotal, discount, shipping, total, applyPromoCode, removePromoCode } =
     useCart();
-  const { formatPrice } = useCurrency();
+  const { formatPrice, formatEur, converted } = useCurrency();
 
   const [form, setForm] = useState({
     name: "",
@@ -264,6 +264,12 @@ function RedesignCheckout() {
           <p className="rd-mid mt-2">
             Total <span className="text-[var(--rd-red)]">{formatPrice(total)}</span>
           </p>
+          {/* Prices can be read in another currency, but the charge is always
+              in euros. Saying so here, next to the number being committed to,
+              is the whole reason the converter is allowed to exist. */}
+          {converted ? (
+            <p className="rd-log mt-1 opacity-70">Charged in euros — {formatEur(total)}</p>
+          ) : null}
         </aside>
       </div>
     </div>

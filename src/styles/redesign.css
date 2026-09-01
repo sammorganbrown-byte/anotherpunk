@@ -1584,3 +1584,35 @@ body:has(.rd-np) .rd-hint {
 body:has(.rd-pdp) .rd-np {
   bottom: calc(var(--rd-foot-h) + 64px);
 }
+
+/* Currency switcher. A native select, restyled to sit on the terminal line
+   rather than replaced with a custom listbox — the native control gets
+   keyboard, screen-reader and mobile behaviour for free, and this is a
+   footer utility, not a place to spend interaction budget. */
+[data-ap-rd] .rd-select {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--rd-rule);
+  color: var(--rd-red);
+  font: inherit;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  padding: 2px 22px 2px 6px;
+  cursor: pointer;
+  /* Caret drawn in, since appearance:none removes the native one. */
+  background-image: linear-gradient(45deg, transparent 50%, var(--rd-red) 50%),
+    linear-gradient(135deg, var(--rd-red) 50%, transparent 50%);
+  background-position: calc(100% - 12px) 52%, calc(100% - 7px) 52%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+[data-ap-rd] .rd-select:focus-visible {
+  outline: 1px solid var(--rd-red);
+  outline-offset: 1px;
+}
+/* The options themselves render in the OS menu, which does not inherit the
+   page's colours — set them explicitly so the list is not white-on-white. */
+[data-ap-rd] .rd-select option {
+  background: var(--rd-bg);
+  color: var(--rd-ink);
+}

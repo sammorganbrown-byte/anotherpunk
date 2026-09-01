@@ -234,9 +234,19 @@ function shuffled<T>(xs: readonly T[]): T[] {
 
 export function RdPlayer() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  // The running order is fixed once, on mount, so it does not reshuffle under
-  // the listener every time React re-renders.
-  const [order] = useState(() => shuffled(TRACKS));
+  // The running order is fixed once, after mount, so it does not reshuffle
+  // under the listener every time React re-renders.
+  //
+  // It deliberately starts unshuffled. Shuffling in the initial state ran the
+  // shuffle during the server render too, so the server picked one first
+  // track and the browser picked another, and every single page load logged a
+  // hydration mismatch on the <audio src>. React does not patch those up. The
+  // first paint now matches on both sides and the order is randomised in an
+  // effect, which only ever runs in the browser.
+  const [order, setOrder] = useState<readonly Track[]>(TRACKS);
+  useEffect(() => {
+    setOrder(shuffled(TRACKS));
+  }, []);
   const [at, setAt] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [started, setStarted] = useState(false);

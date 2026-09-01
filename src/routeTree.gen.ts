@@ -15,6 +15,7 @@ import { Route as ShellCartRouteImport } from './routes/_shell/cart'
 import { Route as ShellCheckoutRouteImport } from './routes/_shell/checkout'
 import { Route as ShellOrderConfirmedRouteImport } from './routes/_shell/order-confirmed'
 import { Route as ShellShopRouteImport } from './routes/_shell/shop'
+import { Route as ApiRatesRouteImport } from './routes/api/rates'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe-webhook'
 import { Route as ClassicIndexRouteImport } from './routes/classic/index'
 import { Route as ClassicCartRouteImport } from './routes/classic/cart'
@@ -52,6 +53,11 @@ const ShellShopRoute = ShellShopRouteImport.update({
   id: '/shop',
   path: '/shop',
   getParentRoute: () => ShellRoute,
+} as any)
+const ApiRatesRoute = ApiRatesRouteImport.update({
+  id: '/api/rates',
+  path: '/api/rates',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiStripeWebhookRoute = ApiStripeWebhookRouteImport.update({
   id: '/api/stripe-webhook',
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof ShellCheckoutRoute
   '/order-confirmed': typeof ShellOrderConfirmedRoute
   '/shop': typeof ShellShopRoute
+  '/api/rates': typeof ApiRatesRoute
   '/api/stripe-webhook': typeof ApiStripeWebhookRoute
   '/classic/cart': typeof ClassicCartRoute
   '/classic/checkout': typeof ClassicCheckoutRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof ShellCheckoutRoute
   '/order-confirmed': typeof ShellOrderConfirmedRoute
   '/shop': typeof ShellShopRoute
+  '/api/rates': typeof ApiRatesRoute
   '/api/stripe-webhook': typeof ApiStripeWebhookRoute
   '/classic/cart': typeof ClassicCartRoute
   '/classic/checkout': typeof ClassicCheckoutRoute
@@ -131,6 +139,7 @@ export interface FileRoutesById {
   '/_shell/checkout': typeof ShellCheckoutRoute
   '/_shell/order-confirmed': typeof ShellOrderConfirmedRoute
   '/_shell/shop': typeof ShellShopRoute
+  '/api/rates': typeof ApiRatesRoute
   '/api/stripe-webhook': typeof ApiStripeWebhookRoute
   '/classic/cart': typeof ClassicCartRoute
   '/classic/checkout': typeof ClassicCheckoutRoute
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/order-confirmed'
     | '/shop'
+    | '/api/rates'
     | '/api/stripe-webhook'
     | '/classic/cart'
     | '/classic/checkout'
@@ -163,6 +173,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/order-confirmed'
     | '/shop'
+    | '/api/rates'
     | '/api/stripe-webhook'
     | '/classic/cart'
     | '/classic/checkout'
@@ -179,6 +190,7 @@ export interface FileRouteTypes {
     | '/_shell/checkout'
     | '/_shell/order-confirmed'
     | '/_shell/shop'
+    | '/api/rates'
     | '/api/stripe-webhook'
     | '/classic/cart'
     | '/classic/checkout'
@@ -192,6 +204,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   ShellRoute: typeof ShellRouteWithChildren
+  ApiRatesRoute: typeof ApiRatesRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
   ClassicCartRoute: typeof ClassicCartRoute
   ClassicCheckoutRoute: typeof ClassicCheckoutRoute
@@ -244,6 +257,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/shop'
       preLoaderRoute: typeof ShellShopRouteImport
       parentRoute: typeof ShellRoute
+    }
+    '/api/rates': {
+      id: '/api/rates'
+      path: '/api/rates'
+      fullPath: '/api/rates'
+      preLoaderRoute: typeof ApiRatesRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/stripe-webhook': {
       id: '/api/stripe-webhook'
@@ -326,6 +346,7 @@ const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   ShellRoute: ShellRouteWithChildren,
+  ApiRatesRoute: ApiRatesRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
   ClassicCartRoute: ClassicCartRoute,
   ClassicCheckoutRoute: ClassicCheckoutRoute,

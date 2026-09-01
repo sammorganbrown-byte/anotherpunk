@@ -9,6 +9,7 @@ import {
 } from "../../../lib/another-punk-products";
 import { useCart } from "../../../lib/cart-context";
 import { useCurrency } from "../../../lib/currency-context";
+import { SHIPPING_BASE, SHIPPING_PER_EXTRA_ITEM } from "../../../lib/shipping";
 import { RdPixelText } from "../../../components/redesign/rd-pixel-text";
 
 export const Route = createFileRoute("/_shell/product/$slug")({
@@ -48,7 +49,9 @@ function RedesignProduct() {
     ["BUILD", product.eyebrow],
     ["PRICE", formatPrice(product.price)],
     ["SIZES", product.sizes.join(" / ")],
-    ["SHIPPING", "WORLDWIDE"],
+    ["SHIPPING", `WORLDWIDE · +${formatPrice(SHIPPING_BASE)}, +${formatPrice(
+      SHIPPING_PER_EXTRA_ITEM,
+    )} PER EXTRA ITEM`],
   ];
 
   return (

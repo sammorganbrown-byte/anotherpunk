@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useCart } from "../lib/cart-context";
 import { RdField } from "../components/redesign/rd-field";
 import { RdPlayer } from "../components/redesign/rd-player";
+import { RdCurrency } from "../components/redesign/rd-currency";
 import rdCss from "../styles/redesign.css?url";
 
 /** The official hand-painted wordmark — the brand mark, not a typeface.
@@ -121,6 +122,7 @@ function RedesignLayout() {
       <footer className="border-t border-[var(--rd-rule)] px-4 py-6">
         <div className="rd-log flex flex-wrap items-center justify-between gap-3">
           <span>SHIPPED WORLDWIDE</span>
+          <RdCurrency />
           <span>
             <a href="/classic" className="rd-link underline underline-offset-4">
               ← Previous version
