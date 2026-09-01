@@ -33,9 +33,10 @@ const PROMO_CODES: PromoCode[] = [
   // exercise a different path from a real sale. A small live charge proves
   // the actual one.
   //
-  // WATCH THE FLOOR. Stripe will not take a EUR charge below €0.50, so this
-  // needs an order over €50: a €60 tee leaves €0.60 and works, a €40 cami
-  // leaves €0.40 and Stripe refuses to create the session.
+  // The 50c EUR floor used to be a trap here — 99% off a €40 item left €0.40
+  // and Stripe refused the session. Shipping is now charged as its own
+  // undiscounted line, so every order clears the floor by €9 or more and any
+  // item can be used for the test. Expect the dry run to cost about €9.45.
   { code: "DRYRUN99", percentOff: 99, label: "Dry run" },
 ];
 

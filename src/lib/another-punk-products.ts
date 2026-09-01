@@ -78,10 +78,15 @@ const SIX: ApSize[] = ["S", "M", "L", "XL", "2XL", "3XL"];
  * one would sell a size that cannot be fulfilled. */
 const FIVE: ApSize[] = ["S", "M", "L", "XL", "2XL"];
 
-export const AP_PRICE = 60;
-/** The jersey is priced below the rest of the range — read from Shopify, not
- * assumed. Anything here that is not AP_PRICE must come from the store. */
+/** Retail, grouped by blank rather than by design, because that is how cost
+ * behaves: every design on the raw-hem tee costs the same to make, so every
+ * design on it sells for the same. Shipping is charged separately — see
+ * shipping.ts — so these are the price of the garment alone. */
+export const TEE_PRICE = 45;
+export const OVERSIZED_PRICE = 40;
+export const MESH_PRICE = 50;
 export const JERSEY_PRICE = 50;
+export const WOMENS_PRICE = 30;
 
 export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
@@ -134,7 +139,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     quoteSource: "Fear and Loathing in Las Vegas, 1998",
     title: "Bat Country",
     eyebrow: "Washed black · raw hem",
-    price: AP_PRICE,
+    price: TEE_PRICE,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/746fa1fe-5055-4a02-913a-aba6e38d07de.png",
       "/img/24-bats-chest-redo.jpg",
@@ -159,7 +164,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     quoteSource: "Barbarella, 1968",
     title: "Tongue Box",
     eyebrow: "Washed black · raw hem",
-    price: AP_PRICE,
+    price: TEE_PRICE,
     // Reshot 2026-09-01. Every previous image showed the garment misspelled
     // TOUNGE; the artwork was corrected and these three are the only shots of
     // the real product. The old five are still on disk but must not be listed
@@ -185,7 +190,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     quoteSource: "The Big Lebowski, 1998",
     title: "The Jesus",
     eyebrow: "Washed black · raw hem",
-    price: AP_PRICE,
+    price: TEE_PRICE,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/ddc73ac6-e5d5-4e0e-8d0e-87380496611f.png",
       "/img/23-jesus-chest.jpg",
@@ -208,7 +213,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     quoteSource: "After Hours, 1985",
     title: "Surrender Dorothy",
     eyebrow: "Washed black · raw hem",
-    price: AP_PRICE,
+    price: TEE_PRICE,
     images: [
       // The print is on the FRONT of this garment. Five shots here showed it
       // across the BACK — 26-back-full, 04-threequarter-turn,
@@ -231,7 +236,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     slug: "saucer",
     title: "Saucer",
     eyebrow: "Washed black · raw hem",
-    price: AP_PRICE,
+    price: TEE_PRICE,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/e4e13de6-1f38-408d-bd58-c5588bb875d9.png",
       "/img/25-saucer-chest.jpg",
@@ -255,7 +260,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "Snow-washed heavyweight cotton. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve.",
     title: "Saucer — Oversized, Black",
     eyebrow: "Snow-washed black · sleeve hit",
-    price: AP_PRICE,
+    price: OVERSIZED_PRICE,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/6c8c1532-1749-44ec-8f53-395ff5643b92.png",
       "/img/28-bwblack-chest.jpg",
@@ -281,7 +286,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "Snow-washed heavyweight cotton in bone. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve.",
     title: "Saucer — Oversized, Bone",
     eyebrow: "Snow-washed bone · sleeve hit",
-    price: AP_PRICE,
+    price: OVERSIZED_PRICE,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/d2036219-e99b-4ceb-8597-37452d66dec3.png",
       "/img/08-bwwhite-midturn.jpg",
@@ -308,7 +313,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "Snow-washed heavyweight cotton. Oversized through the body, hem finished clean. The mark, large across the chest.",
     title: "Another Punk",
     eyebrow: "Snow-washed · oversized",
-    price: AP_PRICE,
+    price: OVERSIZED_PRICE,
     images: [
       // REAL GARMENT PHOTOS, from the Shopify product this maps to.
       //
@@ -354,7 +359,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     fit: "Boxy and loose. Your normal size.",
     title: "Mesh",
     eyebrow: "Open-weave net · boxy",
-    price: AP_PRICE,
+    price: MESH_PRICE,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/47da1769-eb20-4e33-9204-60503c824ef5.png",
       "/img/07-mesh-walking-blur.jpg",
@@ -378,7 +383,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "Pink leopard · cropped",
     // Priced below the rest of the range on request, it's a lighter
     // cropped body rather than the heavyweight boxy tee.
-    price: 40,
+    price: WOMENS_PRICE,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/7d1de5e3-2285-4b61-8580-1acba6248e3f.png",
       "/img/06-leopard-threequarter-night.jpg",
@@ -402,7 +407,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Cami",
     eyebrow: "Black · slim fit · thin strap",
     // Matches Leopard Crop, the other lightweight women's cut. Confirmed.
-    price: 40,
+    price: WOMENS_PRICE,
     images: [
       "/img/80-cami-fullbody-flash.jpg",
       "/img/81-cami-chest-crop.jpg",
@@ -432,7 +437,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Bodysuit",
     eyebrow: "Mineral wash · ribbed · fitted",
     // Confirmed. Below the tees — less garment, more construction.
-    price: 50,
+    price: WOMENS_PRICE,
     images: [
       // HERO is the one-piece shot on purpose. Every shot with it tucked into
       // trousers reads as an ordinary fitted tee in the shop grid, which is

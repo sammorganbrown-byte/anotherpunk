@@ -48,7 +48,7 @@ function Field({
 }
 
 function RedesignCheckout() {
-  const { items, total } = useCart();
+  const { items, shipping, total } = useCart();
   const { formatPrice } = useCurrency();
 
   const [form, setForm] = useState({
@@ -231,7 +231,13 @@ function RedesignCheckout() {
               </li>
             ))}
           </ul>
-          <p className="rd-mid mt-6">
+          {shipping > 0 ? (
+            <p className="rd-log mt-4 flex justify-between">
+              <span>Shipping</span>
+              <span className="rd-ok">{formatPrice(shipping)}</span>
+            </p>
+          ) : null}
+          <p className="rd-mid mt-2">
             Total <span className="text-[var(--rd-red)]">{formatPrice(total)}</span>
           </p>
         </aside>

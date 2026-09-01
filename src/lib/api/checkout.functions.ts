@@ -3,17 +3,13 @@ import { z } from "zod";
 import { getStripe, type CheckoutSessionMetadata } from "../stripe.server";
 import { getAnotherPunkProduct, isFulfillable } from "../another-punk-products";
 import { computeDiscount } from "../promo-codes";
+import { computeShipping } from "../shipping";
 
 // Where the site lives, used to build Stripe's return URLs. Set SITE_URL in
 // the host's env; falls back to localhost so `vite dev` works untouched.
 function siteUrl(): string {
   return process.env.SITE_URL?.replace(/\/$/, "") ?? "http://localhost:3000";
 }
-
-// Shipping is currently absorbed into the shirt price rather than charged
-// as a line — one flat worldwide rate, no live quoting. If that changes,
-// this is the single place to add it.
-const SHIPPING = 0;
 
 const itemSchema = z.object({
   slug: z.string().min(1),
@@ -98,12 +94,16 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       },
     }));
 
-    if (SHIPPING > 0) {
+    // Recomputed here from the resolved lines, never taken from the client.
+    // Deliberately outside `factor`, so a promo code discounts the clothes
+    // and not the postage.
+    const shipping = computeShipping(resolved.reduce((n, r) => n + r.qty, 0));
+    if (shipping > 0) {
       lineItems.push({
         quantity: 1,
         price_data: {
           currency: "eur",
-          unit_amount: Math.round(SHIPPING * 100),
+          unit_amount: Math.round(shipping * 100),
           product_data: { name: "Shipping", images: [] },
         },
       });

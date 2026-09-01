@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { computeDiscount, findPromoCode, normalizePromoCode } from "./promo-codes";
+import { computeShipping } from "./shipping";
 
 // Another Punk sells one kind of thing: apparel produced by Tapstitch via
 // the headless Shopify bridge (see lib/tapstitch-fulfillment.server.ts).
@@ -35,7 +36,10 @@ type CartContextValue = {
   removePromoCode: () => void;
   /** Dollar amount taken off by the applied promo code, 0 if none applied. */
   discount: number;
-  /** subtotal - discount, floored at 0. */
+  /** Shipping for the current bag. Charged on the order, not per garment —
+   * see shipping.ts. Zero for an empty bag. */
+  shipping: number;
+  /** subtotal - discount (floored at 0) + shipping. */
   total: number;
 };
 
@@ -185,7 +189,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [items]);
 
   const discount = useMemo(() => computeDiscount(promoCode, items), [promoCode, items]);
-  const total = Math.max(0, subtotal - discount);
+  // Shipping sits outside the discount: a promo code takes money off the
+  // clothes, not off the courier. It also keeps a heavily-discounted test
+  // order above the 50c minimum Stripe will accept in EUR.
+  const shipping = computeShipping(count);
+  const total = Math.max(0, subtotal - discount) + shipping;
 
   const value: CartContextValue = {
     items,
@@ -199,6 +207,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     applyPromoCode,
     removePromoCode,
     discount,
+    shipping,
     total,
   };
 

@@ -11,7 +11,7 @@ export const Route = createFileRoute("/_shell/cart")({ component: RedesignCart }
  * stays; the theatre stops.
  */
 function RedesignCart() {
-  const { items, updateQty, removeItem, subtotal, discount, total } = useCart();
+  const { items, updateQty, removeItem, subtotal, discount, shipping, total } = useCart();
   const { formatPrice } = useCurrency();
 
   if (items.length === 0) {
@@ -95,10 +95,11 @@ function RedesignCart() {
       <div className="mt-6 flex flex-col items-end gap-1">
         <p className="rd-log">Subtotal {formatPrice(subtotal)}</p>
         {discount > 0 ? <p className="rd-log">Discount −{formatPrice(discount)}</p> : null}
+        {shipping > 0 ? <p className="rd-log">Shipping {formatPrice(shipping)}</p> : null}
         <p className="rd-mid mt-1">
           Total <span className="text-[var(--rd-red)]">{formatPrice(total)}</span>
         </p>
-        <p className="rd-log">Shipping included. Tax at checkout.</p>
+        <p className="rd-log">Worldwide. Duties, where they apply, are yours.</p>
         <Link to="/checkout" className="rd-btn mt-4" data-primary="true">
           Dispatch →
         </Link>

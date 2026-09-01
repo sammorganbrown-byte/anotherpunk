@@ -9,7 +9,7 @@ export const Route = createFileRoute("/classic/cart")({
   }), component: CartPage });
 
 function CartPage() {
-  const { items, updateQty, removeItem, subtotal, discount, total } = useCart();
+  const { items, updateQty, removeItem, subtotal, discount, shipping, total } = useCart();
   const { formatPrice } = useCurrency();
 
   if (items.length === 0) {
@@ -95,10 +95,13 @@ function CartPage() {
             <p className="font-label text-sm text-pink">Discount −{formatPrice(discount)}</p>
           </>
         )}
+        {shipping > 0 && (
+          <p className="font-label text-sm text-ink-2">Shipping {formatPrice(shipping)}</p>
+        )}
         <p className="font-display text-2xl font-bold text-ink uppercase">
           Total {formatPrice(total)}
         </p>
-        <p className="ap-eyebrow text-ink-2">Shipping included. Tax at checkout.</p>
+        <p className="ap-eyebrow text-ink-2">Worldwide. Tax at checkout.</p>
         <Link
           to="/classic/checkout"
           className="font-label mt-4 bg-pink px-10 py-4 text-xs font-medium tracking-[0.14em] text-paper uppercase transition-opacity hover:opacity-90"
