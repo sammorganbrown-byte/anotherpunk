@@ -1482,7 +1482,10 @@ body:has([data-ap-rd]) {
   left: 12px;
   bottom: calc(var(--rd-foot-h) + 12px);
   z-index: 58;
-  width: min(86vw, 330px);
+  /* A third of the size it was: Spotify's compact embed at 80px tall rather
+     than the 152px card, in a narrower box. It is a transport, not a feature
+     of the page. */
+  width: min(70vw, 232px);
   border: 1px solid var(--rd-red);
   background: var(--rd-void);
   padding: 3px;
@@ -1496,14 +1499,20 @@ body:has([data-ap-rd]) {
   border: 0;
 }
 
+/* Nothing you navigate with may sit under the player. The drag hint lives in
+   this exact corner, so it stands down whenever the embed is up rather than
+   being half-covered by it. The CRT slider is top-left, the shop card is
+   bottom-right and both bars are above at z-index 60, so this corner is the
+   one place the player costs nothing. */
+body:has(.rd-embed) .rd-hint {
+  display: none;
+}
+
 @media (max-width: 700px) {
   .rd-embed {
     left: 10px;
-    right: 10px;
-    width: auto;
-  }
-  /* The drag hint sits here on a phone; the player wins. */
-  .rd-hint {
-    display: none;
+    /* Not full width: leave the right-hand side clear so the shop card and
+       the field are still reachable with a thumb. */
+    width: min(62vw, 210px);
   }
 }

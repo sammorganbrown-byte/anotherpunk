@@ -146,13 +146,13 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "Washed black · raw hem",
     price: AP_PRICE,
     images: [
+      // The print is on the FRONT of this garment. Five shots here showed it
+      // across the BACK — 26-back-full, 04-threequarter-turn,
+      // 36-night-takeaway, 59-spin and 70-wide-negspace — which is a product
+      // that does not exist. Each remaining image was opened and checked
+      // rather than judged by filename. Files stay on disk.
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/4ca18e68-84f4-42c7-98a5-f5e547502ce2.png",
-      "/img/26-dorothy-back-full.jpg",
-      "/img/04-dorothy-threequarter-turn.jpg",
-      "/img/36-dorothy-night-takeaway.jpg",
       "/img/53-dorothy-chest-crop.jpg",
-      "/img/59-dorothy-spin.jpg",
-      "/img/70-dorothy-wide-negspace.jpg",
     ],
     sizes: FOUR,
     shopifyProductId: "15942008963403",

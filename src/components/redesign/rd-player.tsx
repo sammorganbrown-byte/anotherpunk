@@ -157,7 +157,7 @@ export function RdPlayer() {
         .then((api) => {
           api.createController(
             host,
-            { uri: uriAt(0), width: "100%", height: "152" },
+            { uri: uriAt(0), width: "100%", height: "80" },
             (controller) => {
               ctrlRef.current = controller;
 
