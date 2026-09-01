@@ -82,7 +82,11 @@ function wrapAxis(v: number, size: number, margin: number) {
 function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: number }): Piece[] {
   const raw: { p: AnotherPunkProduct; src: string; label: boolean }[] = [];
   products.forEach((p) => {
-    p.images.forEach((src) => raw.push({ p, src, label: true }));
+    // Skip anything the product marks as product-page-only — flat packshots,
+    // which read as dead weight floating among photographs of people.
+    p.images
+      .filter((src) => !p.notInField?.includes(src))
+      .forEach((src) => raw.push({ p, src, label: true }));
   });
 
   // Jittered grid: roughly square, one cell per piece, scattered inside it.

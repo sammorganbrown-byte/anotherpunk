@@ -22,6 +22,13 @@
 export type ApSize = "S" | "M" | "L" | "XL" | "2XL" | "3XL";
 
 export type AnotherPunkProduct = {
+  /** Images that belong on the product page but NOT in the field.
+   *
+   * The field is a campaign: photographs of people wearing the thing. A flat
+   * packshot on a plain ground is useful to a customer deciding on a purchase
+   * and dead weight floating among the rest, so it can be listed here and the
+   * field will skip it. Paths must match `images` exactly. */
+  notInField?: string[];
   slug: string;
   title: string;
   /** Short editorial kicker shown above the title. */
@@ -312,6 +319,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       // AP-real-back-black pulled: a blank back with nothing printed on it.
       // It shows the customer no more than an empty tee would. File kept.
     ],
+    // The flat packshot earns its place on the product page and nowhere else.
+    notInField: ["/img/AP-real-front-black.jpg"],
     sizes: SIX,
     shopifyProductId: "15942019613003",
     shopifyVariantIds: {
