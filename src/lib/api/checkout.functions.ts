@@ -9,7 +9,11 @@ import { computeShipping, SHIPPING_COUNTRIES } from "../shipping";
 // Where the site lives, used to build Stripe's return URLs. Set SITE_URL in
 // the host's env; falls back to localhost so `vite dev` works untouched.
 function siteUrl(): string {
-  return process.env.SITE_URL?.replace(/\/$/, "") ?? "http://localhost:3000";
+  // SITE_URL was set but blank in production, and ?? only catches null and
+  // undefined — so this returned "" and Stripe was handed relative return
+  // URLs, which it refuses. Blank is treated as absent.
+  const fromEnv = process.env.SITE_URL?.trim().replace(/\/$/, "");
+  return fromEnv || "https://www.anotherpunk.com";
 }
 
 const itemSchema = z.object({

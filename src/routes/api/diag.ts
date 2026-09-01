@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import Stripe from "stripe";
 import { getStripe } from "../../lib/stripe.server";
 
 /** TEMPORARY. Distinguishes "cannot reach Stripe" from "the SDK is unhappy".
@@ -31,6 +32,20 @@ export const Route = createFileRoute("/api/diag")({
           out.rawFetchToStripe = r.status;
         } catch (e) {
           out.rawFetchToStripe = `threw: ${e instanceof Error ? e.name : "unknown"}`;
+        }
+
+        out.sdkVersion = (Stripe as unknown as { PACKAGE_VERSION?: string }).PACKAGE_VERSION ?? null;
+        out.hasFetchClientFactory = typeof Stripe.createFetchHttpClient === "function";
+
+        // Authenticated raw call. Status only — never the body. 200 proves
+        // the key itself is good and reachable without the SDK in the way.
+        try {
+          const r = await fetch("https://api.stripe.com/v1/prices?limit=1", {
+            headers: { Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY}` },
+          });
+          out.authedRawFetch = r.status;
+        } catch (e) {
+          out.authedRawFetch = `threw: ${e instanceof Error ? e.name : "unknown"}`;
         }
 
         // The SDK path the checkout actually uses.
