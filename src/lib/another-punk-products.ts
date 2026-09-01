@@ -65,6 +65,30 @@ export const AP_PRICE = 60;
 
 export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
+    slug: "westwood-69",
+    description:
+      "Boxy football jersey, striped jacquard, contrast collar. Saucer on the front, WESTWOOD 69 across the back. Pink or black. Made to order.",
+    fit: "Boxy and oversized. Your normal size.",
+    title: "Westwood 69",
+    eyebrow: "Football jersey · pink or black",
+    price: AP_PRICE,
+    images: [
+      "/img/140-jersey-pink-chest-flash.jpg",
+      "/img/142-jersey-black-chest-flash.jpg",
+      "/img/141-jersey-pink-back-69.jpg",
+      "/img/143-jersey-black-football.jpg",
+      "/img/144-jersey-black-slide.jpg",
+    ],
+    sizes: SIX,
+    // NOT WIRED YET. The product exists in Shopify but its id and per-size
+    // variant ids are not here, so isFulfillable() returns false and the page
+    // shows "Not for sale yet" rather than taking money for something that
+    // cannot be fulfilled. Fill these in and it goes on sale with no other
+    // change.
+    shopifyProductId: null,
+    shopifyVariantIds: {},
+  },
+  {
     slug: "bat-country",
     quote: "We can't stop here. This is bat country.",
     quoteSource: "Fear and Loathing in Las Vegas, 1998",
@@ -258,6 +282,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       // These packshots are plainer than the rest of the range. Replace them
       // with campaign shots built from a reference element made from THIS
       // garment, not the raw-hem one.
+      "/img/145-anotherpunk-chest-flash.jpg",
+      "/img/146-anotherpunk-night-neon.jpg",
       "/img/AP-real-front-black.jpg",
       "/img/AP-real-back-black.jpg",
     ],
