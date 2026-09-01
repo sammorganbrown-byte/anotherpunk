@@ -305,7 +305,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       // These packshots are plainer than the rest of the range. Replace them
       // with campaign shots built from a reference element made from THIS
       // garment, not the raw-hem one.
-      "/img/145-anotherpunk-chest-flash.jpg",
+      // 145-anotherpunk-chest-flash pulled on sight — headless torso, arms
+      // dead at the sides, no attitude in it at all. File kept on disk.
       "/img/146-anotherpunk-night-neon.jpg",
       "/img/AP-real-front-black.jpg",
       "/img/AP-real-back-black.jpg",
