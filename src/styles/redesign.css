@@ -1516,3 +1516,21 @@ body:has(.rd-embed) .rd-hint {
     width: min(62vw, 210px);
   }
 }
+
+/* The skip control, beside the transport. Only rendered once the playlist is
+   live, so it never sits there dead before anyone has pressed play. */
+.rd-player-next {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+@media (max-width: 700px) {
+  /* The bar is tight on a phone; the transport wins over the skip. */
+  .rd-player-next {
+    display: none;
+  }
+}

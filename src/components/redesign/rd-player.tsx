@@ -141,6 +141,22 @@ export function RdPlayer() {
     setAsking(false);
   };
 
+  /** The track at a position in the shuffled order. */
+  const uriAt = (i: number) => `spotify:track:${orderRef.current[i]}`;
+
+  /** Move to the next track and play it. Shared by the skip control and by
+   * the end-of-track handler, so a manual skip and a natural one advance the
+   * running order identically — the alternative is two code paths that drift
+   * and land you on the same song twice. */
+  const advance = () => {
+    const c = ctrlRef.current;
+    if (!c || !orderRef.current.length) return;
+    atRef.current = (atRef.current + 1) % orderRef.current.length;
+    c.loadUri(uriAt(atRef.current));
+    c.play();
+    setPlaying(true);
+  };
+
   const start = () => {
     markAsked();
     setLive(true);
@@ -151,7 +167,6 @@ export function RdPlayer() {
       if (!host) return;
       orderRef.current = shuffled(TRACK_IDS);
       atRef.current = 0;
-      const uriAt = (i: number) => `spotify:track:${orderRef.current[i]}`;
 
       loadSpotifyApi()
         .then((api) => {
@@ -172,9 +187,7 @@ export function RdPlayer() {
                 const atEnd = data.position >= data.duration - 800;
                 if (atEnd && !ended) {
                   ended = true;
-                  atRef.current = (atRef.current + 1) % orderRef.current.length;
-                  controller.loadUri(uriAt(atRef.current));
-                  controller.play();
+                  advance();
                 } else if (!atEnd) {
                   ended = false;
                 }
@@ -243,6 +256,16 @@ export function RdPlayer() {
             {live ? "Playlist" : "Sound"}
           </span>
         </button>
+        {live ? (
+          <button
+            type="button"
+            onClick={advance}
+            className="rd-link rd-player-next"
+            aria-label="Skip to the next track"
+          >
+            <span aria-hidden="true">▶▶</span>
+          </button>
+        ) : null}
       </span>
 
       {/* Spotify replaces this node with its own iframe. It stays in the DOM
