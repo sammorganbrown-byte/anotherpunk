@@ -187,8 +187,16 @@ function RedesignCheckout() {
             <p className="rd-log">
               {promoFound ? (
                 <span className="rd-ok">
-                  {promoFound.label ?? promoFound.code} — {promoFound.percentOff}% off,
-                  −{formatPrice(discount)}
+                  {/* Not every code is a percentage — one prices at cost —
+                      and printing "undefined% off" is worse than saying
+                      nothing about how the number was arrived at. */}
+                  {promoFound.label ?? promoFound.code}
+                  {typeof promoFound.percentOff === "number"
+                    ? ` — ${promoFound.percentOff}% off`
+                    : promoFound.toCost
+                      ? " — at cost"
+                      : ""}
+                  , −{formatPrice(discount)}
                 </span>
               ) : (
                 <span className="rd-key">No such code.</span>

@@ -1,3 +1,5 @@
+import { getAnotherPunkProduct } from "./another-punk-products";
+
 // Promo codes, plain shared logic (no server-only APIs) so the exact same
 // discount math can run on the client (cart/checkout display) and on the
 // server as the authoritative check before an order is placed. Never trust a
@@ -18,8 +20,13 @@ export type PromoCodeItem = {
 type PromoCode = {
   /** Stored uppercase; user input is normalised before lookup. */
   code: string;
-  /** Percentage off the order subtotal, 0-100. */
-  percentOff: number;
+  /** Percentage off the order subtotal, 0-100. Omitted by a code that prices
+   * some other way — see `toCost`. */
+  percentOff?: number;
+  /** Prices the clothes at what they cost to make, whatever that is per
+   * product, instead of taking a percentage. Shipping is unaffected unless
+   * shippingPercentOff says otherwise, so the order comes to cost + postage. */
+  toCost?: boolean;
   /** Percentage off the postage, 0-100. Absent means shipping is not
    * discounted, which is the right default: a code is a discount on the
    * clothes, and the courier still has to be paid. */
@@ -41,6 +48,13 @@ const PROMO_CODES: PromoCode[] = [
   // genuine card charge, twice the floor, and cheap enough to run more than
   // once. See computeDiscount for why 99% is not quietly 100%.
   { code: "DRYRUN99", percentOff: 99, shippingPercentOff: 100, label: "Dry run" },
+
+  // Friends and family. Pays what the garment actually costs to make plus the
+  // real postage, so it never loses money — unlike a flat percentage, which
+  // would sell an €18.36 tee and an €11.93 crop at the same discount and put
+  // one of them underwater. Shipping is charged in full, deliberately: the
+  // courier is not doing anyone a favour.
+  { code: "BIGPUSSY69", toCost: true, label: "Friends" },
 ];
 
 export function normalizePromoCode(input: string): string {
@@ -59,7 +73,20 @@ export function computeDiscount(input: string | null | undefined, items: PromoCo
   if (!promo) return 0;
 
   const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
-  return roundDiscount(subtotal, promo.percentOff);
+
+  if (promo.toCost) {
+    // Down to what the garments cost, not down by a percentage. Rounded DOWN
+    // so the rounding can only ever leave the order slightly above cost — the
+    // one direction that cannot end up selling at a loss. A line whose cost
+    // is unknown keeps its full price rather than being given away.
+    const costTotal = items.reduce((sum, i) => {
+      const cost = getAnotherPunkProduct(i.slug ?? "")?.cost;
+      return sum + (typeof cost === "number" ? cost : i.price) * i.qty;
+    }, 0);
+    return Math.max(0, Math.floor(subtotal - costTotal));
+  }
+
+  return roundDiscount(subtotal, promo.percentOff ?? 0);
 }
 
 /** Shipping taken off by a code, 0 unless the code says otherwise. */

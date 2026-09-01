@@ -44,6 +44,9 @@ export type AnotherPunkProduct = {
   /** EUR. Flat across the range for now, revisited once real unit costs
    * and shipping are confirmed against Tapstitch's actual invoices. */
   price: number;
+  /** What the blank plus printing costs, from Shopify's cost-per-item field.
+   * Display never uses it; it exists so a code can price at cost. */
+  cost: number;
   /** Every shot of this garment. images[0] is the hero — it's what the
    * shop grid, homepage tiles and cart thumbnail use, so it should be the
    * frame that reads the garment most clearly. The rest fill the
@@ -102,6 +105,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Westwood 69 — Pink",
     eyebrow: "Football jersey · pink",
     price: JERSEY_PRICE,
+    cost: 14.68,
     images: ["/img/140-jersey-pink-chest-flash.jpg", "/img/141-jersey-pink-back-69.jpg"],
     // Only two photographs, so it barely surfaced in the field. Doubled there.
     fieldRepeat: 2,
@@ -123,6 +127,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Westwood 69 — Black",
     eyebrow: "Football jersey · black",
     price: JERSEY_PRICE,
+    cost: 14.68,
     images: [
       "/img/142-jersey-black-chest-flash.jpg",
       "/img/143-jersey-black-football.jpg",
@@ -145,6 +150,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Bat Country",
     eyebrow: "Washed black · raw hem",
     price: TEE_PRICE,
+    cost: 18.36,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/746fa1fe-5055-4a02-913a-aba6e38d07de.png",
       "/img/24-bats-chest-redo.jpg",
@@ -170,6 +176,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Tongue Box",
     eyebrow: "Washed black · raw hem",
     price: TEE_PRICE,
+    cost: 18.36,
     // Reshot 2026-09-01. Every previous image showed the garment misspelled
     // TOUNGE; the artwork was corrected and these three are the only shots of
     // the real product. The old five are still on disk but must not be listed
@@ -196,6 +203,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "The Jesus",
     eyebrow: "Washed black · raw hem",
     price: TEE_PRICE,
+    cost: 18.36,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/ddc73ac6-e5d5-4e0e-8d0e-87380496611f.png",
       "/img/23-jesus-chest.jpg",
@@ -219,6 +227,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Surrender Dorothy",
     eyebrow: "Washed black · raw hem",
     price: TEE_PRICE,
+    cost: 18.36,
     images: [
       // The print is on the FRONT of this garment. Five shots here showed it
       // across the BACK — 26-back-full, 04-threequarter-turn,
@@ -242,6 +251,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Saucer",
     eyebrow: "Washed black · raw hem",
     price: TEE_PRICE,
+    cost: 18.36,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/e4e13de6-1f38-408d-bd58-c5588bb875d9.png",
       "/img/25-saucer-chest.jpg",
@@ -266,6 +276,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Saucer — Oversized, Black",
     eyebrow: "Snow-washed black · sleeve hit",
     price: SAUCER_OVERSIZED_PRICE,
+    cost: 14.68,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/6c8c1532-1749-44ec-8f53-395ff5643b92.png",
       "/img/28-bwblack-chest.jpg",
@@ -292,6 +303,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Saucer — Oversized, Bone",
     eyebrow: "Snow-washed bone · sleeve hit",
     price: SAUCER_OVERSIZED_PRICE,
+    cost: 14.68,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/d2036219-e99b-4ceb-8597-37452d66dec3.png",
       "/img/08-bwwhite-midturn.jpg",
@@ -319,6 +331,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Another Punk",
     eyebrow: "Snow-washed · oversized",
     price: ANOTHER_PUNK_PRICE,
+    cost: 11.93,
     images: [
       // REAL GARMENT PHOTOS, from the Shopify product this maps to.
       //
@@ -365,6 +378,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Mesh",
     eyebrow: "Open-weave net · boxy",
     price: MESH_PRICE,
+    cost: 17.45,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/47da1769-eb20-4e33-9204-60503c824ef5.png",
       "/img/07-mesh-walking-blur.jpg",
@@ -389,6 +403,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // Priced below the rest of the range on request, it's a lighter
     // cropped body rather than the heavyweight boxy tee.
     price: WOMENS_PRICE,
+    cost: 11.93,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/7d1de5e3-2285-4b61-8580-1acba6248e3f.png",
       "/img/06-leopard-threequarter-night.jpg",
@@ -413,6 +428,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "Black · slim fit · thin strap",
     // Matches Leopard Crop, the other lightweight women's cut. Confirmed.
     price: WOMENS_PRICE,
+    cost: 11.93,
     images: [
       "/img/80-cami-fullbody-flash.jpg",
       "/img/81-cami-chest-crop.jpg",
@@ -443,6 +459,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "Mineral wash · ribbed · fitted",
     // Confirmed. Below the tees — less garment, more construction.
     price: BODYSUIT_PRICE,
+    cost: 14.69,
     images: [
       // HERO is the one-piece shot on purpose. Every shot with it tucked into
       // trousers reads as an ordinary fitted tee in the shop grid, which is
