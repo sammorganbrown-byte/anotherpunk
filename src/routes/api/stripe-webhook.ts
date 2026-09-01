@@ -95,7 +95,20 @@ export const Route = createFileRoute("/api/stripe-webhook")({
         // been through Stripe's country/postal-format validation, unlike the
         // free-text metadata copy which only existed pre-payment. Fall back
         // to metadata only if shipping_details is somehow absent.
-        const shipping = session.shipping_details;
+        // Stripe moved this. On older API versions the collected address is
+        // session.shipping_details; from 2025-03-31.basil onwards it is
+        // session.collected_information.shipping_details, and a webhook
+        // endpoint is pinned to whichever API version it was created with.
+        // Reading only the old shape means a newer endpoint silently finds no
+        // address and falls back to the free-text form values, which never
+        // went through Stripe's country and postal-format validation — a
+        // parcel shipped to a worse address, with nothing visibly wrong.
+        const collected = (
+          session as unknown as {
+            collected_information?: { shipping_details?: typeof session.shipping_details };
+          }
+        ).collected_information?.shipping_details;
+        const shipping = collected ?? session.shipping_details;
         const address: ShippingAddress = shipping?.address
           ? {
               name: shipping.name ?? metadata.name,
