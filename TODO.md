@@ -34,26 +34,39 @@ Ordered by what bites soonest.
       until the payout lands. Worth closing, since it scales with sales
       rather than staying fixed.
 
-      Three angles to look at, roughly in order of how well they solve it:
+      **Researched 2026-09-01. Stripe Issuing is available in Portugal** — PT
+      is one of 22 countries with local Issuing — and the "commercial card
+      program" use case is explicitly for issuing cards to your own business,
+      not just platforms issuing to others. **Stripe balance transfers** move
+      money from your payments balance straight into the Issuing balance that
+      the card spends from, which is exactly the loop you want.
 
-      1. **A card funded by the Stripe balance.** Stripe Issuing can produce
-         a virtual card that spends the balance directly, with no payout
-         wait. Availability and eligibility vary by country and account, so
-         the question for Stripe support is specifically: *"Can I get an
-         Issuing virtual card on a Portuguese account, funded from my Stripe
-         balance, to pay a supplier?"* If yes, this removes the gap entirely.
-      2. **Faster payouts.** Stripe offers instant or daily payouts in some
-         regions, usually for a small percentage. It shortens the gap rather
-         than removing it, and the fee comes off a margin that is already
-         costed at 53%.
-      3. **A working float.** Keep enough in the account to cover a few days
-         of orders. No fees, no applications, but it is your money tied up
-         and it has to grow as the shop does.
+      Two caveats that decide whether it is worth it:
+
+      1. **It is not self-serve.** Step one in Stripe's own docs is
+         "determine your eligibility by contacting Stripe sales", via
+         https://stripe.com/contact/baas — it is an embedded-finance product
+         aimed at businesses with real volume. A new shop may not be taken
+         on. Ask early, since the answer costs nothing.
+      2. **It shortens the lag rather than removing it.** Balance transfers
+         settle instantly in the US but *within 1 business day* in Europe,
+         and are still marked preview here. Better than 3 to 5 days, not
+         zero.
+
+      **The question that actually decides it**, and which the docs do not
+      answer: can a balance transfer draw on *pending* payments proceeds, or
+      only on funds that have already cleared the settlement delay? If only
+      cleared funds, Issuing removes the bank round-trip but not the wait,
+      and a float in the bank does the same job with no application. Put that
+      question to Stripe directly.
 
       Also worth asking Tapstitch whether they support a prepaid wallet or
       account credit — topping that up periodically would let orders draw
-      down automatically rather than needing a card at all, and would pair
-      well with the auto-payment question above.
+      down automatically, solving both this and the "On Hold until you pay"
+      step above, with no Stripe application at all.
+
+      Sources: https://docs.stripe.com/issuing/global and
+      https://docs.stripe.com/issuing/adding-funds-to-your-card-program
 
 - [ ] **`BIGPUSSY69` is guessable** and sells at cost. Fine among friends; if
       it circulates, add an expiry or lengthen it.
