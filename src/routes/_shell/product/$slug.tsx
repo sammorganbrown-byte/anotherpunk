@@ -48,7 +48,6 @@ function RedesignProduct() {
     ["BUILD", product.eyebrow],
     ["PRICE", formatPrice(product.price)],
     ["SIZES", product.sizes.join(" / ")],
-    ["METHOD", "PRINTED TO ORDER"],
     ["SHIPPING", "WORLDWIDE"],
   ];
 

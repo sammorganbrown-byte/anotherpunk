@@ -80,14 +80,25 @@ function wrapAxis(v: number, size: number, margin: number) {
 }
 
 function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: number }): Piece[] {
-  const raw: { p: AnotherPunkProduct; src: string; label: boolean }[] = [];
-  products.forEach((p) => {
+  // Group first, then INTERLEAVE. Walking the catalogue product by product
+  // handed consecutive grid cells to the same garment, so the field came out
+  // in clumps — six photographs of one tee together and another product not
+  // visible at all until you panned. Taking one image from each product in
+  // turn, then going round again, puts a different product in every adjacent
+  // cell, so whatever part of the field you are looking at shows most of the
+  // range rather than a few things repeated.
+  const byProduct = products.map((p) =>
     // Skip anything the product marks as product-page-only — flat packshots,
     // which read as dead weight floating among photographs of people.
-    p.images
-      .filter((src) => !p.notInField?.includes(src))
-      .forEach((src) => raw.push({ p, src, label: true }));
-  });
+    p.images.filter((src) => !p.notInField?.includes(src)).map((src) => ({ p, src, label: true })),
+  );
+  const raw: { p: AnotherPunkProduct; src: string; label: boolean }[] = [];
+  const deepest = Math.max(0, ...byProduct.map((imgs) => imgs.length));
+  for (let round = 0; round < deepest; round++) {
+    for (const imgs of byProduct) {
+      if (imgs[round]) raw.push(imgs[round]);
+    }
+  }
 
   // Jittered grid: roughly square, one cell per piece, scattered inside it.
   const cols = Math.ceil(Math.sqrt(raw.length * (world.w / world.h)));

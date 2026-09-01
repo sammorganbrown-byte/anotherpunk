@@ -79,7 +79,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
     slug: "westwood-69-pink",
     description:
-      "Boxy football jersey, striped jacquard, navy collar. Saucer on the front, WESTWOOD 69 across the back. Made to order.",
+      "Boxy football jersey, striped jacquard, navy collar. Saucer on the front, WESTWOOD 69 across the back.",
     fit: "Boxy and oversized. Your normal size.",
     title: "Westwood 69 — Pink",
     eyebrow: "Football jersey · pink",
@@ -98,7 +98,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
     slug: "westwood-69-black",
     description:
-      "Boxy football jersey, striped jacquard, white collar. Saucer on the front, WESTWOOD 69 across the back. Made to order.",
+      "Boxy football jersey, striped jacquard, white collar. Saucer on the front, WESTWOOD 69 across the back.",
     fit: "Boxy and oversized. Your normal size.",
     title: "Westwood 69 — Black",
     eyebrow: "Football jersey · black",
@@ -242,7 +242,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
     slug: "saucer-oversized-black",
     description:
-      "Snow-washed heavyweight cotton. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve. Made to order.",
+      "Snow-washed heavyweight cotton. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve.",
     title: "Saucer — Oversized, Black",
     eyebrow: "Snow-washed black · sleeve hit",
     price: AP_PRICE,
@@ -268,7 +268,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
     slug: "saucer-oversized-bone",
     description:
-      "Snow-washed heavyweight cotton in bone. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve. Made to order.",
+      "Snow-washed heavyweight cotton in bone. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve.",
     title: "Saucer — Oversized, Bone",
     eyebrow: "Snow-washed bone · sleeve hit",
     price: AP_PRICE,
@@ -295,7 +295,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
     slug: "another-punk",
     description:
-      "Snow-washed heavyweight cotton. Oversized through the body, hem finished clean. The mark, large across the chest. Made to order.",
+      "Snow-washed heavyweight cotton. Oversized through the body, hem finished clean. The mark, large across the chest.",
     title: "Another Punk",
     eyebrow: "Snow-washed · oversized",
     price: AP_PRICE,
@@ -362,7 +362,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
     slug: "leopard-crop",
     description:
-      "Lightweight stretch jersey. Pink leopard. Cut short and close through the body. Slogan drawn by hand, printed in red. Made to order.",
+      "Lightweight stretch jersey. Pink leopard. Cut short and close through the body. Slogan drawn by hand, printed in red.",
     fit: "Fitted and cropped. This one runs true to size. Not oversized like the tees.",
     title: "Leopard Crop",
     eyebrow: "Pink leopard · cropped",
@@ -406,7 +406,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/89-cami-strap-detail.jpg",
     ],
     description:
-      "Lightweight stretch cotton. Cut slim and close through the body. Thin straps, open back. Graphic drawn by hand, printed in red. Made to order.",
+      "Lightweight stretch cotton. Cut slim and close through the body. Thin straps, open back. Graphic drawn by hand, printed in red.",
     fit: "Fitted and close. This one runs true to size. Not oversized like the tees.",
     sizes: FOUR,
     shopifyProductId: "15944344109387",
@@ -444,7 +444,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/97-bodysuit-wide-negspace.jpg",
     ],
     description:
-      "Mineral-washed ribbed cotton. Fitted through the body, short sleeve, high-cut leg. Graphic drawn by hand, printed in red. Made to order.",
+      "Mineral-washed ribbed cotton. Fitted through the body, short sleeve, high-cut leg. Graphic drawn by hand, printed in red.",
     fit: "Fitted and stretchy. Take your normal size. Wear it with everything.",
     sizes: FIVE,
     shopifyProductId: "15944857846091",
