@@ -28,6 +28,33 @@ Ordered by what bites soonest.
       turning it on is what makes an overnight order ship without you. If it
       does not, that manual step is simply part of the job.
 
+- [ ] **Can Stripe's balance pay Tapstitch directly?** Tapstitch charges per
+      order at "Pay now", but Stripe holds the takings for about three days
+      before depositing — so every order is fronted out of your own money
+      until the payout lands. Worth closing, since it scales with sales
+      rather than staying fixed.
+
+      Three angles to look at, roughly in order of how well they solve it:
+
+      1. **A card funded by the Stripe balance.** Stripe Issuing can produce
+         a virtual card that spends the balance directly, with no payout
+         wait. Availability and eligibility vary by country and account, so
+         the question for Stripe support is specifically: *"Can I get an
+         Issuing virtual card on a Portuguese account, funded from my Stripe
+         balance, to pay a supplier?"* If yes, this removes the gap entirely.
+      2. **Faster payouts.** Stripe offers instant or daily payouts in some
+         regions, usually for a small percentage. It shortens the gap rather
+         than removing it, and the fee comes off a margin that is already
+         costed at 53%.
+      3. **A working float.** Keep enough in the account to cover a few days
+         of orders. No fees, no applications, but it is your money tied up
+         and it has to grow as the shop does.
+
+      Also worth asking Tapstitch whether they support a prepaid wallet or
+      account credit — topping that up periodically would let orders draw
+      down automatically rather than needing a card at all, and would pair
+      well with the auto-payment question above.
+
 - [ ] **`BIGPUSSY69` is guessable** and sells at cost. Fine among friends; if
       it circulates, add an expiry or lengthen it.
 
