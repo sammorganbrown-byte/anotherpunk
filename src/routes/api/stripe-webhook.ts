@@ -22,7 +22,7 @@ export const Route = createFileRoute("/api/stripe-webhook")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+        const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
         if (!webhookSecret) {
           return new Response("Webhook secret not configured", { status: 500 });
         }

@@ -14,7 +14,15 @@
 import Stripe from "stripe";
 
 export function getStripe(): Stripe {
-  const key = process.env.STRIPE_SECRET_KEY;
+  // Trimmed, and not merely for tidiness. A key pasted into a host's env UI
+  // can arrive with a trailing newline or space, and that character makes the
+  // Authorization header it is interpolated into an illegal header value —
+  // fetch throws TypeError before the request is ever sent. The SDK reports
+  // that as "An error occurred with our connection to Stripe", which reads
+  // like a network fault and sent this looking at egress, runtimes and HTTP
+  // clients for far too long. An unauthenticated fetch to the same host
+  // returning 401 while an authenticated one threw is what gave it away.
+  const key = process.env.STRIPE_SECRET_KEY?.trim();
   if (!key) {
     throw new Error("Stripe is not connected yet — set STRIPE_SECRET_KEY to enable payment.");
   }

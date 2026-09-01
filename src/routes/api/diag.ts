@@ -14,6 +14,8 @@ export const Route = createFileRoute("/api/diag")({
       GET: async () => {
         const out: Record<string, unknown> = {
           hasSecretKey: Boolean(process.env.STRIPE_SECRET_KEY),
+          keyNeededTrimming:
+            process.env.STRIPE_SECRET_KEY !== process.env.STRIPE_SECRET_KEY?.trim(),
           hasWebhookSecret: Boolean(process.env.STRIPE_WEBHOOK_SECRET),
           siteUrl: process.env.SITE_URL ?? null,
           runtimeHasNodeHttp: (() => {
@@ -41,7 +43,7 @@ export const Route = createFileRoute("/api/diag")({
         // the key itself is good and reachable without the SDK in the way.
         try {
           const r = await fetch("https://api.stripe.com/v1/prices?limit=1", {
-            headers: { Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY}` },
+            headers: { Authorization: `Bearer ${process.env.STRIPE_SECRET_KEY?.trim()}` },
           });
           out.authedRawFetch = r.status;
         } catch (e) {
