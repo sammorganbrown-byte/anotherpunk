@@ -87,15 +87,28 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
   // turn, then going round again, puts a different product in every adjacent
   // cell, so whatever part of the field you are looking at shows most of the
   // range rather than a few things repeated.
-  const byProduct = products.map((p) =>
+  const byProduct = products.map((p) => {
     // Skip anything the product marks as product-page-only — flat packshots,
     // which read as dead weight floating among photographs of people.
-    p.images.filter((src) => !p.notInField?.includes(src)).map((src) => ({ p, src, label: true })),
-  );
+    const usable = p.images.filter((src) => !p.notInField?.includes(src));
+    // A product with few photographs can repeat them, so having a small shoot
+    // does not mean being invisible. The interleave below spreads the repeats
+    // across separate rounds rather than stacking them together.
+    const times = Math.max(1, p.fieldRepeat ?? 1);
+    return Array.from({ length: times }, () => usable)
+      .flat()
+      .map((src) => ({ p, src, label: true }));
+  });
   const raw: { p: AnotherPunkProduct; src: string; label: boolean }[] = [];
   const deepest = Math.max(0, ...byProduct.map((imgs) => imgs.length));
   for (let round = 0; round < deepest; round++) {
-    for (const imgs of byProduct) {
+    // ROTATE the product order every round. Without this a product always
+    // takes the same position within a round, so its images land in the same
+    // column of the grid and its repeats end up as near neighbours — which is
+    // exactly what repeating was meant to avoid. Offsetting by the round
+    // walks each product across the columns instead.
+    for (let k = 0; k < byProduct.length; k++) {
+      const imgs = byProduct[(k + round) % byProduct.length];
       if (imgs[round]) raw.push(imgs[round]);
     }
   }

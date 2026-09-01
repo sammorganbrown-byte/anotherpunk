@@ -22,6 +22,14 @@
 export type ApSize = "S" | "M" | "L" | "XL" | "2XL" | "3XL";
 
 export type AnotherPunkProduct = {
+  /** How many times this product's images repeat in the field.
+   *
+   * The field interleaves one image per product per round, so a product with
+   * few photographs turns up rarely — it is under-represented for a reason
+   * that has nothing to do with how much it matters. Raising this repeats its
+   * images across more rounds, which the interleave then spreads out rather
+   * than clumping. Product pages ignore it entirely. */
+  fieldRepeat?: number;
   /** Images that belong on the product page but NOT in the field.
    *
    * The field is a campaign: photographs of people wearing the thing. A flat
@@ -85,6 +93,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "Football jersey · pink",
     price: JERSEY_PRICE,
     images: ["/img/140-jersey-pink-chest-flash.jpg", "/img/141-jersey-pink-back-69.jpg"],
+    // Only two photographs, so it barely surfaced in the field. Doubled there.
+    fieldRepeat: 2,
     sizes: FIVE,
     shopifyProductId: "15966414274891",
     shopifyVariantIds: {
