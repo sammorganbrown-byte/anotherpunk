@@ -10,6 +10,22 @@ import { computeShipping, SHIPPING_COUNTRIES } from "../shipping";
 // the host's env; falls back to localhost so `vite dev` works untouched.
 const FALLBACK_SITE_URL = "https://www.anotherpunk.com";
 
+/** Stripe will only take absolute image URLs on a line item, and rejects the
+ * whole session with "Not a valid URL" if it gets anything else.
+ *
+ * Half the catalogue stores its photographs as site-relative paths and half
+ * as absolute CDN links, so six of fourteen products could not be bought at
+ * all — and the eight that could were exactly the ones reached for first when
+ * testing, which is why this survived a purchase-path review. An absent image
+ * yields no images array rather than a broken entry: a missing photograph on
+ * Stripe's page is a blemish, a rejected session is a lost sale. */
+function absoluteImages(images: readonly string[] | undefined): string[] {
+  const first = images?.[0];
+  if (!first) return [];
+  if (/^https?:\/\//i.test(first)) return [first];
+  return [`${siteUrl()}${first.startsWith("/") ? "" : "/"}${first}`];
+}
+
 /** The origin Stripe returns the customer to.
  *
  * Defensive about what the environment actually contains, because both ways
@@ -110,7 +126,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
         unit_amount: Math.round(r.product.price * factor * 100),
         product_data: {
           name: `${r.product.title} — ${r.sizeLabel}`,
-          images: [r.product.images[0]],
+          images: absoluteImages(r.product.images),
         },
       },
     }));
