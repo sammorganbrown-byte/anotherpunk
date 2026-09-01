@@ -96,12 +96,15 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Tongue Box",
     eyebrow: "Washed black · raw hem",
     price: AP_PRICE,
+    // Reshot 2026-09-01. Every previous image showed the garment misspelled
+    // TOUNGE; the artwork was corrected and these three are the only shots of
+    // the real product. The old five are still on disk but must not be listed
+    // — a customer scrolling to image four and finding a different spelling
+    // is worse than a product with three photographs.
     images: [
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/b738c126-ea64-4245-8130-9b9ca15adccf.png",
-      "/img/51-tonguebox-chest-FIXED.jpg",
-      "/img/45-tonguebox-night-petrol.jpg",
-      "/img/52-tonguebox-fullbody-FIXED.jpg",
-      "/img/68-tonguebox-midturn.jpg",
+      "/img/70-tonguebox-chest-flash.jpg",
+      "/img/71-tonguebox-threequarter.jpg",
+      "/img/72-tonguebox-night-neon.jpg",
     ],
     sizes: FOUR,
     shopifyProductId: "15942008799563",
