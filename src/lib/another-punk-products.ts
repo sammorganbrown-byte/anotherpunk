@@ -314,6 +314,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       // garment, not the raw-hem one.
       // 145-anotherpunk-chest-flash pulled on sight — headless torso, arms
       // dead at the sides, no attitude in it at all. File kept on disk.
+      // Two night-street shots, different corners. Both were generated from
+      // the raw-distressed-hem reference and both were nearly binned for it —
+      // but neither actually rendered a torn hem, so both show the clean-hem
+      // garment this product really is. Checked, not assumed.
+      "/img/147-anotherpunk-night-shopphone.jpg",
       "/img/146-anotherpunk-night-neon.jpg",
       "/img/AP-real-front-black.jpg",
       // AP-real-back-black pulled: a blank back with nothing printed on it.
