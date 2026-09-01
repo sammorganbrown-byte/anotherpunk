@@ -12,3 +12,7 @@ dist
 # Source downloads for the player: the originals from Bandcamp. Only the
 # transcoded web copies in public/audio/ap belong in the repo.
 ap-music/
+
+# Generated pricing/shipping sheets — regenerate with scripts/pricing-sheet.mjs
+pricing-sheet.csv
+shipping-rates.csv
