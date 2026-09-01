@@ -427,14 +427,18 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       // HERO is the one-piece shot on purpose. Every shot with it tucked into
       // trousers reads as an ordinary fitted tee in the shop grid, which is
       // the one thing a bodysuit tile cannot do.
+      // The shots that actually read as a bodysuit lead. Most of the rest show
+      // it worn under trousers, where it looks like a fitted tee — accurate,
+      // but it does not tell a customer what they are buying.
       "/img/130-bodysuit-onepiece-standing.jpg",
+      "/img/151-bodysuit-tight-cut.jpg",
+      "/img/150-bodysuit-back-turn.jpg",
       "/img/131-bodysuit-onepiece-stool.jpg",
       "/img/90-bodysuit-fullbody-flash.jpg",
       "/img/91-bodysuit-chest-crop.jpg",
       "/img/95-bodysuit-leather-jacket.jpg",
       "/img/92-bodysuit-night-diner.jpg",
       "/img/93-bodysuit-midturn.jpg",
-      "/img/94-bodysuit-profile.jpg",
       "/img/96-bodysuit-stairwell.jpg",
       "/img/122-bodysuit-fireescape.jpg",
       "/img/97-bodysuit-wide-negspace.jpg",
