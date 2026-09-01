@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from "react";
  * Four earlier versions failed, and each failure is the reason for something
  * here, so they are worth recording rather than rediscovering.
  *
- *   1. Autoplayed on load. It worked, which was the problem — sound started
- *      without anyone asking. Hence the prompt.
+ *   1. Autoplayed on load. Removed at the time, then asked for again — so it
+ *      is back, deliberately, with the pause control visible the instant
+ *      anything is audible.
  *   2. Linked out to Spotify. Clean, but then the site has no music; the
  *      point was music WHILE you shop.
  *   3. Spotify embed, driven track-by-track from here. Spotify serves
@@ -20,6 +21,15 @@ import { useEffect, useRef, useState } from "react";
  * hears the same full-length thing on any device — but it is real punk under
  * Creative Commons licences that permit commercial use, checked one release
  * at a time against the licence printed on its Bandcamp page.
+ *
+ * On autoplay: no browser will start audible sound without a user gesture,
+ * and it refuses SILENTLY, so this cannot be one hopeful play() call. It
+ * tries immediately — which Chrome permits for a visitor with enough media
+ * engagement, i.e. anyone who has heard it here before — and if refused, arms
+ * every plausible first interaction and tries again. Listeners are re-armed
+ * on each failure rather than given up on, because a gesture can be rejected
+ * while the tab is still in the background, and it retries on visibility so a
+ * tab opened in the background starts when it is actually looked at.
  *
  * Every one of those licences requires attribution, which is why the artist,
  * the track and a link back are part of the player rather than buried in a
@@ -108,12 +118,6 @@ const TRACKS: Track[] = [
   },
 ];
 
-/** Asked-once-per-session, not answered-once-forever: someone who says no
- * today should be asked again on a fresh visit. */
-const ASK_KEY = "ap-rd-sound-asked";
-/** A beat after the boot clears, so the two never share the screen. */
-const ASK_DELAY_MS = 700;
-
 /** Fisher-Yates. Not `sort(() => Math.random() - 0.5)`, which is not a
  * shuffle — it biases heavily toward the original order. */
 function shuffled<T>(xs: readonly T[]): T[] {
@@ -133,30 +137,8 @@ export function RdPlayer() {
   const [at, setAt] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [started, setStarted] = useState(false);
-  const [asking, setAsking] = useState(false);
 
   const track = order[at];
-
-  const markAsked = () => {
-    try {
-      window.sessionStorage.setItem(ASK_KEY, "1");
-    } catch {
-      // Private mode. It asks again next time; nothing breaks.
-    }
-    setAsking(false);
-  };
-
-  const start = () => {
-    markAsked();
-    setStarted(true);
-    const el = audioRef.current;
-    // Runs inside the click handler, so it is a real user gesture and the
-    // browser allows it. That is the whole reason the prompt exists.
-    void el
-      ?.play()
-      .then(() => setPlaying(true))
-      .catch(() => setPlaying(false));
-  };
 
   const toggle = () => {
     const el = audioRef.current;
@@ -183,29 +165,55 @@ export function RdPlayer() {
     void el.play().catch(() => setPlaying(false));
   }, [at, started]);
 
+  // Autoplay, pushed as hard as browsers actually allow. See the note at the
+  // top of the file for why this is a campaign rather than a single call.
   useEffect(() => {
-    let asked = false;
-    try {
-      asked = window.sessionStorage.getItem(ASK_KEY) === "1";
-    } catch {
-      // Private mode. Ask.
-    }
-    if (asked) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const el = audioRef.current;
+    if (!el) return;
 
-    // Wait for the boot sequence to be gone rather than guessing a delay long
-    // enough to outlast it — timers are throttled in a background tab, so the
-    // two drift apart exactly when nobody is watching.
-    let id = 0;
-    const poll = () => {
-      if (document.querySelector(".rd-boot")) {
-        id = window.setTimeout(poll, 200);
-        return;
-      }
-      id = window.setTimeout(() => setAsking(true), ASK_DELAY_MS);
+    let settled = false;
+    const EVENTS: (keyof WindowEventMap)[] = [
+      "pointerdown",
+      "keydown",
+      "touchstart",
+      "scroll",
+      "wheel",
+    ];
+    const disarm = () => EVENTS.forEach((e) => window.removeEventListener(e, onGesture));
+
+    const attempt = () => {
+      if (settled) return;
+      void el
+        .play()
+        .then(() => {
+          settled = true;
+          setStarted(true);
+          setPlaying(true);
+          disarm();
+          document.removeEventListener("visibilitychange", onVisible);
+        })
+        .catch(() => {
+          if (!settled) arm();
+        });
     };
-    poll();
-    return () => window.clearTimeout(id);
+
+    const onGesture = () => attempt();
+    const onVisible = () => {
+      if (document.visibilityState === "visible") attempt();
+    };
+    const arm = () => {
+      disarm();
+      EVENTS.forEach((e) => window.addEventListener(e, onGesture, { once: true, passive: true }));
+    };
+
+    attempt();
+    arm();
+    document.addEventListener("visibilitychange", onVisible);
+
+    return () => {
+      disarm();
+      document.removeEventListener("visibilitychange", onVisible);
+    };
   }, []);
 
   return (
@@ -265,24 +273,6 @@ export function RdPlayer() {
         </div>
       ) : null}
 
-      {asking ? (
-        <div className="rd-ask" role="dialog" aria-label="Sound">
-          <div className="rd-ask-box">
-            <p className="rd-ask-q">Wanna rock out while you shop?</p>
-            <p className="rd-log rd-ask-meta">
-              Eight tracks from four bands, on the house and on the level.
-            </p>
-            <div className="rd-ask-row">
-              <button type="button" className="rd-btn" data-primary="true" onClick={start}>
-                Play ▶
-              </button>
-              <button type="button" className="rd-link rd-ask-no" onClick={markAsked}>
-                No thanks
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
     </>
   );
 }
