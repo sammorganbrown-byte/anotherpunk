@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { LOGO_URL } from "../../routes/_shell";
+import { ANOTHER_PUNK_PRODUCTS } from "../../lib/another-punk-products";
 
 /** The two things in the field that do NOT drift away: the mark, and the way
  * into the shop.
@@ -198,7 +199,7 @@ export function RdShopCard() {
   return (
     <div className="rd-pin rd-pin-shop">
       <Link to="/shop" className="rd-pin-box rd-pin-link">
-        <span className="rd-pin-kicker">All 12 styles</span>
+        <span className="rd-pin-kicker">All {ANOTHER_PUNK_PRODUCTS.length} styles</span>
         <span className="rd-pin-title">SHOP →</span>
       </Link>
     </div>

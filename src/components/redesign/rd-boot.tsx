@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { RdAsciiMark } from "./rd-ascii-mark";
+import { ANOTHER_PUNK_PRODUCTS } from "../../lib/another-punk-products";
 
 /** A short start-up, not a manifesto.
  *
@@ -10,9 +11,12 @@ import { RdAsciiMark } from "./rd-ascii-mark";
  * skippable by any input, once per session, never on cart or checkout.
  */
 
+// Counted from the catalogue, never typed by hand: it said 12 STYLES while
+// the shop sold 14, because a hard-coded number does not notice when a
+// product is added.
 const LINES: [string, string][] = [
   ["STOREFRONT", "READY"],
-  ["CATALOGUE", "12 STYLES"],
+  ["CATALOGUE", `${ANOTHER_PUNK_PRODUCTS.length} STYLES`],
   ["PRESS", "READY"],
   ["SHIPPING", "WORLDWIDE"],
 ];
