@@ -33,8 +33,9 @@ import { useEffect, useRef, useState } from "react";
  *
  * Every one of those licences requires attribution, which is why the artist,
  * the track and a link back are part of the player rather than buried in a
- * footer. Nothing here trims, loops or edits a track: two of the releases are
- * ShareAlike and playing them whole keeps this simple.
+ * footer. Nothing here trims, loops or edits a track — some of these are
+ * NoDerivatives, and playing everything whole means the same rule covers the
+ * lot rather than one release needing special handling.
  *
  * Continuity across the site is structural: this is mounted by the layout
  * route, which survives client-side navigation, so the <audio> element is
@@ -48,7 +49,7 @@ type Track = {
   art: string;
   /** Where the credit points. Required by every licence used here. */
   href: string;
-  licence: "CC BY" | "CC BY-SA";
+  licence: "CC BY" | "CC BY-SA" | "CC BY-ND";
 };
 
 const TRACKS: Track[] = [
@@ -115,6 +116,110 @@ const TRACKS: Track[] = [
     art: "/audio/ap/art/little-waist.jpg",
     href: "https://littlewaist.bandcamp.com/album/some-kinda-comfort",
     licence: "CC BY",
+  },
+  {
+    file: "/audio/ap/king-gizzard-the-lizard-wizard-polygondwanaland.mp3",
+    title: "Polygondwanaland",
+    artist: "King Gizzard & The Lizard Wizard",
+    art: "/audio/ap/art/king-gizzard-the-lizard-wizard.jpg",
+    href: "https://delicaterecords.bandcamp.com/album/polygondwanaland",
+    licence: "CC BY-ND",
+  },
+  {
+    file: "/audio/ap/king-gizzard-the-lizard-wizard-the-castle-in-the-air.mp3",
+    title: "The Castle In The Air",
+    artist: "King Gizzard & The Lizard Wizard",
+    art: "/audio/ap/art/king-gizzard-the-lizard-wizard.jpg",
+    href: "https://delicaterecords.bandcamp.com/album/polygondwanaland",
+    licence: "CC BY-ND",
+  },
+  {
+    file: "/audio/ap/king-gizzard-the-lizard-wizard-horology.mp3",
+    title: "Horology",
+    artist: "King Gizzard & The Lizard Wizard",
+    art: "/audio/ap/art/king-gizzard-the-lizard-wizard.jpg",
+    href: "https://delicaterecords.bandcamp.com/album/polygondwanaland",
+    licence: "CC BY-ND",
+  },
+  {
+    file: "/audio/ap/c-c-meri-on.mp3",
+    title: "Meri on",
+    artist: "C.C.",
+    art: "/audio/ap/art/c-c.jpg",
+    href: "https://ccest.bandcamp.com/album/siin-olema-peab",
+    licence: "CC BY-SA",
+  },
+  {
+    file: "/audio/ap/goldzilla-cops-oder-zahlen.mp3",
+    title: "Cops Oder Zahlen",
+    artist: "GOLDZILLA",
+    art: "/audio/ap/art/goldzilla.jpg",
+    href: "https://goldzillaband.bandcamp.com/album/goldzilla-vs-robohitler",
+    licence: "CC BY",
+  },
+  {
+    file: "/audio/ap/los-blenders-yo-soy-punk.mp3",
+    title: "Yo Soy Punk",
+    artist: "Los Blenders",
+    art: "/audio/ap/art/los-blenders.jpg",
+    href: "https://losblenders.bandcamp.com/album/chavos-bien-lp",
+    licence: "CC BY-SA",
+  },
+  {
+    file: "/audio/ap/los-zalvajes-garage.mp3",
+    title: "Garage",
+    artist: "Los Zalvajes",
+    art: "/audio/ap/art/los-zalvajes.jpg",
+    href: "https://zalvajes.bandcamp.com/album/los-zalvajes",
+    licence: "CC BY",
+  },
+  {
+    file: "/audio/ap/n0thanky0u-dead-form.mp3",
+    title: "Dead Form",
+    artist: "N0THANKY0U",
+    art: "/audio/ap/art/n0thanky0u.jpg",
+    href: "https://jestedincorporated.bandcamp.com/album/dead-form",
+    licence: "CC BY-SA",
+  },
+  {
+    file: "/audio/ap/preoccupied-pipers-live-and-let-dumb.mp3",
+    title: "Live And Let Dumb",
+    artist: "Preoccupied Pipers",
+    art: "/audio/ap/art/preoccupied-pipers.jpg",
+    href: "https://preoccupiedpipers.bandcamp.com/album/live-and-let-dumb-2022",
+    licence: "CC BY",
+  },
+  {
+    file: "/audio/ap/the-fatalities-down-the-rabbit-hole.mp3",
+    title: "Down the Rabbit Hole",
+    artist: "The Fatalities",
+    art: "/audio/ap/art/the-fatalities.jpg",
+    href: "https://thefatalitiesmusic.bandcamp.com/album/monk-rock",
+    licence: "CC BY",
+  },
+  {
+    file: "/audio/ap/thee-loyal-wankers-trouble.mp3",
+    title: "Trouble!",
+    artist: "Thee Loyal Wankers",
+    art: "/audio/ap/art/thee-loyal-wankers.jpg",
+    href: "https://theeloyalwankers.bandcamp.com/album/thee-loyal-wankers-2",
+    licence: "CC BY",
+  },
+  {
+    file: "/audio/ap/shitty-kickflips-tequila-sunrise.mp3",
+    title: "Tequila Sunrise",
+    artist: "shitty kickflips",
+    art: "/audio/ap/art/shitty-kickflips.jpg",
+    href: "https://shittykickflips.bandcamp.com/album/loosies-comp-1",
+    licence: "CC BY-SA",
+  },
+  {
+    file: "/audio/ap/dj-mcdonalds-hashbrown-aries.mp3",
+    title: "Aries",
+    artist: "DJ MCDONALDS HASHBROWN",
+    art: "/audio/ap/art/dj-mcdonalds-hashbrown.jpg",
+    href: "https://shittykickflips.bandcamp.com/album/zodiac",
+    licence: "CC BY-SA",
   },
 ];
 

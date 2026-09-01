@@ -1577,3 +1577,10 @@ body:has(.rd-np) .rd-hint {
     width: min(66vw, 240px);
   }
 }
+
+/* The product page runs a strip of image thumbnails along the bottom of its
+   media column — in exactly the corner the player sits in. Lift the player
+   clear of it rather than letting it cover a control. */
+body:has(.rd-pdp) .rd-np {
+  bottom: calc(var(--rd-foot-h) + 64px);
+}
