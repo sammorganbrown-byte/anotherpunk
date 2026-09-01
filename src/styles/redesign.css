@@ -1634,3 +1634,25 @@ body:has(.rd-pdp) .rd-np {
   background: var(--rd-bg);
   color: var(--rd-ink);
 }
+
+/* The now-playing panel is fixed just above the footer, positioned against
+   --rd-foot-h. Adding the currency switcher made the footer wrap onto two or
+   three lines on a phone, so that single number stopped describing the real
+   height and the panel came to rest on top of the switcher.
+
+   Rather than chase the variable, the footer is given enough clearance at the
+   bottom for the panel to sit over empty space instead of over a control.
+   Only on narrow screens: on desktop the footer stays one line and the
+   original offset is still right. */
+@media (max-width: 640px) {
+  /* Only while the panel is actually on screen — otherwise every page on a
+     phone ends in a strip of dead space for a player that is not running. */
+  [data-ap-rd]:has(.rd-np) footer {
+    padding-bottom: 104px;
+  }
+  /* The switcher gets its own line rather than being squeezed against the
+     shipping note, so the select stays wide enough to read a country name. */
+  [data-ap-rd] footer .rd-log {
+    row-gap: 10px;
+  }
+}
