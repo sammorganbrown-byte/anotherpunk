@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCart } from "../lib/cart-context";
 import { RdField } from "../components/redesign/rd-field";
 import { RdPlayer } from "../components/redesign/rd-player";
@@ -83,6 +83,55 @@ function RedesignLayout() {
   const reduced = useReducedMotion();
   const path = useRouterState({ select: (s) => s.location.pathname });
 
+  // --rd-foot-h was a hardcoded 34px that eight rules depend on, including
+  // the product page's viewport lock and the now-playing panel's offset. It
+  // stopped being true the moment the footer could wrap — on a phone it is
+  // nearer 100px — so the panel came to rest on top of the footer's own
+  // controls. The previous fix padded the footer to make room, which meant
+  // the bar visibly grew the moment you pressed play. Measuring it instead
+  // fixes the cause: everything positioned against the footer now knows how
+  // tall the footer actually is.
+  const footRef = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    const el = footRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    // Written onto the element that declares the token, not the root: the
+    // default lives on [data-ap-rd], so a value set higher up is shadowed for
+    // everything inside and the panel keeps using the 34px guess.
+    const host = el.closest("[data-ap-rd]") as HTMLElement | null;
+    if (!host) return;
+    let last = -1;
+    const apply = () => {
+      const h = Math.round(el.getBoundingClientRect().height);
+      if (h === last || h === 0) return;
+      last = h;
+      host.style.setProperty("--rd-foot-h", `${h}px`);
+    };
+
+    // Deliberately more than one trigger. A single ResizeObserver measured
+    // the footer before the webfont had settled and then stayed quiet, so the
+    // token kept a height that was 27px short and the panel sat on the
+    // switcher anyway. These are all cheap, they all no-op once the height
+    // stops changing, and between them there is no moment where the footer
+    // can resize without something noticing.
+    apply();
+    const raf = requestAnimationFrame(apply);
+    const ro = new ResizeObserver(apply);
+    ro.observe(el);
+    window.addEventListener("resize", apply);
+    window.addEventListener("load", apply);
+    document.fonts?.ready.then(apply).catch(() => {});
+    const settle = window.setTimeout(apply, 1200);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      window.removeEventListener("resize", apply);
+      window.removeEventListener("load", apply);
+      window.clearTimeout(settle);
+    };
+  }, []);
+
   return (
     <div data-ap-rd className="min-h-dvh">
       {reduced ? null : <RdField />}
@@ -119,7 +168,7 @@ function RedesignLayout() {
         <Outlet />
       </main>
 
-      <footer className="border-t border-[var(--rd-rule)] px-4 py-6">
+      <footer ref={footRef} className="border-t border-[var(--rd-rule)] px-4 py-6">
         <div className="rd-log flex flex-wrap items-center justify-between gap-3">
           <span>SHIPPED WORLDWIDE</span>
           <RdCurrency />
