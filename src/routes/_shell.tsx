@@ -123,11 +123,6 @@ function RedesignLayout() {
         <div className="rd-log flex flex-wrap items-center justify-between gap-3">
           <span>SHIPPED WORLDWIDE</span>
           <RdCurrency />
-          <span>
-            <a href="/classic" className="rd-link underline underline-offset-4">
-              ← Previous version
-            </a>
-          </span>
         </div>
       </footer>
     </div>

@@ -1401,6 +1401,20 @@ body:has([data-ap-rd]) {
   .rd-player-title {
     display: none;
   }
+  /* Dropping the title left a 9px-wide control: a stray ▶ in the bar that
+     did not read as a button and could not reliably be hit. The glyph gets
+     drawn up to a size you can see and padded out to a real tap target —
+     Apple and Google both put the floor at 44px, and a play control nobody
+     can press is the same as no player at all. */
+  .rd-player-btn {
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+    margin: -12px -6px;
+  }
+  .rd-player-glyph {
+    font-size: 1.15em;
+  }
 }
 
 /* ---- the sound prompt -------------------------------------------------- */
