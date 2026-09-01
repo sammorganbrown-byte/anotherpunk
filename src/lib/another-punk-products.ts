@@ -309,7 +309,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       // dead at the sides, no attitude in it at all. File kept on disk.
       "/img/146-anotherpunk-night-neon.jpg",
       "/img/AP-real-front-black.jpg",
-      "/img/AP-real-back-black.jpg",
+      // AP-real-back-black pulled: a blank back with nothing printed on it.
+      // It shows the customer no more than an empty tee would. File kept.
     ],
     sizes: SIX,
     shopifyProductId: "15942019613003",
