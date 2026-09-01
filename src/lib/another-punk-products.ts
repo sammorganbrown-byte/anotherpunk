@@ -78,15 +78,20 @@ const SIX: ApSize[] = ["S", "M", "L", "XL", "2XL", "3XL"];
  * one would sell a size that cannot be fulfilled. */
 const FIVE: ApSize[] = ["S", "M", "L", "XL", "2XL"];
 
-/** Retail, grouped by blank rather than by design, because that is how cost
- * behaves: every design on the raw-hem tee costs the same to make, so every
- * design on it sells for the same. Shipping is charged separately — see
- * shipping.ts — so these are the price of the garment alone. */
-export const TEE_PRICE = 45;
-export const OVERSIZED_PRICE = 40;
-export const MESH_PRICE = 50;
-export const JERSEY_PRICE = 50;
-export const WOMENS_PRICE = 30;
+/** Retail, set so that after the garment, the postage and the card fee, half
+ * of what the customer pays is profit. Every price below is derived from that
+ * product's actual cost — see scripts/margin-sheet.mjs, which solves for it.
+ *
+ * Grouped by cost, not by blank: Saucer Oversized and Another Punk are
+ * printed on the same shirt but do not cost the same to make, so they do not
+ * carry the same price. */
+export const TEE_PRICE = 50;
+export const SAUCER_OVERSIZED_PRICE = 40;
+export const ANOTHER_PUNK_PRICE = 35;
+export const MESH_PRICE = 45;
+export const JERSEY_PRICE = 40;
+export const WOMENS_PRICE = 35;
+export const BODYSUIT_PRICE = 40;
 
 export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
@@ -260,7 +265,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "Snow-washed heavyweight cotton. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve.",
     title: "Saucer — Oversized, Black",
     eyebrow: "Snow-washed black · sleeve hit",
-    price: OVERSIZED_PRICE,
+    price: SAUCER_OVERSIZED_PRICE,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/6c8c1532-1749-44ec-8f53-395ff5643b92.png",
       "/img/28-bwblack-chest.jpg",
@@ -286,7 +291,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "Snow-washed heavyweight cotton in bone. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve.",
     title: "Saucer — Oversized, Bone",
     eyebrow: "Snow-washed bone · sleeve hit",
-    price: OVERSIZED_PRICE,
+    price: SAUCER_OVERSIZED_PRICE,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/d2036219-e99b-4ceb-8597-37452d66dec3.png",
       "/img/08-bwwhite-midturn.jpg",
@@ -313,7 +318,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "Snow-washed heavyweight cotton. Oversized through the body, hem finished clean. The mark, large across the chest.",
     title: "Another Punk",
     eyebrow: "Snow-washed · oversized",
-    price: OVERSIZED_PRICE,
+    price: ANOTHER_PUNK_PRICE,
     images: [
       // REAL GARMENT PHOTOS, from the Shopify product this maps to.
       //
@@ -437,7 +442,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Bodysuit",
     eyebrow: "Mineral wash · ribbed · fitted",
     // Confirmed. Below the tees — less garment, more construction.
-    price: WOMENS_PRICE,
+    price: BODYSUIT_PRICE,
     images: [
       // HERO is the one-piece shot on purpose. Every shot with it tucked into
       // trousers reads as an ordinary fitted tee in the shop grid, which is

@@ -17,8 +17,8 @@
 // alternative of overcharging every other destination.
 //
 // TO CHANGE THE PRICE, change these two numbers. Nothing else needs touching.
-export const SHIPPING_BASE = 9;
-export const SHIPPING_PER_EXTRA_ITEM = 3;
+export const SHIPPING_BASE = 8;
+export const SHIPPING_PER_EXTRA_ITEM = 2;
 
 /** Shipping in whole euros for an order of `count` garments. An empty bag
  * ships for nothing, so a cart with no lines never shows a shipping charge. */

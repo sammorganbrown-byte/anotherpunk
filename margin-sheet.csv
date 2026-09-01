@@ -1,15 +1,15 @@
 product,slug,price_eur,garment_cost,shipping_charged,shipping_cost,card_fee,net_profit,net_margin_pct
-"Westwood 69 — Pink",westwood-69-pink,50,14.68,9,7.33,1.14,35.85,60.8
-"Westwood 69 — Black",westwood-69-black,50,14.68,9,7.33,1.14,35.85,60.8
-"Bat Country",bat-country,45,18.36,9,7.33,1.06,27.25,50.5
-"Tongue Box",tongue-box,45,18.36,9,7.33,1.06,27.25,50.5
-"The Jesus",the-jesus,45,18.36,9,7.33,1.06,27.25,50.5
-"Surrender Dorothy",surrender-dorothy,45,18.36,9,7.33,1.06,27.25,50.5
-"Saucer",saucer,45,18.36,9,7.33,1.06,27.25,50.5
-"Saucer — Oversized, Black",saucer-oversized-black,40,14.68,9,7.33,0.98,26.00,53.1
-"Saucer — Oversized, Bone",saucer-oversized-bone,40,14.68,9,7.33,0.98,26.00,53.1
-"Another Punk",another-punk,40,11.93,9,7.33,0.98,28.75,58.7
-"Mesh",mesh,50,17.45,9,7.33,1.14,33.08,56.1
-"Leopard Crop",leopard-crop,30,11.93,9,7.33,0.83,18.90,48.5
-"Cami",cami,30,11.93,9,7.33,0.83,18.90,48.5
-"Bodysuit",bodysuit,30,14.69,9,7.33,0.83,16.14,41.4
+"Westwood 69 — Pink",westwood-69-pink,40,14.68,8,7.33,0.97,25.02,52.1
+"Westwood 69 — Black",westwood-69-black,40,14.68,8,7.33,0.97,25.02,52.1
+"Bat Country",bat-country,50,18.36,8,7.33,1.12,31.19,53.8
+"Tongue Box",tongue-box,50,18.36,8,7.33,1.12,31.19,53.8
+"The Jesus",the-jesus,50,18.36,8,7.33,1.12,31.19,53.8
+"Surrender Dorothy",surrender-dorothy,50,18.36,8,7.33,1.12,31.19,53.8
+"Saucer",saucer,50,18.36,8,7.33,1.12,31.19,53.8
+"Saucer — Oversized, Black",saucer-oversized-black,40,14.68,8,7.33,0.97,25.02,52.1
+"Saucer — Oversized, Bone",saucer-oversized-bone,40,14.68,8,7.33,0.97,25.02,52.1
+"Another Punk",another-punk,35,11.93,8,7.33,0.90,22.84,53.1
+"Mesh",mesh,45,17.45,8,7.33,1.04,27.17,51.3
+"Leopard Crop",leopard-crop,35,11.93,8,7.33,0.90,22.84,53.1
+"Cami",cami,35,11.93,8,7.33,0.90,22.84,53.1
+"Bodysuit",bodysuit,40,14.69,8,7.33,0.97,25.01,52.1
