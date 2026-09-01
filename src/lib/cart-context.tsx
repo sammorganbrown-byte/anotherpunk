@@ -1,5 +1,10 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { computeDiscount, findPromoCode, normalizePromoCode } from "./promo-codes";
+import {
+  computeDiscount,
+  computeShippingDiscount,
+  findPromoCode,
+  normalizePromoCode,
+} from "./promo-codes";
 import { computeShipping } from "./shipping";
 import { getAnotherPunkProduct } from "./another-punk-products";
 
@@ -37,9 +42,13 @@ type CartContextValue = {
   removePromoCode: () => void;
   /** Dollar amount taken off by the applied promo code, 0 if none applied. */
   discount: number;
-  /** Shipping for the current bag. Charged on the order, not per garment —
-   * see shipping.ts. Zero for an empty bag. */
+  /** Shipping actually payable: the rate for this bag, less anything a promo
+   * code takes off it. Charged on the order, not per garment — see
+   * shipping.ts. Zero for an empty bag. */
   shipping: number;
+  /** The undiscounted postage, so the saving can be shown rather than the
+   * charge simply appearing smaller than the stated rate. */
+  shippingBeforeDiscount: number;
   /** subtotal - discount (floored at 0) + shipping. */
   total: number;
 };
@@ -202,10 +211,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [items]);
 
   const discount = useMemo(() => computeDiscount(promoCode, items), [promoCode, items]);
-  // Shipping sits outside the discount: a promo code takes money off the
-  // clothes, not off the courier. It also keeps a heavily-discounted test
-  // order above the 50c minimum Stripe will accept in EUR.
-  const shipping = computeShipping(count);
+  // A promo code takes money off the clothes and, only if it explicitly says
+  // so, off the postage too. Keeping those separate is what stops a
+  // percentage meant for the garments from quietly paying the courier.
+  const shippingBeforeDiscount = computeShipping(count);
+  const shipping = Math.max(
+    0,
+    shippingBeforeDiscount - computeShippingDiscount(promoCode, shippingBeforeDiscount),
+  );
   const total = Math.max(0, subtotal - discount) + shipping;
 
   const value: CartContextValue = {
@@ -221,6 +234,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     removePromoCode,
     discount,
     shipping,
+    shippingBeforeDiscount,
     total,
   };
 

@@ -48,8 +48,16 @@ function Field({
 }
 
 function RedesignCheckout() {
-  const { items, subtotal, discount, shipping, total, applyPromoCode, removePromoCode } =
-    useCart();
+  const {
+    items,
+    subtotal,
+    discount,
+    shipping,
+    shippingBeforeDiscount,
+    total,
+    applyPromoCode,
+    removePromoCode,
+  } = useCart();
   const { formatPrice, formatEur, converted } = useCurrency();
 
   const [form, setForm] = useState({
@@ -255,10 +263,19 @@ function RedesignCheckout() {
               </p>
             </>
           ) : null}
-          {shipping > 0 ? (
+          {shippingBeforeDiscount > 0 ? (
             <p className={`rd-log flex justify-between ${discount > 0 ? "" : "mt-4"}`}>
               <span>Shipping</span>
-              <span className="rd-ok">{formatPrice(shipping)}</span>
+              {shipping === 0 ? (
+                <span>
+                  <span className="line-through opacity-50">
+                    {formatPrice(shippingBeforeDiscount)}
+                  </span>{" "}
+                  <span className="text-[var(--rd-red)]">free</span>
+                </span>
+              ) : (
+                <span className="rd-ok">{formatPrice(shipping)}</span>
+              )}
             </p>
           ) : null}
           <p className="rd-mid mt-2">

@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { getStripe, type CheckoutSessionMetadata } from "../stripe.server";
 import { getAnotherPunkProduct, isFulfillable } from "../another-punk-products";
-import { computeDiscount } from "../promo-codes";
+import { computeDiscount, computeShippingDiscount } from "../promo-codes";
 import { computeShipping } from "../shipping";
 
 // Where the site lives, used to build Stripe's return URLs. Set SITE_URL in
@@ -95,9 +95,13 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
     }));
 
     // Recomputed here from the resolved lines, never taken from the client.
-    // Deliberately outside `factor`, so a promo code discounts the clothes
-    // and not the postage.
-    const shipping = computeShipping(resolved.reduce((n, r) => n + r.qty, 0));
+    // Deliberately outside `factor`: a code discounts the clothes, and the
+    // postage only if that code says so explicitly.
+    const fullShipping = computeShipping(resolved.reduce((n, r) => n + r.qty, 0));
+    const shipping = Math.max(
+      0,
+      fullShipping - computeShippingDiscount(data.promoCode, fullShipping),
+    );
     if (shipping > 0) {
       lineItems.push({
         quantity: 1,
@@ -107,6 +111,15 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
           product_data: { name: "Shipping", images: [] },
         },
       });
+    }
+
+    const payable = Math.max(0, subtotal - discount) + shipping;
+    if (payable > 0 && payable < 0.5) {
+      return {
+        configured: false,
+        reason:
+          "This order comes to less than the 50c minimum a card payment can take. Remove the discount code, or add another item.",
+      };
     }
 
     const metadata: CheckoutSessionMetadata = {

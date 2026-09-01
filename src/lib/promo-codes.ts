@@ -20,24 +20,27 @@ type PromoCode = {
   code: string;
   /** Percentage off the order subtotal, 0-100. */
   percentOff: number;
+  /** Percentage off the postage, 0-100. Absent means shipping is not
+   * discounted, which is the right default: a code is a discount on the
+   * clothes, and the courier still has to be paid. */
+  shippingPercentOff?: number;
   /** Optional human label for the cart UI. */
   label?: string;
 };
 
 const PROMO_CODES: PromoCode[] = [
   // TEST CODE — remove it once the purchase path has been proved. While it
-  // exists, anyone who guesses it buys at 1%.
+  // exists, anyone who guesses it buys at roughly nothing.
   //
-  // 99% leaves a real charge, which matters: Stripe reports a zero-total
-  // order as "no_payment_required" rather than "paid", so a 100% test would
-  // exercise a different path from a real sale. A small live charge proves
-  // the actual one.
+  // It must leave a real charge. Stripe reports a zero-total order as
+  // "no_payment_required" rather than "paid", so a 100% test would exercise a
+  // different path from a real sale and prove less than it appears to. It also
+  // has to clear Stripe's 50c minimum for EUR.
   //
-  // The 50c EUR floor used to be a trap here — 99% off a €40 item left €0.40
-  // and Stripe refused the session. Shipping is now charged as its own
-  // undiscounted line, so every order clears the floor by €9 or more and any
-  // item can be used for the test. Expect the dry run to cost about €9.45.
-  { code: "DRYRUN99", percentOff: 99, label: "Dry run" },
+  // 99% off the clothes and all of the postage lands a €50 tee at €1.00: a
+  // genuine card charge, twice the floor, and cheap enough to run more than
+  // once. See computeDiscount for why 99% is not quietly 100%.
+  { code: "DRYRUN99", percentOff: 99, shippingPercentOff: 100, label: "Dry run" },
 ];
 
 export function normalizePromoCode(input: string): string {
@@ -56,7 +59,28 @@ export function computeDiscount(input: string | null | undefined, items: PromoCo
   if (!promo) return 0;
 
   const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
-  const raw = (subtotal * promo.percentOff) / 100;
-  // Whole currency units, never more than the order itself.
-  return Math.min(subtotal, Math.round(raw));
+  return roundDiscount(subtotal, promo.percentOff);
+}
+
+/** Shipping taken off by a code, 0 unless the code says otherwise. */
+export function computeShippingDiscount(
+  input: string | null | undefined,
+  shipping: number,
+): number {
+  if (!input || shipping <= 0) return 0;
+  const promo = findPromoCode(input);
+  if (!promo?.shippingPercentOff) return 0;
+  return roundDiscount(shipping, promo.shippingPercentOff);
+}
+
+/** Whole currency units, never more than the amount itself.
+ *
+ * Rounds DOWN, which matters more than it looks. Rounding to nearest turned
+ * "99% off" into 100% off for every price in the range — 99% of €50 is €49.50,
+ * which rounds up to the full €50 — so the test code was zeroing the goods and
+ * a genuine 99% code could silently become a giveaway. Only a code that
+ * actually says 100% can take the whole amount. */
+function roundDiscount(amount: number, percentOff: number): number {
+  if (percentOff >= 100) return amount;
+  return Math.min(amount, Math.floor((amount * percentOff) / 100));
 }

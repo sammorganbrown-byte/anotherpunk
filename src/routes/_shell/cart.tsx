@@ -11,7 +11,16 @@ export const Route = createFileRoute("/_shell/cart")({ component: RedesignCart }
  * stays; the theatre stops.
  */
 function RedesignCart() {
-  const { items, updateQty, removeItem, subtotal, discount, shipping, total } = useCart();
+  const {
+    items,
+    updateQty,
+    removeItem,
+    subtotal,
+    discount,
+    shipping,
+    shippingBeforeDiscount,
+    total,
+  } = useCart();
   const { formatPrice, formatEur, converted } = useCurrency();
 
   if (items.length === 0) {
@@ -95,7 +104,23 @@ function RedesignCart() {
       <div className="mt-6 flex flex-col items-end gap-1">
         <p className="rd-log">Subtotal {formatPrice(subtotal)}</p>
         {discount > 0 ? <p className="rd-log">Discount −{formatPrice(discount)}</p> : null}
-        {shipping > 0 ? <p className="rd-log">Shipping {formatPrice(shipping)}</p> : null}
+        {/* Shows the rate even when a code has taken it to nothing — a line
+            that simply disappears reads as a missing charge, not a saving. */}
+        {shippingBeforeDiscount > 0 ? (
+          <p className="rd-log">
+            Shipping{" "}
+            {shipping === 0 ? (
+              <>
+                <span className="line-through opacity-50">
+                  {formatPrice(shippingBeforeDiscount)}
+                </span>{" "}
+                <span className="text-[var(--rd-red)]">free</span>
+              </>
+            ) : (
+              formatPrice(shipping)
+            )}
+          </p>
+        ) : null}
         <p className="rd-mid mt-1">
           Total <span className="text-[var(--rd-red)]">{formatPrice(total)}</span>
         </p>
