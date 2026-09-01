@@ -8,3 +8,7 @@ dist
 .env.*
 !.env.example
 .claude/
+
+# Source downloads for the player: the originals from Bandcamp. Only the
+# transcoded web copies in public/audio/ap belong in the repo.
+ap-music/
