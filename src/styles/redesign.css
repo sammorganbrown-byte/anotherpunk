@@ -2008,3 +2008,9 @@ body:has(.rd-pdp) .rd-np {
   cursor: inherit;
   pointer-events: none;
 }
+
+/* The one portrait atmosphere frame — a real photograph among the campaign
+   stills, so it keeps its own 3:4 rather than being cropped to match them. */
+[data-ap-rd] .rd-shot[data-tall="true"] {
+  aspect-ratio: 3 / 4;
+}

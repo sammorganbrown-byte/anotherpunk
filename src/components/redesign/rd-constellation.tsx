@@ -51,12 +51,29 @@ const DRAG_SLOP = 6;
  * Any addition needs the same check as everything else: the TOUNGE render of
  * the Tongue Box tee exists in the same batch as these and is unusable, so a
  * generated group shot has to be read letter by letter before it goes in. */
-const ATMOSPHERE = [
-  "/img/153-group-four-street.jpg",
-  "/img/155-pair-shove.jpg",
-  "/img/154-group-five-row.jpg",
-  "/img/156-pair-streetlight.jpg",
-  "/img/157-pair-saucer-bothways.jpg",
+type AtmosFrame = {
+  src: string;
+  /** Portrait rather than 16:9. Carried explicitly rather than sniffed from
+   * the filename, which is what the scale used to do — a rule that would
+   * quietly mis-size the first frame somebody named differently. */
+  tall?: boolean;
+  /** How much larger than a product frame. Five people across need the room;
+   * a two-shot does not; a single portrait needs least of all. */
+  scale: number;
+};
+
+const ATMOSPHERE: AtmosFrame[] = [
+  { src: "/img/153-group-four-street.jpg", scale: 1.85 },
+  { src: "/img/155-pair-shove.jpg", scale: 1.45 },
+  // The one real photograph in the field, and the only person in it who
+  // actually exists. It earns its place by being the odd one out: a phone
+  // snapshot adrift among campaign frames is the whole story of the shop in
+  // one picture. No link — it sells nothing, and pointing it at a product
+  // would make it an advert instead of a person.
+  { src: "/img/158-sam-armchair.jpg", tall: true, scale: 1.15 },
+  { src: "/img/154-group-five-row.jpg", scale: 1.85 },
+  { src: "/img/156-pair-streetlight.jpg", scale: 1.45 },
+  { src: "/img/157-pair-saucer-bothways.jpg", scale: 1.45 },
 ];
 
 function seeded(key: string) {
@@ -90,8 +107,10 @@ type Piece = {
    * not belong to either garment — its obvious destination is the pack, so
    * it links there and captions itself as the deal. */
   bundle?: Bundle;
-  /** Set on atmosphere frames: no link, no caption, wider. */
+  /** Set on atmosphere frames: no link, no caption, larger. */
   atmosphere?: boolean;
+  /** Portrait atmosphere frame — 3:4 rather than 16:9. */
+  tall?: boolean;
 };
 
 /** EVERY frame of every garment. A shirt recurring in three different shots
@@ -140,6 +159,8 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
     label: boolean;
     bundle?: Bundle;
     atmosphere?: boolean;
+    tall?: boolean;
+    scale?: number;
   }[] = [];
   const deepest = Math.max(0, ...byProduct.map((imgs) => imgs.length));
   for (let round = 0; round < deepest; round++) {
@@ -170,7 +191,15 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
   // two kinds of non-product piece do not land on top of each other.
   for (let k = 0; k < ATMOSPHERE.length; k++) {
     const at = Math.floor(((k + 1) * raw.length) / (ATMOSPHERE.length + 1));
-    raw.splice(at, 0, { p: products[0], src: ATMOSPHERE[k], label: false, atmosphere: true });
+    const frame = ATMOSPHERE[k];
+    raw.splice(at, 0, {
+      p: products[0],
+      src: frame.src,
+      label: false,
+      atmosphere: true,
+      tall: frame.tall,
+      scale: frame.scale,
+    });
   }
 
   // Jittered grid: roughly square, one cell per piece, scattered inside it.
@@ -184,11 +213,12 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
     const cx = (i % cols) * cw;
     const cy = Math.floor(i / cols) * ch;
     // Atmosphere frames run larger — at product size a group of four reads as
-    // four smudges. The two-person frames need less room than the five-across
-    // ones to be legible, so they are scaled by how many people are in them.
-    const atmosScale = r.atmosphere ? (r.src.includes("-pair-") ? 1.45 : 1.85) : 1;
-    const w = (150 + rnd() * 130) * atmosScale;
-    const h = w * 0.75;
+    // four smudges — and each carries its own scale, since a five-across shot
+    // needs room a two-shot does not.
+    const w = (150 + rnd() * 130) * (r.scale ?? 1);
+    // Height has to follow the real shape or the grid spaces a tall frame as
+    // though it were a wide one and lets its neighbours sit on top of it.
+    const h = r.tall ? w * (4 / 3) : r.atmosphere ? w * (9 / 16) : w * 0.75;
     // A piece may spill up to ~10% of its own size into the neighbouring
     // cell, in either direction. Enough that the field reads as a strewn
     // contact sheet rather than a disguised grid, without pieces burying
@@ -203,6 +233,7 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
       label: r.label,
       bundle: r.bundle,
       atmosphere: r.atmosphere,
+      tall: r.tall,
       w,
       x: cx - w * OVERLAP + rnd() * spanX,
       y: cy - h * OVERLAP + rnd() * spanY,
@@ -549,7 +580,7 @@ export function RdConstellation({
                not. Inert to the pointer too, so it never steals a drag from
                the field underneath it. */
             <span className="rd-star-link" data-atmos="true" aria-hidden="true">
-              <span className="rd-shot" data-wide="true">
+              <span className="rd-shot" data-wide={s.tall ? undefined : "true"} data-tall={s.tall ? "true" : undefined}>
                 <img
                   src={s.src}
                   alt=""
