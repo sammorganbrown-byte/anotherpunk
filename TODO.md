@@ -5,31 +5,14 @@ Ordered by what bites soonest.
 
 ## Do first
 
-- [ ] **Set up hello@anotherpunk.com — it does not exist.** The Contact link
-      in the top bar points at it and the domain has no MX records at all, so
-      anything sent there bounces silently. Checked 2026-09-01. This is the
-      one item on the list a customer can hit today.
+- [x] **Email — done 2026-09-01.** Google Workspace on sam@anotherpunk.com,
+      with MX, SPF, DKIM and domain verification all added to Vercel DNS and
+      verified. The site's Contact link points at it. An animated signature
+      lives on the Desktop as another-punk-signature.html; the mark it uses is
+      hosted at anotherpunk.com/img/sig-wordmark.gif.
 
-      Options, cheapest effort first:
-
-      - **iCloud+ custom email domain.** Included with any paid iCloud
-        storage plan, which you may already have. Arrives in Mail on the Mac
-        and phone with no new app. Add the domain in iCloud settings, then
-        add the MX records it gives you to the domain's DNS.
-      - **Google Workspace**, about €6/month. Worth it if you want Drive and
-        a calendar on the brand too.
-      - **A forwarder** (ImprovMX and similar have a free tier) — mail to
-        hello@ lands in your existing inbox. Cheapest, but replying *as*
-        hello@anotherpunk.com needs extra setup, and replying from a personal
-        Gmail to a customer looks it.
-
-      The domain is registered with Vercel, so its DNS lives there. Whichever
-      you pick, I can add the MX records for you with the Vercel CLI — just
-      paste me the records the provider gives you.
-
-      Also add an **SPF record** while you are there; the domain has none, so
-      nothing is currently authorised to send as you and anything you do send
-      is more likely to be filed as spam.
+      Still worth doing when convenient: free **aliases** in Workspace for
+      orders@ or hello@, which land in the same inbox at no extra cost.
 
 - [ ] **Talk through social media.** Raised 2026-09-01, not yet discussed —
       handles, what to hold back for launch, what the field imagery is
