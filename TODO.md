@@ -341,3 +341,47 @@ Special Line", so they are duty-paid on this origin too.
 would cut a fortnight to a few days, which is worth having — but it needs its
 own rate card, and not every garment is available from both origins. It is a
 second origin to add, not a default to flip.
+
+## From the real Tapstitch invoice (INV-1540545095349288960)
+
+Five items, shipped to Lisbon. What it actually said:
+
+| | USD |
+|---|---|
+| Production cost (5 items: 18.47 / 12.47 / 16.60 / 12.47 / 15.07) | 75.08 |
+| Shipping | 38.64 |
+| Discount | −12.37 |
+| **Tax** | **0.00** |
+| **Total** | **101.35** |
+
+### 1. Customs question: answered. Declared value is production cost.
+
+The commercial transaction is Tapstitch → Sam at **$75.08 for five garments**,
+not the retail price a customer pays. That is the value that crosses a border.
+Four tees is roughly €65 of declared value — nowhere near €150.
+
+**So Raw Hem Four can go back up.** €140 was bought as insurance against a
+threshold that does not apply. €175 nets ~€83 against ~€49 and is still a real
+discount. Say the word.
+
+Also note **Tax: $0.00** — Tapstitch charged no VAT on the transaction, which
+is consistent with the DDP treatment they described.
+
+### 2. THE SHIPPING NUMBER IS THE PROBLEM. €33 where the model says €16.
+
+$38.64 is about €33 at today's rate, for five items to Portugal. Our model
+(`SHIPPING_BASE` €9 + €2 each extra) predicts **€17 charged** and assumes a
+real cost near **€16**. The invoice is roughly **double the assumed cost**.
+
+If that holds for Special Line, every multi-item order is losing money on
+postage, and the bundles — which include shipping — are worst hit.
+
+**The likely explanation is that this order went International Express**,
+which Sam thinks it may have. That would explain the price and leave the
+Special Line model intact. IT HAS TO BE CONFIRMED BEFORE REAL ORDERS FLOW.
+
+**How to settle it:** put 4 raw-hem tees in a Tapstitch cart to Portugal, pick
+**Special Line**, and read the shipping figure at checkout. Then do the same
+to the Netherlands. If Special Line comes in near the rate sheet, nothing
+changes. If it comes in near €33, `SHIPPING_BASE`, `SHIPPING_PER_EXTRA_ITEM`,
+the margin sheet and both bundle prices all need redoing.
