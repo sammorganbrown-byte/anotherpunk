@@ -376,12 +376,25 @@ real cost near **€16**. The invoice is roughly **double the assumed cost**.
 If that holds for Special Line, every multi-item order is losing money on
 postage, and the bundles — which include shipping — are worst hit.
 
-**The likely explanation is that this order went International Express**,
-which Sam thinks it may have. That would explain the price and leave the
-Special Line model intact. IT HAS TO BE CONFIRMED BEFORE REAL ORDERS FLOW.
+**CHECKED. A live cart, four raw-hem tees to Portugal: production €73.88,
+shipping €19.37, tax €0.00, total €93.25.**
 
-**How to settle it:** put 4 raw-hem tees in a Tapstitch cart to Portugal, pick
-**Special Line**, and read the shipping figure at checkout. Then do the same
-to the Netherlands. If Special Line comes in near the rate sheet, nothing
-changes. If it comes in near €33, `SHIPPING_BASE`, `SHIPPING_PER_EXTRA_ITEM`,
-the margin sheet and both bundle prices all need redoing.
+So the $38.64 on the invoice was inflated by it being five items and probably
+express — but the underlying problem is real at a smaller size. We charge €15
+to ship four items and it costs €19.37. **Every four-item order to Portugal
+loses about €4.40 on postage**, and Portugal is not the worst zone.
+
+The base looks about right; the €2 increment is what is wrong. Three extra
+garments appear to cost around €10 to add, roughly €3.20 each, not €2.
+
+**Still needed — four numbers from the same cart:**
+
+| | 1 item | 2 items | 4 items |
+|---|---|---|---|
+| Portugal | ? | ? | €19.37 |
+| Netherlands | ? | — | ? |
+
+With those, `SHIPPING_BASE`, `SHIPPING_PER_EXTRA_ITEM`, the margin sheet and
+the His and Hers price can all be rebuilt on evidence. Not changing the
+increment before then: raising it to cover four-item orders would tax every
+two-item order to fix an error that mostly shows up at four.

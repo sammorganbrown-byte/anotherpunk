@@ -49,28 +49,38 @@
 export const SHIPPING_BASE = 9;
 export const SHIPPING_PER_EXTRA_ITEM = 2;
 
-/** ── THE €2 IS THE LEAST VERIFIED NUMBER IN THIS SHOP ──────────────────────
+/** ── THE €2 IS WRONG. REAL QUOTE SAYS WE LOSE ON MULTI-ITEM ORDERS ────────
  *
- * shipping-rates.csv quotes Tapstitch for ONE item and TWO items. Everything
- * beyond two repeats the marginal cost of the second, which is a guess with
- * the right shape rather than a figure anyone has confirmed.
+ * A live Tapstitch cart, four raw-hem tees to Portugal, quoted **€19.37** of
+ * shipping. Our model charges €9 + €2 x 3 = **€15** for that order and
+ * assumed it cost about €14.68. So a four-item order to Portugal loses
+ * roughly **€4.40 in postage** — and Portugal is not the worst zone.
  *
- * Tapstitch's own FAQ says why that guess is shakier than it looks:
- * "Shipping costs for multi-product orders may vary depending on the product
- * mix, categories, and total shipment weight." Weight, not item count. Our
- * per-item charge is flat, so a heavy order and a light one of the same
- * length are charged the same and cost us different amounts.
+ * The base looks sound; it is the increment that is wrong. If a single item
+ * is near the €9 we charge, then three extra garments cost about €10 to add,
+ * roughly €3.20 each, against the €2 we take. The rate sheet's two-item quote
+ * understated how the cost grows, and repeating that marginal step for items
+ * three and four compounded the error.
  *
- * THE EXPOSURE IS THE RAW HEM FOUR: four heavyweight tees, the heaviest
- * bundle we sell, priced on a shipping cost extrapolated from a two-item
- * quote. The margin has room — even at triple the assumed postage it stays
- * profitable — so this is not urgent, but it is unmeasured.
+ * NOT CHANGED YET, DELIBERATELY. Raising the increment to cover four-item
+ * orders would tax every two-item order to fix an error that mostly appears
+ * at four, which is the exact mistake the note above warns against. Setting
+ * it properly needs the real quotes:
  *
- * IT IS ALSO EASY TO SETTLE. Tapstitch say: "add the items to your cart and
- * check the live shipping cost at checkout." Put four raw-hem tees in a
- * Tapstitch cart to Portugal, and again to the Netherlands (our worst zone),
- * and read the real numbers. Then either confirm the €2 or correct it here.
- * ────────────────────────────────────────────────────────────────────────── */
+ *     Portugal    1 item    ?      Netherlands  1 item    ?
+ *     Portugal    2 items   ?      Netherlands  4 items   ?
+ *     Portugal    4 items   €19.37
+ *
+ * Four numbers from the same Tapstitch cart. With those, the base and the
+ * increment can be set from evidence instead of extrapolation, and the margin
+ * sheet and both bundle prices rebuilt on them.
+ *
+ * WHAT IS ALREADY KNOWN: the bundles absorb their own postage, so they take
+ * this on the chin rather than passing it on. Raw Hem Four is priced on the
+ * real €19.37 and still nets ~€76 at €175. The His and Hers pair is the one
+ * to watch — its €69 assumed €9.19 of postage, and if two items really cost
+ * nearer €13 the pack nets closer to €24 than the €28 first calculated.
+ * ──────────────────────────────────────────────────────────────────────── */
 
 /** Shipping in whole euros for an order of `count` garments. An empty bag
  * ships for nothing, so a cart with no lines never shows a shipping charge. */
