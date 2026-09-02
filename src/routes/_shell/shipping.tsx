@@ -14,16 +14,32 @@ export const Route = createFileRoute("/_shell/shipping")({ component: Shipping }
  * than written out here, so this page cannot quietly disagree with what the
  * checkout charges. Changing the rate in one place changes it in both.
  *
- * ── TIMINGS NEED CONFIRMING ───────────────────────────────────────────────
- * MAKE_DAYS and the transit ranges below are estimates, not quoted figures
- * from Tapstitch. Check them against Tapstitch's stated production and
- * delivery times and correct them here. Everything else on this page is
- * checked; these are the numbers to verify before they are relied on.
+ * ── PRODUCTION IS IN CHINA, AND THAT DECIDES THIS PAGE ────────────────────
+ * Two consequences, both of which this page used to get wrong:
+ *
+ * TIME. Transit dominates, not printing. The earlier figures here (3–7 days
+ * to Europe) were written assuming European production and were far too
+ * optimistic. They are now the ranges you would expect from an Asian origin.
+ * Still estimates — confirm against Tapstitch and tighten.
+ *
+ * MONEY. Every order into the EU is an IMPORT. This page previously said
+ * "orders inside the EU arrive with nothing further to pay", which is only
+ * true if Tapstitch ships DDP under an IOSS registration. That has not been
+ * confirmed, and if it is wrong the customer meets an unexpected VAT bill and
+ * a courier handling fee at their own front door — the single worst way to
+ * find out, and a guaranteed chargeback. The wording below therefore warns
+ * rather than promises.
+ *
+ * That direction is deliberate. Warning about a charge that never arrives is
+ * a pleasant surprise; promising none and delivering one is fraud by
+ * accident. ASK TAPSTITCH WHETHER THEY ARE IOSS-REGISTERED AND SHIP DDP —
+ * if they are, this section should be rewritten to say so plainly, because
+ * it is a genuine selling point worth stating.
  * ──────────────────────────────────────────────────────────────────────────
  */
 const MAKE_DAYS = "2–5 working days";
-const EUROPE_DAYS = "3–7 working days";
-const WORLD_DAYS = "7–14 working days";
+const EUROPE_DAYS = "8–15 working days";
+const WORLD_DAYS = "10–20 working days";
 
 function Shipping() {
   const eur = (n: number) => `€${n}`;
@@ -32,8 +48,9 @@ function Shipping() {
     <RdLegal label="SHIPPING" title="SHIPPING" updated="2 SEPTEMBER 2026">
       <p className="rd-legal-lede">
         Nothing here sits in a warehouse. Each piece is printed after you order it, which is
-        why there is no dead stock and no sale rail — and why it takes a few days longer than
-        something pulled off a shelf.
+        why there is no dead stock and no sale rail — and why it takes longer than something
+        pulled off a shelf. It is printed and sent by our production partner in China, so
+        most of the wait is the journey rather than the printing.
       </p>
 
       <LegalSection heading="What it costs">
@@ -79,10 +96,16 @@ function Shipping() {
 
       <LegalSection heading="Duty and customs">
         <p>
-          Orders inside the EU arrive with nothing further to pay. Outside it, your country
-          may charge import duty or tax on delivery. That is set by your own customs service,
-          it is not collected here, and it cannot be paid in advance — so it is worth knowing
-          about before you order rather than at the door.
+          Everything is printed and dispatched by our production partner in China, so an
+          order is an import wherever you are. Depending on your country, import VAT or duty
+          may be charged when it arrives, along with a courier handling fee. That is set by
+          your own customs service rather than collected here.
+        </p>
+        <p>
+          Most orders arrive with nothing more to pay. We would rather tell you it is
+          possible than have you meet it at the door — if you are charged anything on
+          delivery, email <a href="mailto:sam@anotherpunk.com">sam@anotherpunk.com</a> with
+          the receipt.
         </p>
       </LegalSection>
 

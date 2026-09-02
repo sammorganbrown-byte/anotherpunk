@@ -208,6 +208,27 @@ Ordered by what bites soonest.
   the bottom of `src/lib/bundles.ts` for why it is a different shape of
   problem from a bundle.
 
+## IOSS — ask Tapstitch first, before anything else (2 Sep)
+
+Production is in China, so **every EU order is an import**. /shipping used to
+say EU orders arrive with nothing more to pay. That is only true if Tapstitch
+ships DDP under an IOSS registration, which is not confirmed — so the page now
+warns instead of promising. Warning about a charge that never comes is a
+pleasant surprise; promising none and delivering a VAT bill plus a courier
+handling fee is a chargeback and a furious customer.
+
+**Ask Tapstitch: are you IOSS-registered, and do you ship DDP?**
+
+- If YES — rewrite that section to say so plainly. "No customs bill, ever" is
+  a real selling point and worth stating loudly.
+- If NO — it needs saying much more prominently than a policy page, because a
+  €50 tee that arrives with €15 to pay is not a €50 tee. It would also be
+  worth pricing VAT in and paying it yourself.
+
+Also confirm the transit ranges. The old figures (3–7 days to Europe) assumed
+European production and were far too optimistic; they are now 8–15, which is
+what an Asian origin usually looks like, but they are still estimates.
+
 ## Express shipping — three questions for Tapstitch (2 Sep)
 
 Nothing is built. The website half is easy; what decides the design is what
@@ -216,12 +237,13 @@ Tapstitch says to these. Ask support:
 1. **What does express cost, per destination?** `shipping-rates.csv` only has
    standard rates for 1 and 2 items. Without express costs any price would be
    a guess, and guessing is how a shipping option quietly loses money.
-2. **Does express speed up PRODUCTION, or only transit?** This decides whether
-   it is worth selling at all. If printing still takes 2–5 days and only the
-   courier is faster, express saves a European customer perhaps 2–4 days for a
-   real premium — and someone who pays extra and still waits a week feels
-   misled. Outside Europe, where transit is 7–14 days, it is a much stronger
-   product. It may be worth offering express only on non-EU orders.
+2. ~~Does express speed up production or only transit?~~ **Settled by the
+   China answer: express is now clearly worth selling.** Transit is the bulk
+   of the wait from an Asian origin — 8–15 working days standard — so cutting
+   it to the 3–5 an air courier takes is a difference customers can feel,
+   everywhere, not just outside Europe. The earlier worry that express would
+   shave only two or three days assumed European production and does not
+   apply. Still confirm the actual express transit time.
 3. **Does Tapstitch read the shipping method from the Shopify order?** If it
    does, this is fully automatic and needs no manual step — the draft order
    currently sets no `shipping_line` at all, so Tapstitch is applying its
