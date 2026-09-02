@@ -113,15 +113,21 @@ function Shipping() {
         {DUTY_PREPAID ? (
           <>
             <p>
-              <strong>Nothing to pay on delivery.</strong> Everything is printed and
-              dispatched by our production partner in China, and the import VAT is settled
-              before the parcel reaches you. The price you paid at checkout is the price.
+              <strong>Nothing to pay on delivery.</strong> Everything is made and sent by our
+              producer in China, and it ships on a duty-paid service — the import duty and
+              tax are covered before the parcel reaches you. The price at checkout is the
+              price.
             </p>
             <p>
-              No customs bill, no courier handling fee, no card through the door asking you
-              to go and collect your own shirt. If anything is ever charged to you on
-              delivery, email <a href="mailto:sam@anotherpunk.com">sam@anotherpunk.com</a>{" "}
-              with the receipt and you will be refunded it.
+              No customs bill, no handling fee, no card through the door asking you to go and
+              collect your own shirt.
+            </p>
+            <p>
+              Customs officers make the final call and no shop anywhere can overrule one, so
+              rather than promise you what we do not control, we will pay for it. If you are
+              ever charged anything on delivery, send the receipt to{" "}
+              <a href="mailto:sam@anotherpunk.com">sam@anotherpunk.com</a> and you will be
+              refunded it in full.
             </p>
           </>
         ) : (

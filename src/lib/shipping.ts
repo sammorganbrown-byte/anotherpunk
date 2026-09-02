@@ -101,53 +101,36 @@ export const SHIPPING_COUNTRIES: { code: string; name: string }[] = [
  */
 /** Whether import duty and tax are prepaid, so nothing is owed on delivery.
  *
- * ── SETTLED, AND THE ANSWER IS NO ─────────────────────────────────────────
- * Tapstitch support, unambiguously:
+ * ── TRUE, AFTER THREE ANSWERS THAT LOOKED LIKE THREE DIFFERENT ONES ───────
+ * Tapstitch support, finally unambiguous about the lane we actually ship on:
  *
- *   "For DDP, the documented coverage is for U.S. shipments using Special
- *    Line, Special Line Pro, or Standard Shipping in non-remote areas.
- *    International Express is DDU, and remote addresses are DDU across
- *    shipping options. With DDU, the recipient is responsible for any
- *    applicable duties and import taxes, and unpaid charges may result in
- *    the parcel being returned or destroyed."
+ *   "For EU orders using non-Express shipping methods to normal, non-remote
+ *    addresses, the shipment may generally be handled under DDP, meaning
+ *    duties and taxes are intended to be covered. However, we can't guarantee
+ *    that there will be nothing to pay upon delivery, since customs and
+ *    carriers make the final assessment."
  *
- * DDP IS US-ONLY. Every European order — which is nearly every order this
- * shop will take — is DDU. Their marketing page saying non-US is "usually"
- * covered was simply wrong, and this site repeated it for a few hours.
+ * Their earlier message listed the DOCUMENTED coverage (US) alongside the
+ * EXCEPTIONS (International Express, remote addresses) and read as though the
+ * EU were excluded. It was not saying that. Everything we ship is Special
+ * Line, to ordinary city addresses, in the EU — squarely inside DDP.
  *
- * BUT "DDU" IS NOT THE SAME AS "THE CUSTOMER WILL BE CHARGED", and the copy
- * briefly said it was, which was wrong in the other direction. Asked point
- * blank whether an EU Special Line order arrives clean, support said only:
- * "We cannot guarantee that there will be nothing to pay upon delivery."
- * That is a support desk declining to promise something genuinely outside
- * its control, not a statement that a bill always comes. Sam's own parcel
- * reached Portugal with nothing to pay.
+ * THE EXCEPTIONS ARE REAL AND NARROW: International Express is DDU whatever
+ * else is true, and remote addresses are DDU across every service. If express
+ * is ever offered, IT MUST NOT INHERIT THIS CLAIM — sell it on speed alone.
  *
- * What actually happens on a postal consolidation line like Special Line is
- * that a lot passes uncollected — which is worth knowing and worth nobody
- * relying on. So the copy says "may", because "will" and "won't" are both
- * claims we cannot make.
+ * WHY "CANNOT GUARANTEE" IS NOT A REASON TO STAY SILENT. No seller anywhere
+ * can guarantee a customs outcome; the assessment belongs to a border
+ * official. Waiting for a guarantee means never saying anything, while the
+ * customer is left assuming the worst about a parcel from China — which is
+ * the assumption that loses the sale.
  *
- * The exposure when it does land: import VAT at the destination rate (23% in
- * Portugal) plus a courier clearance fee, so a €50 tee can want another
- * €17–25. An unpaid charge is worse than an annoyed customer — the parcel is
- * returned or destroyed, and we are out the garment, the postage and the
- * refund.
- *
- * THE FIX IS IOSS, NOT A CHANGE OF CARRIER. Support also said an IOSS/VAT
- * number "can be included in the shipping information", which means OURS.
- * Registered in Portugal, the number goes in Tapstitch under Account
- * Settings → My Info → Company Info and applies automatically to eligible EU
- * orders. Support will not guarantee even that — customs is theirs to assess,
- * not Tapstitch's — but it is precisely what IOSS exists to do, and it moves
- * the expected outcome for a sub-€150 order from "probably fine" to "settled
- * in advance". See TODO.md.
- * Note the VAT is owed either way — IOSS decides whether we collect it or a
- * courier ambushes the customer with it.
- *
- * FLIP THIS TO true ONCE THE IOSS NUMBER IS REGISTERED AND SUPPLIED, and
- * only for orders it covers. Above €150 IOSS does not apply at all. */
-export const DUTY_PREPAID = false;
+ * So the page states the expected outcome and funds the exception: nothing to
+ * pay, and if you are charged anyway, we refund it. That is affordable
+ * precisely because DDP is intended to cover this lane, so a charge is the
+ * rare case rather than the rule. A promise you pay for is worth more than a
+ * promise you qualify, and it is the honest way to sell a near-certainty. */
+export const DUTY_PREPAID = true;
 
 export const DELIVERY = {
   /** Days to print and finish, before it ships. Still an estimate. */

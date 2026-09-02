@@ -53,9 +53,9 @@ function Terms() {
 
       <LegalSection heading="Prices">
         <p>
-          Prices are in euros. Outside the United States they do not include import VAT,
-          which your own customs service may charge on delivery — see{" "}
-          <a href="/shipping">shipping</a> before you order. You can switch the currency
+          Prices are in euros and are what you pay. Orders ship duty-paid, so there is
+          nothing further owed on delivery; in the rare event customs charges you anyway, we
+          refund it — see <a href="/shipping">shipping</a>. You can switch the currency
           shown at the bottom of any page, but that is a conversion for your convenience at
           the day's rate — <strong>the charge is made in euros</strong>, and your bank's rate
           on the day is what lands on your statement.
