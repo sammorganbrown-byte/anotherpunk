@@ -10,6 +10,7 @@ import {
 import { useCart } from "../../../lib/cart-context";
 import { useCurrency } from "../../../lib/currency-context";
 import { SHIPPING_BASE, SHIPPING_PER_EXTRA_ITEM } from "../../../lib/shipping";
+import { RdDelivery } from "../../../components/redesign/rd-delivery";
 import { RdPixelText } from "../../../components/redesign/rd-pixel-text";
 
 export const Route = createFileRoute("/_shell/product/$slug")({
@@ -169,6 +170,10 @@ function RedesignProduct() {
             </p>
           </div>
         )}
+
+        {/* Directly under the buy button, which is the moment the questions
+            it answers actually occur to somebody. */}
+        <RdDelivery />
 
         <p className="rd-log max-w-[56ch]">{product.description ?? ""}</p>
 

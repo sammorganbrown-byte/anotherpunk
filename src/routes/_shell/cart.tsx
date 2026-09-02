@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCart } from "../../lib/cart-context";
 import { useCurrency } from "../../lib/currency-context";
 import { getBundle } from "../../lib/bundles";
+import { RdDelivery } from "../../components/redesign/rd-delivery";
 import type { CartItem } from "../../lib/cart-context";
 
 export const Route = createFileRoute("/_shell/cart")({ component: RedesignCart });
@@ -161,6 +162,8 @@ function RedesignCart() {
           </li>
         ))}
       </ul>
+
+      <RdDelivery compact />
 
       <div className="mt-6 flex flex-col items-end gap-1">
         <p className="rd-log">Subtotal {formatPrice(subtotal)}</p>

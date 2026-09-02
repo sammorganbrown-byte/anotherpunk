@@ -80,3 +80,38 @@ export const SHIPPING_COUNTRIES: { code: string; name: string }[] = [
   { code: "AU", name: "Australia" },
   { code: "NZ", name: "New Zealand" },
 ];
+
+/** ── WHAT THE CUSTOMER IS TOLD ABOUT DELIVERY ──────────────────────────────
+ *
+ * One source for the delivery facts, because they now appear on the product
+ * page, the bundle page, the bag, the checkout and the shipping policy. Five
+ * places is exactly how a site ends up quoting two different delivery times,
+ * and the one a customer remembers is always the shorter one.
+ *
+ * All of it is Tapstitch's own published figures for Special Line, the
+ * service these orders travel on — 10 days average, 95% within 15 — with
+ * production on top. Their times exclude production and they say so.
+ *
+ * WHY THE ORIGIN IS STATED OUT LOUD. It would be quieter not to mention
+ * China. But someone waiting a fortnight works it out anyway, and finding out
+ * afterwards feels like something was hidden — whereas saying it up front,
+ * next to the fact that the customs is already paid, turns the slow part into
+ * the honest part of a good deal. The wait is the price of nothing being made
+ * before it is wanted, and that is worth saying rather than hiding.
+ */
+export const DELIVERY = {
+  /** Days to print and finish, before it ships. Still an estimate. */
+  make: "2–5 days",
+  /** Tapstitch's Special Line average. */
+  transit: "about 10 days",
+  /** Their 95th percentile. */
+  transitMost: "15 days",
+  /** Roughly what the whole thing takes, made and delivered. Rounded to
+   * weeks because a customer thinks in weeks, and quoting "12 to 20 days"
+   * implies a precision that a customs desk can undo in an afternoon. */
+  total: "two to three weeks",
+  origin: "Made and sent by our producer in China.",
+  /** The good news, and the reason the wait is worth stating plainly next to
+   * it. Tapstitch ship DDP; we refund the rare exception. */
+  duty: "No customs charges, ever. Import duty and tax are already paid.",
+} as const;

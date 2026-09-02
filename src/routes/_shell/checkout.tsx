@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useCart } from "../../lib/cart-context";
 import { useCurrency } from "../../lib/currency-context";
+import { RdDelivery } from "../../components/redesign/rd-delivery";
 import { createCheckoutSession } from "../../lib/api/checkout.functions";
 import { findPromoCode } from "../../lib/promo-codes";
 import { SHIPPING_COUNTRIES } from "../../lib/shipping";
@@ -329,6 +330,11 @@ function RedesignCheckout() {
           {converted ? (
             <p className="rd-log mt-1 opacity-70">Charged in euros — {formatEur(total)}</p>
           ) : null}
+
+          {/* Last chance to tell somebody how long it takes and that nothing
+              more is owed. Better here, beside the total, than discovered
+              afterwards from a tracking page. */}
+          <RdDelivery compact />
         </aside>
       </div>
     </div>

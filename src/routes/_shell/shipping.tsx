@@ -4,6 +4,7 @@ import {
   SHIPPING_BASE,
   SHIPPING_PER_EXTRA_ITEM,
   SHIPPING_COUNTRIES,
+  DELIVERY,
 } from "../../lib/shipping";
 
 export const Route = createFileRoute("/_shell/shipping")({ component: Shipping });
@@ -60,19 +61,18 @@ export const Route = createFileRoute("/_shell/shipping")({ component: Shipping }
 const DUTY_PREPAID = true;
 
 /** Tapstitch's own published figures for Special Line, the service these
- * orders travel on: "10d avg; 95% in 15d". Quoted as they state them —
- * plainly days, not working days, because that is not what they said and
- * inventing the stricter reading would quietly add a week to every quote.
+ * orders travel on: "10d avg; 95% in 15d". Read from lib/shipping.ts so this
+ * page, the product page, the bag and the checkout cannot drift apart.
  *
- * Their other two international services are worth knowing about:
+ * Their other two international services, for reference:
  *   International Shipping   5d avg, 95% in 7d   — the fast one
  *   Special Line            10d avg, 95% in 15d  — what we use
  *   Standard Shipping       25d avg, 95% in 30d  — do not use this
  *
- * Production time is on top and is still an estimate. */
-const MAKE_DAYS = "2–5 days";
-const TRANSIT_AVG = "about 10 days";
-const TRANSIT_MOST = "15 days";
+ * Production time is on top, and Tapstitch's figures exclude it. */
+const MAKE_DAYS = DELIVERY.make;
+const TRANSIT_AVG = DELIVERY.transit;
+const TRANSIT_MOST = DELIVERY.transitMost;
 
 function Shipping() {
   const eur = (n: number) => `€${n}`;

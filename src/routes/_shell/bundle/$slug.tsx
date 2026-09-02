@@ -6,6 +6,7 @@ import { computeShipping } from "../../../lib/shipping";
 import { useCart } from "../../../lib/cart-context";
 import { useCurrency } from "../../../lib/currency-context";
 import { RdPixelText } from "../../../components/redesign/rd-pixel-text";
+import { RdDelivery } from "../../../components/redesign/rd-delivery";
 
 export const Route = createFileRoute("/_shell/bundle/$slug")({
   loader: ({ params }) => {
@@ -201,6 +202,8 @@ function BundlePage() {
           </p>
         ) : null}
       </div>
+
+      <RdDelivery />
 
       <p className="rd-log rd-bundle-note">
         Sold as a pack — the pieces arrive in one parcel and come out of the bag together. The

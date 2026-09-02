@@ -1917,3 +1917,47 @@ body:has(.rd-pdp) .rd-np {
   outline: 1px solid var(--rd-red);
   outline-offset: -1px;
 }
+
+/* ── Delivery truth, shown where people decide ───────────────────────────
+   Sits under the buy button on a product, in the bag and at checkout. Framed
+   with a hairline rather than a filled panel: it is information the shop
+   wants read, not a warning box the eye learns to skip. */
+[data-ap-rd] .rd-delivery {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rd-rule);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+[data-ap-rd] .rd-delivery-line {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--rd-dim);
+  max-width: 52ch;
+}
+[data-ap-rd] .rd-delivery-line strong {
+  color: var(--rd-paper);
+  font-weight: 400;
+}
+/* The customs line is the good news and the only thing here in red. It is
+   also the answer to the question the line above it provokes, so it earns
+   the emphasis — a parcel coming from China is exactly when somebody starts
+   wondering what it will cost them at the door. */
+[data-ap-rd] .rd-delivery-line[data-good="true"] strong {
+  color: var(--rd-red);
+}
+[data-ap-rd] .rd-delivery-mark {
+  color: var(--rd-red);
+  flex: 0 0 auto;
+}
+[data-ap-rd] .rd-delivery-more {
+  color: var(--rd-dimmer);
+}
+[data-ap-rd] .rd-delivery[data-compact="true"] {
+  margin-top: 14px;
+}
