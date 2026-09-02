@@ -208,25 +208,43 @@ Ordered by what bites soonest.
   the bottom of `src/lib/bundles.ts` for why it is a different shape of
   problem from a bundle.
 
-## Customs — answered (2 Sep)
+## Customs — SETTLED (2 Sep)
 
-**Tapstitch ship DDP.** From tapstitch.com/shipping: "Our shipping model is
-built on a Delivered Duty Paid (DDP) solution... covers both the freight costs
-and any destination import duties or taxes." A parcel has also already reached
-Portugal with nothing to pay.
+Tapstitch, after three answers that read like three different ones:
 
-They hedge it for non-US: "this is also usually the case. However, in rare
-cases, recipients in certain remote areas may need to pay customs duties or
-related fees upon delivery."
+> "For EU orders using non-Express shipping methods to normal, non-remote
+> addresses, the shipment may generally be handled under DDP, meaning duties
+> and taxes are intended to be covered. However, we can't guarantee that there
+> will be nothing to pay upon delivery, since customs and carriers make the
+> final assessment."
 
-`DUTY_PREPAID` is now **true**, and /shipping says nothing is owed on delivery
-*and promises to refund anyone who is charged anyway* — which converts their
-"usually" into our "always" for a cost that is rare-and-remote by definition.
-If a refund is ever actually claimed, note it here; more than one or two and
-the promise needs revisiting.
+Everything we ship is Special Line, EU, ordinary addresses — inside DDP. Their
+earlier reply listed the documented coverage (US) beside the exceptions and
+read as though the EU were excluded; it was not saying that.
 
-Transit figures on the page are now Tapstitch's own for Special Line —
-10 days average, 95% within 15 — replacing my invented "8-15 working days".
+The site now says **nothing to pay on delivery, and we refund you if you are
+charged anyway**. Funding the exception is what makes the promise honest, and
+it is cheap precisely because DDP is meant to cover this lane. `DUTY_PREPAID`
+is true.
+
+**Exceptions to remember:** International Express is DDU whatever else is
+true, and remote addresses are DDU on every service. If express is ever
+offered it must be sold on speed alone and must not inherit this claim.
+
+**If a refund is ever actually claimed, note it here.** More than one or two
+and the promise needs revisiting.
+
+### IOSS — worth doing, no longer urgent
+
+Not a blocker now DDP covers the lane. Still the clean way for an EU business
+to handle VAT on imported goods, and the easy version here: Portugal-
+established means registering direct with the AT, no intermediary and none of
+the €200–500/yr fee non-EU sellers pay. It brings a monthly return, so ten
+minutes with an accountant first.
+
+The number goes in Tapstitch under **Account Settings → My Info → Company
+Info** and applies automatically to eligible EU orders. IOSS only covers
+consignments up to €150, so it would not reach Raw Hem Four at €175 either way.
 
 ## Express shipping — one question left (2 Sep)
 
@@ -278,34 +296,3 @@ lost parcel can land on our margin. Worth watching if it ever happens twice.
 Also confirmed: shipping time excludes production time, which /shipping
 already states correctly.
 
-## IOSS — the actual next step (2 Sep)
-
-Tapstitch settled it: **DDP is US-only. EU orders are DDU.** They will not
-guarantee anything for the EU either way, because customs is not theirs to
-assess — but they told us exactly where our own number goes:
-
-> **Account Settings → My Info → Company Info** — "it will automatically apply
-> to eligible EU orders."
-
-So the sequence is:
-
-1. **Register for IOSS in Portugal.** Being EU-established makes this the easy
-   version — direct with the AT, no intermediary and no intermediary fee (the
-   €200–500/yr that non-EU sellers pay). Worth ten minutes with an accountant
-   first, because it comes with a monthly return.
-2. Enter the number in Tapstitch at the path above.
-3. Set `DUTY_PREPAID = true` in `src/lib/shipping.ts`.
-
-The VAT is owed either way. IOSS only decides whether we collect it cleanly at
-checkout or a courier ambushes the customer with it plus a handling fee.
-
-Caveats worth remembering:
-- **IOSS covers consignments up to €150 only.** Raw Hem Four at €175 sits
-  outside it — the biggest order in the shop and the one most likely to be
-  charged. €149 brings it inside: costs €26, takes it from ~€83 net to ~€58.
-- **International Express is documented DDU regardless.** Support explicitly
-  warned against promising a clean delivery on express even with IOSS. So
-  express, if built, should not be sold on "no customs" — only on speed.
-- Nobody guarantees a customs outcome, and no print-on-demand company can.
-  What IOSS buys is that the VAT is already settled, which is the whole
-  reason a bill would arrive.
