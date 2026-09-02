@@ -42,7 +42,7 @@ export const Route = createFileRoute("/admin")({
             const posted = p.due < today;
             return `
     <article class="post" data-gone="${posted ? "yes" : "no"}">
-      <img class="shot" src="/img/${esc(p.image)}" alt="" loading="lazy">
+      <div class="shots">${p.images.map((f) => `<img class="shot" src="/img/${esc(f)}" alt="" loading="lazy">`).join("")}</div>
       <div class="meta">
         <p class="when">
           <span class="num">${String(i + 1).padStart(2, "0")}</span>
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/admin")({
           <span class="tag" data-live="${posted ? "no" : "yes"}">${posted ? "posted" : "scheduled"}</span>
         </p>
         <p class="caption">${esc(p.caption)}</p>
-        <p class="file">${esc(p.image)} &middot; ${esc(p.id)}</p>
+        <p class="file">${p.images.map(esc).join(" &middot; ")} &middot; ${esc(p.id)}</p>
       </div>
     </article>`;
           })
@@ -113,7 +113,9 @@ function page(cards: string, total: number, gone: number): string {
   .post{display:grid;grid-template-columns:300px 1fr;gap:26px;padding:30px 0;
         border-bottom:1px solid var(--rule);align-items:start}
   .post[data-gone="yes"]{opacity:.45}
+  .shots{display:flex;flex-direction:column;gap:6px}
   .shot{display:block;width:100%;height:auto;border:1px solid var(--rule);background:var(--void-2)}
+  .shots .shot:not(:first-child){opacity:.66}
   .meta{min-width:0}
   .when{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);
         margin:0 0 10px;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}

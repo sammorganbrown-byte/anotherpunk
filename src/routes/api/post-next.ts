@@ -114,27 +114,22 @@ function alreadyPosted(post: QueuedPost, captions: string[]): boolean {
   return captions.some((c) => c.trim().startsWith(head));
 }
 
-/** Two-step publish: build a container, then publish it. The container is not
- * instant — Instagram fetches the image itself — so it is polled rather than
- * published blind, which fails with an unhelpful error. */
+/** Builds a container, waits for Instagram to fetch the images, publishes.
+ *
+ * One image posts as a single photo; two or three post as a carousel, which
+ * needs a container per image and then a container wrapping those. The single
+ * case is not just a carousel of one — Instagram renders a one-item carousel
+ * with swipe affordances and a different crop, so it is worth the branch. */
 async function publish(post: QueuedPost, igId: string, token: string): Promise<string> {
-  const imageUrl = `${SITE}/img/${post.image}`;
+  const urls = post.images.map((f) => `${SITE}/img/${f}`);
+  const containerId =
+    urls.length === 1
+      ? await singleContainer(urls[0], post.caption, igId, token)
+      : await carouselContainer(urls, post.caption, igId, token);
 
-  const create = await fetch(`${GRAPH}/${igId}/media`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ image_url: imageUrl, caption: post.caption, access_token: token }),
-  });
-  const createBody = (await create.json()) as { id?: string; error?: { message?: string } };
-  if (!create.ok || !createBody.id) {
-    throw new Error(createBody.error?.message ?? `container failed: HTTP ${create.status}`);
-  }
-
-  const containerId = createBody.id;
-
-  // Up to ~30s. Instagram is downloading a photograph from anotherpunk.com;
-  // it is usually ready on the first or second look.
-  for (let i = 0; i < 10; i++) {
+  // Up to ~30s. Instagram is downloading photographs from anotherpunk.com;
+  // usually ready on the first or second look, slower for a carousel.
+  for (let i = 0; i < 12; i++) {
     const s = await fetch(`${GRAPH}/${containerId}?fields=status_code&access_token=${token}`);
     const sb = (await s.json()) as { status_code?: string };
     if (sb.status_code === "FINISHED") break;
@@ -157,10 +152,57 @@ async function publish(post: QueuedPost, igId: string, token: string): Promise<s
   return lb.permalink ?? `https://www.instagram.com/anotherpunk.threads/`;
 }
 
+/** A single photo container. */
+async function singleContainer(
+  url: string,
+  caption: string,
+  igId: string,
+  token: string,
+): Promise<string> {
+  return container(igId, token, { image_url: url, caption });
+}
+
+/** A carousel: one container per image, then a container holding them.
+ *
+ * The children are built in sequence rather than in parallel — Instagram
+ * rate-limits container creation, and a carousel that half-builds leaves
+ * orphaned containers with no way to tell what happened. */
+async function carouselContainer(
+  urls: string[],
+  caption: string,
+  igId: string,
+  token: string,
+): Promise<string> {
+  const children: string[] = [];
+  for (const url of urls) {
+    children.push(await container(igId, token, { image_url: url, is_carousel_item: true }));
+  }
+  return container(igId, token, {
+    media_type: "CAROUSEL",
+    children: children.join(","),
+    caption,
+  });
+}
+
+async function container(
+  igId: string,
+  token: string,
+  fields: Record<string, unknown>,
+): Promise<string> {
+  const r = await fetch(`${GRAPH}/${igId}/media`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...fields, access_token: token }),
+  });
+  const b = (await r.json()) as { id?: string; error?: { message?: string } };
+  if (!r.ok || !b.id) throw new Error(b.error?.message ?? `container failed: HTTP ${r.status}`);
+  return b.id;
+}
+
 async function notify(post: QueuedPost, permalink: string) {
   await email(
     `Posted: ${post.id}`,
-    `${post.caption}\n\n${permalink}\n\nImage: ${post.image}\n\nPosted automatically from the queue. Nothing to do.`,
+    `${post.caption}\n\n${permalink}\n\n${post.images.length === 1 ? "Image" : `${post.images.length} images`}: ${post.images.join(", ")}\n\nPosted automatically from the queue. Nothing to do.`,
   );
 }
 
