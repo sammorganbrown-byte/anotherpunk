@@ -11,12 +11,11 @@ export const Route = createFileRoute("/_shell/terms")({ component: Terms });
  * ever a disagreement — when the contract forms, what happens if a price is
  * wrong, who owns the artwork, and which law applies.
  *
- * ── TRADER DETAILS STILL TO ADD ───────────────────────────────────────────
- * EU consumer law requires the trader's legal name and geographic address to
- * be given to the buyer. The name and email are here; the registered trading
- * address and any tax number are NOT, because they were not known when this
- * was written. Add them to the "Who you are buying from" section below.
- * ──────────────────────────────────────────────────────────────────────────
+ * The trader's legal name and geographic address are required by EU consumer
+ * law and are given in full below — that requirement is the reason the
+ * address is on the page at all, and it is why it has to be a real one
+ * rather than a contact form. A tax number is the one detail still missing;
+ * add it beside the address if the business is registered for VAT.
  */
 function Terms() {
   return (
@@ -28,9 +27,18 @@ function Terms() {
 
       <LegalSection heading="Who you are buying from">
         <p>
-          Another Punk, run by Sam Brown.{" "}
-          <a href="mailto:sam@anotherpunk.com">sam@anotherpunk.com</a>. Questions, complaints
-          and returns all go to the same address, and are read by the same person.
+          Another Punk, run by Sam Brown.
+          <br />
+          R. de S. Bento 436A
+          <br />
+          1250-221 Lisboa, Portugal
+          <br />
+          <a href="mailto:sam@anotherpunk.com">sam@anotherpunk.com</a>
+        </p>
+        <p>
+          Questions, complaints and returns all go to the same address, and are read by the
+          same person. Please do not send returns here — the parcels are printed and shipped
+          elsewhere, so email first and you will be given the right address back.
         </p>
       </LegalSection>
 

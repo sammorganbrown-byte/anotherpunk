@@ -193,10 +193,9 @@ Ordered by what bites soonest.
 
 ## Package deals — open questions (2 Sep)
 
-- **Trader address on /terms.** EU consumer law wants the trader's legal name
-  and a geographic address. Name and email are on the page; the registered
-  trading address and any tax number are not, because I don't know them. The
-  spot is marked in `src/routes/_shell/terms.tsx`.
+- ~~Trader address on /terms~~ — done, 2 Sep. R. de S. Bento 436A,
+  1250-221 Lisboa. A **tax number / NIF** is the one detail still missing;
+  add it beside the address if the business is registered for VAT.
 - **Production and transit times on /shipping** are estimates, not quoted
   Tapstitch figures. Confirm and correct — one constant at the top of
   `src/routes/_shell/shipping.tsx`.

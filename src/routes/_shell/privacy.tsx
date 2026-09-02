@@ -109,8 +109,17 @@ function Privacy() {
         <p>
           Email <a href="mailto:sam@anotherpunk.com">sam@anotherpunk.com</a> and it will be
           dealt with. There is no ticketing system and no department; it is one person, and
-          you will get a straight answer. If you are not happy with it, you can complain to
-          the data protection authority in the country you live in.
+          you will get a straight answer.
+        </p>
+        <p>
+          If you are not happy with the answer, you can complain. Another Punk is established
+          in Portugal, so its supervisory authority is the{" "}
+          <a href="https://www.cnpd.pt" target="_blank" rel="noopener noreferrer">
+            CNPD
+          </a>{" "}
+          — but you do not have to go there. You are equally entitled to complain to the data
+          protection authority of the country you live in, which is usually the easier one to
+          deal with and the one that speaks your language.
         </p>
       </LegalSection>
     </RdLegal>
