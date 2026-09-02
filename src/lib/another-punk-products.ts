@@ -130,6 +130,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     cost: 14.68,
     images: [
       "/img/142-jersey-black-chest-flash.jpg",
+      "/img/148-jersey-black-back-69.jpg",
       "/img/143-jersey-black-football.jpg",
       "/img/144-jersey-black-slide.jpg",
     ],
