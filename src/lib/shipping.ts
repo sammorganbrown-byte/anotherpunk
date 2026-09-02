@@ -101,36 +101,52 @@ export const SHIPPING_COUNTRIES: { code: string; name: string }[] = [
  */
 /** Whether import duty and tax are prepaid, so nothing is owed on delivery.
  *
- * ── FALSE, AND IT WAS BRIEFLY TRUE BY MISTAKE ─────────────────────────────
- * Tapstitch's public shipping page says their model is Delivered Duty Paid
- * and that for non-US destinations duties are "also usually the case". On the
- * strength of that, and a parcel that reached Portugal with nothing to pay,
- * this site briefly told every customer "no customs charges, ever".
+ * ── SETTLED, AND THE ANSWER IS NO ─────────────────────────────────────────
+ * Tapstitch support, unambiguously:
  *
- * Their support team then said something narrower, and it is the sentence
- * that governs:
+ *   "For DDP, the documented coverage is for U.S. shipments using Special
+ *    Line, Special Line Pro, or Standard Shipping in non-remote areas.
+ *    International Express is DDU, and remote addresses are DDU across
+ *    shipping options. With DDU, the recipient is responsible for any
+ *    applicable duties and import taxes, and unpaid charges may result in
+ *    the parcel being returned or destroyed."
  *
- *   "DDP applies to U.S. shipments using Special Line, Special Line Pro, or
- *    Standard Shipping in non-remote areas. DDU applies to International
- *    Express shipments and remote addresses, where duties/taxes may be
- *    collected upon delivery."
+ * DDP IS US-ONLY. Every European order — which is nearly every order this
+ * shop will take — is DDU. Their marketing page saying non-US is "usually"
+ * covered was simply wrong, and this site repeated it for a few hours.
  *
- * Read plainly, DDP is scoped to U.S. shipments. This shop sells into Europe
- * almost exclusively, so the claim cannot stand on that sentence — and the
- * marketing page and the support desk now disagree with each other, which is
- * itself reason enough not to promise anything.
+ * BUT "DDU" IS NOT THE SAME AS "THE CUSTOMER WILL BE CHARGED", and the copy
+ * briefly said it was, which was wrong in the other direction. Asked point
+ * blank whether an EU Special Line order arrives clean, support said only:
+ * "We cannot guarantee that there will be nothing to pay upon delivery."
+ * That is a support desk declining to promise something genuinely outside
+ * its control, not a statement that a bill always comes. Sam's own parcel
+ * reached Portugal with nothing to pay.
  *
- * It may still turn out to be sloppy phrasing and DDP may well cover the EU.
- * That would be a nice answer to get. It is not an answer to assume, because
- * being wrong here means a customer meets an unexpected VAT bill and a
- * courier handling fee at their own door, and the promise we had made was to
- * refund it — on a €50 tee into Portugal that is roughly €11 of VAT plus a
- * handling charge, on every order, against a €25 margin.
+ * What actually happens on a postal consolidation line like Special Line is
+ * that a lot passes uncollected — which is worth knowing and worth nobody
+ * relying on. So the copy says "may", because "will" and "won't" are both
+ * claims we cannot make.
  *
- * SET THIS TRUE ONLY ON AN ANSWER THAT NAMES EUROPE. Not "usually", not the
- * marketing page: a sentence that says an order to an EU country on Special
- * Line arrives with nothing to pay. The confident copy is already written
- * and switches back on with this one line. */
+ * The exposure when it does land: import VAT at the destination rate (23% in
+ * Portugal) plus a courier clearance fee, so a €50 tee can want another
+ * €17–25. An unpaid charge is worse than an annoyed customer — the parcel is
+ * returned or destroyed, and we are out the garment, the postage and the
+ * refund.
+ *
+ * THE FIX IS IOSS, NOT A CHANGE OF CARRIER. Support also said an IOSS/VAT
+ * number "can be included in the shipping information", which means OURS.
+ * Registered in Portugal, the number goes in Tapstitch under Account
+ * Settings → My Info → Company Info and applies automatically to eligible EU
+ * orders. Support will not guarantee even that — customs is theirs to assess,
+ * not Tapstitch's — but it is precisely what IOSS exists to do, and it moves
+ * the expected outcome for a sub-€150 order from "probably fine" to "settled
+ * in advance". See TODO.md.
+ * Note the VAT is owed either way — IOSS decides whether we collect it or a
+ * courier ambushes the customer with it.
+ *
+ * FLIP THIS TO true ONCE THE IOSS NUMBER IS REGISTERED AND SUPPLIED, and
+ * only for orders it covers. Above €150 IOSS does not apply at all. */
 export const DUTY_PREPAID = false;
 
 export const DELIVERY = {
@@ -151,5 +167,5 @@ export const DELIVERY = {
    * promises to look at it rather than to pay it — a promise that can be kept
    * whatever the answer turns out to be. */
   dutyUnknown:
-    "Depending on your country, import VAT or duty may be charged on delivery. Tell us if it is.",
+    "Outside the US, import VAT may be charged on delivery at your country's rate. Most parcels arrive with nothing to pay, but we cannot promise it.",
 } as const;

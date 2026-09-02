@@ -127,16 +127,22 @@ function Shipping() {
         ) : (
           <>
             <p>
-              Everything is printed and dispatched by our production partner in China, so an
-              order is an import wherever you are. Depending on your country, import VAT or
-              duty may be charged when it arrives, along with a courier handling fee. That is
-              set by your own customs service rather than collected here.
+              Everything is made and sent by our producer in China, so an order is an import.
+              Outside the United States that means{" "}
+              <strong>import VAT may be charged when it arrives</strong>, at whatever rate
+              your country sets, sometimes with a small courier fee on top. It is assessed
+              and collected by your own customs service, not by us.
             </p>
             <p>
-              Most orders arrive with nothing more to pay. We would rather tell you it is
-              possible than have you meet it at the door — if you are charged anything on
-              delivery, email <a href="mailto:sam@anotherpunk.com">sam@anotherpunk.com</a>{" "}
-              with the receipt.
+              In practice most parcels arrive with nothing to pay, and we would rather say
+              "most" than promise "none" — customs is not ours to decide. If a charge does
+              come, it has to be paid for the parcel to be released, so do not ignore it.
+            </p>
+            <p>
+              We are registering so that this can be settled at checkout instead, which will
+              mean nothing to pay on arrival. Until then it is worth building into what you
+              expect to spend. Anything unclear, ask before you order:{" "}
+              <a href="mailto:sam@anotherpunk.com">sam@anotherpunk.com</a>.
             </p>
           </>
         )}
