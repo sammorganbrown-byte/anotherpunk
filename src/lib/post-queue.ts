@@ -76,11 +76,18 @@ export const POST_QUEUE: QueuedPost[] = [
     due: "2026-09-10",
   },
   {
-    // No person, no face. Breaks the portrait pattern. Single, deliberately —
-    // a texture shot does not want a swipe attached to it.
-    id: "hem",
-    images: ["11-macro-rawhem-ink.jpg"],
-    caption: "Cracked ink. Raw hem.\n\nIt starts looking like this. It only gets better.",
+    // The only post with a real person in it rather than a model, and the
+    // only one shot on a phone. Both are the point: after five polished
+    // campaign frames, the fifth thing a new follower sees should be that a
+    // person makes these on a floor.
+    //
+    // Ordered lead-first by face, not by information. The armchair shot has
+    // the attitude and the paintings behind it; the working shot is the proof;
+    // the blurry one is there because every real account has one.
+    id: "punkiest-punk",
+    images: ["158-sam-armchair.jpg", "159-sam-drawing.jpg", "160-sam-blur.jpg"],
+    caption:
+      "Sam. Punkiest Punk.\n\nGave himself the title. There were no other nominations.\n\nDraws every one of these on that floor. Answers your emails from the same spot.",
     due: "2026-09-12",
   },
   {
@@ -205,5 +212,14 @@ export const POST_QUEUE: QueuedPost[] = [
     images: ["63-saucer-turn.jpg", "05-saucer-profile.jpg"],
     caption: "Turn around. Something followed you home.",
     due: "2026-10-27",
+  },
+  {
+    // Displaced from 12 September by the founder post. No person, no face —
+    // it breaks the portrait pattern, and it is a single deliberately: a
+    // texture shot does not want a swipe attached to it.
+    id: "hem",
+    images: ["11-macro-rawhem-ink.jpg"],
+    caption: "Cracked ink. Raw hem.\n\nIt starts looking like this. It only gets better.",
+    due: "2026-10-29",
   },
 ];
