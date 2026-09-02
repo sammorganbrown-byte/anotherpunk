@@ -208,56 +208,48 @@ Ordered by what bites soonest.
   the bottom of `src/lib/bundles.ts` for why it is a different shape of
   problem from a bundle.
 
-## IOSS — ask Tapstitch first, before anything else (2 Sep)
+## Customs — answered (2 Sep)
 
-Production is in China, so **every EU order is an import**. /shipping used to
-say EU orders arrive with nothing more to pay. That is only true if Tapstitch
-ships DDP under an IOSS registration, which is not confirmed — so the page now
-warns instead of promising. Warning about a charge that never comes is a
-pleasant surprise; promising none and delivering a VAT bill plus a courier
-handling fee is a chargeback and a furious customer.
+**Tapstitch ship DDP.** From tapstitch.com/shipping: "Our shipping model is
+built on a Delivered Duty Paid (DDP) solution... covers both the freight costs
+and any destination import duties or taxes." A parcel has also already reached
+Portugal with nothing to pay.
 
-**Asked Tapstitch — awaiting their reply.** A parcel has already arrived in
-Portugal with nothing to pay, which is good evidence and probably the right
-answer, but it is not proof: a sample can travel differently from a customer's
-order, and low-value parcels sometimes clear uncharged with no IOSS behind
-them at all.
+They hedge it for non-US: "this is also usually the case. However, in rare
+cases, recipients in certain remote areas may need to pay customs duties or
+related fees upon delivery."
 
-**When support confirms it in writing, set `DUTY_PREPAID = true` at the top of
-`src/routes/_shell/shipping.tsx`.** One line. The page rewrites itself from a
-warning into "nothing to pay on delivery", which is the version that sells.
+`DUTY_PREPAID` is now **true**, and /shipping says nothing is owed on delivery
+*and promises to refund anyone who is charged anyway* — which converts their
+"usually" into our "always" for a cost that is rare-and-remote by definition.
+If a refund is ever actually claimed, note it here; more than one or two and
+the promise needs revisiting.
 
-- If NO — it needs saying much more prominently than a policy page, because a
-  €50 tee that arrives with €15 to pay is not a €50 tee. It would also be
-  worth pricing VAT in and paying it yourself.
+Transit figures on the page are now Tapstitch's own for Special Line —
+10 days average, 95% within 15 — replacing my invented "8-15 working days".
 
-Also confirm the transit ranges. The old figures (3–7 days to Europe) assumed
-European production and were far too optimistic; they are now 8–15, which is
-what an Asian origin usually looks like, but they are still estimates.
+## Express shipping — one question left (2 Sep)
 
-## Express shipping — three questions for Tapstitch (2 Sep)
+Tapstitch publish three international services. Times are theirs:
 
-Nothing is built. The website half is easy; what decides the design is what
-Tapstitch says to these. Ask support:
+| Service | Average | 95% within |
+|---|---|---|
+| International Shipping | 5 days | 7 days |
+| **Special Line** (what we use) | 10 days | 15 days |
+| Standard Shipping | 25 days | 30 days |
 
-1. **What does express cost, per destination?** `shipping-rates.csv` only has
-   standard rates for 1 and 2 items. Without express costs any price would be
-   a guess, and guessing is how a shipping option quietly loses money.
-2. ~~Does express speed up production or only transit?~~ **Settled by the
-   China answer: express is now clearly worth selling.** Transit is the bulk
-   of the wait from an Asian origin — 8–15 working days standard — so cutting
-   it to the 3–5 an air courier takes is a difference customers can feel,
-   everywhere, not just outside Europe. The earlier worry that express would
-   shave only two or three days assumed European production and does not
-   apply. Still confirm the actual express transit time.
-3. **Does Tapstitch read the shipping method from the Shopify order?** If it
-   does, this is fully automatic and needs no manual step — the draft order
-   currently sets no `shipping_line` at all, so Tapstitch is applying its
-   default. If it does not, express has to be upgraded by hand in the
-   Tapstitch dashboard per order.
+So the express product already exists and is roughly **twice as fast** —
+"International Shipping", not "Special Line", which is the middle tier despite
+the name sounding premium.
 
-If it is manual, the safeguard is that Tapstitch orders arrive **On Hold**, so
-there is a window to upgrade before production starts. Express orders would
-carry an `EXPRESS` tag on the Shopify draft, the word in the order note, and
-EXPRESS in the subject of the notification email — three loud signals, because
-missing one means a customer paid for express and got standard.
+**The one thing still needed is what it costs**, per destination.
+`shipping-rates.csv` only holds Special Line rates. Ask support for the
+International Shipping rate card and the checkout side can be built the same
+day.
+
+Still worth confirming: whether the service can be set from the Shopify order
+(the draft sets no `shipping_line` at all today, so Tapstitch is applying a
+default), or whether each express order has to be switched by hand in their
+dashboard. If it is manual, Tapstitch orders arrive **On Hold**, so there is a
+window — and express orders would carry an `EXPRESS` tag, the word in the
+order note, and EXPRESS in the notification email subject.

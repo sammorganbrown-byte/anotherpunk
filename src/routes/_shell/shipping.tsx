@@ -40,26 +40,39 @@ export const Route = createFileRoute("/_shell/shipping")({ component: Shipping }
 /** Whether Tapstitch ships DDP under an IOSS registration, so that nothing is
  * owed on delivery.
  *
- * FLIP THIS TO true THE MOMENT TAPSTITCH SUPPORT CONFIRMS IT IN WRITING, and
- * the section below rewrites itself from a warning into the selling point it
- * ought to be. One line, no other edits.
+ * True on the strength of two things. Tapstitch state it themselves on
+ * tapstitch.com/shipping: "Our shipping model is built on a Delivered Duty
+ * Paid (DDP) solution... an all-inclusive, door-to-door service that covers
+ * both the freight costs and any destination import duties or taxes." And a
+ * Tapstitch parcel has already reached Portugal with nothing to pay, so the
+ * claim is not only on paper.
  *
- * Left false for now on purpose. A parcel from Tapstitch has already arrived
- * in Portugal with nothing to pay, which is real evidence and probably the
- * right answer — but it is not proof. A sample or a test order can travel on
- * a different service from a customer's, and low-value parcels sometimes
- * clear uncharged even where no IOSS registration exists at all. One parcel
- * establishes that it can happen, not that it always will.
+ * THEY DO HEDGE IT, and the copy below is built around the hedge rather than
+ * ignoring it. Their exact words for outside the US: "this is also usually
+ * the case. However, in rare cases, recipients in certain remote areas may
+ * need to pay customs duties or related fees upon delivery."
  *
- * The asymmetry is what decides it. Being cautious here costs a sentence of
- * reassurance nobody will miss. Being wrong costs a customer an unexpected
- * VAT bill and a courier handling fee on their own doorstep, which is a
- * chargeback and someone who never comes back. Wait for the sentence. */
-const DUTY_PREPAID = false;
+ * So the page does not claim it can never happen. It promises to refund
+ * anyone it happens to, which is the honest way to sell a near-certainty: it
+ * turns their "usually" into our "always" and costs almost nothing, because
+ * rare and remote is exactly the shape of a bill you can afford to absorb.
+ * A promise you fund is worth more than a promise you qualify. */
+const DUTY_PREPAID = true;
 
-const MAKE_DAYS = "2–5 working days";
-const EUROPE_DAYS = "8–15 working days";
-const WORLD_DAYS = "10–20 working days";
+/** Tapstitch's own published figures for Special Line, the service these
+ * orders travel on: "10d avg; 95% in 15d". Quoted as they state them —
+ * plainly days, not working days, because that is not what they said and
+ * inventing the stricter reading would quietly add a week to every quote.
+ *
+ * Their other two international services are worth knowing about:
+ *   International Shipping   5d avg, 95% in 7d   — the fast one
+ *   Special Line            10d avg, 95% in 15d  — what we use
+ *   Standard Shipping       25d avg, 95% in 30d  — do not use this
+ *
+ * Production time is on top and is still an estimate. */
+const MAKE_DAYS = "2–5 days";
+const TRANSIT_AVG = "about 10 days";
+const TRANSIT_MOST = "15 days";
 
 function Shipping() {
   const eur = (n: number) => `€${n}`;
@@ -89,12 +102,11 @@ function Shipping() {
       <LegalSection heading="How long it takes">
         <p>
           <strong>{MAKE_DAYS}</strong> to print and finish, then{" "}
-          <strong>{EUROPE_DAYS}</strong> in transit within Europe and{" "}
-          <strong>{WORLD_DAYS}</strong> everywhere else. You get a tracking number by email
-          when it leaves.
+          <strong>{TRANSIT_AVG}</strong> in transit — the large majority arrive within{" "}
+          {TRANSIT_MOST} of leaving. You get a tracking number by email when it does.
         </p>
         <p>
-          These are working days and they are honest estimates rather than guarantees — a
+          These are honest estimates rather than guarantees — a
           customs desk or a courier's bad week can add to them. If something has gone quiet
           for longer than it should, email{" "}
           <a href="mailto:sam@anotherpunk.com">sam@anotherpunk.com</a> and it will be chased.
