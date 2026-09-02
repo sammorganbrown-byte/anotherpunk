@@ -16,7 +16,11 @@ import { Route as ShellCartRouteImport } from './routes/_shell/cart'
 import { Route as ShellCheckoutRouteImport } from './routes/_shell/checkout'
 import { Route as ShellContactRouteImport } from './routes/_shell/contact'
 import { Route as ShellOrderConfirmedRouteImport } from './routes/_shell/order-confirmed'
+import { Route as ShellPrivacyRouteImport } from './routes/_shell/privacy'
+import { Route as ShellReturnsRouteImport } from './routes/_shell/returns'
+import { Route as ShellShippingRouteImport } from './routes/_shell/shipping'
 import { Route as ShellShopRouteImport } from './routes/_shell/shop'
+import { Route as ShellTermsRouteImport } from './routes/_shell/terms'
 import { Route as ApiPostNextRouteImport } from './routes/api/post-next'
 import { Route as ApiRatesRouteImport } from './routes/api/rates'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe-webhook'
@@ -62,9 +66,29 @@ const ShellOrderConfirmedRoute = ShellOrderConfirmedRouteImport.update({
   path: '/order-confirmed',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellPrivacyRoute = ShellPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellReturnsRoute = ShellReturnsRouteImport.update({
+  id: '/returns',
+  path: '/returns',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellShippingRoute = ShellShippingRouteImport.update({
+  id: '/shipping',
+  path: '/shipping',
+  getParentRoute: () => ShellRoute,
+} as any)
 const ShellShopRoute = ShellShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellTermsRoute = ShellTermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => ShellRoute,
 } as any)
 const ApiPostNextRoute = ApiPostNextRouteImport.update({
@@ -125,7 +149,11 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof ShellCheckoutRoute
   '/contact': typeof ShellContactRoute
   '/order-confirmed': typeof ShellOrderConfirmedRoute
+  '/privacy': typeof ShellPrivacyRoute
+  '/returns': typeof ShellReturnsRoute
+  '/shipping': typeof ShellShippingRoute
   '/shop': typeof ShellShopRoute
+  '/terms': typeof ShellTermsRoute
   '/api/post-next': typeof ApiPostNextRoute
   '/api/rates': typeof ApiRatesRoute
   '/api/stripe-webhook': typeof ApiStripeWebhookRoute
@@ -143,7 +171,11 @@ export interface FileRoutesByTo {
   '/checkout': typeof ShellCheckoutRoute
   '/contact': typeof ShellContactRoute
   '/order-confirmed': typeof ShellOrderConfirmedRoute
+  '/privacy': typeof ShellPrivacyRoute
+  '/returns': typeof ShellReturnsRoute
+  '/shipping': typeof ShellShippingRoute
   '/shop': typeof ShellShopRoute
+  '/terms': typeof ShellTermsRoute
   '/api/post-next': typeof ApiPostNextRoute
   '/api/rates': typeof ApiRatesRoute
   '/api/stripe-webhook': typeof ApiStripeWebhookRoute
@@ -164,7 +196,11 @@ export interface FileRoutesById {
   '/_shell/checkout': typeof ShellCheckoutRoute
   '/_shell/contact': typeof ShellContactRoute
   '/_shell/order-confirmed': typeof ShellOrderConfirmedRoute
+  '/_shell/privacy': typeof ShellPrivacyRoute
+  '/_shell/returns': typeof ShellReturnsRoute
+  '/_shell/shipping': typeof ShellShippingRoute
   '/_shell/shop': typeof ShellShopRoute
+  '/_shell/terms': typeof ShellTermsRoute
   '/api/post-next': typeof ApiPostNextRoute
   '/api/rates': typeof ApiRatesRoute
   '/api/stripe-webhook': typeof ApiStripeWebhookRoute
@@ -186,7 +222,11 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/order-confirmed'
+    | '/privacy'
+    | '/returns'
+    | '/shipping'
     | '/shop'
+    | '/terms'
     | '/api/post-next'
     | '/api/rates'
     | '/api/stripe-webhook'
@@ -204,7 +244,11 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/order-confirmed'
+    | '/privacy'
+    | '/returns'
+    | '/shipping'
     | '/shop'
+    | '/terms'
     | '/api/post-next'
     | '/api/rates'
     | '/api/stripe-webhook'
@@ -224,7 +268,11 @@ export interface FileRouteTypes {
     | '/_shell/checkout'
     | '/_shell/contact'
     | '/_shell/order-confirmed'
+    | '/_shell/privacy'
+    | '/_shell/returns'
+    | '/_shell/shipping'
     | '/_shell/shop'
+    | '/_shell/terms'
     | '/api/post-next'
     | '/api/rates'
     | '/api/stripe-webhook'
@@ -303,11 +351,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellOrderConfirmedRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/privacy': {
+      id: '/_shell/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof ShellPrivacyRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/returns': {
+      id: '/_shell/returns'
+      path: '/returns'
+      fullPath: '/returns'
+      preLoaderRoute: typeof ShellReturnsRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/shipping': {
+      id: '/_shell/shipping'
+      path: '/shipping'
+      fullPath: '/shipping'
+      preLoaderRoute: typeof ShellShippingRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/shop': {
       id: '/_shell/shop'
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShellShopRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/terms': {
+      id: '/_shell/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof ShellTermsRouteImport
       parentRoute: typeof ShellRoute
     }
     '/api/post-next': {
@@ -388,7 +464,11 @@ interface ShellRouteChildren {
   ShellCheckoutRoute: typeof ShellCheckoutRoute
   ShellContactRoute: typeof ShellContactRoute
   ShellOrderConfirmedRoute: typeof ShellOrderConfirmedRoute
+  ShellPrivacyRoute: typeof ShellPrivacyRoute
+  ShellReturnsRoute: typeof ShellReturnsRoute
+  ShellShippingRoute: typeof ShellShippingRoute
   ShellShopRoute: typeof ShellShopRoute
+  ShellTermsRoute: typeof ShellTermsRoute
   ShellIndexRoute: typeof ShellIndexRoute
   ShellProductSlugRoute: typeof ShellProductSlugRoute
 }
@@ -398,7 +478,11 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellCheckoutRoute: ShellCheckoutRoute,
   ShellContactRoute: ShellContactRoute,
   ShellOrderConfirmedRoute: ShellOrderConfirmedRoute,
+  ShellPrivacyRoute: ShellPrivacyRoute,
+  ShellReturnsRoute: ShellReturnsRoute,
+  ShellShippingRoute: ShellShippingRoute,
   ShellShopRoute: ShellShopRoute,
+  ShellTermsRoute: ShellTermsRoute,
   ShellIndexRoute: ShellIndexRoute,
   ShellProductSlugRoute: ShellProductSlugRoute,
 }

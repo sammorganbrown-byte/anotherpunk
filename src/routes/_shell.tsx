@@ -28,14 +28,46 @@ export const LOGO_URL =
  * and music player — they still render from __root.tsx for /classic, and are
  * simply not shown here.
  */
+/** One description, used by the search result and by every link unfurl.
+ *
+ * Kept in a constant because it appears seven times below and a description
+ * that disagrees with itself across Google and WhatsApp is the sort of thing
+ * nobody notices until it is embarrassing. */
+const DESCRIPTION =
+  "Fourteen pieces. Printed to order, shipped worldwide. No warehouse, no dead stock, no sale rail.";
+
+/** Absolute, because Open Graph will not accept a relative image URL — the
+ * exact rule that made six products unbuyable through Stripe. Same mistake,
+ * different protocol. */
+const SITE = "https://www.anotherpunk.com";
+
 export const Route = createFileRoute("/_shell")({
   head: () => ({
     meta: [
       { title: "Another Punk" },
+      { name: "description", content: DESCRIPTION },
+      // Open Graph and Twitter, so a link pasted into Instagram, WhatsApp or
+      // anywhere else arrives as a photograph and a sentence rather than a
+      // bare URL. Worth more than it looks: for a shop whose reach is going
+      // to come from links being shared, the unfurl IS the shopfront, and
+      // until now every share showed nothing at all.
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Another Punk" },
+      { property: "og:title", content: "Another Punk" },
+      { property: "og:description", content: DESCRIPTION },
+      { property: "og:url", content: SITE },
+      { property: "og:image", content: `${SITE}/img/og-another-punk.jpg` },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       {
-        name: "description",
-        content: "Nothing exists until you run the job. Drawn by hand, printed to order.",
+        property: "og:image:alt",
+        content: "Two people at night in the Westwood 69 football jerseys, black and pink.",
       },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Another Punk" },
+      { name: "twitter:description", content: DESCRIPTION },
+      { name: "twitter:image", content: `${SITE}/img/og-another-punk.jpg` },
+      { name: "theme-color", content: "#080807" },
     ],
     links: [{ rel: "stylesheet", href: rdCss }],
   }),
@@ -169,6 +201,27 @@ function RedesignLayout() {
       </main>
 
       <footer ref={footRef} className="border-t border-[var(--rd-rule)] px-4 py-6">
+        {/* The policies get their own line above the rest. Folding them into
+            the row below would have buried four links people go looking for
+            among two they do not — and a shop that hides its returns page
+            reads as a shop with something to hide. */}
+        <nav className="rd-log mb-3 flex flex-wrap gap-x-4 gap-y-2" aria-label="Policies">
+          <Link to="/shipping" className="rd-link">
+            SHIPPING
+          </Link>
+          <Link to="/returns" className="rd-link">
+            RETURNS
+          </Link>
+          <Link to="/privacy" className="rd-link">
+            PRIVACY
+          </Link>
+          <Link to="/terms" className="rd-link">
+            TERMS
+          </Link>
+          <Link to="/contact" className="rd-link">
+            CONTACT
+          </Link>
+        </nav>
         <div className="rd-log flex flex-wrap items-center justify-between gap-3">
           <span>
             SHIPPED WORLDWIDE{" "}

@@ -111,7 +111,14 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/141-jersey-pink-back-69.jpg",
       "/img/152-jersey-pair-night.jpg",
     ],
-    // Only two photographs, so it barely surfaced in the field. Doubled there.
+    // The pair shot belongs to both jerseys, so it would otherwise float in
+    // the field twice — the one photograph on the homepage that visibly
+    // repeats. It is kept on this product page and shown in the field under
+    // the black jersey only, which is the figure facing the camera and so the
+    // one somebody clicking it is asking about.
+    notInField: ["/img/152-jersey-pair-night.jpg"],
+    // Only two photographs of its own, so it barely surfaced in the field.
+    // Doubled there.
     fieldRepeat: 2,
     sizes: FIVE,
     shopifyProductId: "15966414274891",

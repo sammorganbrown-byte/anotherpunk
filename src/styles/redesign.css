@@ -1692,3 +1692,94 @@ body:has(.rd-pdp) .rd-np {
 [data-ap-rd] .rd-np a {
   cursor: pointer;
 }
+
+/* ── Policy pages ────────────────────────────────────────────────────────
+   Privacy, returns, shipping, terms. Set narrower and quieter than anything
+   else on the site: these are the only pages here that are genuinely read
+   left-to-right rather than scanned, and the rest of the site's tight
+   tracking and hard contrast fight that. Measure is held near 68 characters,
+   which is where continuous prose stops being work.
+
+   The headings are small caps rather than the display face on purpose. A
+   returns policy set in the poster type reads as a joke about a returns
+   policy, and the one page where somebody wants to be reassured is the wrong
+   place to be styling. */
+[data-ap-rd] .rd-legal {
+  padding: 40px 16px 96px;
+  max-width: 900px;
+}
+[data-ap-rd] .rd-legal-body {
+  margin-top: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+}
+[data-ap-rd] .rd-legal-body section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 26px;
+  border-top: 1px solid var(--rd-rule);
+}
+[data-ap-rd] .rd-legal-body h2 {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rd-red);
+  font-weight: 400;
+  margin: 0;
+}
+[data-ap-rd] .rd-legal-body p,
+[data-ap-rd] .rd-legal-body li {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.75;
+  max-width: 68ch;
+  color: var(--rd-dim);
+}
+/* Emphasis is carried by colour, not weight. The body face at 600 goes muddy
+   at this size, and the paper tone against the dim tone is a clearer signal
+   than a half-step of weight. */
+[data-ap-rd] .rd-legal-body strong {
+  color: var(--rd-paper);
+  font-weight: 400;
+}
+[data-ap-rd] .rd-legal-body em {
+  color: var(--rd-paper);
+  font-style: italic;
+}
+[data-ap-rd] .rd-legal-body a {
+  color: var(--rd-paper);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--rd-red);
+}
+[data-ap-rd] .rd-legal-body a:hover {
+  color: var(--rd-red);
+}
+[data-ap-rd] .rd-legal-body ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+[data-ap-rd] .rd-legal-body li::marker {
+  color: var(--rd-red);
+}
+/* The opening paragraph carries the whole page for anyone who reads no
+   further, so it is set up a step and in the paper tone. */
+[data-ap-rd] .rd-legal-lede {
+  font-size: 16px !important;
+  line-height: 1.7 !important;
+  color: var(--rd-paper) !important;
+  max-width: 62ch !important;
+}
+/* A long run of country names is a list wearing a paragraph's clothes. Given
+   its own tracking and a smaller size so it reads as data. */
+[data-ap-rd] .rd-legal-countries {
+  font-size: 12px !important;
+  line-height: 2 !important;
+  letter-spacing: 0.04em;
+  color: var(--rd-dimmer, var(--rd-dim)) !important;
+}

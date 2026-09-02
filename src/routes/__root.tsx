@@ -9,6 +9,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { type ReactNode, useEffect, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 import appCss from "../styles.css?url";
 import { CartProvider, useCart } from "../lib/cart-context";
@@ -56,6 +57,13 @@ function RootShell({ children }: { children: ReactNode }) {
       </head>
       <body data-brand="another-punk" className="font-body">
         {children}
+        {/* Cookieless. It counts pages, countries and device types and sets
+            nothing on the visitor's machine, which is why this site still
+            needs no consent banner — the one thing that would have forced
+            one is exactly the thing this avoids. Said out loud on /privacy;
+            if this is ever swapped for something that tracks people, that
+            page has to change in the same commit. */}
+        <Analytics />
         <Scripts />
       </body>
     </html>

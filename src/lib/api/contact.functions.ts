@@ -42,7 +42,11 @@ export const sendContactMessage = createServerFn({ method: "POST" })
       };
     }
 
-    const from = process.env.CONTACT_FROM?.trim() || "Another Punk <hello@anotherpunk.com>";
+    // Falls back to the SEND subdomain, not the root. Only send.anotherpunk.com
+    // is verified with Resend — the root carries Google Workspace, and a from
+    // address there is refused outright. The old fallback would have failed
+    // silently the moment CONTACT_FROM was missing.
+    const from = process.env.CONTACT_FROM?.trim() || "Another Punk <hello@send.anotherpunk.com>";
 
     try {
       const res = await fetch("https://api.resend.com/emails", {
