@@ -1783,3 +1783,137 @@ body:has(.rd-pdp) .rd-np {
   letter-spacing: 0.04em;
   color: var(--rd-dimmer, var(--rd-dim)) !important;
 }
+
+/* ── Package deals ───────────────────────────────────────────────────────
+   The bundle page is a list of decisions, so it is laid out as one: a row
+   per garment, each row carrying its own picture so you can see what you are
+   assembling rather than reading four product names back to yourself. */
+[data-ap-rd] .rd-bundle {
+  padding: 40px 16px 96px;
+  max-width: 900px;
+}
+[data-ap-rd] .rd-bundle-price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+[data-ap-rd] .rd-bundle-now {
+  font-size: 30px;
+  color: var(--rd-paper);
+  font-variant-numeric: tabular-nums;
+}
+/* Struck through rather than merely dimmed. The saving is the entire point
+   of the page, and a price that is only a bit greyer reads as a second price
+   rather than as the one you are not paying. */
+[data-ap-rd] .rd-bundle-was {
+  font-size: 15px;
+  color: var(--rd-dimmer);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+[data-ap-rd] .rd-bundle-save {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rd-red);
+  border: 1px solid var(--rd-red);
+  padding: 3px 8px;
+}
+[data-ap-rd] .rd-bundle-slots {
+  margin-top: 38px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+[data-ap-rd] .rd-bundle-slot {
+  padding: 22px 0;
+  border-top: 1px solid var(--rd-rule);
+}
+[data-ap-rd] .rd-bundle-slot-body {
+  margin-top: 14px;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+[data-ap-rd] .rd-bundle-thumb {
+  width: 132px;
+  flex: 0 0 132px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--rd-rule);
+  background: var(--rd-void-2, #0e0d0c);
+}
+[data-ap-rd] .rd-bundle-picks {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+[data-ap-rd] .rd-bundle-actions {
+  margin-top: 34px;
+  padding-top: 26px;
+  border-top: 1px solid var(--rd-rule);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+}
+[data-ap-rd] .rd-bundle-note {
+  margin-top: 26px;
+  max-width: 60ch;
+  color: var(--rd-dimmer);
+}
+/* A disabled design is one already taken by another slot. It stays visible
+   and stays readable — dimming it to near-nothing would make the pack look
+   broken rather than partly built. */
+[data-ap-rd] .rd-bundle .rd-cell:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+@media (max-width: 560px) {
+  [data-ap-rd] .rd-bundle-slot-body {
+    flex-direction: column;
+  }
+  [data-ap-rd] .rd-bundle-thumb {
+    width: 100%;
+    flex: none;
+  }
+}
+
+/* The bundle as it appears in the bag: its lines bracketed together under one
+   heading and one price, because that is what was bought. Showing four tees
+   at €50 each and a €25 discount floating below them would be arithmetically
+   true and completely unreadable. */
+[data-ap-rd] .rd-bag-bundle {
+  border: 1px solid var(--rd-red);
+  padding: 14px;
+  margin-bottom: 14px;
+}
+[data-ap-rd] .rd-bag-bundle-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+[data-ap-rd] .rd-bag-bundle-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* A package deal's price in the field. Red so a group shot reads as a deal
+   at a glance — it is the only thing in the field priced differently from
+   the garment beside it, and without the colour it just looks like a cheap
+   jersey. */
+[data-ap-rd] .rd-star-deal {
+  color: var(--rd-red);
+}
+[data-ap-rd] .rd-star-link[data-bundle="true"] .rd-shot {
+  outline: 1px solid var(--rd-red);
+  outline-offset: -1px;
+}

@@ -5,6 +5,7 @@ import { getStripe, type CheckoutSessionMetadata } from "../stripe.server";
 import { getAnotherPunkProduct, isFulfillable } from "../another-punk-products";
 import { computeDiscount, computeShippingDiscount } from "../promo-codes";
 import { encodeOrderLines } from "../order-lines";
+import { bundleDiscount, shippingAfterBundles } from "../bundles";
 import { computeShipping, SHIPPING_COUNTRIES } from "../shipping";
 
 // Where the site lives, used to build Stripe's return URLs. Set SITE_URL in
@@ -55,6 +56,11 @@ const itemSchema = z.object({
   sizeLabel: z.string().min(1),
   price: z.number().nonnegative(),
   qty: z.number().int().positive(),
+  /** Which bundle instance this line belongs to, if any. Purely a grouping
+   * key — the price it implies is recomputed from the catalogue below, so a
+   * made-up id buys nothing. */
+  bundleId: z.string().max(64).optional(),
+  bundleSlug: z.string().max(64).optional(),
 });
 
 const checkoutInput = z.object({
@@ -96,14 +102,37 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
           reason: `"${product.title}" doesn't come in size ${item.sizeLabel}.`,
         };
       }
-      resolved.push({ product, sizeLabel: item.sizeLabel, qty: item.qty });
+      resolved.push({
+        product,
+        sizeLabel: item.sizeLabel,
+        qty: item.qty,
+        bundleId: item.bundleId,
+        bundleSlug: item.bundleSlug,
+      });
     }
 
     // Discount recomputed server-side; the client's figure is display only.
-    const discount = computeDiscount(
+    const promoDiscount = computeDiscount(
       data.promoCode,
       resolved.map((r) => ({ price: r.product.price, qty: r.qty, slug: r.product.slug })),
     );
+
+    // Bundles, likewise recomputed. A group that does not validate — wrong
+    // count, a product not in the bundle, a repeat where the bundle wants
+    // four different designs — is silently ignored and its lines are charged
+    // in full. Tampering can only ever cost the customer more.
+    const bundleLines = resolved.map((r) => ({
+      slug: r.product.slug,
+      qty: r.qty,
+      bundleId: r.bundleId,
+      bundleSlug: r.bundleSlug,
+    }));
+    const bundlesOff = bundleDiscount(bundleLines);
+
+    // Capped at the subtotal so the two discounts together can never make
+    // the garments free and then start eating the postage.
+    const grossSubtotal = resolved.reduce((sum, r) => sum + r.product.price * r.qty, 0);
+    const discount = Math.min(grossSubtotal, promoDiscount + bundlesOff);
 
     let stripe;
     try {
@@ -115,7 +144,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       };
     }
 
-    const subtotal = resolved.reduce((sum, r) => sum + r.product.price * r.qty, 0);
+    const subtotal = grossSubtotal;
     // Spread any discount proportionally across lines so Stripe's own
     // line-item totals still add up to what the customer is charged.
     const factor = subtotal > 0 ? Math.max(0, subtotal - discount) / subtotal : 1;
@@ -135,7 +164,11 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
     // Recomputed here from the resolved lines, never taken from the client.
     // Deliberately outside `factor`: a code discounts the clothes, and the
     // postage only if that code says so explicitly.
-    const fullShipping = computeShipping(resolved.reduce((n, r) => n + r.qty, 0));
+    // A bundle's price includes its postage, so it pays for the parcel its
+    // own garments travel in. Anything loose alongside it is then charged
+    // only the marginal cost of adding it — the same parcel, €2, not a
+    // second €9 and not nothing.
+    const fullShipping = shippingAfterBundles(bundleLines);
     const shipping = Math.max(
       0,
       fullShipping - computeShippingDiscount(data.promoCode, fullShipping),

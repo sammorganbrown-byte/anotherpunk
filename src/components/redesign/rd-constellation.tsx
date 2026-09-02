@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { BUNDLES, type Bundle } from "../../lib/bundles";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { AnotherPunkProduct } from "../../lib/another-punk-products";
 
@@ -57,6 +58,10 @@ type Piece = {
   amp: number;
   /** Every frame carries the garment's name and price. */
   label: boolean;
+  /** Set on the group shots. A photograph of two people in two jerseys does
+   * not belong to either garment — its obvious destination is the pack, so
+   * it links there and captions itself as the deal. */
+  bundle?: Bundle;
 };
 
 /** EVERY frame of every garment. A shirt recurring in three different shots
@@ -99,7 +104,12 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
       .flat()
       .map((src) => ({ p, src, label: true }));
   });
-  const raw: { p: AnotherPunkProduct; src: string; label: boolean }[] = [];
+  const raw: {
+    p: AnotherPunkProduct;
+    src: string;
+    label: boolean;
+    bundle?: Bundle;
+  }[] = [];
   const deepest = Math.max(0, ...byProduct.map((imgs) => imgs.length));
   for (let round = 0; round < deepest; round++) {
     // ROTATE the product order every round. Without this a product always
@@ -111,6 +121,18 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
       const imgs = byProduct[(k + round) % byProduct.length];
       if (imgs[round]) raw.push(imgs[round]);
     }
+  }
+
+  // The package deals go in as pieces of their own, spaced evenly through
+  // the field rather than appended — dropped at the end they would all land
+  // in the last row together, which is the one part of the field a person is
+  // least likely to wander into.
+  for (let b = 0; b < BUNDLES.length; b++) {
+    const bundle = BUNDLES[b];
+    const lead = products.find((p) => p.slug === bundle.choices[0]);
+    if (!lead) continue;
+    const at = Math.floor(((b + 1) * raw.length) / (BUNDLES.length + 1));
+    raw.splice(at, 0, { p: lead, src: bundle.image, label: true, bundle });
   }
 
   // Jittered grid: roughly square, one cell per piece, scattered inside it.
@@ -133,10 +155,11 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
     const spanX = Math.max(10, cw - w) + w * OVERLAP * 2;
     const spanY = Math.max(10, ch - h) + h * OVERLAP * 2;
     return {
-      key: `${r.p.slug}-${i}`,
+      key: `${r.bundle?.slug ?? r.p.slug}-${i}`,
       p: r.p,
       src: r.src,
       label: r.label,
+      bundle: r.bundle,
       w,
       x: cx - w * OVERLAP + rnd() * spanX,
       y: cy - h * OVERLAP + rnd() * spanY,
@@ -345,6 +368,18 @@ export function RdConstellation({
   if (reduced) {
     return (
       <ul className="grid grid-cols-2 gap-px sm:grid-cols-3 lg:grid-cols-4">
+        {/* The still version of the field still leads with the deals. */}
+        {BUNDLES.map((b) => (
+          <li key={b.slug}>
+            <Link to="/bundle/$slug" params={{ slug: b.slug }} className="rd-star block">
+              <img src={b.image} alt={b.title} className="aspect-[4/3] w-full" />
+              <figcaption>
+                {b.title} <span aria-hidden="true">·</span>{" "}
+                <span className="rd-star-deal">€{b.price}</span>
+              </figcaption>
+            </Link>
+          </li>
+        ))}
         {products.map((p) => (
           <li key={p.slug}>
             <Link to="/product/$slug" params={{ slug: p.slug }} className="rd-star block">
@@ -461,11 +496,16 @@ export function RdConstellation({
           style={{ left: `${s.x}px`, top: `${s.y}px`, width: `${s.w}px` }}
         >
           <Link
-            to="/product/$slug"
-            params={{ slug: s.p.slug }}
+            to={s.bundle ? "/bundle/$slug" : "/product/$slug"}
+            params={{ slug: s.bundle ? s.bundle.slug : s.p.slug }}
             className="rd-star-link"
+            data-bundle={s.bundle ? "true" : undefined}
             draggable={false}
-            aria-label={`${s.p.title}, \u20ac${s.p.price}`}
+            aria-label={
+              s.bundle
+                ? `${s.bundle.title}, package deal, \u20ac${s.bundle.price}`
+                : `${s.p.title}, \u20ac${s.p.price}`
+            }
           >
             {/* The frame holds the layout; the photograph floats inside it.
                 CRT mode quantises by rendering the image small and scaling it
@@ -490,7 +530,16 @@ export function RdConstellation({
             </span>
             {s.label ? (
               <figcaption>
-                {s.p.title} <span aria-hidden="true">·</span> €{s.p.price}
+                {s.bundle ? (
+                  <>
+                    {s.bundle.title} <span aria-hidden="true">·</span>{" "}
+                    <span className="rd-star-deal">€{s.bundle.price}</span>
+                  </>
+                ) : (
+                  <>
+                    {s.p.title} <span aria-hidden="true">·</span> €{s.p.price}
+                  </>
+                )}
               </figcaption>
             ) : null}
           </Link>

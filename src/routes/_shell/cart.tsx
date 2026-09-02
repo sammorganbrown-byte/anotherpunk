@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCart } from "../../lib/cart-context";
 import { useCurrency } from "../../lib/currency-context";
+import { getBundle } from "../../lib/bundles";
+import type { CartItem } from "../../lib/cart-context";
 
 export const Route = createFileRoute("/_shell/cart")({ component: RedesignCart });
 
@@ -15,6 +17,7 @@ function RedesignCart() {
     items,
     updateQty,
     removeItem,
+    removeBundle,
     subtotal,
     discount,
     shipping,
@@ -22,6 +25,22 @@ function RedesignCart() {
     total,
   } = useCart();
   const { formatPrice, formatEur, converted } = useCurrency();
+
+  // Split the bag into package deals and everything loose. Insertion order is
+  // preserved by Map, so a pack stays where it was added rather than jumping
+  // to the top of the bag when something else is added after it.
+  const groups = new Map<string, CartItem[]>();
+  const loose: CartItem[] = [];
+  for (const line of items) {
+    if (!line.bundleId) {
+      loose.push(line);
+      continue;
+    }
+    const existing = groups.get(line.bundleId);
+    if (existing) existing.push(line);
+    else groups.set(line.bundleId, [line]);
+  }
+  const bundleGroups = [...groups.entries()];
 
   if (items.length === 0) {
     return (
@@ -44,10 +63,52 @@ function RedesignCart() {
         {items.length === 1 ? "" : "s"}
       </h1>
 
+      {/* Bundles are bracketed out of the flat list and shown as one thing.
+          A pack is bought as a unit and removed as a unit, so its lines get
+          no quantity steppers and no individual Kill — pulling one tee out
+          of a four-pack would leave three garments that are no longer a
+          deal, priced as though they never were. */}
+      {bundleGroups.map(([bundleId, lines]) => {
+        const bundle = getBundle(lines[0].bundleSlug ?? "");
+        if (!bundle) return null;
+        return (
+          <section className="rd-bag-bundle" key={bundleId}>
+            <div className="rd-bag-bundle-head">
+              <div>
+                <p className="rd-row-name">{bundle.title}</p>
+                <p className="rd-log">
+                  PACKAGE DEAL <span className="rd-key">·</span> SHIPPING INCLUDED
+                </p>
+              </div>
+              <div className="flex items-baseline gap-3">
+                <span className="rd-row-name">{formatPrice(bundle.price)}</span>
+                <button
+                  type="button"
+                  className="rd-link shrink-0 underline underline-offset-4"
+                  onClick={() => removeBundle(bundleId)}
+                >
+                  Kill
+                </button>
+              </div>
+            </div>
+            <ul className="rd-bag-bundle-lines">
+              {lines.map((line, i) => (
+                <li className="rd-log flex items-center gap-2" key={`${line.slug}-${line.sizeLabel}-${i}`}>
+                  <span className="rd-key">{String(i + 1).padStart(2, "0")}</span>
+                  <span>{line.title}</span>
+                  <span className="rd-key">·</span>
+                  <span>SIZE {line.sizeLabel}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+
       <ul className="border-t border-[var(--rd-rule)]">
-        {items.map((line) => (
+        {loose.map((line) => (
           <li
-            key={`${line.slug}-${line.sizeLabel}`}
+            key={`${line.slug}-${line.sizeLabel}-${line.bundleId ?? ""}`}
             className="flex items-center gap-3 border-b border-[var(--rd-rule)] p-3"
           >
             <img
@@ -70,7 +131,7 @@ function RedesignCart() {
                 className="rd-cell"
                 aria-label={`Decrease quantity of ${line.title}`}
                 onClick={() =>
-                  updateQty(line.slug, line.productType, line.sizeLabel, line.qty - 1)
+                  updateQty(line.slug, line.productType, line.sizeLabel, line.qty - 1, line.bundleId)
                 }
               >
                 −
@@ -83,7 +144,7 @@ function RedesignCart() {
                 className="rd-cell"
                 aria-label={`Increase quantity of ${line.title}`}
                 onClick={() =>
-                  updateQty(line.slug, line.productType, line.sizeLabel, line.qty + 1)
+                  updateQty(line.slug, line.productType, line.sizeLabel, line.qty + 1, line.bundleId)
                 }
               >
                 +
@@ -93,7 +154,7 @@ function RedesignCart() {
             <button
               type="button"
               className="rd-link shrink-0 underline underline-offset-4"
-              onClick={() => removeItem(line.slug, line.productType, line.sizeLabel)}
+              onClick={() => removeItem(line.slug, line.productType, line.sizeLabel, line.bundleId)}
             >
               Kill
             </button>

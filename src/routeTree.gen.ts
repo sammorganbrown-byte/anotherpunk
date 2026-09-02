@@ -29,6 +29,7 @@ import { Route as ClassicCartRouteImport } from './routes/classic/cart'
 import { Route as ClassicCheckoutRouteImport } from './routes/classic/checkout'
 import { Route as ClassicOrderConfirmedRouteImport } from './routes/classic/order-confirmed'
 import { Route as ClassicShopRouteImport } from './routes/classic/shop'
+import { Route as ShellBundleSlugRouteImport } from './routes/_shell/bundle/$slug'
 import { Route as ShellProductSlugRouteImport } from './routes/_shell/product/$slug'
 import { Route as ClassicProductSlugRouteImport } from './routes/classic/product/$slug'
 
@@ -131,6 +132,11 @@ const ClassicShopRoute = ClassicShopRouteImport.update({
   path: '/classic/shop',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShellBundleSlugRoute = ShellBundleSlugRouteImport.update({
+  id: '/bundle/$slug',
+  path: '/bundle/$slug',
+  getParentRoute: () => ShellRoute,
+} as any)
 const ShellProductSlugRoute = ShellProductSlugRouteImport.update({
   id: '/product/$slug',
   path: '/product/$slug',
@@ -162,6 +168,7 @@ export interface FileRoutesByFullPath {
   '/classic/order-confirmed': typeof ClassicOrderConfirmedRoute
   '/classic/shop': typeof ClassicShopRoute
   '/classic/': typeof ClassicIndexRoute
+  '/bundle/$slug': typeof ShellBundleSlugRoute
   '/product/$slug': typeof ShellProductSlugRoute
   '/classic/product/$slug': typeof ClassicProductSlugRoute
 }
@@ -185,6 +192,7 @@ export interface FileRoutesByTo {
   '/classic/shop': typeof ClassicShopRoute
   '/': typeof ShellIndexRoute
   '/classic': typeof ClassicIndexRoute
+  '/bundle/$slug': typeof ShellBundleSlugRoute
   '/product/$slug': typeof ShellProductSlugRoute
   '/classic/product/$slug': typeof ClassicProductSlugRoute
 }
@@ -210,6 +218,7 @@ export interface FileRoutesById {
   '/classic/shop': typeof ClassicShopRoute
   '/_shell/': typeof ShellIndexRoute
   '/classic/': typeof ClassicIndexRoute
+  '/_shell/bundle/$slug': typeof ShellBundleSlugRoute
   '/_shell/product/$slug': typeof ShellProductSlugRoute
   '/classic/product/$slug': typeof ClassicProductSlugRoute
 }
@@ -235,6 +244,7 @@ export interface FileRouteTypes {
     | '/classic/order-confirmed'
     | '/classic/shop'
     | '/classic/'
+    | '/bundle/$slug'
     | '/product/$slug'
     | '/classic/product/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -258,6 +268,7 @@ export interface FileRouteTypes {
     | '/classic/shop'
     | '/'
     | '/classic'
+    | '/bundle/$slug'
     | '/product/$slug'
     | '/classic/product/$slug'
   id:
@@ -282,6 +293,7 @@ export interface FileRouteTypes {
     | '/classic/shop'
     | '/_shell/'
     | '/classic/'
+    | '/_shell/bundle/$slug'
     | '/_shell/product/$slug'
     | '/classic/product/$slug'
   fileRoutesById: FileRoutesById
@@ -442,6 +454,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClassicShopRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_shell/bundle/$slug': {
+      id: '/_shell/bundle/$slug'
+      path: '/bundle/$slug'
+      fullPath: '/bundle/$slug'
+      preLoaderRoute: typeof ShellBundleSlugRouteImport
+      parentRoute: typeof ShellRoute
+    }
     '/_shell/product/$slug': {
       id: '/_shell/product/$slug'
       path: '/product/$slug'
@@ -470,6 +489,7 @@ interface ShellRouteChildren {
   ShellShopRoute: typeof ShellShopRoute
   ShellTermsRoute: typeof ShellTermsRoute
   ShellIndexRoute: typeof ShellIndexRoute
+  ShellBundleSlugRoute: typeof ShellBundleSlugRoute
   ShellProductSlugRoute: typeof ShellProductSlugRoute
 }
 
@@ -484,6 +504,7 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellShopRoute: ShellShopRoute,
   ShellTermsRoute: ShellTermsRoute,
   ShellIndexRoute: ShellIndexRoute,
+  ShellBundleSlugRoute: ShellBundleSlugRoute,
   ShellProductSlugRoute: ShellProductSlugRoute,
 }
 

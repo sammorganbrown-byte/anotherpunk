@@ -5,7 +5,7 @@ import {
   findPromoCode,
   normalizePromoCode,
 } from "./promo-codes";
-import { computeShipping } from "./shipping";
+import { bundleDiscount, shippingAfterBundles } from "./bundles";
 import { getAnotherPunkProduct } from "./another-punk-products";
 
 // Another Punk sells one kind of thing: apparel produced by Tapstitch via
@@ -23,13 +23,39 @@ export type CartItem = {
   sizeLabel: string;
   price: number;
   qty: number;
+  /** Set when this line arrived as part of a package deal. Two fields, not
+   * one: the slug says WHICH deal, the id says WHICH INSTANCE of it, so two
+   * separate Raw Hem Fours in one basket stay two bundles rather than
+   * merging into an eight-garment group that validates as neither.
+   *
+   * Both are display grouping on this side. The price they imply is worked
+   * out again on the server from the catalogue, so nothing here decides what
+   * anybody is charged. */
+  bundleId?: string;
+  bundleSlug?: string;
 };
 
 type CartContextValue = {
   items: CartItem[];
   addItem: (item: Omit<CartItem, "qty">, qty: number) => void;
-  updateQty: (slug: string, productType: CartProductType, sizeLabel: string, qty: number) => void;
-  removeItem: (slug: string, productType: CartProductType, sizeLabel: string) => void;
+  updateQty: (
+    slug: string,
+    productType: CartProductType,
+    sizeLabel: string,
+    qty: number,
+    bundleId?: string,
+  ) => void;
+  removeItem: (
+    slug: string,
+    productType: CartProductType,
+    sizeLabel: string,
+    bundleId?: string,
+  ) => void;
+  /** Drops every line belonging to one package deal at once. A bundle is
+   * bought and removed as a unit — pulling one tee out of a four-pack would
+   * leave three garments that are no longer a deal and no longer priced as
+   * one, which is a worse outcome than any button should quietly produce. */
+  removeBundle: (bundleId: string) => void;
   clear: () => void;
   subtotal: number;
   count: number;
@@ -62,8 +88,30 @@ const PROMO_STORAGE_KEY = "another-punk-promo";
 // (unframed / framed / hanger), so the line key has to include productType
 // too, otherwise a framed 16×20 and an unframed 16×20 of the same poster
 // would collapse into one cart line.
-function lineKey(slug: string, productType: CartProductType, sizeLabel: string) {
-  return `${slug}__${productType}__${sizeLabel}`;
+// The bundle instance is part of the identity too, and this one matters more
+// than it looks. Without it, adding a loose Bat Country tee in L to a basket
+// that already holds a Raw Hem Four containing Bat Country in L would MERGE
+// the two into a single line of qty 2 — and that group then has five garments
+// where the bundle wants four, fails validation, and is quietly charged at
+// full price. The customer would have watched their package deal evaporate
+// with no error and no explanation.
+function lineKey(
+  slug: string,
+  productType: CartProductType,
+  sizeLabel: string,
+  bundleId?: string,
+) {
+  return `${slug}__${productType}__${sizeLabel}__${bundleId ?? ""}`;
+}
+
+/** Every line's own key, so callers never have to reassemble it. */
+export function cartLineKey(line: {
+  slug: string;
+  productType: CartProductType;
+  sizeLabel: string;
+  bundleId?: string;
+}) {
+  return lineKey(line.slug, line.productType, line.sizeLabel, line.bundleId);
 }
 
 const VALID_PRODUCT_TYPES: CartProductType[] = ["tapstitch"];
@@ -153,13 +201,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const addItem: CartContextValue["addItem"] = (item, qty) => {
     setItems((prev) => {
-      const key = lineKey(item.slug, item.productType, item.sizeLabel);
+      const key = lineKey(item.slug, item.productType, item.sizeLabel, item.bundleId);
       const existing = prev.find(
-        (line) => lineKey(line.slug, line.productType, line.sizeLabel) === key,
+        (line) => lineKey(line.slug, line.productType, line.sizeLabel, line.bundleId) === key,
       );
       if (existing) {
         return prev.map((line) =>
-          lineKey(line.slug, line.productType, line.sizeLabel) === key
+          lineKey(line.slug, line.productType, line.sizeLabel, line.bundleId) === key
             ? { ...line, qty: line.qty + qty }
             : line,
         );
@@ -168,23 +216,33 @@ export function CartProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const updateQty: CartContextValue["updateQty"] = (slug, productType, sizeLabel, qty) => {
+  const updateQty: CartContextValue["updateQty"] = (
+    slug,
+    productType,
+    sizeLabel,
+    qty,
+    bundleId,
+  ) => {
     setItems((prev) => {
-      const key = lineKey(slug, productType, sizeLabel);
+      const key = lineKey(slug, productType, sizeLabel, bundleId);
       if (qty <= 0) {
-        return prev.filter((line) => lineKey(line.slug, line.productType, line.sizeLabel) !== key);
+        return prev.filter((line) => lineKey(line.slug, line.productType, line.sizeLabel, line.bundleId) !== key);
       }
       return prev.map((line) =>
-        lineKey(line.slug, line.productType, line.sizeLabel) === key ? { ...line, qty } : line,
+        lineKey(line.slug, line.productType, line.sizeLabel, line.bundleId) === key ? { ...line, qty } : line,
       );
     });
   };
 
-  const removeItem: CartContextValue["removeItem"] = (slug, productType, sizeLabel) => {
-    const key = lineKey(slug, productType, sizeLabel);
+  const removeItem: CartContextValue["removeItem"] = (slug, productType, sizeLabel, bundleId) => {
+    const key = lineKey(slug, productType, sizeLabel, bundleId);
     setItems((prev) =>
-      prev.filter((line) => lineKey(line.slug, line.productType, line.sizeLabel) !== key),
+      prev.filter((line) => lineKey(line.slug, line.productType, line.sizeLabel, line.bundleId) !== key),
     );
+  };
+
+  const removeBundle: CartContextValue["removeBundle"] = (bundleId) => {
+    setItems((prev) => prev.filter((line) => line.bundleId !== bundleId));
   };
 
   const clear = () => {
@@ -210,11 +268,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   }, [items]);
 
-  const discount = useMemo(() => computeDiscount(promoCode, items), [promoCode, items]);
+  const promoDiscount = useMemo(() => computeDiscount(promoCode, items), [promoCode, items]);
+
+  // Mirrors the server exactly — same functions, same catalogue. This figure
+  // is only ever shown; checkout recomputes it before charging anything.
+  const bundlesOff = useMemo(() => bundleDiscount(items), [items]);
+  const discount = Math.min(subtotal, promoDiscount + bundlesOff);
   // A promo code takes money off the clothes and, only if it explicitly says
   // so, off the postage too. Keeping those separate is what stops a
   // percentage meant for the garments from quietly paying the courier.
-  const shippingBeforeDiscount = computeShipping(count);
+  // Bundles include their own postage, so they pay for the parcel and only
+  // whatever travels alongside them is charged the marginal cost of going in
+  // the same box.
+  const shippingBeforeDiscount = shippingAfterBundles(items);
   const shipping = Math.max(
     0,
     shippingBeforeDiscount - computeShippingDiscount(promoCode, shippingBeforeDiscount),
@@ -226,6 +292,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     addItem,
     updateQty,
     removeItem,
+    removeBundle,
     clear,
     subtotal,
     count,

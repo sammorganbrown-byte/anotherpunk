@@ -136,6 +136,12 @@ function RedesignCheckout() {
             sizeLabel: i.sizeLabel,
             price: i.price,
             qty: i.qty,
+            // Must be carried through. Without these the server sees a bag
+            // of loose garments, finds no bundle to honour, and charges the
+            // full price — the customer having been shown the deal the whole
+            // way to the card form.
+            bundleId: i.bundleId,
+            bundleSlug: i.bundleSlug,
           })),
           promoCode: promo.trim() || null,
           ...form,

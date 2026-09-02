@@ -190,3 +190,21 @@ Ordered by what bites soonest.
 
 - [ ] **Surrender Dorothy has only 2 images**, Another Punk 2 — the fewest in
       the range, both having lost shots in the front/back audit.
+
+## Package deals — open questions (2 Sep)
+
+- **Trader address on /terms.** EU consumer law wants the trader's legal name
+  and a geographic address. Name and email are on the page; the registered
+  trading address and any tax number are not, because I don't know them. The
+  spot is marked in `src/routes/_shell/terms.tsx`.
+- **Production and transit times on /shipping** are estimates, not quoted
+  Tapstitch figures. Confirm and correct — one constant at the top of
+  `src/routes/_shell/shipping.tsx`.
+- **A four-up shot of the raw-hem tees.** There isn't one; the pack currently
+  leads with the raw-hem ink macro. Needs Higgsfield credits.
+- **More group shots for the field.** Only `152-jersey-pair-night.jpg` exists.
+  Both bundles float in the field now, so any new group shot has an obvious
+  home — the pack, not a single garment.
+- **Jersey name customisation** — deliberately not built yet. See the note at
+  the bottom of `src/lib/bundles.ts` for why it is a different shape of
+  problem from a bundle.
