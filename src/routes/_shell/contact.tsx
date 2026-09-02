@@ -112,6 +112,16 @@ function Contact() {
             sam@anotherpunk.com
           </a>
         </p>
+        <p className="rd-log">
+          <a
+            href="https://instagram.com/anotherpunk.threads"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rd-link underline underline-offset-4"
+          >
+            @anotherpunk.threads
+          </a>
+        </p>
       </div>
     </div>
   );

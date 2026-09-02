@@ -170,7 +170,20 @@ function RedesignLayout() {
 
       <footer ref={footRef} className="border-t border-[var(--rd-rule)] px-4 py-6">
         <div className="rd-log flex flex-wrap items-center justify-between gap-3">
-          <span>SHIPPED WORLDWIDE</span>
+          <span>
+            SHIPPED WORLDWIDE{" "}
+            <span aria-hidden="true" className="opacity-40">
+              ·
+            </span>{" "}
+            <a
+              href="https://instagram.com/anotherpunk.threads"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rd-link underline underline-offset-4"
+            >
+              @anotherpunk.threads
+            </a>
+          </span>
           <RdCurrency />
         </div>
       </footer>
