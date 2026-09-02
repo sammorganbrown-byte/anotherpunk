@@ -106,7 +106,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "Football jersey · pink",
     price: JERSEY_PRICE,
     cost: 14.68,
-    images: ["/img/140-jersey-pink-chest-flash.jpg", "/img/141-jersey-pink-back-69.jpg"],
+    images: [
+      "/img/140-jersey-pink-chest-flash.jpg",
+      "/img/141-jersey-pink-back-69.jpg",
+      "/img/152-jersey-pair-night.jpg",
+    ],
     // Only two photographs, so it barely surfaced in the field. Doubled there.
     fieldRepeat: 2,
     sizes: FIVE,
@@ -133,6 +137,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/148-jersey-black-back-69.jpg",
       "/img/143-jersey-black-football.jpg",
       "/img/144-jersey-black-slide.jpg",
+      "/img/152-jersey-pair-night.jpg",
     ],
     sizes: FIVE,
     shopifyProductId: "15966414274891",

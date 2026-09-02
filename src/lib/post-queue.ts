@@ -54,6 +54,7 @@ export const POST_QUEUE: QueuedPost[] = [
     // back shot exists — before this it was one jersey pretending to be two.
     id: "jerseys",
     images: [
+      "152-jersey-pair-night.jpg",
       "142-jersey-black-chest-flash.jpg",
       "148-jersey-black-back-69.jpg",
       "140-jersey-pink-chest-flash.jpg",
