@@ -62,42 +62,43 @@ export type Bundle = {
  *     that costs its own name is worth more in the telling than the few
  *     euros it gives up. This is the one price here chosen by ear.
  *
- *   RAW HEM FOUR           €175
- *     Separately: 4 x €50 + €15 shipping = €215. Saves €40, near a fifth.
- *     Garments €73.44, shipping ~€12.90, card fee ~€5.38 → net ~€83 (48%),
- *     which is in line with the margin on a single piece.
+ *   RAW HEM FOUR           €140
+ *     Separately: 4 x €50 + €15 shipping = €215. Saves €75, over a third.
+ *     Garments €73.44, shipping ~€12.90, card fee ~€4.36 → net ~€49 (35%).
+ *     Thinner than the €175 it started at, deliberately. A third off reads
+ *     instantly as a reason to buy four shirts, where €40 off €215 was a
+ *     discount someone had to work out — and a deal that needs arithmetic is
+ *     not doing its job. Four garments earning €49 still beats one earning
+ *     €25, so the pack outperforms the sale it replaces at the lower price.
  *
  * Shipping costs are the average across the eighteen countries the shop
  * ships to, from shipping-rates.csv. The Netherlands is the worst case at
  * roughly €21 for four; the pack still clears well over half in profit
  * there, so no country is sold at a loss.
  *
- * ── €175 STAYS. THE €150 THRESHOLD DOES NOT BITE HERE ────────────────────
- * This block previously argued for dropping the pack to €149 to stay under
- * the EU's €150 import threshold, below which VAT is simpler and no customs
- * duty applies. That argument was wrong, on a premise worth spelling out so
- * nobody rebuilds it.
+ * ── WHY €140, AND THE €150 QUESTION UNDERNEATH IT ────────────────────────
+ * The EU treats an import differently above €150 of declared value: below it
+ * only VAT is due, above it customs duty applies as well — around 12% on
+ * textiles — and the parcel takes a fuller customs entry. So being near that
+ * line matters on the one order in this shop big enough to approach it.
  *
- * THE THRESHOLD APPLIES TO THE DECLARED CONSIGNMENT VALUE, NOT OUR RETAIL
- * PRICE. What crosses the border is a parcel of four tees declared at their
- * production value — around €73 — not the €175 a customer paid us. The
- * customer's price is a domestic retail transaction that customs never sees.
- * So the pack sits well under €150 as far as the border is concerned, and
- * repricing to €149 would have given up €25 of margin to solve a problem
- * that was not there.
+ * WHICH VALUE COUNTS IS THE UNRESOLVED PART. If the border sees the
+ * production value of four tees — roughly €73 — no price we choose here gets
+ * anywhere near €150, and this is all moot. If it sees the retail price
+ * instead, then €149 clears the threshold by a single euro, and a euro is not
+ * a margin: a rounding difference, or shipping being counted into the value
+ * rather than stated separately, tips it over.
  *
- * It is moot in any case now that the lane is confirmed DDP: Tapstitch prepay
- * what is due, and asked directly about orders over €150 they declined to say
- * those become DDU — only that they would not guarantee an outcome, which is
- * what they say about every value.
+ * €140 costs about €9 a pack and buys real headroom under either reading.
+ * That is cheap insurance against a rare but expensive failure — duty plus
+ * VAT plus a handling fee landing on the largest order in the shop, and
+ * landing on a customer who was promised no customs fees, which we would then
+ * refund. One bad parcel costs more than several packs of margin.
  *
- * At €175 the pack nets around €83 against €58 at €149, and still saves the
- * customer €40. Both halves of that are worth keeping.
- *
- * WORTH ONE CHECK, NOT A REPRICE: look at what value the test order's customs
- * paperwork actually declared. If Tapstitch declare retail rather than
- * production value, this reasoning changes — but that is not how drop-shipped
- * goods are normally declared.
+ * NOT A PERMANENT CEILING. Check what value the test order's customs
+ * paperwork actually declared. If it is production value, as drop-shipped
+ * goods normally are, the threshold is irrelevant and this can go back up —
+ * €175 was comfortably profitable and still a real discount.
  * ────────────────────────────────────────────────────────────────────────── */
 
 /** The five heavyweight raw-hem tees. Sam described this pack as "the 4 raw
@@ -126,7 +127,7 @@ export const BUNDLES: Bundle[] = [
     slug: "raw-hem-four",
     title: "Raw Hem Four",
     eyebrow: "Any four tees",
-    price: 175,
+    price: 140,
     image: "/img/11-macro-rawhem-ink.jpg",
     description:
       "Any four of the five heavyweight raw-hem tees, each in its own size. Shipping included.",
