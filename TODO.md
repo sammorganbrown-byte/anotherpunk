@@ -207,3 +207,29 @@ Ordered by what bites soonest.
 - **Jersey name customisation** — deliberately not built yet. See the note at
   the bottom of `src/lib/bundles.ts` for why it is a different shape of
   problem from a bundle.
+
+## Express shipping — three questions for Tapstitch (2 Sep)
+
+Nothing is built. The website half is easy; what decides the design is what
+Tapstitch says to these. Ask support:
+
+1. **What does express cost, per destination?** `shipping-rates.csv` only has
+   standard rates for 1 and 2 items. Without express costs any price would be
+   a guess, and guessing is how a shipping option quietly loses money.
+2. **Does express speed up PRODUCTION, or only transit?** This decides whether
+   it is worth selling at all. If printing still takes 2–5 days and only the
+   courier is faster, express saves a European customer perhaps 2–4 days for a
+   real premium — and someone who pays extra and still waits a week feels
+   misled. Outside Europe, where transit is 7–14 days, it is a much stronger
+   product. It may be worth offering express only on non-EU orders.
+3. **Does Tapstitch read the shipping method from the Shopify order?** If it
+   does, this is fully automatic and needs no manual step — the draft order
+   currently sets no `shipping_line` at all, so Tapstitch is applying its
+   default. If it does not, express has to be upgraded by hand in the
+   Tapstitch dashboard per order.
+
+If it is manual, the safeguard is that Tapstitch orders arrive **On Hold**, so
+there is a window to upgrade before production starts. Express orders would
+carry an `EXPRESS` tag on the Shopify draft, the word in the order note, and
+EXPRESS in the subject of the notification email — three loud signals, because
+missing one means a customer paid for express and got standard.
