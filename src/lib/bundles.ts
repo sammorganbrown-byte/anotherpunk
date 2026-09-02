@@ -56,21 +56,22 @@ export type Bundle = {
  * include shipping. Checked against the real numbers rather than picked:
  *
  *   69 — HIS AND HERS      €69
- *     Separately: 2 x €40 + €11 shipping = €91. Saves €22.
- *     Garments €29.36, shipping ~€9.19, card fee ~€2.30 → net ~€28 (41%).
+ *     Separately: 2 x €40 + €13 shipping = €93. Saves €24.
+ *     Garments €29.36, real shipping €14 to Portugal and about €17 to the
+ *     Netherlands, card fee ~€2.30 → net €23 to €20 depending where it goes.
  *     Priced at 69 because the jersey is called Westwood 69 and a bundle
  *     that costs its own name is worth more in the telling than the few
  *     euros it gives up. This is the one price here chosen by ear.
  *
- *     ⚠ THE SHIPPING FIGURE ABOVE IS THE OLD, UNDERSTATED ONE. Real quotes
- *     came in a third higher than the rate sheet, so two jerseys probably
- *     cost nearer €13 to Portugal and perhaps €19 to the Netherlands, not
- *     €9.19. At the Dutch end that would leave this pack netting closer to
- *     €18 than €28 — still profitable, but the thinnest thing in the shop.
- *     RECHECK ONCE THE TWO-ITEM QUOTES ARE IN; this may need to be €75.
+ *     That is around 30%, the thinnest margin in the shop, and it is the
+ *     price of a joke — the pack absorbs its own postage and real postage
+ *     turned out a third dearer than the sheet claimed. Worth keeping at €69
+ *     anyway: two garments earning €20 still beat one earning €25 only just,
+ *     but the pair shot is the strongest image here and this is the thing it
+ *     sells. Revisit if it ever becomes a large share of orders.
  *
  *   RAW HEM FOUR           €175
- *     Separately: 4 x €50 + €15 shipping = €215. Saves €40.
+ *     Separately: 4 x €50 + €21 shipping = €221. Saves €46.
  *     These are REAL figures, read off a live Tapstitch cart to Portugal for
  *     exactly these four garments rather than extrapolated: production
  *     €73.88, shipping €19.37, card fee ~€5.38 → net ~€76 (44%).

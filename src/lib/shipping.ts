@@ -47,44 +47,43 @@
 
 // TO CHANGE THE PRICE, change these two numbers. Nothing else needs touching.
 export const SHIPPING_BASE = 9;
-export const SHIPPING_PER_EXTRA_ITEM = 2;
+export const SHIPPING_PER_EXTRA_ITEM = 4;
 
-/** ── THE RATE SHEET UNDERSTATES COST BY ABOUT A THIRD. REAL QUOTES ────────
+/** ── WHY THE INCREMENT IS €4 AND NOT €2 ───────────────────────────────────
  *
- * Live Tapstitch carts, four raw-hem tees, production €73.88 both times:
+ * Live Tapstitch carts, four raw-hem tees:
  *
- *                   we charge    rate sheet said    ACTUALLY COSTS   we lose
- *     Portugal         €15           €14.68            €19.37         €4.37
- *     Netherlands      €15           €21.13            €28.61        €13.61
+ *                   old charge   we assumed   ACTUALLY COSTS
+ *     Portugal         €15         €14.68        €19.37
+ *     Netherlands      €15         €21.13        €28.61
  *
- * The sheet understated both by roughly 32–35%, consistently enough that the
- * single-item cost is probably out by about the same — which would make a
- * lone garment cost near €10 to send against the €9 we take, and more than
- * that to the Netherlands.
+ * At €9 + €2 both lost money. At €9 + €4 the picture across the eighteen
+ * destinations we ship to, with costs above two items estimated by scaling
+ * the sheet to match those quotes:
  *
- * SO TWO SEPARATE ERRORS, NOT ONE. The increment is far too low: three extra
- * garments cost roughly €3.20 each to Portugal and €5 to the Netherlands,
- * against the €2 charged. And a flat national rate cannot hold when the real
- * spread between the cheapest and dearest destination is €9 on the same
- * parcel — Portugal and the Netherlands are charged identically and cost half
- * as much again.
+ *     1 item    charge €9    avg cost €9.83    −€0.83
+ *     2 items   charge €13   avg cost €12.32   +€0.68
+ *     4 items   charge €21   avg cost €17.29   +€3.71
  *
- * HOW BAD IS IT REALLY. Not fatal, and worth saying plainly: a €50 tee costs
- * €18.47 to make, so even carrying €10 of postage it nets over €20. The
- * garment margin is absorbing the shipping error rather than the business
- * running at a loss. What it does mean is that every multi-item order is
- * quietly less profitable than the margin sheet claims, and the bundles —
- * which swallow their own postage — are where it bites hardest.
+ * So it roughly breaks even on singles and earns on everything larger, which
+ * is the right shape: the multi-item orders now pay for themselves instead of
+ * being subsidised by the garment margin.
  *
- * STILL NEEDED, and it is the last unknown: ONE ITEM and TWO ITEMS, to
- * Portugal and to the Netherlands. Four numbers from the same cart. One-item
- * orders will be most of the shop, so the base matters more than anything
- * else here, and it is the one figure still resting on the bad sheet.
+ * IT DOES NOT COVER THE NETHERLANDS, and that is a deliberate acceptance
+ * rather than an oversight. Dutch orders lose at every size, up to €7.61 on
+ * four items. A flat rate across a range where the same parcel costs €19 to
+ * one country and €29 to another must lose somewhere; the alternative is
+ * per-country pricing at checkout, which is real complexity for a few euros
+ * an order. €7.61 sits against roughly €100 of garment margin on that same
+ * four-item order. It is a rounding error being paid for simplicity.
  *
- * Not raising the increment before those arrive. Setting it to cover a
- * four-item order to the Netherlands would put roughly €5 on every second
- * garment anyone adds, taxing the common two-item order to fix the rare
- * four-item one — the exact mistake the note above this warns against.
+ * ONE CAVEAT ON THE SINGLE-ITEM FIGURE. The sheet's one- and two-item rates
+ * are QUOTED by Tapstitch; everything above two was my own extrapolation.
+ * The four-item quotes prove the extrapolation wrong — they do NOT prove the
+ * quoted rates wrong. So −€0.83 on a single item may be pessimistic, and the
+ * €9 base may already be fine. Worth confirming with a one-item quote to
+ * Portugal and to the Netherlands, since singles will be most of the shop,
+ * but it is no longer urgent: the error it would correct is under a euro.
  * ──────────────────────────────────────────────────────────────────────── */
 
 /** Shipping in whole euros for an order of `count` garments. An empty bag

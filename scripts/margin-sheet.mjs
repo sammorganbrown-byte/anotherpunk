@@ -36,7 +36,7 @@ const COUNTRY = (arg("country", "") || "").toUpperCase();
 // Kept in step with src/lib/shipping.ts by hand — it is two numbers, and a
 // build step to share them across a script and a bundle is not worth it.
 const SHIPPING_BASE = 9;
-const SHIPPING_PER_EXTRA_ITEM = 2;
+const SHIPPING_PER_EXTRA_ITEM = 4;
 const shippingCharged = (n) => (n <= 0 ? 0 : SHIPPING_BASE + SHIPPING_PER_EXTRA_ITEM * (n - 1));
 
 // Stripe's standard European rates. NOT read from the account — if these are
