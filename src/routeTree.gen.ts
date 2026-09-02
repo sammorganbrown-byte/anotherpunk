@@ -13,6 +13,7 @@ import { Route as ShellRouteImport } from './routes/_shell'
 import { Route as ShellIndexRouteImport } from './routes/_shell/index'
 import { Route as ShellCartRouteImport } from './routes/_shell/cart'
 import { Route as ShellCheckoutRouteImport } from './routes/_shell/checkout'
+import { Route as ShellContactRouteImport } from './routes/_shell/contact'
 import { Route as ShellOrderConfirmedRouteImport } from './routes/_shell/order-confirmed'
 import { Route as ShellShopRouteImport } from './routes/_shell/shop'
 import { Route as ApiRatesRouteImport } from './routes/api/rates'
@@ -42,6 +43,11 @@ const ShellCartRoute = ShellCartRouteImport.update({
 const ShellCheckoutRoute = ShellCheckoutRouteImport.update({
   id: '/checkout',
   path: '/checkout',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellContactRoute = ShellContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => ShellRoute,
 } as any)
 const ShellOrderConfirmedRoute = ShellOrderConfirmedRouteImport.update({
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/': typeof ShellIndexRoute
   '/cart': typeof ShellCartRoute
   '/checkout': typeof ShellCheckoutRoute
+  '/contact': typeof ShellContactRoute
   '/order-confirmed': typeof ShellOrderConfirmedRoute
   '/shop': typeof ShellShopRoute
   '/api/rates': typeof ApiRatesRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/cart': typeof ShellCartRoute
   '/checkout': typeof ShellCheckoutRoute
+  '/contact': typeof ShellContactRoute
   '/order-confirmed': typeof ShellOrderConfirmedRoute
   '/shop': typeof ShellShopRoute
   '/api/rates': typeof ApiRatesRoute
@@ -137,6 +145,7 @@ export interface FileRoutesById {
   '/_shell': typeof ShellRouteWithChildren
   '/_shell/cart': typeof ShellCartRoute
   '/_shell/checkout': typeof ShellCheckoutRoute
+  '/_shell/contact': typeof ShellContactRoute
   '/_shell/order-confirmed': typeof ShellOrderConfirmedRoute
   '/_shell/shop': typeof ShellShopRoute
   '/api/rates': typeof ApiRatesRoute
@@ -156,6 +165,7 @@ export interface FileRouteTypes {
     | '/'
     | '/cart'
     | '/checkout'
+    | '/contact'
     | '/order-confirmed'
     | '/shop'
     | '/api/rates'
@@ -171,6 +181,7 @@ export interface FileRouteTypes {
   to:
     | '/cart'
     | '/checkout'
+    | '/contact'
     | '/order-confirmed'
     | '/shop'
     | '/api/rates'
@@ -188,6 +199,7 @@ export interface FileRouteTypes {
     | '/_shell'
     | '/_shell/cart'
     | '/_shell/checkout'
+    | '/_shell/contact'
     | '/_shell/order-confirmed'
     | '/_shell/shop'
     | '/api/rates'
@@ -242,6 +254,13 @@ declare module '@tanstack/react-router' {
       path: '/checkout'
       fullPath: '/checkout'
       preLoaderRoute: typeof ShellCheckoutRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/contact': {
+      id: '/_shell/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ShellContactRouteImport
       parentRoute: typeof ShellRoute
     }
     '/_shell/order-confirmed': {
@@ -327,6 +346,7 @@ declare module '@tanstack/react-router' {
 interface ShellRouteChildren {
   ShellCartRoute: typeof ShellCartRoute
   ShellCheckoutRoute: typeof ShellCheckoutRoute
+  ShellContactRoute: typeof ShellContactRoute
   ShellOrderConfirmedRoute: typeof ShellOrderConfirmedRoute
   ShellShopRoute: typeof ShellShopRoute
   ShellIndexRoute: typeof ShellIndexRoute
@@ -336,6 +356,7 @@ interface ShellRouteChildren {
 const ShellRouteChildren: ShellRouteChildren = {
   ShellCartRoute: ShellCartRoute,
   ShellCheckoutRoute: ShellCheckoutRoute,
+  ShellContactRoute: ShellContactRoute,
   ShellOrderConfirmedRoute: ShellOrderConfirmedRoute,
   ShellShopRoute: ShellShopRoute,
   ShellIndexRoute: ShellIndexRoute,

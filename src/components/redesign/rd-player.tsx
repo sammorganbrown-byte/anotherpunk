@@ -221,6 +221,9 @@ const ASK_KEY = "ap-rd-sound-asked";
 /** A beat after the boot clears, so the two never share the screen. */
 const ASK_DELAY_MS = 700;
 
+/** Where the listener last dragged the now-playing panel to. */
+const NP_POS_KEY = "another-punk-np-pos";
+
 /** Fisher-Yates. Not `sort(() => Math.random() - 0.5)`, which is not a
  * shuffle — it biases heavily toward the original order. */
 function shuffled<T>(xs: readonly T[]): T[] {
@@ -320,17 +323,90 @@ export function RdPlayer() {
         return;
       }
       id = window.setTimeout(() => {
-        // Never over the money pages. The prompt is a panel near the middle
-        // of the screen, so on checkout it lands on top of the address form —
-        // an invitation to play music covering the fields someone is trying
-        // to pay with. It can wait until they are browsing again.
-        if (/^\/(checkout|cart|order-confirmed)/.test(window.location.pathname)) return;
+        // Never over a page with a form on it. The prompt is a panel near the
+        // middle of the screen, so on checkout it landed on the address fields
+        // and on contact it landed on the send button — an invitation to play
+        // music covering the thing someone is trying to do. It can wait until
+        // they are browsing again.
+        if (/^\/(checkout|cart|order-confirmed|contact)/.test(window.location.pathname)) return;
         setAsking(true);
       }, ASK_DELAY_MS);
     };
     poll();
     return () => window.clearTimeout(id);
   }, []);
+
+  // Draggable, because a fixed panel eventually lands on something. It has
+  // already had to be moved off the nav and off the currency switcher, and
+  // that is a game you lose slowly — a page added later will collide again.
+  // Letting it be dragged out of the way costs less than guarding every
+  // future layout against it.
+  //
+  // Position is kept as an offset from where CSS puts it rather than as
+  // absolute coordinates, so the panel still sits itself correctly on a
+  // phone, on a product page, and wherever CSS moves it next; a drag just
+  // nudges it from there.
+  const npRef = useRef<HTMLDivElement | null>(null);
+  const [nudge, setNudge] = useState<{ x: number; y: number }>(() => {
+    try {
+      const raw = window.localStorage.getItem(NP_POS_KEY);
+      if (raw) {
+        const p = JSON.parse(raw) as { x: number; y: number };
+        if (Number.isFinite(p?.x) && Number.isFinite(p?.y)) return p;
+      }
+    } catch {
+      // No stored position. It opens where CSS puts it, which is correct.
+    }
+    return { x: 0, y: 0 };
+  });
+
+  const onDragStart = (e: React.PointerEvent) => {
+    // Never start a drag from a control — the buttons and the artist link
+    // have to stay clickable, and a drag that begins on a button feels like
+    // a broken button.
+    if ((e.target as HTMLElement).closest("button, a")) return;
+    const el = npRef.current;
+    if (!el) return;
+    e.preventDefault();
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const from = { ...nudge };
+    el.setPointerCapture(e.pointerId);
+    el.dataset.dragging = "true";
+
+    const move = (ev: PointerEvent) => {
+      const box = el.getBoundingClientRect();
+      // Clamped so it can never be dragged off screen and stranded — the
+      // only way back would be clearing site data.
+      const next = {
+        x: from.x + (ev.clientX - startX),
+        y: from.y + (ev.clientY - startY),
+      };
+      const minX = -box.left + nudge.x + 8;
+      const maxX = window.innerWidth - box.right + nudge.x - 8;
+      const minY = -box.top + nudge.y + 8;
+      const maxY = window.innerHeight - box.bottom + nudge.y - 8;
+      setNudge({
+        x: Math.min(Math.max(next.x, minX), maxX),
+        y: Math.min(Math.max(next.y, minY), maxY),
+      });
+    };
+    const up = () => {
+      el.removeEventListener("pointermove", move);
+      el.removeEventListener("pointerup", up);
+      delete el.dataset.dragging;
+      setNudge((n) => {
+        try {
+          window.localStorage.setItem(NP_POS_KEY, JSON.stringify(n));
+        } catch {
+          // Position simply will not persist. Nothing else breaks.
+        }
+        return n;
+      });
+    };
+    el.addEventListener("pointermove", move);
+    el.addEventListener("pointerup", up);
+  };
 
   return (
     <>
@@ -364,7 +440,17 @@ export function RdPlayer() {
           credit lives where the music is rather than in a footer nobody
           reads. */}
       {started ? (
-        <div className="rd-np">
+        <div
+          className="rd-np"
+          ref={npRef}
+          onPointerDown={onDragStart}
+          style={
+            nudge.x || nudge.y
+              ? { transform: `translate(${nudge.x}px, ${nudge.y}px)` }
+              : undefined
+          }
+          title="Drag to move"
+        >
           <img className="rd-np-art" src={track.art} alt="" aria-hidden="true" />
           <div className="rd-np-meta">
             <p className="rd-np-track">{track.title}</p>

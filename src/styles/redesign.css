@@ -1653,3 +1653,42 @@ body:has(.rd-pdp) .rd-np {
    --rd-foot-h — which _shell.tsx now measures from the footer itself rather
    than guessing at. No clearance padding is needed, and nothing about the
    footer changes when the player starts. */
+
+/* ---- contact ----------------------------------------------------------- */
+
+[data-ap-rd] .rd-contact {
+  padding: 40px 16px 80px;
+  max-width: 900px;
+}
+/* The name and address sit below the form, separated by a rule rather than
+   whitespace alone — they are a different kind of thing from the form, not a
+   continuation of it. */
+[data-ap-rd] .rd-contact-who {
+  margin-top: 40px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rd-rule);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+[data-ap-rd] textarea.rd-input {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+/* The now-playing panel can be dragged out of the way. The cursor says so on
+   the panel itself but not on its controls, which stay ordinary buttons. */
+[data-ap-rd] .rd-np {
+  cursor: grab;
+  touch-action: none;
+}
+[data-ap-rd] .rd-np[data-dragging] {
+  cursor: grabbing;
+  /* Lifted while held, so it is unambiguous which thing is moving. */
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.55);
+}
+[data-ap-rd] .rd-np button,
+[data-ap-rd] .rd-np a {
+  cursor: pointer;
+}
