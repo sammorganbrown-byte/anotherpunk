@@ -23,8 +23,8 @@
 export type QueuedPost = {
   /** Stable id. Appears in the email you get and in the logs. */
   id: string;
-  /** One to three filenames under /img. The first is the one that shows in
-   * the grid, so it carries the post; the rest are the swipe. */
+  /** One to ten filenames under /img. The first is the one that shows in the
+   * grid, so it carries the post; the rest are the swipe. */
   images: string[];
   /** Exactly what appears under the post. Newlines survive. */
   caption: string;
@@ -41,24 +41,25 @@ export type QueuedPost = {
  * scrolling a grid sees the inside of a carousel twice. */
 export const POST_QUEUE: QueuedPost[] = [
   {
-    // Opens the run because it is the only image that makes someone laugh,
-    // and an account being built needs to be likeable before it is admired.
-    id: "football",
-    images: [
-      "143-jersey-black-football.jpg",
-      "142-jersey-black-chest-flash.jpg",
-      "144-jersey-black-slide.jpg",
-    ],
-    caption: "He was told to stay on his feet.\n\nWestwood 69. Pink or black.",
+    // Leads the account. Urban, wet, cinematic — the register the brand
+    // actually lives in. The footballer is funnier but it is a joke, and a
+    // joke is the wrong first impression for a shop nobody knows yet.
+    id: "jesus",
+    images: ["35-jesus-night-rain.jpg", "23-jesus-chest.jpg", "74-jesus-kerb-night.jpg"],
+    caption: "Wet crossing. Red light. No notes.",
     due: "2026-09-03",
   },
   {
-    // Second on purpose: no person, no face. Breaks the portrait pattern
-    // immediately rather than three weeks in. Single image — a texture shot
-    // does not want a swipe.
-    id: "hem",
-    images: ["11-macro-rawhem-ink.jpg"],
-    caption: "Cracked ink. Raw hem.\n\nIt starts looking like this. It only gets better.",
+    // The pair, front and back, both colourways. Only possible now the black
+    // back shot exists — before this it was one jersey pretending to be two.
+    id: "jerseys",
+    images: [
+      "142-jersey-black-chest-flash.jpg",
+      "148-jersey-black-back-69.jpg",
+      "140-jersey-pink-chest-flash.jpg",
+      "141-jersey-pink-back-69.jpg",
+    ],
+    caption: "Front says Another Punk. Back says Westwood 69.\n\nPink or black.",
     due: "2026-09-05",
   },
   {
@@ -74,17 +75,19 @@ export const POST_QUEUE: QueuedPost[] = [
     due: "2026-09-10",
   },
   {
-    // Almost entirely black. Sits between two busy frames and makes both
-    // of them louder. Single, deliberately.
-    id: "raking",
-    images: ["03-wordmark-chest-raking.jpg"],
-    caption: "Lights off. Still red.",
+    // No person, no face. Breaks the portrait pattern. Single, deliberately —
+    // a texture shot does not want a swipe attached to it.
+    id: "hem",
+    images: ["11-macro-rawhem-ink.jpg"],
+    caption: "Cracked ink. Raw hem.\n\nIt starts looking like this. It only gets better.",
     due: "2026-09-12",
   },
   {
-    id: "jesus",
-    images: ["35-jesus-night-rain.jpg", "23-jesus-chest.jpg", "74-jesus-kerb-night.jpg"],
-    caption: "Wet crossing. Red light. No notes.",
+    // Moved off the front. Still the funniest thing here, just not the
+    // opening statement.
+    id: "football",
+    images: ["143-jersey-black-football.jpg", "144-jersey-black-slide.jpg"],
+    caption: "He was told to stay on his feet.",
     due: "2026-09-15",
   },
   {
@@ -106,8 +109,7 @@ export const POST_QUEUE: QueuedPost[] = [
     due: "2026-09-22",
   },
   {
-    // Replaces the post deleted for carrying the TOUNGE typo. Corrected
-    // artwork, and a better frame than the one that went out.
+    // Replaces the post deleted for carrying the TOUNGE typo.
     id: "tonguebox",
     images: [
       "72-tonguebox-night-neon.jpg",
@@ -124,7 +126,6 @@ export const POST_QUEUE: QueuedPost[] = [
     due: "2026-09-26",
   },
   {
-    // Closes September with the most composed photograph in the set.
     id: "subway",
     images: ["77-wordmark-night-subway-REDO.jpg", "147-anotherpunk-night-shopphone.jpg"],
     caption: "Last train. Green light. Nobody coming.",
@@ -193,11 +194,9 @@ export const POST_QUEUE: QueuedPost[] = [
     due: "2026-10-22",
   },
   {
-    // The jerseys post. Pink only for now — there is no back shot of the
-    // black one, so the pair cannot be shown properly yet.
-    id: "jersey-pink",
-    images: ["140-jersey-pink-chest-flash.jpg", "141-jersey-pink-back-69.jpg"],
-    caption: "Front says Another Punk. Back says Westwood 69.",
+    id: "corridor",
+    images: ["61-jesus-walking-corridor.jpg", "03-wordmark-chest-raking.jpg"],
+    caption: "Corridor. Strip light. Long way out.",
     due: "2026-10-24",
   },
   {
