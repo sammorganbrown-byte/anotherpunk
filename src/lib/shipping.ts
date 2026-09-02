@@ -139,10 +139,24 @@ export const DELIVERY = {
   transit: "about 10 days",
   /** Their 95th percentile. */
   transitMost: "15 days",
-  /** Roughly what the whole thing takes, made and delivered. Rounded to
-   * weeks because a customer thinks in weeks, and quoting "12 to 20 days"
-   * implies a precision that a customs desk can undo in an afternoon. */
-  total: "two to three weeks",
+  /** Roughly what the whole thing takes, made and delivered. Rounded to weeks
+   * because a customer thinks in weeks, and quoting "12 to 20 days" implies a
+   * precision that a customs desk can undo in an afternoon.
+   *
+   * SAY THE TYPICAL, NOT THE WORST. This read "two to three weeks", which
+   * quietly took the tail of every estimate and added them together — 5 days
+   * of production plus the 15-day 95th percentile. Almost nobody gets that.
+   * Tapstitch's average is 10 days in transit, so a fortnight is the honest
+   * headline and the detail line underneath carries the spread for anyone who
+   * wants it.
+   *
+   * The pull is toward over-quoting, because an early parcel delights and a
+   * late one complains. But an inflated number on the product page costs
+   * sales from people who never order at all, and that cost is invisible —
+   * which is exactly why it is worth resisting. Sam's own order beat this
+   * comfortably; when there are a few real orders to average, put the real
+   * number here. */
+  total: "about two weeks",
   origin: "Made and sent by our producer in China.",
   /** The confident version, for when DUTY_PREPAID is true. */
   dutyPrepaid: "No customs charges, ever. Import duty and tax are already paid.",
