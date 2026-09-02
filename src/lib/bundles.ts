@@ -72,23 +72,32 @@ export type Bundle = {
  * roughly €21 for four; the pack still clears well over half in profit
  * there, so no country is sold at a loss.
  *
- * ── €175 SITS ABOVE THE IOSS THRESHOLD, AND THAT IS A DECISION ────────────
- * The EU's import one-stop-shop only covers consignments up to €150. Below
- * that, with an IOSS number supplied, VAT is settled at checkout and the
- * parcel is delivered with nothing to pay. Above it, IOSS does not apply at
- * all: the order clears customs the ordinary way and the customer meets
- * import VAT plus a courier handling fee at the door.
+ * ── €175 STAYS. THE €150 THRESHOLD DOES NOT BITE HERE ────────────────────
+ * This block previously argued for dropping the pack to €149 to stay under
+ * the EU's €150 import threshold, below which VAT is simpler and no customs
+ * duty applies. That argument was wrong, on a premise worth spelling out so
+ * nobody rebuilds it.
  *
- * So the Raw Hem Four is the single order most likely to arrive with a bill,
- * and the largest one — the worst possible combination. Even once IOSS is
- * registered and every other order is clean, this one would not be.
+ * THE THRESHOLD APPLIES TO THE DECLARED CONSIGNMENT VALUE, NOT OUR RETAIL
+ * PRICE. What crosses the border is a parcel of four tees declared at their
+ * production value — around €73 — not the €175 a customer paid us. The
+ * customer's price is a domestic retail transaction that customs never sees.
+ * So the pack sits well under €150 as far as the border is concerned, and
+ * repricing to €149 would have given up €25 of margin to solve a problem
+ * that was not there.
  *
- * Pricing it at €149 instead would bring it inside the threshold. That costs
- * €26 of revenue and takes the pack from roughly €83 net to €58, which is
- * still a healthy margin on an order that then behaves like every other. It
- * is Sam's call, and it is a real trade rather than an obvious one — but a
- * surprise customs bill on the biggest order in the shop is an expensive way
- * to save €26.
+ * It is moot in any case now that the lane is confirmed DDP: Tapstitch prepay
+ * what is due, and asked directly about orders over €150 they declined to say
+ * those become DDU — only that they would not guarantee an outcome, which is
+ * what they say about every value.
+ *
+ * At €175 the pack nets around €83 against €58 at €149, and still saves the
+ * customer €40. Both halves of that are worth keeping.
+ *
+ * WORTH ONE CHECK, NOT A REPRICE: look at what value the test order's customs
+ * paperwork actually declared. If Tapstitch declare retail rather than
+ * production value, this reasoning changes — but that is not how drop-shipped
+ * goods are normally declared.
  * ────────────────────────────────────────────────────────────────────────── */
 
 /** The five heavyweight raw-hem tees. Sam described this pack as "the 4 raw
