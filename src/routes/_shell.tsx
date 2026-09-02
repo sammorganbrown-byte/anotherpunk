@@ -188,6 +188,22 @@ function RedesignLayout() {
           <Link to="/contact" className="rd-link" data-on={path.startsWith("/contact")}>
             Contact
           </Link>
+          {/* Instagram sits in the bar rather than only in the footer. The
+              account is where the brand actually lives day to day, and a link
+              nobody scrolls to is a link nobody follows — the footer copy was
+              below two screens of field on the homepage.
+              Labelled with the glyph and the word on wider screens, glyph
+              alone on a phone, where the bar has no room to spare. */}
+          <a
+            href="https://instagram.com/anotherpunk.threads"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rd-link rd-ig"
+            aria-label="Another Punk on Instagram"
+          >
+            <span aria-hidden="true">◎</span>
+            <span className="rd-ig-word">Instagram</span>
+          </a>
           <Link to="/cart" className="rd-link" data-on={path.startsWith("/cart")}>
             Bag [{count}]
           </Link>
@@ -223,18 +239,15 @@ function RedesignLayout() {
           </Link>
         </nav>
         <div className="rd-log flex flex-wrap items-center justify-between gap-3">
-          <span>
-            SHIPPED WORLDWIDE{" "}
-            <span aria-hidden="true" className="opacity-40">
-              ·
-            </span>{" "}
+          <span className="flex flex-wrap items-center gap-3">
+            <span>SHIPPED WORLDWIDE</span>
             <a
               href="https://instagram.com/anotherpunk.threads"
               target="_blank"
               rel="noopener noreferrer"
-              className="rd-link underline underline-offset-4"
+              className="rd-ig-cta"
             >
-              @anotherpunk.threads
+              <span aria-hidden="true">◎</span> @anotherpunk.threads
             </a>
           </span>
           <RdCurrency />

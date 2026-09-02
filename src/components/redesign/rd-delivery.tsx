@@ -30,7 +30,7 @@ export function RdDelivery({ compact = false }: { compact?: boolean }) {
           →
         </span>
         <span>
-          Printed to order, so allow <strong>{DELIVERY.total}</strong>. {DELIVERY.origin}
+          Printed to order, and usually arrives in <strong>{DELIVERY.total}</strong>.
         </span>
       </p>
       {/* Which of these shows is decided by DUTY_PREPAID in lib/shipping.ts,
@@ -44,8 +44,8 @@ export function RdDelivery({ compact = false }: { compact?: boolean }) {
         <span>
           {DUTY_PREPAID ? (
             <>
-              <strong>{DELIVERY.dutyPrepaid}</strong> If you are ever charged anything on
-              delivery, we refund it.
+              <strong>No customs fees.</strong> Duty and import tax are already paid — and if
+              you are ever charged anything on delivery, we refund it.
             </>
           ) : (
             <>{DELIVERY.dutyUnknown}</>
@@ -58,8 +58,8 @@ export function RdDelivery({ compact = false }: { compact?: boolean }) {
             →
           </span>
           <span>
-            {DELIVERY.make} to make, then {DELIVERY.transit} in transit — most arrive within{" "}
-            {DELIVERY.transitMost}. Tracked.{" "}
+            {DELIVERY.make} to make, then {DELIVERY.transit} in transit. Tracked all the
+            way.{" "}
             <Link to="/shipping" className="rd-link underline underline-offset-4">
               Shipping in full
             </Link>

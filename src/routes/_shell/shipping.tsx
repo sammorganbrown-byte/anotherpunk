@@ -64,9 +64,9 @@ function Shipping() {
     <RdLegal label="SHIPPING" title="SHIPPING" updated="2 SEPTEMBER 2026">
       <p className="rd-legal-lede">
         Nothing here sits in a warehouse. Each piece is printed after you order it, which is
-        why there is no dead stock and no sale rail — and why it takes longer than something
-        pulled off a shelf. It is printed and sent by our production partner in China, so
-        most of the wait is the journey rather than the printing.
+        why there is no dead stock and no sale rail — and why it takes a little longer than
+        something pulled off a shelf. Most of that wait is the journey rather than the
+        printing: it is made and sent by our production partner in China.
       </p>
 
       <LegalSection heading="What it costs">
@@ -113,10 +113,9 @@ function Shipping() {
         {DUTY_PREPAID ? (
           <>
             <p>
-              <strong>Nothing to pay on delivery.</strong> Everything is made and sent by our
-              producer in China, and it ships on a duty-paid service — the import duty and
-              tax are covered before the parcel reaches you. The price at checkout is the
-              price.
+              <strong>Nothing to pay on delivery.</strong> Orders ship on a duty-paid
+              service, so the import duty and tax are covered before the parcel reaches you.
+              The price at checkout is the price.
             </p>
             <p>
               No customs bill, no handling fee, no card through the door asking you to go and

@@ -156,8 +156,17 @@ export const DELIVERY = {
    * which is exactly why it is worth resisting. Sam's own order beat this
    * comfortably; when there are a few real orders to average, put the real
    * number here. */
-  total: "about two weeks",
-  origin: "Made and sent by our producer in China.",
+  total: "under two weeks",
+  /** Kept for the shipping policy, where somebody who wants to know can find
+   * it. Deliberately NOT on the product pages, the bag or the checkout: Sam's
+   * call, and a fair one — where a thing is manufactured is ordinary
+   * commercial information, not something a shopfront owes on every page, and
+   * no clothing brand on the high street prints it above the till.
+   *
+   * It stays on /shipping rather than disappearing entirely, because the
+   * difference between "not advertised" and "hidden" is whether it is there
+   * for anyone who looks. */
+  origin: "Made and sent by our production partner overseas.",
   /** The confident version, for when DUTY_PREPAID is true. */
   dutyPrepaid: "No customs charges, ever. Import duty and tax are already paid.",
   /** The honest version while it is unconfirmed. Warns without alarming, and

@@ -1961,3 +1961,36 @@ body:has(.rd-pdp) .rd-np {
 [data-ap-rd] .rd-delivery[data-compact="true"] {
   margin-top: 14px;
 }
+
+/* Instagram in the top bar. The glyph carries it on a phone, where the bar is
+   already tight; the word appears once there is room for it. */
+[data-ap-rd] .rd-ig {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+}
+[data-ap-rd] .rd-ig-word {
+  display: none;
+}
+@media (min-width: 700px) {
+  [data-ap-rd] .rd-ig-word {
+    display: inline;
+  }
+}
+
+/* And in the footer, given an outline so it reads as somewhere to go rather
+   than as the tail of a sentence about shipping. */
+[data-ap-rd] .rd-ig-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--rd-red);
+  color: var(--rd-red);
+  padding: 3px 9px;
+  text-decoration: none;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+[data-ap-rd] .rd-ig-cta:hover {
+  background: var(--rd-red);
+  color: var(--rd-void, #080807);
+}
