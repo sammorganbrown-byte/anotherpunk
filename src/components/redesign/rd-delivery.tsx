@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { DELIVERY } from "../../lib/shipping";
+import { DELIVERY, DUTY_PREPAID } from "../../lib/shipping";
 
 /** What a customer is told about delivery, at the moment they are deciding.
  *
@@ -33,13 +33,23 @@ export function RdDelivery({ compact = false }: { compact?: boolean }) {
           Printed to order, so allow <strong>{DELIVERY.total}</strong>. {DELIVERY.origin}
         </span>
       </p>
-      <p className="rd-delivery-line" data-good="true">
+      {/* Which of these shows is decided by DUTY_PREPAID in lib/shipping.ts,
+          currently false. The confident line is not a claim to make on a
+          marketing page and a hopeful reading of a support email — see the
+          reasoning there. */}
+      <p className="rd-delivery-line" data-good={DUTY_PREPAID ? "true" : undefined}>
         <span className="rd-delivery-mark" aria-hidden="true">
           →
         </span>
         <span>
-          <strong>{DELIVERY.duty}</strong> If you are ever charged anything on delivery, we
-          refund it.
+          {DUTY_PREPAID ? (
+            <>
+              <strong>{DELIVERY.dutyPrepaid}</strong> If you are ever charged anything on
+              delivery, we refund it.
+            </>
+          ) : (
+            <>{DELIVERY.dutyUnknown}</>
+          )}
         </span>
       </p>
       {compact ? null : (

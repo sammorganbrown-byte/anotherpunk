@@ -5,6 +5,7 @@ import {
   SHIPPING_PER_EXTRA_ITEM,
   SHIPPING_COUNTRIES,
   DELIVERY,
+  DUTY_PREPAID,
 } from "../../lib/shipping";
 
 export const Route = createFileRoute("/_shell/shipping")({ component: Shipping });
@@ -38,27 +39,9 @@ export const Route = createFileRoute("/_shell/shipping")({ component: Shipping }
  * it is a genuine selling point worth stating.
  * ──────────────────────────────────────────────────────────────────────────
  */
-/** Whether Tapstitch ships DDP under an IOSS registration, so that nothing is
- * owed on delivery.
- *
- * True on the strength of two things. Tapstitch state it themselves on
- * tapstitch.com/shipping: "Our shipping model is built on a Delivered Duty
- * Paid (DDP) solution... an all-inclusive, door-to-door service that covers
- * both the freight costs and any destination import duties or taxes." And a
- * Tapstitch parcel has already reached Portugal with nothing to pay, so the
- * claim is not only on paper.
- *
- * THEY DO HEDGE IT, and the copy below is built around the hedge rather than
- * ignoring it. Their exact words for outside the US: "this is also usually
- * the case. However, in rare cases, recipients in certain remote areas may
- * need to pay customs duties or related fees upon delivery."
- *
- * So the page does not claim it can never happen. It promises to refund
- * anyone it happens to, which is the honest way to sell a near-certainty: it
- * turns their "usually" into our "always" and costs almost nothing, because
- * rare and remote is exactly the shape of a bill you can afford to absorb.
- * A promise you fund is worth more than a promise you qualify. */
-const DUTY_PREPAID = true;
+// DUTY_PREPAID now lives in lib/shipping.ts, beside the reasoning and the
+// support quote that governs it, so this page and the product pages cannot
+// disagree about whether a customer owes anything at the door.
 
 /** Tapstitch's own published figures for Special Line, the service these
  * orders travel on: "10d avg; 95% in 15d". Read from lib/shipping.ts so this

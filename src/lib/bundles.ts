@@ -71,6 +71,24 @@ export type Bundle = {
  * ships to, from shipping-rates.csv. The Netherlands is the worst case at
  * roughly €21 for four; the pack still clears well over half in profit
  * there, so no country is sold at a loss.
+ *
+ * ── €175 SITS ABOVE THE IOSS THRESHOLD, AND THAT IS A DECISION ────────────
+ * The EU's import one-stop-shop only covers consignments up to €150. Below
+ * that, with an IOSS number supplied, VAT is settled at checkout and the
+ * parcel is delivered with nothing to pay. Above it, IOSS does not apply at
+ * all: the order clears customs the ordinary way and the customer meets
+ * import VAT plus a courier handling fee at the door.
+ *
+ * So the Raw Hem Four is the single order most likely to arrive with a bill,
+ * and the largest one — the worst possible combination. Even once IOSS is
+ * registered and every other order is clean, this one would not be.
+ *
+ * Pricing it at €149 instead would bring it inside the threshold. That costs
+ * €26 of revenue and takes the pack from roughly €83 net to €58, which is
+ * still a healthy margin on an order that then behaves like every other. It
+ * is Sam's call, and it is a real trade rather than an obvious one — but a
+ * surprise customs bill on the biggest order in the shop is an expensive way
+ * to save €26.
  * ────────────────────────────────────────────────────────────────────────── */
 
 /** The five heavyweight raw-hem tees. Sam described this pack as "the 4 raw

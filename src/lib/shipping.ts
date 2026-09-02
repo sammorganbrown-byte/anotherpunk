@@ -99,6 +99,40 @@ export const SHIPPING_COUNTRIES: { code: string; name: string }[] = [
  * the honest part of a good deal. The wait is the price of nothing being made
  * before it is wanted, and that is worth saying rather than hiding.
  */
+/** Whether import duty and tax are prepaid, so nothing is owed on delivery.
+ *
+ * ── FALSE, AND IT WAS BRIEFLY TRUE BY MISTAKE ─────────────────────────────
+ * Tapstitch's public shipping page says their model is Delivered Duty Paid
+ * and that for non-US destinations duties are "also usually the case". On the
+ * strength of that, and a parcel that reached Portugal with nothing to pay,
+ * this site briefly told every customer "no customs charges, ever".
+ *
+ * Their support team then said something narrower, and it is the sentence
+ * that governs:
+ *
+ *   "DDP applies to U.S. shipments using Special Line, Special Line Pro, or
+ *    Standard Shipping in non-remote areas. DDU applies to International
+ *    Express shipments and remote addresses, where duties/taxes may be
+ *    collected upon delivery."
+ *
+ * Read plainly, DDP is scoped to U.S. shipments. This shop sells into Europe
+ * almost exclusively, so the claim cannot stand on that sentence — and the
+ * marketing page and the support desk now disagree with each other, which is
+ * itself reason enough not to promise anything.
+ *
+ * It may still turn out to be sloppy phrasing and DDP may well cover the EU.
+ * That would be a nice answer to get. It is not an answer to assume, because
+ * being wrong here means a customer meets an unexpected VAT bill and a
+ * courier handling fee at their own door, and the promise we had made was to
+ * refund it — on a €50 tee into Portugal that is roughly €11 of VAT plus a
+ * handling charge, on every order, against a €25 margin.
+ *
+ * SET THIS TRUE ONLY ON AN ANSWER THAT NAMES EUROPE. Not "usually", not the
+ * marketing page: a sentence that says an order to an EU country on Special
+ * Line arrives with nothing to pay. The confident copy is already written
+ * and switches back on with this one line. */
+export const DUTY_PREPAID = false;
+
 export const DELIVERY = {
   /** Days to print and finish, before it ships. Still an estimate. */
   make: "2–5 days",
@@ -111,7 +145,11 @@ export const DELIVERY = {
    * implies a precision that a customs desk can undo in an afternoon. */
   total: "two to three weeks",
   origin: "Made and sent by our producer in China.",
-  /** The good news, and the reason the wait is worth stating plainly next to
-   * it. Tapstitch ship DDP; we refund the rare exception. */
-  duty: "No customs charges, ever. Import duty and tax are already paid.",
+  /** The confident version, for when DUTY_PREPAID is true. */
+  dutyPrepaid: "No customs charges, ever. Import duty and tax are already paid.",
+  /** The honest version while it is unconfirmed. Warns without alarming, and
+   * promises to look at it rather than to pay it — a promise that can be kept
+   * whatever the answer turns out to be. */
+  dutyUnknown:
+    "Depending on your country, import VAT or duty may be charged on delivery. Tell us if it is.",
 } as const;
