@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShellRouteImport } from './routes/_shell'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ShellIndexRouteImport } from './routes/_shell/index'
 import { Route as ShellCartRouteImport } from './routes/_shell/cart'
 import { Route as ShellCheckoutRouteImport } from './routes/_shell/checkout'
@@ -29,6 +30,11 @@ import { Route as ClassicProductSlugRouteImport } from './routes/classic/product
 
 const ShellRoute = ShellRouteImport.update({
   id: '/_shell',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ShellIndexRoute = ShellIndexRouteImport.update({
@@ -114,6 +120,7 @@ const ClassicProductSlugRoute = ClassicProductSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof ShellIndexRoute
+  '/admin': typeof AdminRoute
   '/cart': typeof ShellCartRoute
   '/checkout': typeof ShellCheckoutRoute
   '/contact': typeof ShellContactRoute
@@ -131,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/classic/product/$slug': typeof ClassicProductSlugRoute
 }
 export interface FileRoutesByTo {
+  '/admin': typeof AdminRoute
   '/cart': typeof ShellCartRoute
   '/checkout': typeof ShellCheckoutRoute
   '/contact': typeof ShellContactRoute
@@ -151,6 +159,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_shell': typeof ShellRouteWithChildren
+  '/admin': typeof AdminRoute
   '/_shell/cart': typeof ShellCartRoute
   '/_shell/checkout': typeof ShellCheckoutRoute
   '/_shell/contact': typeof ShellContactRoute
@@ -172,6 +181,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/cart'
     | '/checkout'
     | '/contact'
@@ -189,6 +199,7 @@ export interface FileRouteTypes {
     | '/classic/product/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/admin'
     | '/cart'
     | '/checkout'
     | '/contact'
@@ -208,6 +219,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_shell'
+    | '/admin'
     | '/_shell/cart'
     | '/_shell/checkout'
     | '/_shell/contact'
@@ -228,6 +240,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   ShellRoute: typeof ShellRouteWithChildren
+  AdminRoute: typeof AdminRoute
   ApiPostNextRoute: typeof ApiPostNextRoute
   ApiRatesRoute: typeof ApiRatesRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
@@ -246,6 +259,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof ShellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_shell/': {
@@ -387,6 +407,7 @@ const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   ShellRoute: ShellRouteWithChildren,
+  AdminRoute: AdminRoute,
   ApiPostNextRoute: ApiPostNextRoute,
   ApiRatesRoute: ApiRatesRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
