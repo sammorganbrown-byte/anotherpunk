@@ -108,12 +108,6 @@ export const POST_QUEUE: QueuedPost[] = [
     due: "2026-09-24",
   },
   {
-    id: "wordmark",
-    image: "145-anotherpunk-chest-flash.jpg",
-    caption: "The whole brief, on one shirt.",
-    due: "2026-09-26",
-  },
-  {
     // Closes the run with the most composed photograph in the set.
     id: "subway",
     image: "77-wordmark-night-subway-REDO.jpg",
