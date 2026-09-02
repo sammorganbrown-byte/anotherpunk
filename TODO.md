@@ -387,12 +387,27 @@ loses about €4.40 on postage**, and Portugal is not the worst zone.
 The base looks about right; the €2 increment is what is wrong. Three extra
 garments appear to cost around €10 to add, roughly €3.20 each, not €2.
 
-**Still needed — four numbers from the same cart:**
+**Netherlands checked too: €28.61** for the same four tees.
 
-| | 1 item | 2 items | 4 items |
-|---|---|---|---|
-| Portugal | ? | ? | €19.37 |
-| Netherlands | ? | — | ? |
+| | we charge | sheet said | ACTUAL | we lose |
+|---|---|---|---|---|
+| Portugal, 4 items | €15 | €14.68 | **€19.37** | €4.37 |
+| Netherlands, 4 items | €15 | €21.13 | **€28.61** | €13.61 |
+
+The sheet understates by roughly a third, consistently. Two separate problems:
+the €2 increment is far too low (real marginal cost is €3.20 to Portugal, €5
+to the Netherlands), and a flat national rate cannot hold when the spread
+between cheapest and dearest destination is €9 on an identical parcel.
+
+**Not fatal.** A €50 tee costs €18.47 to make, so even carrying €10 of postage
+it nets over €20 — the garment margin is absorbing the error. But every
+multi-item order is less profitable than the margin sheet says, and the
+bundles, which swallow their own postage, take it hardest.
+
+**Last thing needed — 1 item and 2 items, to Portugal and the Netherlands.**
+Four numbers, same cart. One-item orders will be most of the shop, so the base
+rate matters more than anything else here and it is the last figure still
+resting on the bad sheet.
 
 With those, `SHIPPING_BASE`, `SHIPPING_PER_EXTRA_ITEM`, the margin sheet and
 the His and Hers price can all be rebuilt on evidence. Not changing the

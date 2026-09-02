@@ -62,6 +62,13 @@ export type Bundle = {
  *     that costs its own name is worth more in the telling than the few
  *     euros it gives up. This is the one price here chosen by ear.
  *
+ *     ⚠ THE SHIPPING FIGURE ABOVE IS THE OLD, UNDERSTATED ONE. Real quotes
+ *     came in a third higher than the rate sheet, so two jerseys probably
+ *     cost nearer €13 to Portugal and perhaps €19 to the Netherlands, not
+ *     €9.19. At the Dutch end that would leave this pack netting closer to
+ *     €18 than €28 — still profitable, but the thinnest thing in the shop.
+ *     RECHECK ONCE THE TWO-ITEM QUOTES ARE IN; this may need to be €75.
+ *
  *   RAW HEM FOUR           €175
  *     Separately: 4 x €50 + €15 shipping = €215. Saves €40.
  *     These are REAL figures, read off a live Tapstitch cart to Portugal for
@@ -69,10 +76,11 @@ export type Bundle = {
  *     €73.88, shipping €19.37, card fee ~€5.38 → net ~€76 (44%).
  *
  *     Note the shipping. €19.37 against the €12.90 the rate sheet implied —
- *     half again as much. That is the reason this went back to €175 rather
- *     than staying at the €140 it briefly carried: at €140 the same pack
- *     nets ~€42, and the postage it absorbs is the biggest single cost after
- *     the garments themselves.
+ *     half again as much, and to the Netherlands it is €28.61, at which the
+ *     pack still nets ~€67. That is the reason this went back to €175 rather
+ *     than staying at the €140 it briefly carried: at €140 the Dutch version
+ *     of this pack nets ~€32, and the postage it absorbs is the biggest
+ *     single cost after the garments themselves.
  *
  * Shipping costs are the average across the eighteen countries the shop
  * ships to, from shipping-rates.csv. The Netherlands is the worst case at

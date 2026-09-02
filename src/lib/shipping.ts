@@ -49,37 +49,42 @@
 export const SHIPPING_BASE = 9;
 export const SHIPPING_PER_EXTRA_ITEM = 2;
 
-/** ── THE €2 IS WRONG. REAL QUOTE SAYS WE LOSE ON MULTI-ITEM ORDERS ────────
+/** ── THE RATE SHEET UNDERSTATES COST BY ABOUT A THIRD. REAL QUOTES ────────
  *
- * A live Tapstitch cart, four raw-hem tees to Portugal, quoted **€19.37** of
- * shipping. Our model charges €9 + €2 x 3 = **€15** for that order and
- * assumed it cost about €14.68. So a four-item order to Portugal loses
- * roughly **€4.40 in postage** — and Portugal is not the worst zone.
+ * Live Tapstitch carts, four raw-hem tees, production €73.88 both times:
  *
- * The base looks sound; it is the increment that is wrong. If a single item
- * is near the €9 we charge, then three extra garments cost about €10 to add,
- * roughly €3.20 each, against the €2 we take. The rate sheet's two-item quote
- * understated how the cost grows, and repeating that marginal step for items
- * three and four compounded the error.
+ *                   we charge    rate sheet said    ACTUALLY COSTS   we lose
+ *     Portugal         €15           €14.68            €19.37         €4.37
+ *     Netherlands      €15           €21.13            €28.61        €13.61
  *
- * NOT CHANGED YET, DELIBERATELY. Raising the increment to cover four-item
- * orders would tax every two-item order to fix an error that mostly appears
- * at four, which is the exact mistake the note above warns against. Setting
- * it properly needs the real quotes:
+ * The sheet understated both by roughly 32–35%, consistently enough that the
+ * single-item cost is probably out by about the same — which would make a
+ * lone garment cost near €10 to send against the €9 we take, and more than
+ * that to the Netherlands.
  *
- *     Portugal    1 item    ?      Netherlands  1 item    ?
- *     Portugal    2 items   ?      Netherlands  4 items   ?
- *     Portugal    4 items   €19.37
+ * SO TWO SEPARATE ERRORS, NOT ONE. The increment is far too low: three extra
+ * garments cost roughly €3.20 each to Portugal and €5 to the Netherlands,
+ * against the €2 charged. And a flat national rate cannot hold when the real
+ * spread between the cheapest and dearest destination is €9 on the same
+ * parcel — Portugal and the Netherlands are charged identically and cost half
+ * as much again.
  *
- * Four numbers from the same Tapstitch cart. With those, the base and the
- * increment can be set from evidence instead of extrapolation, and the margin
- * sheet and both bundle prices rebuilt on them.
+ * HOW BAD IS IT REALLY. Not fatal, and worth saying plainly: a €50 tee costs
+ * €18.47 to make, so even carrying €10 of postage it nets over €20. The
+ * garment margin is absorbing the shipping error rather than the business
+ * running at a loss. What it does mean is that every multi-item order is
+ * quietly less profitable than the margin sheet claims, and the bundles —
+ * which swallow their own postage — are where it bites hardest.
  *
- * WHAT IS ALREADY KNOWN: the bundles absorb their own postage, so they take
- * this on the chin rather than passing it on. Raw Hem Four is priced on the
- * real €19.37 and still nets ~€76 at €175. The His and Hers pair is the one
- * to watch — its €69 assumed €9.19 of postage, and if two items really cost
- * nearer €13 the pack nets closer to €24 than the €28 first calculated.
+ * STILL NEEDED, and it is the last unknown: ONE ITEM and TWO ITEMS, to
+ * Portugal and to the Netherlands. Four numbers from the same cart. One-item
+ * orders will be most of the shop, so the base matters more than anything
+ * else here, and it is the one figure still resting on the bad sheet.
+ *
+ * Not raising the increment before those arrive. Setting it to cover a
+ * four-item order to the Netherlands would put roughly €5 on every second
+ * garment anyone adds, taxing the common two-item order to fix the rare
+ * four-item one — the exact mistake the note above this warns against.
  * ──────────────────────────────────────────────────────────────────────── */
 
 /** Shipping in whole euros for an order of `count` garments. An empty bag
