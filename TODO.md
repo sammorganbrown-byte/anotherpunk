@@ -5,6 +5,24 @@ Ordered by what bites soonest.
 
 ## Do first
 
+- [ ] **Connect the contact form.** /contact is live and its form cannot send:
+      it needs a `RESEND_API_KEY`. Right now a visitor who fills it in is told
+      to email sam@anotherpunk.com instead — honest, but not what the page is
+      for. Sign up free at resend.com, paste me the key, and I will add it to
+      Vercel and verify the domain. Two minutes.
+
+- [x] **Shopify sender address — DNS done 2026-09-01.** Six Shopify CNAMEs
+      added and resolving; Google's MX and SPF untouched. Finish in Shopify by
+      setting the sender to sam@anotherpunk.com, and add it as a staff
+      notification recipient on the same Notifications page so order alerts
+      reach the brand inbox.
+
+      Tapstitch has no separate notification address — only the account email,
+      which means changing the login. It is not customer-facing, so it can
+      wait; a Gmail filter forwarding Tapstitch mail to sam@ does the same job
+      with no risk.
+
+
 - [x] **Email — done 2026-09-01.** Google Workspace on sam@anotherpunk.com,
       with MX, SPF, DKIM and domain verification all added to Vercel DNS and
       verified. The site's Contact link points at it. An animated signature
