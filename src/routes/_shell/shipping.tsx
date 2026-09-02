@@ -37,6 +37,26 @@ export const Route = createFileRoute("/_shell/shipping")({ component: Shipping }
  * it is a genuine selling point worth stating.
  * ──────────────────────────────────────────────────────────────────────────
  */
+/** Whether Tapstitch ships DDP under an IOSS registration, so that nothing is
+ * owed on delivery.
+ *
+ * FLIP THIS TO true THE MOMENT TAPSTITCH SUPPORT CONFIRMS IT IN WRITING, and
+ * the section below rewrites itself from a warning into the selling point it
+ * ought to be. One line, no other edits.
+ *
+ * Left false for now on purpose. A parcel from Tapstitch has already arrived
+ * in Portugal with nothing to pay, which is real evidence and probably the
+ * right answer — but it is not proof. A sample or a test order can travel on
+ * a different service from a customer's, and low-value parcels sometimes
+ * clear uncharged even where no IOSS registration exists at all. One parcel
+ * establishes that it can happen, not that it always will.
+ *
+ * The asymmetry is what decides it. Being cautious here costs a sentence of
+ * reassurance nobody will miss. Being wrong costs a customer an unexpected
+ * VAT bill and a courier handling fee on their own doorstep, which is a
+ * chargeback and someone who never comes back. Wait for the sentence. */
+const DUTY_PREPAID = false;
+
 const MAKE_DAYS = "2–5 working days";
 const EUROPE_DAYS = "8–15 working days";
 const WORLD_DAYS = "10–20 working days";
@@ -95,18 +115,36 @@ function Shipping() {
       </LegalSection>
 
       <LegalSection heading="Duty and customs">
-        <p>
-          Everything is printed and dispatched by our production partner in China, so an
-          order is an import wherever you are. Depending on your country, import VAT or duty
-          may be charged when it arrives, along with a courier handling fee. That is set by
-          your own customs service rather than collected here.
-        </p>
-        <p>
-          Most orders arrive with nothing more to pay. We would rather tell you it is
-          possible than have you meet it at the door — if you are charged anything on
-          delivery, email <a href="mailto:sam@anotherpunk.com">sam@anotherpunk.com</a> with
-          the receipt.
-        </p>
+        {DUTY_PREPAID ? (
+          <>
+            <p>
+              <strong>Nothing to pay on delivery.</strong> Everything is printed and
+              dispatched by our production partner in China, and the import VAT is settled
+              before the parcel reaches you. The price you paid at checkout is the price.
+            </p>
+            <p>
+              No customs bill, no courier handling fee, no card through the door asking you
+              to go and collect your own shirt. If anything is ever charged to you on
+              delivery, email <a href="mailto:sam@anotherpunk.com">sam@anotherpunk.com</a>{" "}
+              with the receipt and you will be refunded it.
+            </p>
+          </>
+        ) : (
+          <>
+            <p>
+              Everything is printed and dispatched by our production partner in China, so an
+              order is an import wherever you are. Depending on your country, import VAT or
+              duty may be charged when it arrives, along with a courier handling fee. That is
+              set by your own customs service rather than collected here.
+            </p>
+            <p>
+              Most orders arrive with nothing more to pay. We would rather tell you it is
+              possible than have you meet it at the door — if you are charged anything on
+              delivery, email <a href="mailto:sam@anotherpunk.com">sam@anotherpunk.com</a>{" "}
+              with the receipt.
+            </p>
+          </>
+        )}
       </LegalSection>
 
       <LegalSection heading="Wrong address">

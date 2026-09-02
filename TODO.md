@@ -217,10 +217,16 @@ warns instead of promising. Warning about a charge that never comes is a
 pleasant surprise; promising none and delivering a VAT bill plus a courier
 handling fee is a chargeback and a furious customer.
 
-**Ask Tapstitch: are you IOSS-registered, and do you ship DDP?**
+**Asked Tapstitch — awaiting their reply.** A parcel has already arrived in
+Portugal with nothing to pay, which is good evidence and probably the right
+answer, but it is not proof: a sample can travel differently from a customer's
+order, and low-value parcels sometimes clear uncharged with no IOSS behind
+them at all.
 
-- If YES — rewrite that section to say so plainly. "No customs bill, ever" is
-  a real selling point and worth stating loudly.
+**When support confirms it in writing, set `DUTY_PREPAID = true` at the top of
+`src/routes/_shell/shipping.tsx`.** One line. The page rewrites itself from a
+warning into "nothing to pay on delivery", which is the version that sells.
+
 - If NO — it needs saying much more prominently than a policy page, because a
   €50 tee that arrives with €15 to pay is not a €50 tee. It would also be
   worth pricing VAT in and paying it yourself.
