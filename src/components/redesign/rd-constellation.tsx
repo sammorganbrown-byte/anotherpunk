@@ -31,6 +31,23 @@ import type { AnotherPunkProduct } from "../../lib/another-punk-products";
 
 const DRAG_SLOP = 6;
 
+/** Atmosphere frames: group shots that sell nothing.
+ *
+ * These link nowhere and carry no caption, on purpose. A photograph of four
+ * people wearing four different garments has no single product to point at,
+ * and forcing one on it would make every click a small disappointment. They
+ * are here to make the field feel like a place rather than a catalogue — the
+ * wide, cinematic frames a lookbook opens with, drifting among the pieces you
+ * can actually buy.
+ *
+ * Wider than the product frames and shown at their native 16:9, because
+ * cropping a group shot to 4:3 cuts the people off the ends of it.
+ *
+ * Any addition needs the same check as everything else: the TOUNGE render of
+ * the Tongue Box tee exists in the same batch as these and is unusable, so a
+ * generated group shot has to be read letter by letter before it goes in. */
+const ATMOSPHERE = ["/img/153-group-four-street.jpg", "/img/154-group-five-row.jpg"];
+
 function seeded(key: string) {
   let h = 2166136261;
   for (let i = 0; i < key.length; i++) {
@@ -62,6 +79,8 @@ type Piece = {
    * not belong to either garment — its obvious destination is the pack, so
    * it links there and captions itself as the deal. */
   bundle?: Bundle;
+  /** Set on atmosphere frames: no link, no caption, wider. */
+  atmosphere?: boolean;
 };
 
 /** EVERY frame of every garment. A shirt recurring in three different shots
@@ -109,6 +128,7 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
     src: string;
     label: boolean;
     bundle?: Bundle;
+    atmosphere?: boolean;
   }[] = [];
   const deepest = Math.max(0, ...byProduct.map((imgs) => imgs.length));
   for (let round = 0; round < deepest; round++) {
@@ -135,6 +155,13 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
     raw.splice(at, 0, { p: lead, src: bundle.image, label: true, bundle });
   }
 
+  // Atmosphere frames, spaced the same way. Placed after the bundles so the
+  // two kinds of non-product piece do not land on top of each other.
+  for (let k = 0; k < ATMOSPHERE.length; k++) {
+    const at = Math.floor(((k + 1) * raw.length) / (ATMOSPHERE.length + 1));
+    raw.splice(at, 0, { p: products[0], src: ATMOSPHERE[k], label: false, atmosphere: true });
+  }
+
   // Jittered grid: roughly square, one cell per piece, scattered inside it.
   const cols = Math.ceil(Math.sqrt(raw.length * (world.w / world.h)));
   const rows = Math.ceil(raw.length / cols);
@@ -145,7 +172,9 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
     const rnd = seeded(r.src + i);
     const cx = (i % cols) * cw;
     const cy = Math.floor(i / cols) * ch;
-    const w = 150 + rnd() * 130;
+    // Atmosphere frames run larger — they are the wide establishing shots,
+    // and at product size a group of four reads as four smudges.
+    const w = (150 + rnd() * 130) * (r.atmosphere ? 1.8 : 1);
     const h = w * 0.75;
     // A piece may spill up to ~10% of its own size into the neighbouring
     // cell, in either direction. Enough that the field reads as a strewn
@@ -155,11 +184,12 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
     const spanX = Math.max(10, cw - w) + w * OVERLAP * 2;
     const spanY = Math.max(10, ch - h) + h * OVERLAP * 2;
     return {
-      key: `${r.bundle?.slug ?? r.p.slug}-${i}`,
+      key: `${r.atmosphere ? "atmos" : (r.bundle?.slug ?? r.p.slug)}-${i}`,
       p: r.p,
       src: r.src,
       label: r.label,
       bundle: r.bundle,
+      atmosphere: r.atmosphere,
       w,
       x: cx - w * OVERLAP + rnd() * spanX,
       y: cy - h * OVERLAP + rnd() * spanY,
@@ -495,54 +525,72 @@ export function RdConstellation({
           className="rd-star"
           style={{ left: `${s.x}px`, top: `${s.y}px`, width: `${s.w}px` }}
         >
-          <Link
-            to={s.bundle ? "/bundle/$slug" : "/product/$slug"}
-            params={{ slug: s.bundle ? s.bundle.slug : s.p.slug }}
-            className="rd-star-link"
-            data-bundle={s.bundle ? "true" : undefined}
-            draggable={false}
-            aria-label={
-              s.bundle
-                ? `${s.bundle.title}, package deal, \u20ac${s.bundle.price}`
-                : `${s.p.title}, \u20ac${s.p.price}`
-            }
-          >
-            {/* The frame holds the layout; the photograph floats inside it.
-                CRT mode quantises by rendering the image small and scaling it
-                back up — and while that image was still the sizing element,
-                shrinking it shrank the whole piece and let the scaled-up
-                result cover the caption. That is what made the pieces jump
-                in size and lose their words. */}
-            <span className="rd-shot">
-              <img
-                src={s.src}
-                alt=""
-                aria-hidden="true"
-                // The first handful are the ones on screen at load. Lazy-loading
-                // those meant the field appeared as empty outlines and filled in
-                // afterwards; the rest stay lazy so 76 photographs do not all
-                // fetch at once.
-                loading={i < 10 ? "eager" : "lazy"}
-                fetchPriority={i < 6 ? "high" : "auto"}
-                decoding="async"
-                draggable={false}
-              />
+          {s.atmosphere ? (
+            /* No Link. There is nothing to click through to, and a frame that
+               looks clickable but is not is worse than one that plainly is
+               not. Inert to the pointer too, so it never steals a drag from
+               the field underneath it. */
+            <span className="rd-star-link" data-atmos="true" aria-hidden="true">
+              <span className="rd-shot" data-wide="true">
+                <img
+                  src={s.src}
+                  alt=""
+                  loading={i < 10 ? "eager" : "lazy"}
+                  decoding="async"
+                  draggable={false}
+                />
+              </span>
             </span>
-            {s.label ? (
-              <figcaption>
-                {s.bundle ? (
-                  <>
-                    {s.bundle.title} <span aria-hidden="true">·</span>{" "}
-                    <span className="rd-star-deal">€{s.bundle.price}</span>
-                  </>
-                ) : (
-                  <>
-                    {s.p.title} <span aria-hidden="true">·</span> €{s.p.price}
-                  </>
-                )}
-              </figcaption>
-            ) : null}
-          </Link>
+          ) : (
+          <Link
+              to={s.bundle ? "/bundle/$slug" : "/product/$slug"}
+              params={{ slug: s.bundle ? s.bundle.slug : s.p.slug }}
+              className="rd-star-link"
+              data-bundle={s.bundle ? "true" : undefined}
+              draggable={false}
+              aria-label={
+                s.bundle
+                  ? `${s.bundle.title}, package deal, \u20ac${s.bundle.price}`
+                  : `${s.p.title}, \u20ac${s.p.price}`
+              }
+            >
+              {/* The frame holds the layout; the photograph floats inside it.
+                  CRT mode quantises by rendering the image small and scaling it
+                  back up — and while that image was still the sizing element,
+                  shrinking it shrank the whole piece and let the scaled-up
+                  result cover the caption. That is what made the pieces jump
+                  in size and lose their words. */}
+              <span className="rd-shot">
+                <img
+                  src={s.src}
+                  alt=""
+                  aria-hidden="true"
+                  // The first handful are the ones on screen at load. Lazy-loading
+                  // those meant the field appeared as empty outlines and filled in
+                  // afterwards; the rest stay lazy so 76 photographs do not all
+                  // fetch at once.
+                  loading={i < 10 ? "eager" : "lazy"}
+                  fetchPriority={i < 6 ? "high" : "auto"}
+                  decoding="async"
+                  draggable={false}
+                />
+              </span>
+              {s.label ? (
+                <figcaption>
+                  {s.bundle ? (
+                    <>
+                      {s.bundle.title} <span aria-hidden="true">·</span>{" "}
+                      <span className="rd-star-deal">€{s.bundle.price}</span>
+                    </>
+                  ) : (
+                    <>
+                      {s.p.title} <span aria-hidden="true">·</span> €{s.p.price}
+                    </>
+                  )}
+                </figcaption>
+              ) : null}
+            </Link>
+          )}
         </div>
         ))}
       </div>

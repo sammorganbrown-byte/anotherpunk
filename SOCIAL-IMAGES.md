@@ -64,3 +64,22 @@ The Tongue Box post — girl on wooden pallets in a warehouse — reads
 which were all clean, but not individually verified. `hero-poster.jpg`,
 `tongue-box-artwork.jpg` and `AP-real-*.jpg` are working assets rather than
 photographs and were skipped.
+
+## Group shots recovered from Higgsfield history (2 Sep)
+
+Three existed in the generation history and had never been downloaded. Two are
+now in `public/img` as atmosphere frames in the field — they link nowhere:
+
+| file | what | verdict |
+|---|---|---|
+| `153-group-four-street.jpg` | Four models, night street, colour | **Use.** Bat Country, Another Punk, Saucer, Big Pussy — all spelled correctly. |
+| `154-group-five-row.jpg` | Five models in a row, B&W wall | **Use.** Jesus, two Saucers, Big Pussy, Mesh — all correct. |
+| `554b0310` three models, car park | Three models, night car park | **REJECTED.** The right-hand model's tee reads **TOUNGE BOX**. Checked against `tongue-box-artwork.jpg`, which reads TONGUE. Same typo as `45`, `51`, `52`, `68`. |
+
+Worth noting the rejected one is otherwise the best composed of the three — a
+reminder that a good frame is not a usable one, and that these have to be read
+letter by letter before they go anywhere.
+
+Also still in history and unused, if a two-person shot is ever wanted:
+`adc3083a` (two models shoving each other), `ef90dd62` (two back to back),
+`9a6232ce` (two under a streetlight), `b25ed51c` (another five-in-a-row).

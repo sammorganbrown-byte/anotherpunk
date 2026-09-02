@@ -1994,3 +1994,17 @@ body:has(.rd-pdp) .rd-np {
   background: var(--rd-red);
   color: var(--rd-void, #080807);
 }
+
+/* Atmosphere frames in the field: the wide group shots that sell nothing.
+   Native 16:9 rather than the 4:3 the product frames use — cropping a group
+   shot square cuts the people off both ends of it. */
+[data-ap-rd] .rd-shot[data-wide="true"] {
+  aspect-ratio: 16 / 9;
+}
+/* Inert to the pointer. Nothing to click, and it must never swallow a drag
+   meant for the field beneath it. */
+[data-ap-rd] .rd-star-link[data-atmos="true"] {
+  display: block;
+  cursor: inherit;
+  pointer-events: none;
+}
