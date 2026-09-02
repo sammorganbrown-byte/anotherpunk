@@ -5,11 +5,16 @@ Ordered by what bites soonest.
 
 ## Do first
 
-- [ ] **Connect the contact form.** /contact is live and its form cannot send:
-      it needs a `RESEND_API_KEY`. Right now a visitor who fills it in is told
-      to email sam@anotherpunk.com instead — honest, but not what the page is
-      for. Sign up free at resend.com, paste me the key, and I will add it to
-      Vercel and verify the domain. Two minutes.
+- [ ] **Finish connecting the contact form.** The Resend key is in Vercel.
+      What is left: add the domain at resend.com/domains — **enter
+      `send.anotherpunk.com`, not `anotherpunk.com`**. Verifying the root
+      would have Resend ask for an SPF record there, and the root already has
+      one for Google; a domain can only have one, and a second breaks both
+      silently. The subdomain keeps them apart. Paste me the records and I
+      will add them and switch the form's from-address over.
+
+      Until then /contact is live but the form cannot send — it tells people
+      to email sam@anotherpunk.com instead.
 
 - [x] **Shopify sender address — DNS done 2026-09-01.** Six Shopify CNAMEs
       added and resolving; Google's MX and SPF untouched. Finish in Shopify by
@@ -46,6 +51,22 @@ Ordered by what bites soonest.
       drafts for the earlier payment is exactly why order #1001 appeared.
 
 - [ ] **Refund the three test charges** in Stripe → Payments: €6, €1, €1.
+      Not refundable immediately on a new account — the balance is still
+      pending. It will become available; it is €8 and not worth chasing.
+
+- [ ] **Set the payout schedule to daily** at Settings → Payouts. Free, no
+      eligibility needed, and money leaves for the bank as soon as it is
+      available rather than waiting for a weekly batch. Instant Payouts (1%
+      in the EU, needs a debit card on file) are not available to new
+      accounts and would not help in week one anyway, since the first payout
+      is held 7-14 days regardless.
+
+- [ ] **Launch-week float.** The first Stripe payout takes 7-14 days, not 3,
+      so nothing comes back during launch week and every order is fronted.
+      Twenty orders in week one is about €460 of Tapstitch costs with no
+      money returning yet. The steady-state €500 covers it, but only just.
+      Worst case orders sit "On Hold" in Tapstitch until funds land, which is
+      survivable — just better known in advance than discovered.
 
 - [ ] **Remove `DRYRUN99`** — one entry in `src/lib/promo-codes.ts`. While it
       exists, anyone who guesses it buys a €50 shirt for €1. Ask and it is a
