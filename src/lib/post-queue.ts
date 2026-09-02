@@ -86,8 +86,22 @@ export const POST_QUEUE: QueuedPost[] = [
     // the blurry one is there because every real account has one.
     id: "punkiest-punk",
     images: ["158-sam-armchair.jpg", "159-sam-drawing.jpg", "160-sam-blur.jpg"],
+    // WRITTEN TO BE PINNED. That changes the job: it is not a post that
+    // scrolls past, it is the first thing every new visitor to the account
+    // reads, so it has to introduce the shop and not only the man. Hence the
+    // middle paragraph, which the feed version did not need.
+    //
+    // The first two lines carry it. Instagram truncates at about 125
+    // characters behind a "more" link, and the joke lands at 72 — so anyone
+    // who never expands it still gets the whole gag, and what follows is
+    // reward for tapping rather than the price of understanding.
+    //
+    // Self-deprecating on purpose. The claim underneath — one person draws,
+    // prints, packs and replies — is the shop's real advantage over anything
+    // else printed to order, and the joke about the title is what stops it
+    // reading as a boast.
     caption:
-      "Sam. Punkiest Punk.\n\nGave himself the title. There were no other nominations.\n\nDraws every one of these on that floor. Answers your emails from the same spot.",
+      "Sam. Punkiest Punk.\n\nSelf-appointed title. There were no other nominations.\n\nEvery graphic on this account was drawn by hand, on that floor. Nothing gets printed until somebody orders it — no warehouse, no dead stock, no sale rail.\n\nHe draws them, packs them and answers the emails. Usually the same day.\n\nanotherpunk.com",
     due: "2026-09-12",
   },
   {
