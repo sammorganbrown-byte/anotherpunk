@@ -216,3 +216,41 @@ export function shippingAfterBundles(lines: BundleLine[]): number {
   const total = lines.reduce((n, l) => n + l.qty, 0);
   return Math.max(0, computeShipping(total) - bundleShippingCredit(lines));
 }
+
+/** ── ON CUSTOMISING THE NAME ON A JERSEY BACK ──────────────────────────────
+ *
+ * Not built, and deliberately kept separate from bundles, because it is a
+ * different shape of problem. A bundle is a price rule over garments that
+ * already exist. A custom name is a garment that does not exist yet.
+ *
+ * Everything sold here today is "pick a variant": the artwork is a fixed file
+ * Tapstitch already holds, and an order is a pointer to it. A name on the
+ * back means an artwork file PER ORDER — the name set in the right typeface,
+ * at the right size, in the right place on the back panel, at print
+ * resolution. Something has to make that file and get it to the printer.
+ *
+ * Two ways, and the first is the right way to start:
+ *
+ *   BY HAND. The name is collected at checkout and travels in the order,
+ *   Sam sets it in the artwork and uploads it against that order in
+ *   Tapstitch. Nothing new to build beyond the input and carrying the text
+ *   through. It does not scale, and at the volume this shop is at, it does
+ *   not need to — ten of these a month is an evening's work, and it proves
+ *   people want it before anything is automated.
+ *
+ *   AUTOMATICALLY. Render the back print server-side and hand Tapstitch the
+ *   file with the order. This is only worth building once the volume hurts,
+ *   and it depends on something not yet checked: whether Tapstitch's API
+ *   accepts per-order artwork at all, or whether custom files have to be set
+ *   up as products in advance. That question decides the whole design and
+ *   should be answered before any of it is written.
+ *
+ * THE PART THAT IS NOT A TECHNICAL PROBLEM: a garment personalised to the
+ * buyer is the one case where the EU's 14-day right of withdrawal genuinely
+ * DOES fall away — the exemption /returns currently explains does not apply
+ * to us. It would start applying to these. That has to be said plainly on
+ * the page before the name is typed and not after, and /returns needs a line
+ * for it, because a customised jersey is the one thing here that cannot be
+ * sent back for a change of mind. It is also unsellable to anyone else if it
+ * comes back, which is the reason the law allows the exemption at all.
+ * ────────────────────────────────────────────────────────────────────────── */
