@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { BUNDLES, type Bundle } from "../../lib/bundles";
+import { useCurrency } from "../../lib/currency-context";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { AnotherPunkProduct } from "../../lib/another-punk-products";
 
@@ -221,6 +222,11 @@ export function RdConstellation({
   products: AnotherPunkProduct[];
   reduced: boolean;
 }) {
+  // The field quotes prices too, so it has to speak the chosen currency like
+  // every other surface. It did not, and a shop that switches to dollars
+  // everywhere except its own homepage looks broken in the one place a
+  // visitor lands first.
+  const { formatPrice } = useCurrency();
   const [pieces, setPieces] = useState<Piece[]>([]);
   const skyRef = useRef<HTMLDivElement | null>(null);
   const worldRef = useRef<HTMLDivElement | null>(null);
@@ -417,7 +423,7 @@ export function RdConstellation({
               <img src={b.image} alt={b.title} className="aspect-[4/3] w-full" />
               <figcaption>
                 {b.title} <span aria-hidden="true">·</span>{" "}
-                <span className="rd-star-deal">€{b.price}</span>
+                <span className="rd-star-deal">{formatPrice(b.price)}</span>
               </figcaption>
             </Link>
           </li>
@@ -562,8 +568,8 @@ export function RdConstellation({
               draggable={false}
               aria-label={
                 s.bundle
-                  ? `${s.bundle.title}, package deal, \u20ac${s.bundle.price}`
-                  : `${s.p.title}, \u20ac${s.p.price}`
+                  ? `${s.bundle.title}, package deal, ${formatPrice(s.bundle.price)}`
+                  : `${s.p.title}, ${formatPrice(s.p.price)}`
               }
             >
               {/* The frame holds the layout; the photograph floats inside it.
@@ -592,11 +598,11 @@ export function RdConstellation({
                   {s.bundle ? (
                     <>
                       {s.bundle.title} <span aria-hidden="true">·</span>{" "}
-                      <span className="rd-star-deal">€{s.bundle.price}</span>
+                      <span className="rd-star-deal">{formatPrice(s.bundle.price)}</span>
                     </>
                   ) : (
                     <>
-                      {s.p.title} <span aria-hidden="true">·</span> €{s.p.price}
+                      {s.p.title} <span aria-hidden="true">·</span> {formatPrice(s.p.price)}
                     </>
                   )}
                 </figcaption>
