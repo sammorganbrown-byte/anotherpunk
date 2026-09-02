@@ -22,6 +22,29 @@
 export const SHIPPING_BASE = 9;
 export const SHIPPING_PER_EXTRA_ITEM = 2;
 
+/** ── THE €2 IS THE LEAST VERIFIED NUMBER IN THIS SHOP ──────────────────────
+ *
+ * shipping-rates.csv quotes Tapstitch for ONE item and TWO items. Everything
+ * beyond two repeats the marginal cost of the second, which is a guess with
+ * the right shape rather than a figure anyone has confirmed.
+ *
+ * Tapstitch's own FAQ says why that guess is shakier than it looks:
+ * "Shipping costs for multi-product orders may vary depending on the product
+ * mix, categories, and total shipment weight." Weight, not item count. Our
+ * per-item charge is flat, so a heavy order and a light one of the same
+ * length are charged the same and cost us different amounts.
+ *
+ * THE EXPOSURE IS THE RAW HEM FOUR: four heavyweight tees, the heaviest
+ * bundle we sell, priced on a shipping cost extrapolated from a two-item
+ * quote. The margin has room — even at triple the assumed postage it stays
+ * profitable — so this is not urgent, but it is unmeasured.
+ *
+ * IT IS ALSO EASY TO SETTLE. Tapstitch say: "add the items to your cart and
+ * check the live shipping cost at checkout." Put four raw-hem tees in a
+ * Tapstitch cart to Portugal, and again to the Netherlands (our worst zone),
+ * and read the real numbers. Then either confirm the €2 or correct it here.
+ * ────────────────────────────────────────────────────────────────────────── */
+
 /** Shipping in whole euros for an order of `count` garments. An empty bag
  * ships for nothing, so a cart with no lines never shows a shipping charge. */
 export function computeShipping(count: number): number {

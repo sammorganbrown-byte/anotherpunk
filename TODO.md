@@ -253,3 +253,27 @@ default), or whether each express order has to be switched by hand in their
 dashboard. If it is manual, Tapstitch orders arrive **On Hold**, so there is a
 window — and express orders would carry an `EXPRESS` tag, the word in the
 order note, and EXPRESS in the notification email subject.
+
+## From the Tapstitch FAQ — two things worth acting on (2 Sep)
+
+**1. Check the real postage on four heavyweight tees.** Their FAQ says
+multi-item shipping "may vary depending on the product mix, categories, and
+total shipment weight" — weight, not item count. Our `SHIPPING_PER_EXTRA_ITEM`
+of €2 is extrapolated from a two-item quote and has never been verified, and
+the Raw Hem Four is the heaviest thing we sell. They tell you how to check:
+add the items to a Tapstitch cart and read the live rate at checkout. Do it
+for Portugal and for the Netherlands (our worst zone). The margin survives
+even at triple the assumed cost, so this is not urgent — just unmeasured.
+
+Same trick gets the **International Shipping (express) rates**, which is the
+one thing still blocking express at checkout.
+
+**2. Lost or damaged parcels are not guaranteed.** Their answer is only that
+they will "do our best to assist you and work with you toward a satisfactory
+solution" — no committed reshipment. /returns promises customers a replacement
+or refund with postage both ways, which is the right promise to make and
+should stay. Just know it may not always be recoverable from Tapstitch, so a
+lost parcel can land on our margin. Worth watching if it ever happens twice.
+
+Also confirmed: shipping time excludes production time, which /shipping
+already states correctly.
