@@ -80,6 +80,19 @@ Worth noting the rejected one is otherwise the best composed of the three — a
 reminder that a good frame is not a usable one, and that these have to be read
 letter by letter before they go anywhere.
 
-Also still in history and unused, if a two-person shot is ever wanted:
-`adc3083a` (two models shoving each other), `ef90dd62` (two back to back),
-`9a6232ce` (two under a streetlight), `b25ed51c` (another five-in-a-row).
+Three two-person shots added alongside them, all checked and all clean:
+
+| file | what | garments, all correct |
+|---|---|---|
+| `155-pair-shove.jpg` | Two laughing, shoving, against a white wall | Bat Country, Surrender Dorothy |
+| `156-pair-streetlight.jpg` | Two deadpan under a streetlight at night | Bat Country, Another Punk |
+| `157-pair-saucer-bothways.jpg` | The Saucer tee in black and bone, side by side | Another Punk (x2) |
+
+`155` is the only image in the whole shoot where anyone is laughing, which is
+why it earns its place — everything else here is deadpan by design, and one
+frame of actual delight in a field of eighty stops the deadpan reading as the
+only thing the brand can do.
+
+Still unused in history: `ef90dd62` (two back to back — the back of a tee is
+blank, so it shows less than it costs) and `b25ed51c` (a second
+five-in-a-row, near-duplicate of `154`).

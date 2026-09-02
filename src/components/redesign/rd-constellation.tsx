@@ -43,10 +43,20 @@ const DRAG_SLOP = 6;
  * Wider than the product frames and shown at their native 16:9, because
  * cropping a group shot to 4:3 cuts the people off the ends of it.
  *
+ * Ordered so the two big group frames never sit next to each other — they are
+ * inserted at even intervals through the field, so alternating group and pair
+ * here keeps the largest frames apart once they land.
+ *
  * Any addition needs the same check as everything else: the TOUNGE render of
  * the Tongue Box tee exists in the same batch as these and is unusable, so a
  * generated group shot has to be read letter by letter before it goes in. */
-const ATMOSPHERE = ["/img/153-group-four-street.jpg", "/img/154-group-five-row.jpg"];
+const ATMOSPHERE = [
+  "/img/153-group-four-street.jpg",
+  "/img/155-pair-shove.jpg",
+  "/img/154-group-five-row.jpg",
+  "/img/156-pair-streetlight.jpg",
+  "/img/157-pair-saucer-bothways.jpg",
+];
 
 function seeded(key: string) {
   let h = 2166136261;
@@ -172,9 +182,11 @@ function buildPieces(products: AnotherPunkProduct[], world: { w: number; h: numb
     const rnd = seeded(r.src + i);
     const cx = (i % cols) * cw;
     const cy = Math.floor(i / cols) * ch;
-    // Atmosphere frames run larger — they are the wide establishing shots,
-    // and at product size a group of four reads as four smudges.
-    const w = (150 + rnd() * 130) * (r.atmosphere ? 1.8 : 1);
+    // Atmosphere frames run larger — at product size a group of four reads as
+    // four smudges. The two-person frames need less room than the five-across
+    // ones to be legible, so they are scaled by how many people are in them.
+    const atmosScale = r.atmosphere ? (r.src.includes("-pair-") ? 1.45 : 1.85) : 1;
+    const w = (150 + rnd() * 130) * atmosScale;
     const h = w * 0.75;
     // A piece may spill up to ~10% of its own size into the neighbouring
     // cell, in either direction. Enough that the field reads as a strewn
