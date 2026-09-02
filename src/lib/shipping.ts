@@ -119,21 +119,22 @@ export const SHIPPING_COUNTRIES: { code: string; name: string }[] = [
  * else is true, and remote addresses are DDU across every service. If express
  * is ever offered, IT MUST NOT INHERIT THIS CLAIM — sell it on speed alone.
  *
- * ── WHICH SERVICE DO OUR ORDERS ACTUALLY USE? VERIFY THIS. ───────────────
- * The claim below holds for NON-EXPRESS shipping only. Sam's own parcel may
- * have gone International Express, which means two things: it is no longer
- * evidence that this lane arrives clean, and nobody has yet confirmed which
- * service the account actually sends customer orders on.
+ * ── THE SERVICE IS CONFIRMED: SPECIAL LINE ───────────────────────────────
+ * Checked with Sam. Orders default to Special Line — non-Express, which is
+ * precisely the lane support described as generally DDP. So the claim below
+ * rests on the right service, and the exceptions (International Express,
+ * remote addresses) do not apply to how this shop actually ships.
  *
- * If Tapstitch is defaulting these orders to International Express, every one
- * is DDU and the promise below becomes a refund we pay on roughly every
- * order — around €20 a time, against a €25 margin. Check the service on the
- * account and on a real order before volume arrives.
+ * Sam's own parcel may have gone Express, which is why it is cited nowhere as
+ * evidence: it was a different service from the one customers get, and it
+ * happened to be both faster and DDU. Interesting, irrelevant.
  *
- * The claim is left standing because the refund backstop protects the
- * CUSTOMER either way; what is at risk is our own margin, and that is the
- * right thing to have exposed while this is checked rather than the other way
- * round.
+ * THE ONE WAY THIS BREAKS is if the service is ever changed — by picking
+ * Express for a rush order, or by setting a Shopify shipping option that
+ * Tapstitch honours. Either would move that order to DDU while the site still
+ * promises no customs fees, and the refund would land on us. If express is
+ * ever offered, this is the reason it needs its own handling rather than a
+ * shipping line swapped in behind the same copy.
  *
  * WHY "CANNOT GUARANTEE" IS NOT A REASON TO STAY SILENT. No seller anywhere
  * can guarantee a customs outcome; the assessment belongs to a border

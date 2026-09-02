@@ -297,29 +297,23 @@ Also confirmed: shipping time excludes production time, which /shipping
 already states correctly.
 
 
-## CHECK WHICH SHIPPING SERVICE OUR ORDERS ACTUALLY USE (2 Sep)
+## Shipping service — confirmed (2 Sep)
 
-Sam's parcel may have gone **International Express**. If so it proves nothing
-about what customers get, and it takes away the only real-world evidence
-behind two live claims.
+Orders default to **Special Line**. That is non-Express, to normal addresses,
+in the EU — exactly the lane Tapstitch described as generally DDP, so the
+"no customs fees" promise sits on the right service and the exceptions
+(International Express, remote addresses) do not apply.
 
-**Why it matters:** International Express is DDU. If the Tapstitch account is
-sending customer orders on Express, every EU order can attract import VAT plus
-a handling fee — and the site promises to refund that. Roughly €20 a time
-against a €25 margin, on most orders. The "no customs fees" line only holds
-for non-Express services.
+Sam's own parcel may have gone Express. It is cited as evidence for nothing:
+different service, happened to be faster, and would have been DDU.
 
-**What to check, before real orders start arriving:**
-1. Open the completed test order in Tapstitch and read the service it shipped on.
-2. Check the account's default shipping method (and whether Shopify's shipping
-   option is influencing it — the draft order sets no `shipping_line`, so
-   Tapstitch is choosing).
-3. If it is Express, switch the default to Special Line, then re-verify.
+Delivery time stays "about two weeks", matching Tapstitch's published Special
+Line figures — 2–5 days to make plus around 10 in transit. Replace it with a
+real average once a few customer orders have landed.
 
-The customer is protected either way by the refund promise. What is exposed is
-our margin, which is the right way round while this is unconfirmed — but it is
-not a thing to leave unconfirmed for long.
-
-Delivery time has gone back to "about two weeks", matching Tapstitch's own
-published figures for Special Line rather than the faster number Sam's
-possibly-Express parcel suggested.
+**The one way this breaks:** if an order ever goes out on a different service.
+Picking Express for someone in a rush, or adding a Shopify shipping option
+Tapstitch honours, moves that order to DDU while the site still promises no
+customs fees — and the refund lands on us. This is why express, if ever
+offered, needs its own copy rather than a different service swapped in behind
+the same promise.
