@@ -153,7 +153,7 @@ function RedesignLayout() {
           >
             Shop
           </Link>
-          <a href="mailto:hello@anotherpunk.com" className="rd-link">
+          <a href="mailto:sam@anotherpunk.com" className="rd-link">
             Contact
           </a>
           <Link to="/cart" className="rd-link" data-on={path.startsWith("/cart")}>
