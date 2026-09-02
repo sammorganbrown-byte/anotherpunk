@@ -18,6 +18,33 @@
 // increment would tax every two-item order to make back a loss that only
 // happens on one route.
 //
+// ── FULFILMENT ORIGIN: KEEP IT ON INTERNATIONAL ─────────────────────────
+// Tapstitch let you default to US or international fulfilment. This shop is
+// on international, and should stay there.
+//
+// EVERY NUMBER BELOW ASSUMES IT. The rates in shipping-rates.csv are quoted
+// from the international origin — which is why the cheapest zones on the
+// sheet are Thailand, China and Vietnam, and Europe is mid-table. Switching
+// origin would invalidate the base, the increment, the margin sheet and both
+// bundle prices in one move, silently, with the site still charging the old
+// figures.
+//
+// It is also the better origin for this shop on the merits. Nearly all sales
+// are European, and international origin on Special Line is the lane Tapstitch
+// confirmed as DDP into the EU. Switching to US origin would make EU orders an
+// import from America instead: no cheaper, no faster, and with the duty-paid
+// treatment no longer documented. It would trade the main market's shipping
+// for a smaller one's.
+//
+// US orders do not lose out either. Tapstitch's DDP explicitly covers "U.S.
+// shipments using Special Line", so an American customer is duty-paid on this
+// origin too — just not as fast as domestic would be.
+//
+// WHEN TO REVISIT: if US sales ever become a real share of orders. Fulfilling
+// those domestically would cut a fortnight to a few days, which is a genuine
+// win — but it needs its own rate card, and not every garment is available
+// from both origins. It is a second origin to add, never a default to flip.
+
 // TO CHANGE THE PRICE, change these two numbers. Nothing else needs touching.
 export const SHIPPING_BASE = 9;
 export const SHIPPING_PER_EXTRA_ITEM = 2;

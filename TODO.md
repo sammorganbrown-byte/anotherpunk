@@ -317,3 +317,27 @@ Tapstitch honours, moves that order to DDU while the site still promises no
 customs fees — and the refund lands on us. This is why express, if ever
 offered, needs its own copy rather than a different service swapped in behind
 the same promise.
+
+## Fulfilment origin — stay on international (2 Sep)
+
+Tapstitch lets you default to US or international fulfilment. **Keep
+international.** Two reasons:
+
+1. **Every price on the site assumes it.** `shipping-rates.csv` is quoted from
+   the international origin — that is why Thailand, China and Vietnam are the
+   cheapest zones on the sheet. Switching would invalidate the €9 base, the €2
+   increment, the margin sheet and both bundle prices at once, silently, while
+   the site kept charging the old numbers.
+2. **It is the better origin for a European shop.** International on Special
+   Line is the lane Tapstitch confirmed as DDP into the EU. US origin would
+   make every EU order an import from America instead — no cheaper, no faster,
+   and without the documented duty-paid treatment. That trades the main
+   market's shipping for a smaller one's.
+
+US customers are not penalised: DDP explicitly covers "U.S. shipments using
+Special Line", so they are duty-paid on this origin too.
+
+**Revisit if US sales become a real share.** Fulfilling those domestically
+would cut a fortnight to a few days, which is worth having — but it needs its
+own rate card, and not every garment is available from both origins. It is a
+second origin to add, not a default to flip.
