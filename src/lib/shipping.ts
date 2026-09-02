@@ -119,6 +119,22 @@ export const SHIPPING_COUNTRIES: { code: string; name: string }[] = [
  * else is true, and remote addresses are DDU across every service. If express
  * is ever offered, IT MUST NOT INHERIT THIS CLAIM — sell it on speed alone.
  *
+ * ── WHICH SERVICE DO OUR ORDERS ACTUALLY USE? VERIFY THIS. ───────────────
+ * The claim below holds for NON-EXPRESS shipping only. Sam's own parcel may
+ * have gone International Express, which means two things: it is no longer
+ * evidence that this lane arrives clean, and nobody has yet confirmed which
+ * service the account actually sends customer orders on.
+ *
+ * If Tapstitch is defaulting these orders to International Express, every one
+ * is DDU and the promise below becomes a refund we pay on roughly every
+ * order — around €20 a time, against a €25 margin. Check the service on the
+ * account and on a real order before volume arrives.
+ *
+ * The claim is left standing because the refund backstop protects the
+ * CUSTOMER either way; what is at risk is our own margin, and that is the
+ * right thing to have exposed while this is checked rather than the other way
+ * round.
+ *
  * WHY "CANNOT GUARANTEE" IS NOT A REASON TO STAY SILENT. No seller anywhere
  * can guarantee a customs outcome; the assessment belongs to a border
  * official. Waiting for a guarantee means never saying anything, while the
@@ -153,10 +169,19 @@ export const DELIVERY = {
    * The pull is toward over-quoting, because an early parcel delights and a
    * late one complains. But an inflated number on the product page costs
    * sales from people who never order at all, and that cost is invisible —
-   * which is exactly why it is worth resisting. Sam's own order beat this
-   * comfortably; when there are a few real orders to average, put the real
-   * number here. */
-  total: "under two weeks",
+   * which is exactly why it is worth resisting.
+   *
+   * THIS BRIEFLY SAID "UNDER TWO WEEKS" ON BAD EVIDENCE. The reason was that
+   * Sam's own parcel arrived quickly — but he then remembered it may have
+   * gone International Express, which is a different and faster service from
+   * the one customers get. So it confirms nothing about Special Line, and the
+   * figure goes back to matching Tapstitch's published numbers: 2–5 days to
+   * make plus around 10 in transit is a fortnight, not less than one.
+   *
+   * When a few REAL customer orders have landed, average them and put the
+   * true number here. That is the only evidence that will ever be worth
+   * anything. */
+  total: "about two weeks",
   /** Kept for the shipping policy, where somebody who wants to know can find
    * it. Deliberately NOT on the product pages, the bag or the checkout: Sam's
    * call, and a fair one — where a thing is manufactured is ordinary
