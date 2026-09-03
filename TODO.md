@@ -1,7 +1,13 @@
 # Another Punk — outstanding
 
-Updated 2026-09-01, after the purchase path was proved end to end.
-Ordered by what bites soonest.
+Updated 2026-09-03. Ordered by what bites soonest.
+
+**Two figures in the older sections below were stale and are corrected here
+rather than left to mislead:** `SHIPPING_PER_EXTRA_ITEM` is **€4**, not €2 —
+it was raised once the real multi-item quotes came in — and the Staple is no
+longer a 400gsm blank. Where a section still argues from €2 or from 400gsm,
+the argument is historical; the constants in `src/lib/shipping.ts` and the
+descriptions in `another-punk-products.ts` are the truth.
 
 ## Do first
 
@@ -69,8 +75,58 @@ Ordered by what bites soonest.
       survivable — just better known in advance than discovered.
 
 - [ ] **Remove `DRYRUN99`** — one entry in `src/lib/promo-codes.ts`. While it
-      exists, anyone who guesses it buys a €50 shirt for €1. Ask and it is a
+      exists, anyone who guesses it buys a €50 shirt for €1. The test order
+      has been run and passed, so this has done its job. Ask and it is a
       two-minute change.
+
+- [ ] **`FIRSTPUNK` expires 2026-09-30, which is a PLACEHOLDER.** You asked
+      for 20% off, valid for a week; nobody has said which week. The date in
+      `promo-codes.ts` is invented and will either expire the code early or
+      leave it running long. Give the announcement date and it becomes right.
+
+## Size charts — the mechanism is built, the numbers are not (3 Sep)
+
+`/terms` promised "sizes follow the chart on each product page" and no product
+page had one. Worse, the product page never rendered the `fit` note either —
+`DEFAULT_FIT` existed and nothing displayed it. Both fixed.
+
+**What exists now.** `src/lib/size-charts.ts` holds measurements keyed by
+**Shopify product id**, not slug — several pieces share one blank (both
+Westwood 69 colourways, both Saucer Oversized, both Staples), and a blank is
+the thing that has measurements. Keying that way means a shared blank cannot
+end up with two disagreeing tables, and adding a colourway needs no work at
+all. `RdSizeChart` renders the fit note always and a collapsible table only
+where real data exists; inches are derived from centimetres so the two units
+cannot drift.
+
+**`SIZE_CHARTS` IS EMPTY. That is deliberate, not unfinished.** Every number
+has to be copied off that product's own Tapstitch page. Nothing may be
+estimated, scaled from another blank, or reasoned out from a size letter: a
+made-up chart is the thing a customer measures against, so a wrong number
+produces a bad fit, a return we pay postage on, and goods "not as described"
+under the two-year rule /returns commits to. An absent table is the honest
+failure; a plausible table is the dishonest one.
+
+- [ ] **Paste the Tapstitch size tables in.** Fourteen blanks. The format and
+      a worked example are at the bottom of `size-charts.ts`. Everything else
+      is already wired — the tables appear the moment the numbers land.
+
+## Done 3 Sep
+
+- [x] **NIF 319556050** added to `/terms`, completing the trader block.
+- [x] **Custom 404, and the leak it was hiding.** The old one linked to
+      `/classic/shop` — the previous design's shop. It is the root's
+      `notFoundComponent`, so every mistyped URL on the live site quietly
+      handed people the legacy version with no way back. Now in the current
+      site's language and pointing only at live routes. `redesign.css` is
+      loaded at the root for it; every rule is scoped under `[data-ap-rd]`, so
+      it stays inert on `/classic`.
+- [x] **Cami archived in Shopify** (`15944344109387`). It was still active
+      after being pulled — found by the new health check, below.
+- [x] **Field checked for delisted products.** Clean. The field derives from
+      `ANOTHER_PUNK_PRODUCTS`, so delisting removes a product automatically;
+      "Cami" survives only in comments explaining why two post slots changed.
+      The one hand-maintained surface, `ATMOSPHERE`, is now checked too.
 
 ## Decisions worth making early
 
@@ -481,9 +537,31 @@ worst failure a shop has: the money is taken, the draft order is created, the
 customer is thanked, and the garment is never made — with nothing raising a
 hand.
 
-Cheap fix, worth doing before volume: a script that walks the catalogue,
+~~Cheap fix, worth doing before volume: a script that walks the catalogue,
 resolves each `shopifyProductId` against Shopify, and reports anything that
-does not exist. It would have caught this the day it broke.
+does not exist.~~ **Built 3 Sep: `scripts/shopify-health.mjs`.**
+
+    node scripts/shopify-health.mjs
+
+It reads the real catalogue (transpiled, not regex-matched, so it cannot drift
+as the file's shape changes) and checks: every product id still resolves; it is
+`active` rather than archived or draft; every size on sale has a variant id;
+every variant id actually belongs to that product; no two sizes share one
+variant; every local image exists on disk; and the field's hand-written
+`ATMOSPHERE` paths resolve. It also lists active Shopify products the catalogue
+does not use — which is how the Cami was caught. Exits non-zero on anything
+critical, so it can be wired into CI later.
+
+**One trap it found in itself, worth knowing before you use the Shopify API
+again:** `products.json?status=any` is not valid and returns **HTTP 200 with an
+empty list** rather than an error. An early version of the script reported all
+17 products as missing. Statuses must be listed explicitly.
+
+**What it still cannot do:** it checks the catalogue against *Shopify*, the
+bridge — not against *Tapstitch*, the factory, which has no API here. A product
+deleted in Tapstitch while its Shopify product survives is exactly the Saucer
+case, and this script would pass it. A clean run means "the bridge is intact",
+not "everything is makeable".
 
 Also worth knowing: Shopify calls the second colourway **Apricot**, our site
 calls it **bone**. Fine as a brand choice — just do not let it confuse a

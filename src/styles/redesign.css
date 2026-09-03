@@ -2014,3 +2014,69 @@ body:has(.rd-pdp) .rd-np {
 [data-ap-rd] .rd-shot[data-tall="true"] {
   aspect-ratio: 3 / 4;
 }
+
+/* Size chart on the product page. Reference material, so it is quiet: the
+   type is the log size used elsewhere, the rules are hairlines, and the
+   figures are tabular so the columns line up when scanned down rather than
+   read across. Scrolls inside itself on a narrow screen so the page body
+   never scrolls sideways. */
+.rd-size-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--rd-mono, ui-monospace, monospace);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--rd-ink, inherit);
+}
+.rd-size-table caption {
+  padding-bottom: 0.6rem;
+  opacity: 0.6;
+}
+.rd-size-table th,
+.rd-size-table td {
+  padding: 0.45rem 0.9rem 0.45rem 0;
+  text-align: left;
+  border-bottom: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  white-space: nowrap;
+}
+.rd-size-table thead th {
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.rd-size-table tbody th {
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+/* 404. Rendered ABOVE the shell, which is what makes it different from every
+   other page here: it gets no shell wrapper, so it has to paint its own
+   ground. It cannot lean on `body:has([data-ap-rd])` above either — that rule
+   sets `background: var(--rd-void)` on the BODY, where the variable does not
+   exist, because --rd-void is declared on [data-ap-rd] itself. On every
+   normal page the shell's own wrapper covers the viewport and the gap never
+   shows; here it left the panel floating on the old design's grey gradient.
+   Painting it on this element works because this element carries the
+   attribute, and therefore the variables.
+
+   Left-aligned like the policy pages rather than centred, so it does not
+   become the only centred page on the site. */
+.rd-notfound {
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  background: var(--rd-void);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 1rem;
+}
+.rd-notfound-inner {
+  width: 100%;
+  max-width: 62ch;
+  margin: 0 auto;
+}
+@media (min-width: 640px) {
+  .rd-notfound { padding: 5rem 2rem; }
+}

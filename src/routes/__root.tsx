@@ -12,9 +12,11 @@ import { type ReactNode, useEffect, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
 
 import appCss from "../styles.css?url";
+import rdCss from "../styles/redesign.css?url";
 import { CartProvider, useCart } from "../lib/cart-context";
 import { ApPlayer } from "../components/another-punk/ap-player";
 import { CurrencyProvider } from "../lib/currency-context";
+import { RdPixelText } from "../components/redesign/rd-pixel-text";
 
 const LOGO_URL =
   "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/00048e3d-cede-4c1a-a65e-222abb97d9a9.png";
@@ -38,7 +40,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:title", content: TITLE },
       { name: "twitter:description", content: DESCRIPTION },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    /* redesign.css is loaded at the root, not only in _shell, so the 404
+       can be styled. Every rule in it is scoped under [data-ap-rd], which
+       makes it completely inert on any page that does not set that
+       attribute — /classic included. Loading it here costs one cached
+       stylesheet and is what lets a page rendered ABOVE the shell still look
+       like the site. */
+    links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "stylesheet", href: rdCss },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -252,19 +263,43 @@ function RootComponent() {
   );
 }
 
+/** 404.
+ *
+ * ── THE BUG THIS FIXES ────────────────────────────────────────────────────
+ * This used to send people to /classic/shop — the OLD design's shop. It is
+ * the root's notFoundComponent, so it renders for the whole site, which meant
+ * every mistyped URL on the live site quietly handed the visitor the legacy
+ * version instead: different chrome, different prices in places, and no way
+ * back to the current one. A 404 is the one page guaranteed to be seen by
+ * somebody already slightly lost, and it was the only thing on the live site
+ * pointing out of it.
+ *
+ * Every route it offers now belongs to the live site. If a second design is
+ * ever run again, this component must keep pointing at the live one — it
+ * renders above the split and cannot know which it is being shown from.
+ *
+ * Written in the shop's own register rather than an apology: it is a wrong
+ * address, not a failure, and saying so plainly is faster than sorry.
+ */
 function NotFound() {
   return (
-    <div className="flex min-h-[70vh] flex-col items-center justify-center gap-6 px-6 text-center">
-      <h1 className="ap-statement text-pink">Gone.</h1>
-      <p className="max-w-sm text-sm text-ink-2">
-        Not here. The rest of it still is.
+    <div className="rd-notfound" data-ap-rd="">
+      <div className="rd-notfound-inner">
+      <p className="rd-label mb-4">404 <span className="rd-key">/</span> NO SUCH PAGE</p>
+      <RdPixelText as="h1" text="NOTHING HERE" />
+      <p className="rd-log mt-6 max-w-[46ch]">
+        Wrong address, or a page that never existed. Nothing was lost and nothing sold
+        out — everything is printed to order, so it is all still there.
       </p>
-      <Link
-        to="/classic/shop"
-        className="font-label mt-2 bg-pink px-8 py-4 text-xs font-medium tracking-[0.14em] text-paper uppercase transition-opacity hover:opacity-90"
-      >
-        Everything else
-      </Link>
+      <div className="mt-8 flex flex-wrap gap-5">
+        <Link to="/" className="rd-btn" data-primary="true">
+          Back to the field
+        </Link>
+        <Link to="/shop" className="rd-link self-center underline underline-offset-4">
+          Shop
+        </Link>
+      </div>
+      </div>
     </div>
   );
 }

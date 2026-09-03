@@ -14,8 +14,8 @@ export const Route = createFileRoute("/_shell/terms")({ component: Terms });
  * The trader's legal name and geographic address are required by EU consumer
  * law and are given in full below — that requirement is the reason the
  * address is on the page at all, and it is why it has to be a real one
- * rather than a contact form. A tax number is the one detail still missing;
- * add it beside the address if the business is registered for VAT.
+ * rather than a contact form. The NIF was added 3 Sep and completes the
+ * trader identification block.
  */
 function Terms() {
   return (
@@ -32,6 +32,8 @@ function Terms() {
           R. de S. Bento 436A
           <br />
           1250-221 Lisboa, Portugal
+          <br />
+          NIF 319556050
           <br />
           <a href="mailto:sam@anotherpunk.com">sam@anotherpunk.com</a>
         </p>
@@ -75,8 +77,10 @@ function Terms() {
           site are honest about how these actually look.
         </p>
         <p>
-          Sizes follow the chart on each product page. Measure something you already own
-          against it — it is more reliable than a letter on a label.
+          Every product page carries how that piece is cut and how it runs, with flat
+          measurements where we have them. Measure something you already own against them —
+          it is more reliable than a letter on a label. Between sizes, or unsure, ask before
+          you order rather than after.
         </p>
       </LegalSection>
 

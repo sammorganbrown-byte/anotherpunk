@@ -11,6 +11,7 @@ import { useCart } from "../../../lib/cart-context";
 import { useCurrency } from "../../../lib/currency-context";
 import { SHIPPING_BASE, SHIPPING_PER_EXTRA_ITEM } from "../../../lib/shipping";
 import { RdDelivery } from "../../../components/redesign/rd-delivery";
+import { RdSizeChart } from "../../../components/redesign/rd-size-chart";
 import { RdPixelText } from "../../../components/redesign/rd-pixel-text";
 
 export const Route = createFileRoute("/_shell/product/$slug")({
@@ -133,6 +134,9 @@ function RedesignProduct() {
               </button>
             ))}
           </div>
+          {/* Under the size buttons, which is where somebody is standing when
+              they wonder whether M means what they think it means. */}
+          <RdSizeChart product={product} />
         </div>
 
         {available ? (
