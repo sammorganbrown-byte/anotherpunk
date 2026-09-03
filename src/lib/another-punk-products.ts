@@ -405,21 +405,22 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "400gsm heavyweight cotton \u2014 11.8oz, and it hangs like it. Cut boxy and oversized, ribbed crew collar. Blank front, blank back, and the mark on the sleeve where only you can see it. Because a wardrobe full of loud shirts still needs a staple.",
     fit: "Boxy and oversized. Your normal size.",
     price: 35,
-    // cost: unknown — see the note on the field. Look up the unit cost in
-    // Tapstitch and fill it in; until then the friends code charges this line
-    // at full price rather than guessing at cost.
-    // The sleeve close-up that used to sit second here is gone: the generated
-    // lettering was a thin, evenly-spaced marker font at roughly twice the
-    // real size, not the heavy hand-lettering the garment actually carries.
-    // Close enough to pass a glance and wrong enough to be a different shirt,
-    // which is the worst kind of product photograph.
+    cost: 16.06,
+    // The sleeve close-up took three attempts and the fix was a second
+    // reference element: a crop of the real wordmark off 145, so the model had
+    // the actual letterforms to copy instead of inventing them. A garment
+    // reference is not an artwork reference — given only the shirt, it drew a
+    // thin evenly-spaced marker at twice the size, which passed a glance and
+    // was a different shirt.
     images: [
       "/img/163-plainwhite-night-street.jpg",
+      "/img/164-plainwhite-sleeve.jpg",
       "/img/161-plainwhite-front.jpg",
       "/img/162-plainwhite-back.jpg",
     ],
     notInField: [
       "/img/163-plainwhite-night-street.jpg",
+      "/img/164-plainwhite-sleeve.jpg",
       "/img/161-plainwhite-front.jpg",
       "/img/162-plainwhite-back.jpg",
     ],

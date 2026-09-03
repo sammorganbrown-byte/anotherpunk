@@ -96,3 +96,27 @@ only thing the brand can do.
 Still unused in history: `ef90dd62` (two back to back — the back of a tee is
 blank, so it shows less than it costs) and `b25ed51c` (a second
 five-in-a-row, near-duplicate of `154`).
+
+## Generating the sleeve print — a garment reference is not an artwork reference (3 Sep)
+
+Three attempts on one mockup, worth recording because the same trap is waiting
+for every future sleeve or small-print garment.
+
+1. **"Reproduce the lettering exactly as in the reference"** → printed
+   **ANOT PUI**. The reference element was built from Tapstitch's flat
+   photographs, where the sleeve print runs out of view round the curve of the
+   sleeve. The instruction made the model faithfully copy the fragment. That
+   rule exists to stop a spelling being dictated blind; here it did the
+   opposite harm by deferring to a cropped source.
+2. **Spelling stated explicitly** → both words whole, but in a thin,
+   evenly-spaced marker font at about twice the real size. Passed a glance,
+   was a different shirt. Sam caught it.
+3. **A second reference element carrying the artwork itself** → correct.
+   `AP-Wordmark-Artwork` (`a250a908`) is a crop of the real wordmark taken from
+   `145-anotherpunk-chest-flash.jpg`, so the model had the true letterforms to
+   copy rather than inventing them.
+
+**The lesson:** a reference of the GARMENT tells the model the shirt. It does
+not tell it the letters. Anything where the print carries the product needs an
+artwork reference too, and the artwork reference has to come from a source
+where the print is fully visible — not a flat where it wraps out of frame.
