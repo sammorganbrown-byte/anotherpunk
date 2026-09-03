@@ -32,7 +32,29 @@ export type QueuedPost = {
   due: string;
 };
 
-/** Two months, three a week, Tuesday / Thursday / Saturday.
+/** ── CAPTION CONVENTION ────────────────────────────────────────────────────
+ * Product name, then the colour and cut, then the link. Nothing else.
+ *
+ * These were written as one-line jokes and Sam replaced them with this: it
+ * matches what he had already posted by hand, and it does the job a shop
+ * account is actually for. A caption that says "Nobody parks up here after
+ * ten" is a nicer sentence and tells a stranger nothing — not what the
+ * garment is, not that it is for sale, not where. The name and the fabric do
+ * both, and the link means every post is a way in rather than a dead end.
+ *
+ * Middots become full stops. The shop's eyebrow reads "Washed black · raw
+ * hem" and the brand's voice does not use middots, so it lands here as
+ * "Washed black. Raw hem."
+ *
+ * Shop titles carry a variant suffix — "Saucer — Oversized, Black" — which
+ * exists to disambiguate a grid and reads as clutter under a photograph. The
+ * name is trimmed to what precedes the dash and the variant moves into the
+ * second line, where it was always the more natural fit.
+ *
+ * The founder post is the deliberate exception and keeps its own words.
+ * ──────────────────────────────────────────────────────────────────────────
+ *
+ * Two months, three a week, Tuesday / Thursday / Saturday.
  *
  * Ordered for rhythm rather than by product: the aim is that three
  * consecutive squares never look like the same photograph twice, so action,
@@ -46,7 +68,7 @@ export const POST_QUEUE: QueuedPost[] = [
     // joke is the wrong first impression for a shop nobody knows yet.
     id: "jesus",
     images: ["35-jesus-night-rain.jpg", "23-jesus-chest.jpg", "74-jesus-kerb-night.jpg"],
-    caption: "Wet crossing. Red light. No notes.",
+    caption: "The Jesus\nWashed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-09-03",
   },
   {
@@ -60,19 +82,19 @@ export const POST_QUEUE: QueuedPost[] = [
       "140-jersey-pink-chest-flash.jpg",
       "141-jersey-pink-back-69.jpg",
     ],
-    caption: "Front says Another Punk. Back says Westwood 69.\n\nPink or black.",
+    caption: "Westwood 69\nPink or black.\n\nanotherpunk.com",
     due: "2026-09-05",
   },
   {
     id: "launderette",
     images: ["41-leopard-night-launderette.jpg", "76-leopard-midturn.jpg"],
-    caption: "Spin cycle. Nothing else open.",
+    caption: "Leopard Crop\nPink leopard. Cropped.\n\nanotherpunk.com",
     due: "2026-09-08",
   },
   {
     id: "skate",
     images: ["66-bwblack-skate-kick.jpg", "28-bwblack-chest.jpg"],
-    caption: "Level four. Nobody parks up here after ten.",
+    caption: "Saucer\nSnow-washed black. Sleeve hit.\n\nanotherpunk.com",
     due: "2026-09-10",
   },
   {
@@ -115,25 +137,25 @@ export const POST_QUEUE: QueuedPost[] = [
     // opening statement.
     id: "football",
     images: ["143-jersey-black-football.jpg", "144-jersey-black-slide.jpg"],
-    caption: "He was told to stay on his feet.",
+    caption: "Westwood 69\nFootball jersey. Black.\n\nanotherpunk.com",
     due: "2026-09-15",
   },
   {
     id: "kerb",
     images: ["62-wordmark-jump-kerb.jpg", "146-anotherpunk-night-neon.jpg"],
-    caption: "Nobody saw it. Went for it anyway.",
+    caption: "Another Punk\nSnow-washed. Oversized.\n\nanotherpunk.com",
     due: "2026-09-17",
   },
   {
     id: "fireescape",
     images: ["122-bodysuit-fireescape.jpg", "151-bodysuit-tight-cut.jpg"],
-    caption: "Fourth floor. Better view than the flat.",
+    caption: "Bodysuit\nMineral wash. Ribbed. Fitted.\n\nanotherpunk.com",
     due: "2026-09-19",
   },
   {
     id: "dorothy",
     images: ["59-dorothy-spin.jpg", "53-dorothy-chest-crop.jpg"],
-    caption: "She is not surrendering.\n\nSurrender Dorothy.",
+    caption: "Surrender Dorothy\nWashed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-09-22",
   },
   {
@@ -144,19 +166,19 @@ export const POST_QUEUE: QueuedPost[] = [
       "70-tonguebox-chest-flash.jpg",
       "71-tonguebox-threequarter.jpg",
     ],
-    caption: "Wind it up. See what happens.",
+    caption: "Tongue Box\nWashed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-09-24",
   },
   {
     id: "bats-neon",
     images: ["33-bats-night-neon.jpg", "24-bats-chest-redo.jpg", "44-bats-jump-flash.jpg"],
-    caption: "This is bat country. Obviously.",
+    caption: "Bat Country\nWashed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-09-26",
   },
   {
     id: "subway",
     images: ["77-wordmark-night-subway-REDO.jpg", "147-anotherpunk-night-shopphone.jpg"],
-    caption: "Last train. Green light. Nobody coming.",
+    caption: "Another Punk\nSnow-washed. Oversized.\n\nanotherpunk.com",
     due: "2026-09-29",
   },
 
@@ -164,73 +186,73 @@ export const POST_QUEUE: QueuedPost[] = [
   {
     id: "cami-cafe",
     images: ["121-cami-cafe.jpg", "81-cami-chest-crop.jpg"],
-    caption: "Coffee at two. Nobody asked why.",
+    caption: "Cami\nBlack. Slim fit. Thin strap.\n\nanotherpunk.com",
     due: "2026-10-01",
   },
   {
     id: "saucer-carpark",
     images: ["37-saucer-night-carpark.jpg", "25-saucer-chest.jpg"],
-    caption: "Car park. No cars. One saucer.",
+    caption: "Saucer\nWashed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-10-03",
   },
   {
     id: "alley",
     images: ["39-bwwhite-night-alley.jpg", "08-bwwhite-midturn.jpg"],
-    caption: "Shortcut. Regretted it.",
+    caption: "Saucer\nSnow-washed bone. Sleeve hit.\n\nanotherpunk.com",
     due: "2026-10-06",
   },
   {
     id: "mesh",
     images: ["07-mesh-walking-blur.jpg", "27-mesh-chest.jpg"],
-    caption: "See-through. On purpose.",
+    caption: "Mesh\nOpen-weave net. Boxy.\n\nanotherpunk.com",
     due: "2026-10-08",
   },
   {
     id: "sprint",
     images: ["60-bats-sprint-night.jpg"],
-    caption: "Late for nothing.",
+    caption: "Bat Country\nWashed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-10-10",
   },
   {
     id: "busstop",
     images: ["75-leopard-night-busstop.jpg", "06-leopard-threequarter-night.jpg"],
-    caption: "Bus at ten past. Never comes.",
+    caption: "Leopard Crop\nPink leopard. Cropped.\n\nanotherpunk.com",
     due: "2026-10-13",
   },
   {
     id: "diner",
     images: ["92-bodysuit-night-diner.jpg", "130-bodysuit-onepiece-standing.jpg"],
-    caption: "Diner. Third coffee. Still here.",
+    caption: "Bodysuit\nMineral wash. Ribbed. Fitted.\n\nanotherpunk.com",
     due: "2026-10-15",
   },
   {
     id: "shelter",
     images: ["38-bwblack-night-busshelter.jpg", "43-bwblack-night-wide.jpg"],
-    caption: "Shelter. Not from anything.",
+    caption: "Saucer\nSnow-washed black. Sleeve hit.\n\nanotherpunk.com",
     due: "2026-10-17",
   },
   {
     id: "leather",
     images: ["86-cami-leather-jacket.jpg", "89-cami-strap-detail.jpg"],
-    caption: "Borrowed the jacket. Keeping it.",
+    caption: "Cami\nBlack. Slim fit. Thin strap.\n\nanotherpunk.com",
     due: "2026-10-20",
   },
   {
     id: "dance",
     images: ["64-bwwhite-dance.jpg"],
-    caption: "No music. Still dancing.",
+    caption: "Saucer\nSnow-washed bone. Sleeve hit.\n\nanotherpunk.com",
     due: "2026-10-22",
   },
   {
     id: "corridor",
     images: ["61-jesus-walking-corridor.jpg", "03-wordmark-chest-raking.jpg"],
-    caption: "Corridor. Strip light. Long way out.",
+    caption: "The Jesus\nWashed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-10-24",
   },
   {
     id: "saucer-turn",
     images: ["63-saucer-turn.jpg", "05-saucer-profile.jpg"],
-    caption: "Turn around. Something followed you home.",
+    caption: "Saucer\nWashed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-10-27",
   },
   {
@@ -239,7 +261,7 @@ export const POST_QUEUE: QueuedPost[] = [
     // texture shot does not want a swipe attached to it.
     id: "hem",
     images: ["11-macro-rawhem-ink.jpg"],
-    caption: "Cracked ink. Raw hem.\n\nIt starts looking like this. It only gets better.",
+    caption: "Raw hem.\nOn every tee.\n\nanotherpunk.com",
     due: "2026-10-29",
   },
 ];
