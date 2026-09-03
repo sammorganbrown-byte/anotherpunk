@@ -291,6 +291,23 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     },
   },
   {
+    // ── OFF SALE: NOT IN TAPSTITCH ───────────────────────────────────────
+    // Shopify still carries this product and our variant ids still resolve,
+    // but Tapstitch has no matching product — so an order would take the
+    // money, create the Shopify draft, and then simply never be made. That is
+    // the worst failure available to a shop: a paid order that silently does
+    // not exist.
+    //
+    // shopifyProductId is null, which makes isFulfillable false and shows
+    // "Not for sale yet" in place of the buy button. Photographs and the page
+    // stay up.
+    //
+    // TO PUT IT BACK: Sam re-adds it in Tapstitch, which creates a NEW
+    // Shopify product with NEW ids. The ids below are the OLD ones and will
+    // be stale — do not simply un-null this. Re-read them with
+    // scripts/shopify-find-product.mjs, take the cost off Tapstitch, and
+    // update both entries.
+    // ─────────────────────────────────────────────────────────────────────
     slug: "saucer-oversized-black",
     description:
       "Snow-washed heavyweight cotton. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve.",
@@ -307,7 +324,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/66-bwblack-skate-kick.jpg",
     ],
     sizes: SIX,
-    shopifyProductId: "15942009520459",
+    shopifyProductId: null, // was "15942009520459" — stale once re-added,
     shopifyVariantIds: {
       S: "58204637954379",
       M: "58204637987147",
@@ -318,6 +335,23 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     },
   },
   {
+    // ── OFF SALE: NOT IN TAPSTITCH ───────────────────────────────────────
+    // Shopify still carries this product and our variant ids still resolve,
+    // but Tapstitch has no matching product — so an order would take the
+    // money, create the Shopify draft, and then simply never be made. That is
+    // the worst failure available to a shop: a paid order that silently does
+    // not exist.
+    //
+    // shopifyProductId is null, which makes isFulfillable false and shows
+    // "Not for sale yet" in place of the buy button. Photographs and the page
+    // stay up.
+    //
+    // TO PUT IT BACK: Sam re-adds it in Tapstitch, which creates a NEW
+    // Shopify product with NEW ids. The ids below are the OLD ones and will
+    // be stale — do not simply un-null this. Re-read them with
+    // scripts/shopify-find-product.mjs, take the cost off Tapstitch, and
+    // update both entries.
+    // ─────────────────────────────────────────────────────────────────────
     slug: "saucer-oversized-bone",
     description:
       "Snow-washed heavyweight cotton in bone. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve.",
@@ -335,7 +369,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     sizes: SIX,
     // Same Shopify product as the black colourway above, different colour
     // option, hence the same product id but the Apricot variant ids.
-    shopifyProductId: "15942009520459",
+    shopifyProductId: null, // was "15942009520459" — stale once re-added,
     shopifyVariantIds: {
       S: "58204637757771",
       M: "58204637790539",

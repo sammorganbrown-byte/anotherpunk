@@ -460,3 +460,43 @@ Eleven references in `another-punk-products.ts` point at
 files in `public/img`. They work today. They are not ours, and nothing
 guarantees they will resolve next year. Worth downloading into the repo like
 every other image before that becomes a support email about missing pictures.
+
+## Saucer Oversized is off sale — Tapstitch has no such product (3 Sep)
+
+Shopify still carries it and our variant ids still resolved, but there is no
+matching Tapstitch product. An order would have taken the money, created the
+Shopify draft, and then never been made. Both entries are now
+`shopifyProductId: null`, so the page shows "Not for sale yet" instead of a
+buy button. Photographs stay up.
+
+**Putting it back, in this order:**
+
+1. Sam re-adds it in Tapstitch. That creates a **NEW Shopify product with NEW
+   ids** — the ones in the catalogue are the old ones and will be stale, so do
+   not simply un-null them.
+2. `node scripts/shopify-find-product.mjs "Oversized"` for the new ids.
+3. Read the unit cost off **Tapstitch**, not Shopify — Shopify's cost field is
+   stale on everything.
+4. Update both `saucer-oversized-black` and `saucer-oversized-bone` and remove
+   the off-sale block.
+
+**The old Shopify product `15942009520459` will be orphaned.** Archive rather
+than delete it — it may carry order history, and archiving is reversible.
+
+**Four scheduled posts point at it.** They still publish and the link still
+works; it just lands on a page that cannot be bought from.
+
+| due | post |
+|---|---|
+| 10 Sep | skate |
+| 6 Oct | alley |
+| 17 Oct | shelter |
+| 22 Oct | dance |
+
+**10 September is the one that matters** — if it is not back in Tapstitch by
+then, move that post or swap its images, because sending people to an
+unbuyable product is worse than posting nothing.
+
+**Worth checking the rest of the range the same way.** This one was only found
+because a cost was missing. Any other product that exists in Shopify but not
+in Tapstitch has exactly the same silent failure waiting.
