@@ -461,42 +461,29 @@ files in `public/img`. They work today. They are not ours, and nothing
 guarantees they will resolve next year. Worth downloading into the repo like
 every other image before that becomes a support email about missing pictures.
 
-## Saucer Oversized is off sale — Tapstitch has no such product (3 Sep)
+## Saucer Oversized — resolved, but check the rest (3 Sep)
 
-Shopify still carries it and our variant ids still resolved, but there is no
-matching Tapstitch product. An order would have taken the money, created the
-Shopify draft, and then never been made. Both entries are now
-`shopifyProductId: null`, so the page shows "Not for sale yet" instead of a
-buy button. Photographs stay up.
+It had gone missing from Tapstitch, probably deleted by accident. Shopify
+still carried it and our ids still resolved, so the site was selling both
+colourways at €40 with nothing at the other end to make them. Sam re-added it;
+both entries are relinked to the new product **15972246094155**, cost €15.07
+from Tapstitch, and all 16 products are on sale again.
 
-**Putting it back, in this order:**
+**The old Shopify product `15942009520459` is now an orphan.** ARCHIVE it
+rather than delete — it may carry order history, archiving is reversible, and
+leaving it live invites relinking to the dead one later.
 
-1. Sam re-adds it in Tapstitch. That creates a **NEW Shopify product with NEW
-   ids** — the ones in the catalogue are the old ones and will be stale, so do
-   not simply un-null them.
-2. `node scripts/shopify-find-product.mjs "Oversized"` for the new ids.
-3. Read the unit cost off **Tapstitch**, not Shopify — Shopify's cost field is
-   stale on everything.
-4. Update both `saucer-oversized-black` and `saucer-oversized-bone` and remove
-   the off-sale block.
+**Nothing checks that a product we sell exists where it gets made.** This was
+found only because a unit cost was missing and I went looking. Any other gap
+of the same kind is sitting there silently right now, and it produces the
+worst failure a shop has: the money is taken, the draft order is created, the
+customer is thanked, and the garment is never made — with nothing raising a
+hand.
 
-**The old Shopify product `15942009520459` will be orphaned.** Archive rather
-than delete it — it may carry order history, and archiving is reversible.
+Cheap fix, worth doing before volume: a script that walks the catalogue,
+resolves each `shopifyProductId` against Shopify, and reports anything that
+does not exist. It would have caught this the day it broke.
 
-**Four scheduled posts point at it.** They still publish and the link still
-works; it just lands on a page that cannot be bought from.
-
-| due | post |
-|---|---|
-| 10 Sep | skate |
-| 6 Oct | alley |
-| 17 Oct | shelter |
-| 22 Oct | dance |
-
-**10 September is the one that matters** — if it is not back in Tapstitch by
-then, move that post or swap its images, because sending people to an
-unbuyable product is worse than posting nothing.
-
-**Worth checking the rest of the range the same way.** This one was only found
-because a cost was missing. Any other product that exists in Shopify but not
-in Tapstitch has exactly the same silent failure waiting.
+Also worth knowing: Shopify calls the second colourway **Apricot**, our site
+calls it **bone**. Fine as a brand choice — just do not let it confuse a
+variant mapping later.
