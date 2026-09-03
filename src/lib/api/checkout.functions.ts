@@ -3,9 +3,14 @@ import type Stripe from "stripe";
 import { z } from "zod";
 import { getStripe, type CheckoutSessionMetadata } from "../stripe.server";
 import { getAnotherPunkProduct, isFulfillable } from "../another-punk-products";
-import { computeDiscount, computeShippingDiscount, isCostPriceCode } from "../promo-codes";
+import {
+  computeDiscount,
+  computeShippingDiscount,
+  isCostPriceCode,
+  excludesBundles,
+} from "../promo-codes";
 import { encodeOrderLines } from "../order-lines";
-import { bundleDiscount, shippingAfterBundles } from "../bundles";
+import { bundleDiscount, bundledListValue, shippingAfterBundles } from "../bundles";
 import { computeShipping, SHIPPING_COUNTRIES } from "../shipping";
 
 // Where the site lives, used to build Stripe's return URLs. Set SITE_URL in
@@ -132,10 +137,16 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
     // code failed worse than that: it charged €49 for four tees costing €93
     // to make and post, which is the one thing pricing at cost exists to
     // prevent.
+    // A code that excludes package deals discounts only the loose lines, so
+    // it sees the subtotal with the bundled garments taken out entirely
+    // rather than merely bundle-priced.
+    const promoBase = excludesBundles(data.promoCode)
+      ? grossSubtotal - bundledListValue(bundleLines)
+      : grossSubtotal - bundlesOff;
     const promoDiscount = computeDiscount(
       data.promoCode,
       resolved.map((r) => ({ price: r.product.price, qty: r.qty, slug: r.product.slug })),
-      grossSubtotal - bundlesOff,
+      Math.max(0, promoBase),
     );
 
     // Capped at the subtotal so the two together can never make the garments

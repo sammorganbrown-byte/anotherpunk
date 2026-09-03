@@ -224,6 +224,15 @@ export function collectBundles(lines: BundleLine[]): BundleGroup[] {
 }
 
 /** How much comes off the garment subtotal because of bundles. */
+/** What the garments inside valid bundles would have cost individually.
+ *
+ * Subtracting this from the order's subtotal leaves exactly the lines that
+ * are NOT part of a package deal — which is the amount a code marked
+ * `notOnBundles` is allowed to discount. */
+export function bundledListValue(lines: BundleLine[]): number {
+  return collectBundles(lines).reduce((sum, g) => sum + g.full, 0);
+}
+
 export function bundleDiscount(lines: BundleLine[]): number {
   return collectBundles(lines).reduce((sum, g) => sum + Math.max(0, g.full - g.price), 0);
 }

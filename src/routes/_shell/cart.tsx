@@ -191,7 +191,12 @@ function RedesignCart() {
         {converted ? (
           <p className="rd-log opacity-70">Charged in euros — {formatEur(total)}</p>
         ) : null}
-        <p className="rd-log">Worldwide. Duties, where they apply, are yours.</p>
+        {/* A line here used to read "Worldwide. Duties, where they apply, are
+            yours." It survived the switch to duty-paid shipping and sat two
+            lines under the promise that there are no customs fees, flatly
+            contradicting it on the same screen — and the frightening version
+            is always the one a customer believes. RdDelivery above already
+            says what happens; this said it again and wrongly. */}
         <Link to="/checkout" className="rd-btn mt-4" data-primary="true">
           Dispatch →
         </Link>

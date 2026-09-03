@@ -33,6 +33,19 @@ type PromoCode = {
   shippingPercentOff?: number;
   /** Optional human label for the cart UI. */
   label?: string;
+  /** Last day the code works, as an ISO date (YYYY-MM-DD), inclusive.
+   *
+   * Checked on the SERVER as well as in the display, because an expiry that
+   * only the browser enforces is not an expiry — the checkout call is a plain
+   * POST and anyone can send yesterday's code to it. */
+  expires?: string;
+  /** Refuses to discount package deals.
+   *
+   * A bundle is already the discount. Stacking a launch percentage on top of
+   * one takes His and Hers from a thin margin to a pointless one, and a
+   * customer who wanted the pack was never going to need persuading with a
+   * second reduction. */
+  notOnBundles?: boolean;
 };
 
 const PROMO_CODES: PromoCode[] = [
@@ -55,6 +68,26 @@ const PROMO_CODES: PromoCode[] = [
   // one of them underwater. Shipping is charged in full, deliberately: the
   // courier is not doing anyone a favour.
   { code: "BIGPUSSY69", toCost: true, label: "Friends" },
+
+  // ── LAUNCH CODE ──────────────────────────────────────────────────────────
+  // 20% off for the first week. SET `expires` TO ONE WEEK AFTER THE DAY YOU
+  // ACTUALLY ANNOUNCE — the date below is a placeholder, and the code simply
+  // stops working the morning after it.
+  //
+  // Not valid on the package deals, deliberately. At 20% off, a single tee
+  // still nets around 38%, and Raw Hem Four 28%; His and Hers falls to 18%,
+  // which is roughly €10 for making, packing and posting two garments. The
+  // packs are already the discount, and somebody choosing one does not need
+  // a second reason.
+  //
+  // Shipping is untouched. The courier is not running a launch offer.
+  {
+    code: "FIRSTPUNK",
+    percentOff: 20,
+    notOnBundles: true,
+    expires: "2026-09-30",
+    label: "Launch",
+  },
 ];
 
 /** True when the code prices at cost rather than by percentage.
@@ -75,7 +108,25 @@ export function normalizePromoCode(input: string): string {
 export function findPromoCode(input: string): PromoCode | null {
   const code = normalizePromoCode(input);
   if (!code) return null;
-  return PROMO_CODES.find((c) => c.code === code) ?? null;
+  const found = PROMO_CODES.find((c) => c.code === code) ?? null;
+  if (found && isExpired(found)) return null;
+  return found;
+}
+
+/** Expired codes behave exactly like codes that never existed.
+ *
+ * Compared as ISO date strings rather than Date objects, which sorts
+ * correctly and sidesteps a timezone argument nobody needs: the code works
+ * all of its last day, anywhere in the world, and stops the morning after. */
+function isExpired(promo: PromoCode): boolean {
+  if (!promo.expires) return false;
+  return new Date().toISOString().slice(0, 10) > promo.expires;
+}
+
+/** True when the code refuses to discount package deals. */
+export function excludesBundles(input: string | null | undefined): boolean {
+  if (!input) return false;
+  return Boolean(findPromoCode(input)?.notOnBundles);
 }
 
 /** @param subtotalOverride the amount the code should actually discount.
