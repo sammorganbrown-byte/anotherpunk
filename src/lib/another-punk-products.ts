@@ -402,7 +402,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Staple",
     eyebrow: "Plain white · sleeve print",
     description:
-      "400gsm heavyweight cotton \u2014 11.8oz, and it hangs like it. Cut boxy and oversized, ribbed crew collar. Blank front, blank back, and the mark on the sleeve where only you can see it. Because a wardrobe full of loud shirts still needs a staple.",
+      "400gsm heavyweight cotton \u2014 11.8oz, and it hangs like it. Cut boxy and oversized, ribbed crew collar. Blank front, blank back, one small mark on the sleeve. Because a wardrobe full of loud shirts still needs a staple.",
     fit: "Boxy and oversized. Your normal size.",
     price: 35,
     cost: 16.06,
