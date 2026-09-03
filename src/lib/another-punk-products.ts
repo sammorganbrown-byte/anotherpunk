@@ -400,22 +400,18 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // is the whole idea: a shop of loud shirts still needs the thing you put
     // on when you do not want to say anything.
     //
-    // ── €35 IS DELIBERATE. DO NOT "FIX" THE MARGIN. ──────────────────────
-    // This runs at 43% net where the rest of the range clears 50%, and it
-    // will keep showing up as the outlier in any costing. It is priced as a
-    // way in: the thing somebody buys when they are not yet sure they want to
-    // buy anything. An entry product earns its margin back on the second
-    // order, not the first.
+    // ── €35 IS DELIBERATE, AND NOW IT IS ALSO THE BEST MARGIN HERE ───────
+    // Priced as a way in: the thing somebody buys when they are not yet sure
+    // they want to buy anything. That reasoning has not changed.
     //
-    // The blank is £16.93, nearly what a €50 tee's costs, and swapping it for
-    // a cheaper one was considered and rejected. There is no chest graphic
-    // here — the 400gsm weight IS the product, and it is the only thing the
-    // page can argue with. A lighter blank would fix the margin by removing
-    // the only reason to choose this over anyone else's plain white tee.
+    // What changed is the blank. This ran on a 400gsm shirt costing €16.93 —
+    // the worst margin in the shop at 43% — until Sam replaced it because
+    // 400gsm is simply too thick for a t-shirt, closer to sweatshirt weight.
+    // The 300gsm that replaced it costs €9.93, so an entry price that used to
+    // be the thinnest thing here is now the fattest at 59%.
     //
-    // What to watch instead is whether Staple and Crop Tank buyers order a
-    // second time. If they do, 43% is cheap. If they do not, this is just the
-    // worst-margin product wearing a strategy as a hat.
+    // Worth keeping the order of those straight: the blank changed because
+    // the shirt was wrong, and the margin followed. Not the other way round.
     // ─────────────────────────────────────────────────────────────────────
     //
     // Not in the field — every image here is either a flat packshot or reads
@@ -423,13 +419,13 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // photographs that carry a graphic. Sam asked for it to stay out, and it
     // would have looked like an empty frame in there anyway.
     slug: "staple",
-    title: "Staple",
-    eyebrow: "Plain white · sleeve print",
+    title: "Staple — White",
+    eyebrow: "White · 300gsm · sleeve print",
     description:
-      "400gsm heavyweight cotton \u2014 11.8oz, and it hangs like it. Cut boxy and oversized, ribbed crew collar. Blank front, blank back, one small mark on the sleeve. Because a wardrobe full of loud shirts still needs a staple.",
+      "300gsm cotton \u2014 heavy enough to hang properly, light enough to actually wear. Cut boxy and oversized, ribbed crew collar. Blank front, blank back, one small mark on the sleeve. Because a wardrobe full of loud shirts still needs a staple.",
     fit: "Boxy and oversized. Your normal size.",
     price: 35,
-    cost: 16.93,
+    cost: 9.93,
     // The sleeve close-up took three attempts and the fix was a second
     // reference element: a crop of the real wordmark off 145, so the model had
     // the actual letterforms to copy instead of inventing them. A garment
@@ -446,13 +442,38 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     images: ["/img/163-plainwhite-night-street.jpg", "/img/164-plainwhite-sleeve.jpg"],
     notInField: ["/img/163-plainwhite-night-street.jpg", "/img/164-plainwhite-sleeve.jpg"],
     sizes: FIVE,
-    shopifyProductId: "15971630580043",
+    shopifyProductId: "15972281844043",
     shopifyVariantIds: {
-      S: "58347515609419",
-      M: "58347515642187",
-      L: "58347515674955",
-      XL: "58347515707723",
-      "2XL": "58347515740491",
+      S: "58349633175883",
+      M: "58349633208651",
+      L: "58349633241419",
+      XL: "58349633274187",
+      "2XL": "58349633306955",
+    },
+  },
+  {
+    // The black half of the same 300gsm blank. Split into its own entry the
+    // way Westwood 69 and the Saucer Oversized are, so the grid shows the
+    // colour you would actually be buying rather than one swatch standing in
+    // for two.
+    slug: "staple-black",
+    title: "Staple — Black",
+    eyebrow: "Black · 300gsm · sleeve print",
+    description:
+      "300gsm cotton \u2014 heavy enough to hang properly, light enough to actually wear. Cut boxy and oversized, ribbed crew collar. Blank front, blank back, one small mark on the sleeve. Because a wardrobe full of loud shirts still needs a staple.",
+    fit: "Boxy and oversized. Your normal size.",
+    price: 35,
+    cost: 9.93,
+    images: ["/img/169-staple-black-street.jpg", "/img/170-staple-black-sleeve.jpg"],
+    notInField: ["/img/169-staple-black-street.jpg", "/img/170-staple-black-sleeve.jpg"],
+    sizes: FIVE,
+    shopifyProductId: "15972281844043",
+    shopifyVariantIds: {
+      S: "58349633339723",
+      M: "58349633372491",
+      L: "58349633405259",
+      XL: "58349633438027",
+      "2XL": "58349633470795",
     },
   },
   {
