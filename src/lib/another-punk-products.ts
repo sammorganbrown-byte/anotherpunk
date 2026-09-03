@@ -291,30 +291,13 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     },
   },
   {
-    // ── OFF SALE: NOT IN TAPSTITCH ───────────────────────────────────────
-    // Shopify still carries this product and our variant ids still resolve,
-    // but Tapstitch has no matching product — so an order would take the
-    // money, create the Shopify draft, and then simply never be made. That is
-    // the worst failure available to a shop: a paid order that silently does
-    // not exist.
-    //
-    // shopifyProductId is null, which makes isFulfillable false and shows
-    // "Not for sale yet" in place of the buy button. Photographs and the page
-    // stay up.
-    //
-    // TO PUT IT BACK: Sam re-adds it in Tapstitch, which creates a NEW
-    // Shopify product with NEW ids. The ids below are the OLD ones and will
-    // be stale — do not simply un-null this. Re-read them with
-    // scripts/shopify-find-product.mjs, take the cost off Tapstitch, and
-    // update both entries.
-    // ─────────────────────────────────────────────────────────────────────
     slug: "saucer-oversized-black",
     description:
       "Snow-washed heavyweight cotton. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve.",
     title: "Saucer — Oversized, Black",
     eyebrow: "Snow-washed black · sleeve hit",
     price: SAUCER_OVERSIZED_PRICE,
-    cost: 14.68,
+    cost: 15.07,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/6c8c1532-1749-44ec-8f53-395ff5643b92.png",
       "/img/28-bwblack-chest.jpg",
@@ -324,41 +307,24 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/66-bwblack-skate-kick.jpg",
     ],
     sizes: SIX,
-    shopifyProductId: null, // was "15942009520459" — stale once re-added,
+    shopifyProductId: "15972246094155",
     shopifyVariantIds: {
-      S: "58204637954379",
-      M: "58204637987147",
-      L: "58204638019915",
-      XL: "58204638052683",
-      "2XL": "58204638085451",
-      "3XL": "58204638118219",
+      S: "58349182353739",
+      M: "58349182386507",
+      L: "58349182419275",
+      XL: "58349182452043",
+      "2XL": "58349182484811",
+      "3XL": "58349182517579",
     },
   },
   {
-    // ── OFF SALE: NOT IN TAPSTITCH ───────────────────────────────────────
-    // Shopify still carries this product and our variant ids still resolve,
-    // but Tapstitch has no matching product — so an order would take the
-    // money, create the Shopify draft, and then simply never be made. That is
-    // the worst failure available to a shop: a paid order that silently does
-    // not exist.
-    //
-    // shopifyProductId is null, which makes isFulfillable false and shows
-    // "Not for sale yet" in place of the buy button. Photographs and the page
-    // stay up.
-    //
-    // TO PUT IT BACK: Sam re-adds it in Tapstitch, which creates a NEW
-    // Shopify product with NEW ids. The ids below are the OLD ones and will
-    // be stale — do not simply un-null this. Re-read them with
-    // scripts/shopify-find-product.mjs, take the cost off Tapstitch, and
-    // update both entries.
-    // ─────────────────────────────────────────────────────────────────────
     slug: "saucer-oversized-bone",
     description:
       "Snow-washed heavyweight cotton in bone. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve.",
     title: "Saucer — Oversized, Bone",
     eyebrow: "Snow-washed bone · sleeve hit",
     price: SAUCER_OVERSIZED_PRICE,
-    cost: 14.68,
+    cost: 15.07,
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/d2036219-e99b-4ceb-8597-37452d66dec3.png",
       "/img/08-bwwhite-midturn.jpg",
@@ -369,14 +335,14 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     sizes: SIX,
     // Same Shopify product as the black colourway above, different colour
     // option, hence the same product id but the Apricot variant ids.
-    shopifyProductId: null, // was "15942009520459" — stale once re-added,
+    shopifyProductId: "15972246094155",
     shopifyVariantIds: {
-      S: "58204637757771",
-      M: "58204637790539",
-      L: "58204637823307",
-      XL: "58204637856075",
-      "2XL": "58204637888843",
-      "3XL": "58204637921611",
+      S: "58349182157131",
+      M: "58349182189899",
+      L: "58349182222667",
+      XL: "58349182255435",
+      "2XL": "58349182288203",
+      "3XL": "58349182320971",
     },
   },
   {
