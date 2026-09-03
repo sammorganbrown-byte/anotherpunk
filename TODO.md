@@ -487,3 +487,33 @@ does not exist. It would have caught this the day it broke.
 Also worth knowing: Shopify calls the second colourway **Apricot**, our site
 calls it **bone**. Fine as a brand choice — just do not let it confuse a
 variant mapping later.
+
+## Staple: changing the blank (3 Sep)
+
+Sam is replacing the 400gsm blank — too thick for a t-shirt, which it is.
+Standard tee is around 180gsm, heavyweight 240–280; 400gsm/11.8oz is
+sweatshirt weight. Target something in the 240–280 range for a plain tee that
+still feels like a good one.
+
+**Five things change with the blank, and the first is the one that bites:**
+
+1. **The description is now wrong.** It reads "400gsm heavyweight cotton —
+   11.8oz, and it hangs like it." That has to be rewritten to the real weight
+   before the new blank goes live, or the page describes a garment nobody
+   receives.
+2. **The cost changes.** Read it off Tapstitch, not Shopify.
+3. **The Shopify ids will change** if this becomes a new Tapstitch product,
+   exactly as the Saucer Oversized did. Do not assume the existing ids carry
+   over — re-read them with `scripts/shopify-find-product.mjs` and check the
+   old product gets archived rather than left live.
+4. **The comment above the price in `another-punk-products.ts` becomes
+   wrong.** It argues the 400gsm weight IS the product and that a lighter
+   blank would remove the only reason to buy it. That argument dies with the
+   blank and needs replacing with whatever the new one actually is.
+5. **The mockups are probably fine.** A plain white tee with a sleeve print
+   looks much the same at 260gsm; only the drape differs, and not enough to
+   notice in the shots we have. Re-check rather than assume.
+
+**Margin improves as a side effect** — a lighter blank costs less than €16.93,
+so the 43% goes up without touching the €35 price. That is a bonus, not the
+reason: the reason is that the shirt is too thick.
