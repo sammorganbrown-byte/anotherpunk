@@ -318,6 +318,10 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     },
   },
   {
+    // "Bone" is ours and Shopify calls the same colourway "Apricot". The
+    // divergence is deliberate — bone is the better name for it — but it is
+    // exactly the kind of thing that mis-maps a variant later, so: the
+    // APRICOT ids in Shopify are the BONE ones here. Black is black in both.
     slug: "saucer-oversized-bone",
     description:
       "Snow-washed heavyweight cotton in bone. Oversized through the body, hem finished clean. Drawn by hand on the chest, mark on the sleeve.",
