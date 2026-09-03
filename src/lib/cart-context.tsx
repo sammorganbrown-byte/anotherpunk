@@ -4,8 +4,11 @@ import {
   computeShippingDiscount,
   findPromoCode,
   normalizePromoCode,
+  excludesBundles,
+  isCostPriceCode,
 } from "./promo-codes";
-import { bundleDiscount, shippingAfterBundles } from "./bundles";
+import { bundleDiscount, bundledListValue, shippingAfterBundles } from "./bundles";
+import { computeShipping } from "./shipping";
 import { getAnotherPunkProduct } from "./another-punk-products";
 
 // Another Punk sells one kind of thing: apparel produced by Tapstitch via
@@ -268,11 +271,24 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   }, [items]);
 
-  const promoDiscount = useMemo(() => computeDiscount(promoCode, items), [promoCode, items]);
-
   // Mirrors the server exactly — same functions, same catalogue. This figure
   // is only ever shown; checkout recomputes it before charging anything.
+  //
+  // MIRRORING IT IS THE WHOLE POINT, and this is where that failed. The
+  // server was taught not to stack a promo code on top of a bundle discount;
+  // this was not, so a code on a package deal displayed "Pay €0" while the
+  // server would have charged €1 — or, before the server fix, refused the
+  // order outright. A total the customer can see and the server disagrees
+  // with is worse than either number alone.
   const bundlesOff = useMemo(() => bundleDiscount(items), [items]);
+  const promoDiscount = useMemo(() => {
+    // A code that excludes package deals discounts only the loose lines, so
+    // it sees the bundled garments removed rather than merely bundle-priced.
+    const base = excludesBundles(promoCode)
+      ? subtotal - bundledListValue(items)
+      : subtotal - bundlesOff;
+    return computeDiscount(promoCode, items, Math.max(0, base));
+  }, [promoCode, items, subtotal, bundlesOff]);
   const discount = Math.min(subtotal, promoDiscount + bundlesOff);
   // A promo code takes money off the clothes and, only if it explicitly says
   // so, off the postage too. Keeping those separate is what stops a
@@ -280,7 +296,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // Bundles include their own postage, so they pay for the parcel and only
   // whatever travels alongside them is charged the marginal cost of going in
   // the same box.
-  const shippingBeforeDiscount = shippingAfterBundles(items);
+  // Cost-price codes pay the real postage on everything in the parcel: a
+  // bundle folds postage into its price out of its margin, and an order sold
+  // at cost has no margin to fold it out of. Same rule as the server.
+  const shippingBeforeDiscount = isCostPriceCode(promoCode)
+    ? computeShipping(count)
+    : shippingAfterBundles(items);
   const shipping = Math.max(
     0,
     shippingBeforeDiscount - computeShippingDiscount(promoCode, shippingBeforeDiscount),
