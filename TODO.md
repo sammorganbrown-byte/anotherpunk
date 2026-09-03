@@ -469,9 +469,10 @@ colourways at €40 with nothing at the other end to make them. Sam re-added it;
 both entries are relinked to the new product **15972246094155**, cost €15.07
 from Tapstitch, and all 16 products are on sale again.
 
-**The old Shopify product `15942009520459` is now an orphan.** ARCHIVE it
-rather than delete — it may carry order history, archiving is reversible, and
-leaving it live invites relinking to the dead one later.
+~~**The old Shopify product `15942009520459` is now an orphan.**~~ Archived
+3 Sep with `scripts/shopify-archive.mjs`, along with the old 400gsm
+`15971630580043`. Both kept rather than deleted: archiving preserves any order
+history and is reversible from the Shopify admin.
 
 **Nothing checks that a product we sell exists where it gets made.** This was
 found only because a unit cost was missing and I went looking. Any other gap
