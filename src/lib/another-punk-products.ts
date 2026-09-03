@@ -45,8 +45,14 @@ export type AnotherPunkProduct = {
    * and shipping are confirmed against Tapstitch's actual invoices. */
   price: number;
   /** What the blank plus printing costs, from Shopify's cost-per-item field.
-   * Display never uses it; it exists so a code can price at cost. */
-  cost: number;
+   * Display never uses it; it exists so a code can price at cost.
+   *
+   * OPTIONAL, because a product can go live before anyone has looked its unit
+   * cost up. Leaving it out is safe in the only direction that matters: the
+   * cost-price code falls back to charging the full price for that line
+   * rather than guessing, so an unknown cost can never sell at a loss. Fill
+   * it in when you have the real figure. */
+  cost?: number;
   /** Every shot of this garment. images[0] is the hero — it's what the
    * shop grid, homepage tiles and cart thumbnail use, so it should be the
    * frame that reads the garment most clearly. The rest fill the
@@ -97,6 +103,50 @@ export const WOMENS_PRICE = 35;
 export const BODYSUIT_PRICE = 40;
 
 export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
+  {
+    // The plain one. No graphic at all beyond a wordmark on the sleeve, which
+    // is the whole idea: a shop of loud shirts still needs the thing you put
+    // on when you do not want to say anything.
+    //
+    // Not in the field — every image here is either a flat packshot or reads
+    // at a glance as a blank white tee, and the field is a campaign of
+    // photographs that carry a graphic. Sam asked for it to stay out, and it
+    // would have looked like an empty frame in there anyway.
+    slug: "staple",
+    title: "Staple",
+    eyebrow: "Plain white · sleeve print",
+    description:
+      "Heavyweight cotton, cut boxy and oversized, ribbed crew collar. Blank front, blank back, and the mark on the sleeve where only you can see it. Because a wardrobe full of loud shirts still needs something to wear underneath everything else.",
+    fit: "Boxy and oversized. Your normal size.",
+    price: 35,
+    // cost: unknown — see the note on the field. Look up the unit cost in
+    // Tapstitch and fill it in; until then the friends code charges this line
+    // at full price rather than guessing at cost.
+    // The sleeve close-up that used to sit second here is gone: the generated
+    // lettering was a thin, evenly-spaced marker font at roughly twice the
+    // real size, not the heavy hand-lettering the garment actually carries.
+    // Close enough to pass a glance and wrong enough to be a different shirt,
+    // which is the worst kind of product photograph.
+    images: [
+      "/img/163-plainwhite-night-street.jpg",
+      "/img/161-plainwhite-front.jpg",
+      "/img/162-plainwhite-back.jpg",
+    ],
+    notInField: [
+      "/img/163-plainwhite-night-street.jpg",
+      "/img/161-plainwhite-front.jpg",
+      "/img/162-plainwhite-back.jpg",
+    ],
+    sizes: FIVE,
+    shopifyProductId: "15971630580043",
+    shopifyVariantIds: {
+      S: "58347515609419",
+      M: "58347515642187",
+      L: "58347515674955",
+      XL: "58347515707723",
+      "2XL": "58347515740491",
+    },
+  },
   {
     slug: "westwood-69-pink",
     description:
