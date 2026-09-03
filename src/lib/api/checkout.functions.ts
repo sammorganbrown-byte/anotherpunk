@@ -3,7 +3,7 @@ import type Stripe from "stripe";
 import { z } from "zod";
 import { getStripe, type CheckoutSessionMetadata } from "../stripe.server";
 import { getAnotherPunkProduct, isFulfillable } from "../another-punk-products";
-import { computeDiscount, computeShippingDiscount } from "../promo-codes";
+import { computeDiscount, computeShippingDiscount, isCostPriceCode } from "../promo-codes";
 import { encodeOrderLines } from "../order-lines";
 import { bundleDiscount, shippingAfterBundles } from "../bundles";
 import { computeShipping, SHIPPING_COUNTRIES } from "../shipping";
@@ -111,13 +111,7 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       });
     }
 
-    // Discount recomputed server-side; the client's figure is display only.
-    const promoDiscount = computeDiscount(
-      data.promoCode,
-      resolved.map((r) => ({ price: r.product.price, qty: r.qty, slug: r.product.slug })),
-    );
-
-    // Bundles, likewise recomputed. A group that does not validate — wrong
+    // Bundles recomputed server-side. A group that does not validate — wrong
     // count, a product not in the bundle, a repeat where the bundle wants
     // four different designs — is silently ignored and its lines are charged
     // in full. Tampering can only ever cost the customer more.
@@ -128,10 +122,24 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       bundleSlug: r.bundleSlug,
     }));
     const bundlesOff = bundleDiscount(bundleLines);
-
-    // Capped at the subtotal so the two discounts together can never make
-    // the garments free and then start eating the postage.
     const grossSubtotal = resolved.reduce((sum, r) => sum + r.product.price * r.qty, 0);
+
+    // ORDER MATTERS. The promo code discounts what the customer is already
+    // being charged — the price after any bundle — not the list price. Taking
+    // both off the gross made them stack: 99% of €200 plus the €25 a pack
+    // already saves is €223 of discount on a €200 order, which capped out at
+    // exactly zero and made Stripe refuse the session outright. The friends
+    // code failed worse than that: it charged €49 for four tees costing €93
+    // to make and post, which is the one thing pricing at cost exists to
+    // prevent.
+    const promoDiscount = computeDiscount(
+      data.promoCode,
+      resolved.map((r) => ({ price: r.product.price, qty: r.qty, slug: r.product.slug })),
+      grossSubtotal - bundlesOff,
+    );
+
+    // Capped at the subtotal so the two together can never make the garments
+    // free and then start eating the postage.
     const discount = Math.min(grossSubtotal, promoDiscount + bundlesOff);
 
     let stripe;
@@ -166,9 +174,18 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
     // postage only if that code says so explicitly.
     // A bundle's price includes its postage, so it pays for the parcel its
     // own garments travel in. Anything loose alongside it is then charged
-    // only the marginal cost of adding it — the same parcel, €2, not a
-    // second €9 and not nothing.
-    const fullShipping = shippingAfterBundles(bundleLines);
+    // only the marginal cost of adding it to the same parcel, not a second
+    // full base rate and not nothing.
+    //
+    // EXCEPT at cost price. A bundle can absorb postage because it is sold
+    // with a margin; an order priced at what the garments cost to make has
+    // nothing to absorb it with, so a friends order pays the real postage on
+    // everything in the parcel. Otherwise the code that exists specifically
+    // to never lose money quietly loses the postage on every bundle.
+    const totalQty = resolved.reduce((sum, r) => sum + r.qty, 0);
+    const fullShipping = isCostPriceCode(data.promoCode)
+      ? computeShipping(totalQty)
+      : shippingAfterBundles(bundleLines);
     const shipping = Math.max(
       0,
       fullShipping - computeShippingDiscount(data.promoCode, fullShipping),
@@ -184,8 +201,13 @@ export const createCheckoutSession = createServerFn({ method: "POST" })
       });
     }
 
+    // Note the `< 0.5` rather than `> 0 && < 0.5`: an order that comes to
+    // exactly nothing is not a free gift, it is a Stripe session that cannot
+    // be created, and it used to be reachable by putting a discount code on a
+    // package deal. Refusing it with an explanation beats an opaque failure
+    // at the payment step.
     const payable = Math.max(0, subtotal - discount) + shipping;
-    if (payable > 0 && payable < 0.5) {
+    if (payable < 0.5) {
       return {
         configured: false,
         reason:

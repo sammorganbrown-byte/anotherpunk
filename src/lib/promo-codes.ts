@@ -57,6 +57,17 @@ const PROMO_CODES: PromoCode[] = [
   { code: "BIGPUSSY69", toCost: true, label: "Friends" },
 ];
 
+/** True when the code prices at cost rather than by percentage.
+ *
+ * Checkout needs to know, because a bundle's price has its postage folded in
+ * and a cost-price order has no margin to absorb that. A friends order must
+ * pay the real postage or the code stops being "never loses money", which is
+ * the entire reason it prices at cost instead of by percentage. */
+export function isCostPriceCode(input: string | null | undefined): boolean {
+  if (!input) return false;
+  return Boolean(findPromoCode(input)?.toCost);
+}
+
 export function normalizePromoCode(input: string): string {
   return input.trim().toUpperCase();
 }
@@ -67,12 +78,25 @@ export function findPromoCode(input: string): PromoCode | null {
   return PROMO_CODES.find((c) => c.code === code) ?? null;
 }
 
-export function computeDiscount(input: string | null | undefined, items: PromoCodeItem[]): number {
+/** @param subtotalOverride the amount the code should actually discount.
+ *
+ * Exists because a code must apply to what the customer is ALREADY being
+ * charged, not to the list price. Without it a bundle discount and a promo
+ * code both come off the full total and stack: 99% off €200 plus the €25 the
+ * pack already saves is €223 of discount on a €200 order, which capped out at
+ * exactly zero and made Stripe refuse the session. The friends code was worse
+ * than refused — it charged €49 for four tees that cost €93 to make and post.
+ */
+export function computeDiscount(
+  input: string | null | undefined,
+  items: PromoCodeItem[],
+  subtotalOverride?: number,
+): number {
   if (!input) return 0;
   const promo = findPromoCode(input);
   if (!promo) return 0;
 
-  const subtotal = items.reduce((sum, i) => sum + i.price * i.qty, 0);
+  const subtotal = subtotalOverride ?? items.reduce((sum, i) => sum + i.price * i.qty, 0);
 
   if (promo.toCost) {
     // Down to what the garments cost, not down by a percentage. Rounded DOWN
