@@ -433,11 +433,20 @@ The tank works out at €22.44 on the nose; it went to €25 because every other
 price here is a multiple of five and a lone €22 reads as a mistake rather than
 a decision.
 
-**The Staple's cost was wrong.** It was set to €16.06 from a message; Shopify
-says **€16.53**. Corrected. At €35 that is a markup of 2.12x — the thinnest in
-the shop by a distance, where the house standard is 2.72x. At that markup it
-would be €45. Worth a decision: it is a plain white tee, so the low price may
-be deliberate, but nothing else here works that hard for that little.
+**All costs now come from Tapstitch, not Shopify.** Shopify's cost-per-item
+field was stale on every single product — low by 2c to 68c, with no consistent
+offset, so the gap could not be derived. Understated costs flatter every
+margin and let the cost-price friends code sell below true cost.
+
+**Two products still need checking.** `saucer-oversized-black` and
+`saucer-oversized-bone` are still on the old Shopify figure of €14.68 —
+Tapstitch's page for that product was not among the screenshots. Read it off
+Tapstitch and correct them.
+
+**The Staple is the thin one.** €35 against a true cost of €16.93 is 2.07x,
+where the house standard is about 2.7x. At that markup it would be €45. It may
+be deliberate for a plain white tee, but nothing else here works that hard for
+that little.
 
 **The white tank is still not listed.** Shopify carries the colourway and the
 flat exists, but nothing has photographed it on a body, and a listing without

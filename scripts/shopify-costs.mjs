@@ -2,9 +2,29 @@
 /**
  * Print each product's unit cost from Shopify's cost-per-item field.
  *
- * The catalogue's `cost` values are supposed to come from here, and this is
- * how to check that they still do. Costs live on the InventoryItem, not the
- * variant, so the variant list is only a way of collecting inventory ids.
+ * ── READ THIS BEFORE TRUSTING THE OUTPUT ─────────────────────────────────
+ * Shopify's cost field is NOT the source of truth. Checked against
+ * Tapstitch's own product pages on 3 Sep, every single one was stale and LOW,
+ * by between 2c and 68c:
+ *
+ *     Cropped Tank    Shopify €8.25   Tapstitch €8.93
+ *     Another Punk    Shopify €11.93  Tapstitch €12.47
+ *     Boxy Oversized  Shopify €16.53  Tapstitch €16.93
+ *     Westwood 69     Shopify €14.68  Tapstitch €15.07
+ *     Mesh            Shopify €17.45  Tapstitch €17.47
+ *
+ * There is no consistent ratio or offset, so the gap cannot be derived — the
+ * figures have to be read off Tapstitch. Understated costs make every margin
+ * look better than it is and, worse, let the cost-price friends code sell
+ * below what the garment actually costs.
+ *
+ * This script is still useful as a CHECK — it is the fast way to see all
+ * costs at once and spot a product whose catalogue figure has drifted. Just
+ * confirm anything surprising against Tapstitch before acting on it.
+ * ─────────────────────────────────────────────────────────────────────────
+ *
+ * Costs live on the InventoryItem, not the variant, so the variant list is
+ * only a way of collecting inventory ids.
  *
  * Prints titles and numbers only — never credentials, never an error body,
  * which on this API can echo the client id back.
