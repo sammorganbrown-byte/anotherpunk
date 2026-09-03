@@ -494,6 +494,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // boxy, oversized, and a GREY snow-leopard rather than the crop top's pink.
     // Worth keeping straight — they are easy to confuse in a grid and the two
     // reference elements in Higgsfield are named to match.
+    // Only two photographs, so it surfaced once each in a field of nearly
+    // eighty and the cat shot — the funniest thing in the shop — was easy to
+    // miss entirely. Doubled, the way Westwood 69 Pink already is for the
+    // same reason. The interleave spreads the repeats across separate rounds
+    // rather than stacking them next to each other.
+    fieldRepeat: 2,
     slug: "big-pussy",
     title: "Big Pussy",
     eyebrow: "Grey leopard · unisex boxy",
@@ -521,6 +527,9 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // Shopify also carries a white colourway, but there are no photographs of
     // it and a listing with no picture of what you are buying is worse than no
     // listing. The white variant ids are in Shopify when it is shot.
+    // Same as Big Pussy: two photographs is not enough to be seen in a field
+    // this size.
+    fieldRepeat: 2,
     slug: "crop-tank",
     title: "Crop Tank",
     eyebrow: "Black · cropped · wide strap",
