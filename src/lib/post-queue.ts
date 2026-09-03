@@ -184,9 +184,10 @@ export const POST_QUEUE: QueuedPost[] = [
 
   // ── October ───────────────────────────────────────────────────────────
   {
-    id: "cami-cafe",
-    images: ["121-cami-cafe.jpg", "81-cami-chest-crop.jpg"],
-    caption: "Cami\nBlack. Slim fit. Thin strap.\n\nanotherpunk.com",
+    // Was the Cami, which Sam pulled for quality. Same slot, its replacement.
+    id: "crop-tank",
+    images: ["167-tank-alley.jpg", "168-tank-crop.jpg"],
+    caption: "Crop Tank\nBlack. Cropped. Wide strap.\n\nanotherpunk.com",
     due: "2026-10-01",
   },
   {
@@ -232,9 +233,10 @@ export const POST_QUEUE: QueuedPost[] = [
     due: "2026-10-17",
   },
   {
-    id: "leather",
-    images: ["86-cami-leather-jacket.jpg", "89-cami-strap-detail.jpg"],
-    caption: "Cami\nBlack. Slim fit. Thin strap.\n\nanotherpunk.com",
+    // Also freed up by dropping the Cami. Given to the other new piece.
+    id: "big-pussy",
+    images: ["166-bigpussy-cat.jpg", "165-bigpussy-night.jpg"],
+    caption: "Big Pussy\nGrey leopard. Unisex boxy.\n\nanotherpunk.com",
     due: "2026-10-20",
   },
   {

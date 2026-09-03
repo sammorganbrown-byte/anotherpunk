@@ -413,3 +413,35 @@ With those, `SHIPPING_BASE`, `SHIPPING_PER_EXTRA_ITEM`, the margin sheet and
 the His and Hers price can all be rebuilt on evidence. Not changing the
 increment before then: raising it to cover four-item orders would tax every
 two-item order to fix an error that mostly shows up at four.
+
+## Two new products, two things still needed (3 Sep)
+
+**Big Pussy** (grey leopard unisex boxy, €45) and **Crop Tank** (black, €20)
+are live. The Cami is gone — Sam pulled it for quality — and its two scheduled
+posts were retargeted to these instead, so nothing advertises a product that
+no longer exists.
+
+**1. Unit costs.** Neither has one. The friends code falls back to charging
+full price on a line whose cost is unknown, so this is safe rather than
+wrong — but it means BIGPUSSY69 does not discount them at all, and the margin
+sheet cannot include them. Grab both from Tapstitch the way the Staple's
+€16.06 came.
+
+The prices came from Shopify. At the house markup of ~2.66x they imply costs
+of about **€16.95** (Big Pussy) and **€7.53** (Crop Tank). If the real figures
+are close, the prices are right as they stand. If the tank actually costs more
+than about €8 it is underpriced — at €20 it is already the cheapest thing in
+the shop by a wide margin, so it is the one to check first.
+
+**2. The white tank is not listed.** Shopify carries a white colourway and the
+flat exists, but there are no photographs of it on a body, and a listing
+without a picture of what you are buying is worse than no listing. The white
+variant ids are in Shopify whenever it gets shot.
+
+## Latent risk: eight product images are remote CDN URLs
+
+Eleven references in `another-punk-products.ts` point at
+`d2ol7oe51mr4n9.cloudfront.net` — Higgsfield's own storage — rather than at
+files in `public/img`. They work today. They are not ours, and nothing
+guarantees they will resolve next year. Worth downloading into the repo like
+every other image before that becomes a support email about missing pictures.

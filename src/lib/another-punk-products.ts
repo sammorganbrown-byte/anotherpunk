@@ -19,7 +19,7 @@
 // grids read those files directly, so an Another Punk product can never leak
 // into Deadstock's listings, or vice versa.
 
-export type ApSize = "S" | "M" | "L" | "XL" | "2XL" | "3XL";
+export type ApSize = "XS" | "S" | "M" | "L" | "XL" | "2XL" | "3XL";
 
 export type AnotherPunkProduct = {
   /** How many times this product's images repeat in the field.
@@ -82,6 +82,8 @@ export const DEFAULT_FIT =
   "Runs oversized. Your normal size for the fit shown. One down if you want it closer.";
 
 const FOUR: ApSize[] = ["S", "M", "L", "XL"];
+/** The cropped tank runs smaller and starts at XS — the only piece that does. */
+const XS_TO_L: ApSize[] = ["XS", "S", "M", "L"];
 const SIX: ApSize[] = ["S", "M", "L", "XL", "2XL", "3XL"];
 /** The jersey stops at 2XL — there is no 3XL variant in Shopify, so offering
  * one would sell a size that cannot be fulfilled. */
@@ -484,34 +486,51 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     },
   },
   {
-    slug: "cami",
-    title: "Cami",
-    eyebrow: "Black · slim fit · thin strap",
-    // Matches Leopard Crop, the other lightweight women's cut. Confirmed.
-    price: WOMENS_PRICE,
-    cost: 11.93,
-    images: [
-      "/img/80-cami-fullbody-flash.jpg",
-      "/img/81-cami-chest-crop.jpg",
-      "/img/86-cami-leather-jacket.jpg",
-      "/img/82-cami-night-neon.jpg",
-      "/img/83-cami-midturn.jpg",
-      "/img/84-cami-profile.jpg",
-      "/img/87-cami-night-carpark.jpg",
-      "/img/121-cami-cafe.jpg",
-      "/img/88-cami-wide-negspace.jpg",
-      "/img/89-cami-strap-detail.jpg",
-    ],
+    // Same slogan as the Leopard Crop, a completely different garment: unisex,
+    // boxy, oversized, and a GREY snow-leopard rather than the crop top's pink.
+    // Worth keeping straight — they are easy to confuse in a grid and the two
+    // reference elements in Higgsfield are named to match.
+    slug: "big-pussy",
+    title: "Big Pussy",
+    eyebrow: "Grey leopard · unisex boxy",
     description:
-      "Lightweight stretch cotton. Cut slim and close through the body. Thin straps, open back. Graphic drawn by hand, printed in red.",
-    fit: "Fitted and close. This one runs true to size. Not oversized like the tees.",
-    sizes: FOUR,
-    shopifyProductId: "15944344109387",
+      "Grey snow-leopard print, washed and faded, on a boxy oversized cut with dropped shoulders. Slogan drawn by hand, printed big and red across the chest. Unisex.",
+    fit: "Boxy and oversized. Your normal size.",
+    price: 45,
+    // cost: not yet known — see the note in TODO. Until it is filled in the
+    // friends code charges this line at full price rather than guessing.
+    images: ["/img/165-bigpussy-night.jpg", "/img/166-bigpussy-cat.jpg"],
+    sizes: FIVE,
+    shopifyProductId: "15972229841227",
     shopifyVariantIds: {
-      S: "58217310323019",
-      M: "58217310355787",
-      L: "58217310388555",
-      XL: "58217310421323",
+      S: "58349114097995",
+      M: "58349114130763",
+      L: "58349114163531",
+      XL: "58349114196299",
+      "2XL": "58349114229067",
+    },
+  },
+  {
+    // Replaces the Cami, which Sam pulled for quality. Black only for now:
+    // Shopify also carries a white colourway, but there are no photographs of
+    // it and a listing with no picture of what you are buying is worse than no
+    // listing. The white variant ids are in Shopify when it is shot.
+    slug: "crop-tank",
+    title: "Crop Tank",
+    eyebrow: "Black · cropped · wide strap",
+    description:
+      "Cropped tank in plain black cotton. Fitted through the body, wide scoop neck, broad straps rather than spaghetti. The mark across the chest, drawn by hand and printed in red.",
+    fit: "Fitted and cropped. Runs small — size up if you are between.",
+    price: 20,
+    // cost: not yet known — see TODO.
+    images: ["/img/167-tank-alley.jpg", "/img/168-tank-crop.jpg"],
+    sizes: XS_TO_L,
+    shopifyProductId: "15972226695499",
+    shopifyVariantIds: {
+      XS: "58349099188555",
+      S: "58349099221323",
+      M: "58349099254091",
+      L: "58349099286859",
     },
   },
   {
