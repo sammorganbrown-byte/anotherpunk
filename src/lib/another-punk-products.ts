@@ -407,7 +407,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "400gsm heavyweight cotton \u2014 11.8oz, and it hangs like it. Cut boxy and oversized, ribbed crew collar. Blank front, blank back, one small mark on the sleeve. Because a wardrobe full of loud shirts still needs a staple.",
     fit: "Boxy and oversized. Your normal size.",
     price: 35,
-    cost: 16.06,
+    cost: 16.53,
     // The sleeve close-up took three attempts and the fix was a second
     // reference element: a crop of the real wordmark off 145, so the model had
     // the actual letterforms to copy instead of inventing them. A garment
@@ -496,9 +496,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     description:
       "Grey snow-leopard print, washed and faded, on a boxy oversized cut with dropped shoulders. Slogan drawn by hand, printed big and red across the chest. Unisex.",
     fit: "Boxy and oversized. Your normal size.",
-    price: 45,
-    // cost: not yet known — see the note in TODO. Until it is filled in the
-    // friends code charges this line at full price rather than guessing.
+    // €40 rather than the €45 Shopify carried. At a cost of €14.69 that was
+    // 3.06x — the steepest markup in the shop — where the house standard is
+    // 2.72x, which lands almost exactly on €40.
+    price: 40,
+    cost: 14.69,
     images: ["/img/165-bigpussy-night.jpg", "/img/166-bigpussy-cat.jpg"],
     sizes: FIVE,
     shopifyProductId: "15972229841227",
@@ -521,8 +523,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     description:
       "Cropped tank in plain black cotton. Fitted through the body, wide scoop neck, broad straps rather than spaghetti. The mark across the chest, drawn by hand and printed in red.",
     fit: "Fitted and cropped. Runs small — size up if you are between.",
-    price: 20,
-    // cost: not yet known — see TODO.
+    // €25 rather than the €20 Shopify carried. At a cost of €8.25 that was
+    // 2.42x against a house standard of 2.72x, which works out at €22.44 —
+    // rounded up to €25 because every other price here is a multiple of five
+    // and a lone €22 reads as a mistake rather than a decision.
+    price: 25,
+    cost: 8.25,
     images: ["/img/167-tank-alley.jpg", "/img/168-tank-crop.jpg"],
     sizes: XS_TO_L,
     shopifyProductId: "15972226695499",
