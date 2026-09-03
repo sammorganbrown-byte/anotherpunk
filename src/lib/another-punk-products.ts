@@ -77,7 +77,7 @@ export type AnotherPunkProduct = {
 };
 
 export const DEFAULT_DESCRIPTION =
-  "Heavyweight cotton. Cut boxy. Raw hem. Graphic drawn by hand. Printed after you order. Not before.";
+  "340gsm. Ultra-heavyweight cotton with a proper lux hand-feel \u2014 it has real weight to it and hangs like it. Cut boxy. Raw hem. Graphic drawn by hand. Printed after you order. Not before.";
 export const DEFAULT_FIT =
   "Runs oversized. Your normal size for the fit shown. One down if you want it closer.";
 
@@ -169,7 +169,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     quote: "We can't stop here. This is bat country.",
     quoteSource: "Fear and Loathing in Las Vegas, 1998",
     title: "Bat Country",
-    eyebrow: "Washed black · raw hem",
+    eyebrow: "340gsm · washed black · raw hem",
     price: TEE_PRICE,
     cost: 18.47,
     images: [
@@ -195,7 +195,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     quote: "I better adjust my tongue box.",
     quoteSource: "Barbarella, 1968",
     title: "Tongue Box",
-    eyebrow: "Washed black · raw hem",
+    eyebrow: "340gsm · washed black · raw hem",
     price: TEE_PRICE,
     cost: 18.47,
     // Reshot 2026-09-01. Every previous image showed the garment misspelled
@@ -222,7 +222,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     quote: "Nobody fucks with the Jesus.",
     quoteSource: "The Big Lebowski, 1998",
     title: "The Jesus",
-    eyebrow: "Washed black · raw hem",
+    eyebrow: "340gsm · washed black · raw hem",
     price: TEE_PRICE,
     cost: 18.47,
     images: [
@@ -246,7 +246,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     quote: "Surrender Dorothy.",
     quoteSource: "After Hours, 1985",
     title: "Surrender Dorothy",
-    eyebrow: "Washed black · raw hem",
+    eyebrow: "340gsm · washed black · raw hem",
     price: TEE_PRICE,
     cost: 18.47,
     images: [
@@ -270,7 +270,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
     slug: "saucer",
     title: "Saucer",
-    eyebrow: "Washed black · raw hem",
+    eyebrow: "340gsm · washed black · raw hem",
     price: TEE_PRICE,
     cost: 18.47,
     images: [

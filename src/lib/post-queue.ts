@@ -68,7 +68,7 @@ export const POST_QUEUE: QueuedPost[] = [
     // joke is the wrong first impression for a shop nobody knows yet.
     id: "jesus",
     images: ["35-jesus-night-rain.jpg", "23-jesus-chest.jpg", "74-jesus-kerb-night.jpg"],
-    caption: "The Jesus\nWashed black. Raw hem.\n\nanotherpunk.com",
+    caption: "The Jesus\n340gsm. Washed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-09-03",
   },
   {
@@ -155,7 +155,7 @@ export const POST_QUEUE: QueuedPost[] = [
   {
     id: "dorothy",
     images: ["59-dorothy-spin.jpg", "53-dorothy-chest-crop.jpg"],
-    caption: "Surrender Dorothy\nWashed black. Raw hem.\n\nanotherpunk.com",
+    caption: "Surrender Dorothy\n340gsm. Washed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-09-22",
   },
   {
@@ -166,13 +166,13 @@ export const POST_QUEUE: QueuedPost[] = [
       "70-tonguebox-chest-flash.jpg",
       "71-tonguebox-threequarter.jpg",
     ],
-    caption: "Tongue Box\nWashed black. Raw hem.\n\nanotherpunk.com",
+    caption: "Tongue Box\n340gsm. Washed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-09-24",
   },
   {
     id: "bats-neon",
     images: ["33-bats-night-neon.jpg", "24-bats-chest-redo.jpg", "44-bats-jump-flash.jpg"],
-    caption: "Bat Country\nWashed black. Raw hem.\n\nanotherpunk.com",
+    caption: "Bat Country\n340gsm. Washed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-09-26",
   },
   {
@@ -193,7 +193,7 @@ export const POST_QUEUE: QueuedPost[] = [
   {
     id: "saucer-carpark",
     images: ["37-saucer-night-carpark.jpg", "25-saucer-chest.jpg"],
-    caption: "Saucer\nWashed black. Raw hem.\n\nanotherpunk.com",
+    caption: "Saucer\n340gsm. Washed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-10-03",
   },
   {
@@ -211,7 +211,7 @@ export const POST_QUEUE: QueuedPost[] = [
   {
     id: "sprint",
     images: ["60-bats-sprint-night.jpg"],
-    caption: "Bat Country\nWashed black. Raw hem.\n\nanotherpunk.com",
+    caption: "Bat Country\n340gsm. Washed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-10-10",
   },
   {
@@ -248,13 +248,13 @@ export const POST_QUEUE: QueuedPost[] = [
   {
     id: "corridor",
     images: ["61-jesus-walking-corridor.jpg", "03-wordmark-chest-raking.jpg"],
-    caption: "The Jesus\nWashed black. Raw hem.\n\nanotherpunk.com",
+    caption: "The Jesus\n340gsm. Washed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-10-24",
   },
   {
     id: "saucer-turn",
     images: ["63-saucer-turn.jpg", "05-saucer-profile.jpg"],
-    caption: "Saucer\nWashed black. Raw hem.\n\nanotherpunk.com",
+    caption: "Saucer\n340gsm. Washed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-10-27",
   },
   {
