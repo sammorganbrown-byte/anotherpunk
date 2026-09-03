@@ -104,50 +104,6 @@ export const BODYSUIT_PRICE = 40;
 
 export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
-    // The plain one. No graphic at all beyond a wordmark on the sleeve, which
-    // is the whole idea: a shop of loud shirts still needs the thing you put
-    // on when you do not want to say anything.
-    //
-    // Not in the field — every image here is either a flat packshot or reads
-    // at a glance as a blank white tee, and the field is a campaign of
-    // photographs that carry a graphic. Sam asked for it to stay out, and it
-    // would have looked like an empty frame in there anyway.
-    slug: "staple",
-    title: "Staple",
-    eyebrow: "Plain white · sleeve print",
-    description:
-      "Heavyweight cotton, cut boxy and oversized, ribbed crew collar. Blank front, blank back, and the mark on the sleeve where only you can see it. Because a wardrobe full of loud shirts still needs something to wear underneath everything else.",
-    fit: "Boxy and oversized. Your normal size.",
-    price: 35,
-    // cost: unknown — see the note on the field. Look up the unit cost in
-    // Tapstitch and fill it in; until then the friends code charges this line
-    // at full price rather than guessing at cost.
-    // The sleeve close-up that used to sit second here is gone: the generated
-    // lettering was a thin, evenly-spaced marker font at roughly twice the
-    // real size, not the heavy hand-lettering the garment actually carries.
-    // Close enough to pass a glance and wrong enough to be a different shirt,
-    // which is the worst kind of product photograph.
-    images: [
-      "/img/163-plainwhite-night-street.jpg",
-      "/img/161-plainwhite-front.jpg",
-      "/img/162-plainwhite-back.jpg",
-    ],
-    notInField: [
-      "/img/163-plainwhite-night-street.jpg",
-      "/img/161-plainwhite-front.jpg",
-      "/img/162-plainwhite-back.jpg",
-    ],
-    sizes: FIVE,
-    shopifyProductId: "15971630580043",
-    shopifyVariantIds: {
-      S: "58347515609419",
-      M: "58347515642187",
-      L: "58347515674955",
-      XL: "58347515707723",
-      "2XL": "58347515740491",
-    },
-  },
-  {
     slug: "westwood-69-pink",
     description:
       "Boxy football jersey, striped jacquard, navy collar. Saucer on the front, WESTWOOD 69 across the back.",
@@ -431,6 +387,50 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       XL: "58204707389771",
       "2XL": "58204707422539",
       "3XL": "58204707455307",
+    },
+  },
+  {
+    // The plain one. No graphic at all beyond a wordmark on the sleeve, which
+    // is the whole idea: a shop of loud shirts still needs the thing you put
+    // on when you do not want to say anything.
+    //
+    // Not in the field — every image here is either a flat packshot or reads
+    // at a glance as a blank white tee, and the field is a campaign of
+    // photographs that carry a graphic. Sam asked for it to stay out, and it
+    // would have looked like an empty frame in there anyway.
+    slug: "staple",
+    title: "Staple",
+    eyebrow: "Plain white · sleeve print",
+    description:
+      "400gsm heavyweight cotton \u2014 11.8oz, and it hangs like it. Cut boxy and oversized, ribbed crew collar. Blank front, blank back, and the mark on the sleeve where only you can see it. Because a wardrobe full of loud shirts still needs a staple.",
+    fit: "Boxy and oversized. Your normal size.",
+    price: 35,
+    // cost: unknown — see the note on the field. Look up the unit cost in
+    // Tapstitch and fill it in; until then the friends code charges this line
+    // at full price rather than guessing at cost.
+    // The sleeve close-up that used to sit second here is gone: the generated
+    // lettering was a thin, evenly-spaced marker font at roughly twice the
+    // real size, not the heavy hand-lettering the garment actually carries.
+    // Close enough to pass a glance and wrong enough to be a different shirt,
+    // which is the worst kind of product photograph.
+    images: [
+      "/img/163-plainwhite-night-street.jpg",
+      "/img/161-plainwhite-front.jpg",
+      "/img/162-plainwhite-back.jpg",
+    ],
+    notInField: [
+      "/img/163-plainwhite-night-street.jpg",
+      "/img/161-plainwhite-front.jpg",
+      "/img/162-plainwhite-back.jpg",
+    ],
+    sizes: FIVE,
+    shopifyProductId: "15971630580043",
+    shopifyVariantIds: {
+      S: "58347515609419",
+      M: "58347515642187",
+      L: "58347515674955",
+      XL: "58347515707723",
+      "2XL": "58347515740491",
     },
   },
   {

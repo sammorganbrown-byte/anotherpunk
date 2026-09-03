@@ -31,9 +31,34 @@ function RedesignIndexView() {
         </p>
       </div>
 
-      {/* Package deals lead the grid rather than sitting at the bottom of it.
-          A deal nobody scrolls to is not a deal, and these are the two
-          highest-value things in the shop. */}
+      <ul className="grid grid-cols-2 gap-px p-px sm:grid-cols-3 lg:grid-cols-4">
+        {ANOTHER_PUNK_PRODUCTS.map((p) => (
+          <li key={p.slug}>
+            <Link to="/product/$slug" params={{ slug: p.slug }} className="rd-tile">
+              <img
+                src={p.images[0]}
+                alt={p.title}
+                loading="lazy"
+                decoding="async"
+                className="aspect-[4/5] w-full object-cover"
+              />
+              <span className="rd-tile-cap">
+                <span className="rd-ok">{p.title}</span>
+                <span className="rd-log">{formatPrice(p.price)}</span>
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+
+      {/* Package deals sit UNDER the garments, not above them.
+          They led the grid on the theory that a deal nobody scrolls to is not
+          a deal. But somebody arriving at a shop wants to see the clothes, and
+          opening with two bundles asks them to commit to four garments before
+          they have seen one — the pack is what you consider after something
+          has caught your eye, not instead of looking. Putting the range first
+          also means the grid opens with fourteen different graphics rather
+          than two, which is the more honest picture of what is for sale. */}
       <ul className="grid grid-cols-1 gap-px p-px sm:grid-cols-2">
         {BUNDLES.map((b) => (
           <li key={b.slug}>
@@ -51,26 +76,6 @@ function RedesignIndexView() {
                   <span className="text-[var(--rd-red)]">{formatPrice(b.price)}</span>{" "}
                   <span aria-hidden="true">·</span> {b.eyebrow}
                 </span>
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-
-      <ul className="grid grid-cols-2 gap-px p-px sm:grid-cols-3 lg:grid-cols-4">
-        {ANOTHER_PUNK_PRODUCTS.map((p) => (
-          <li key={p.slug}>
-            <Link to="/product/$slug" params={{ slug: p.slug }} className="rd-tile">
-              <img
-                src={p.images[0]}
-                alt={p.title}
-                loading="lazy"
-                decoding="async"
-                className="aspect-[4/5] w-full object-cover"
-              />
-              <span className="rd-tile-cap">
-                <span className="rd-ok">{p.title}</span>
-                <span className="rd-log">{formatPrice(p.price)}</span>
               </span>
             </Link>
           </li>
