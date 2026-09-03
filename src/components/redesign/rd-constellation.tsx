@@ -32,6 +32,26 @@ import type { AnotherPunkProduct } from "../../lib/another-punk-products";
 
 const DRAG_SLOP = 6;
 
+/** ── THE FIELD IS A MOOD BOARD AS MUCH AS A STORE ─────────────────────────
+ * Sam's words, and they settle a class of argument before it starts.
+ *
+ * A store optimises for the shortest path from arriving to buying, and by that
+ * standard every non-clickable frame here is dead weight and the answer to
+ * "should this link somewhere?" is always yes. That is the wrong standard. The
+ * field is where somebody works out whether they like this brand at all, and
+ * that is a slower, more browsing kind of attention than a grid of buy
+ * buttons invites. The shop page exists for people who have already decided.
+ *
+ * So: images that sell nothing are allowed to be here, and are allowed to be
+ * the biggest things on the screen. Repetition of a good photograph is not
+ * waste. A frame that goes nowhere is not a dead end — it is the part of the
+ * page doing the work a lookbook does.
+ *
+ * The limit is honesty, not restraint. Every garment shown has to be a garment
+ * we sell, and every price and link has to be right. Mood is not a licence to
+ * misrepresent the product.
+ * ─────────────────────────────────────────────────────────────────────────
+
 /** Atmosphere frames: group shots that sell nothing.
  *
  * These link nowhere and carry no caption, on purpose. A photograph of four

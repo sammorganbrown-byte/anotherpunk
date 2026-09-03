@@ -400,6 +400,24 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // is the whole idea: a shop of loud shirts still needs the thing you put
     // on when you do not want to say anything.
     //
+    // ── €35 IS DELIBERATE. DO NOT "FIX" THE MARGIN. ──────────────────────
+    // This runs at 43% net where the rest of the range clears 50%, and it
+    // will keep showing up as the outlier in any costing. It is priced as a
+    // way in: the thing somebody buys when they are not yet sure they want to
+    // buy anything. An entry product earns its margin back on the second
+    // order, not the first.
+    //
+    // The blank is £16.93, nearly what a €50 tee's costs, and swapping it for
+    // a cheaper one was considered and rejected. There is no chest graphic
+    // here — the 400gsm weight IS the product, and it is the only thing the
+    // page can argue with. A lighter blank would fix the margin by removing
+    // the only reason to choose this over anyone else's plain white tee.
+    //
+    // What to watch instead is whether Staple and Crop Tank buyers order a
+    // second time. If they do, 43% is cheap. If they do not, this is just the
+    // worst-margin product wearing a strategy as a hat.
+    // ─────────────────────────────────────────────────────────────────────
+    //
     // Not in the field — every image here is either a flat packshot or reads
     // at a glance as a blank white tee, and the field is a campaign of
     // photographs that carry a graphic. Sam asked for it to stay out, and it
