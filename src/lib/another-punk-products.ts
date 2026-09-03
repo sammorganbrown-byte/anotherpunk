@@ -412,18 +412,15 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // reference is not an artwork reference — given only the shirt, it drew a
     // thin evenly-spaced marker at twice the size, which passed a glance and
     // was a different shirt.
-    images: [
-      "/img/163-plainwhite-night-street.jpg",
-      "/img/164-plainwhite-sleeve.jpg",
-      "/img/161-plainwhite-front.jpg",
-      "/img/162-plainwhite-back.jpg",
-    ],
-    notInField: [
-      "/img/163-plainwhite-night-street.jpg",
-      "/img/164-plainwhite-sleeve.jpg",
-      "/img/161-plainwhite-front.jpg",
-      "/img/162-plainwhite-back.jpg",
-    ],
+    // NO FLAT PACKSHOTS HERE. Tapstitch's front and back flats were images
+    // three and four and looked terrible on the page: a white garment on a
+    // white ground, run through the gallery's tint, renders as a blank pink
+    // slab with a fragment of red lettering adrift in it. That is a problem
+    // specific to a white product — the same flats would read fine on a black
+    // one — and it is the reason this piece is carried entirely by
+    // photographs of it being worn.
+    images: ["/img/163-plainwhite-night-street.jpg", "/img/164-plainwhite-sleeve.jpg"],
+    notInField: ["/img/163-plainwhite-night-street.jpg", "/img/164-plainwhite-sleeve.jpg"],
     sizes: FIVE,
     shopifyProductId: "15971630580043",
     shopifyVariantIds: {
