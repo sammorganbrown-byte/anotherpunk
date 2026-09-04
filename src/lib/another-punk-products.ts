@@ -186,6 +186,15 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed black · raw hem",
     price: TEE_PRICE,
     cost: 18.47,
+    /* 178 is the SHARED back shot for all five raw-hem tees. The backs of
+       these are genuinely identical — plain washed black, no print, raw torn
+       hem — so five separate photographs would be five copies of the same
+       information. Sam approved reusing one. It goes LAST in each gallery:
+       it answers "what does the back look like" for anyone who swipes that
+       far, without displacing a frame that sells the shirt.
+
+       If a back print is ever added to any of these, that product needs its
+       own shot and must stop pointing here. */
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/746fa1fe-5055-4a02-913a-aba6e38d07de.png",
       "/img/24-bats-chest-redo.jpg",
@@ -194,6 +203,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/44-bats-jump-flash.jpg",
       "/img/58-bats-chest-daylight.jpg",
       "/img/60-bats-sprint-night.jpg",
+          "/img/178-rawhem-back-shared.png",
     ],
     sizes: FOUR,
     shopifyProductId: "15942009225547",
@@ -221,6 +231,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/70-tonguebox-chest-flash.jpg",
       "/img/71-tonguebox-threequarter.jpg",
       "/img/72-tonguebox-night-neon.jpg",
+          "/img/178-rawhem-back-shared.png",
     ],
     sizes: FOUR,
     shopifyProductId: "15942008799563",
@@ -245,6 +256,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/35-jesus-night-rain.jpg",
       "/img/61-jesus-walking-corridor.jpg",
       "/img/74-jesus-kerb-night.jpg",
+          "/img/178-rawhem-back-shared.png",
     ],
     sizes: FOUR,
     shopifyProductId: "15942008832331",
@@ -271,6 +283,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       // rather than judged by filename. Files stay on disk.
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/4ca18e68-84f4-42c7-98a5-f5e547502ce2.png",
       "/img/53-dorothy-chest-crop.jpg",
+          "/img/178-rawhem-back-shared.png",
     ],
     sizes: FOUR,
     shopifyProductId: "15942008963403",
@@ -294,6 +307,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/37-saucer-night-carpark.jpg",
       "/img/56-saucer-chest-raking.jpg",
       "/img/63-saucer-turn.jpg",
+          "/img/178-rawhem-back-shared.png",
     ],
     sizes: FOUR,
     shopifyProductId: "15942009356619",
