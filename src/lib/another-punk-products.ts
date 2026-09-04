@@ -514,13 +514,24 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        before they buy. It stays even after the mockups are redone: it is the
        only image here that is the real thing.
 
-       When regenerating: the artwork must be knocked through by the mesh,
-       not sitting on top of it. See MOCKUP-BRIEF.md. */
+       FIXED 4 Sep. 173-mesh-chest-real-print is the regenerated hero: the
+       wordmark is correct and the print is knocked through the net, every
+       hole open. The old CloudFront hero and 27-mesh-chest are dropped
+       outright rather than demoted, because both showed a solid filled
+       print, which is the one thing about this shirt that was wrong.
+       07-mesh-walking-blur is kept for now: it is a motion blur and the
+       print is not legible enough in it to misinform anyone. Replace it in
+       the next batch.
+
+       What produced the correct result, and what to repeat: the garment
+       element AND the wordmark artwork element together, a chest-facing
+       pose, "letter for letter", and an explicit instruction that ink sits
+       only on the threads with every hole open. A turned-away pose invented
+       a back print reading "UNK NOWN". See MOCKUP-BRIEF.md. */
     images: [
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/47da1769-eb20-4e33-9204-60503c824ef5.png",
+      "/img/173-mesh-chest-real-print.png",
       "/img/171-mesh-print-macro.jpg",
       "/img/07-mesh-walking-blur.jpg",
-      "/img/27-mesh-chest.jpg",
     ],
     sizes: FOUR,
     shopifyProductId: "15943646740811",
@@ -588,7 +599,15 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // 2.72x, which lands almost exactly on €40.
     price: 40,
     cost: 14.93,
-    images: ["/img/165-bigpussy-night.jpg", "/img/166-bigpussy-cat.jpg"],
+    /* 177 leads: it is the only shot that shows the cut honestly — cropped,
+       close through the body, midriff visible — which is exactly what the
+       corrected fit note now promises. The old hero read as a normal boxy
+       tee, which is what let the page describe it as oversized for a month. */
+    images: [
+      "/img/177-bigpussy-launderette.png",
+      "/img/165-bigpussy-night.jpg",
+      "/img/166-bigpussy-cat.jpg",
+    ],
     sizes: FIVE,
     shopifyProductId: "15972229841227",
     shopifyVariantIds: {
