@@ -204,8 +204,9 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/44-bats-jump-flash.jpg",
       "/img/58-bats-chest-daylight.jpg",
       "/img/60-bats-sprint-night.jpg",
-          "/img/178-rawhem-back-shared.png",
+      "/img/178-rawhem-back-shared.png",
     ],
+    notInField: ["/img/178-rawhem-back-shared.png"],
     sizes: FOUR,
     shopifyProductId: "15942009225547",
     shopifyVariantIds: {
@@ -235,6 +236,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/178-rawhem-back-shared.png",
       "/img/201-tonguebox-crosswalk.png",
     ],
+    notInField: ["/img/178-rawhem-back-shared.png"],
     sizes: FOUR,
     shopifyProductId: "15942008799563",
     shopifyVariantIds: {
@@ -258,8 +260,9 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/35-jesus-night-rain.jpg",
       "/img/61-jesus-walking-corridor.jpg",
       "/img/74-jesus-kerb-night.jpg",
-          "/img/178-rawhem-back-shared.png",
+      "/img/178-rawhem-back-shared.png",
     ],
+    notInField: ["/img/178-rawhem-back-shared.png"],
     sizes: FOUR,
     shopifyProductId: "15942008832331",
     shopifyVariantIds: {
@@ -281,9 +284,9 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/4ca18e68-84f4-42c7-98a5-f5e547502ce2.png",
       "/img/53-dorothy-chest-crop.jpg",
       "/img/178-rawhem-back-shared.png",
-      "/img/199-dorothy-launderette.png",
       "/img/200-dorothy-chest-crop.png",
     ],
+    notInField: ["/img/178-rawhem-back-shared.png"],
     sizes: FOUR,
     shopifyProductId: "15942008963403",
     shopifyVariantIds: {
@@ -306,8 +309,9 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/37-saucer-night-carpark.jpg",
       "/img/56-saucer-chest-raking.jpg",
       "/img/63-saucer-turn.jpg",
-          "/img/178-rawhem-back-shared.png",
+      "/img/178-rawhem-back-shared.png",
     ],
+    notInField: ["/img/178-rawhem-back-shared.png"],
     sizes: FOUR,
     shopifyProductId: "15942009356619",
     shopifyVariantIds: {
@@ -334,6 +338,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/66-bwblack-skate-kick.jpg",
       "/img/181-snowwash-black-back.png",
     ],
+    notInField: ["/img/181-snowwash-black-back.png"],
     sizes: SIX,
     shopifyProductId: "15972246094155",
     shopifyVariantIds: {
@@ -365,6 +370,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/64-bwwhite-dance.jpg",
       "/img/182-snowwash-bone-back.png",
     ],
+    notInField: ["/img/182-snowwash-bone-back.png"],
     sizes: SIX,
     // Same Shopify product as the black colourway above, different colour
     // option, hence the same product id but the Apricot variant ids.
@@ -392,8 +398,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/AP-real-front-black.jpg",
       "/img/181-snowwash-black-back.png",
     ],
-    // The flat packshot earns its place on the product page and nowhere else.
-    notInField: ["/img/AP-real-front-black.jpg"],
+    /* Kept off the field. The flat packshot belongs on the product page and
+       nowhere else, and a back shot is reference rather than campaign: the
+       field is a mood board of people wearing the things, and a row of
+       identical shoulders reads as a fault in the page. */
+    notInField: ["/img/181-snowwash-black-back.png", "/img/AP-real-front-black.jpg"],
     sizes: SIX,
     shopifyProductId: "15942019613003",
     shopifyVariantIds: {
@@ -456,7 +465,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/195-staple-white-night.png",
       "/img/196-staple-white-daylight.png",
     ],
-    notInField: ["/img/163-plainwhite-night-street.jpg", "/img/164-plainwhite-sleeve.jpg"],
+    notInField: [
+      "/img/163-plainwhite-night-street.jpg",
+      "/img/164-plainwhite-sleeve.jpg",
+      "/img/183-staple-white-back.png",
+    ],
     sizes: FIVE,
     shopifyProductId: "15972281844043",
     shopifyVariantIds: {
@@ -487,7 +500,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/197-staple-black-forecourt.png",
       "/img/198-staple-black-profile.png",
     ],
-    notInField: ["/img/169-staple-black-street.jpg", "/img/170-staple-black-sleeve.jpg"],
+    notInField: [
+      "/img/169-staple-black-street.jpg",
+      "/img/170-staple-black-sleeve.jpg",
+      "/img/184-staple-black-back.png",
+    ],
     sizes: FIVE,
     shopifyProductId: "15972281844043",
     shopifyVariantIds: {
@@ -544,6 +561,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/191-mesh-front-woman.png",
       "/img/194-mesh-back.png",
     ],
+    notInField: ["/img/194-mesh-back.png"],
     sizes: FOUR,
     shopifyProductId: "15943646740811",
     shopifyVariantIds: {
@@ -574,6 +592,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/186-leopardcrop-back.png",
       "/img/187-leopardcrop-bed.png",
     ],
+    notInField: ["/img/186-leopardcrop-back.png"],
     sizes: ["S", "M", "L", "XL", "2XL"],
     shopifyProductId: "15942025118027",
     shopifyVariantIds: {
@@ -623,6 +642,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/190-bigpussy-knot-corridor.png",
       "/img/192-bigpussy-back.png",
     ],
+    notInField: ["/img/192-bigpussy-back.png"],
     sizes: FIVE,
     shopifyProductId: "15972229841227",
     shopifyVariantIds: {
@@ -659,6 +679,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/189-croptank-front-bathroom.png",
       "/img/185-croptank-back.png",
     ],
+    notInField: ["/img/185-croptank-back.png"],
     sizes: XS_TO_L,
     shopifyProductId: "15972226695499",
     shopifyVariantIds: {
@@ -716,7 +737,6 @@ export const AP_IMAGERY = {
   motion: "/img/07-mesh-walking-blur.jpg",
   hemDetail: "/img/11-macro-rawhem-ink.jpg",
   wide: "/img/09-bats-wide-negativespace.jpg",
-
 } as const;
 
 export function getAnotherPunkProduct(slug: string): AnotherPunkProduct | undefined {

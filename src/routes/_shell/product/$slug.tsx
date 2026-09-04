@@ -106,6 +106,7 @@ function RedesignProduct() {
             band at the ends. The browser does all of that for free, keeps
             working when JS is still loading, and stays scrollable by trackpad
             on a desktop. */}
+        <div className="rd-gallery-wrap">
         <div
           className="rd-gallery"
           ref={trackRef}
@@ -127,6 +128,43 @@ function RedesignProduct() {
               />
             </div>
           ))}
+        </div>
+
+        {/* Arrows. The swipe works and the numbered cells work, but neither is
+            discoverable: on a desktop there is nothing to tell you the
+            photograph moves, and the numbers read as a spec field rather than
+            a control. These say "there is more" without being asked.
+
+            Hidden from screen readers and from keyboard focus on purpose:
+            they duplicate the numbered buttons below, which already announce
+            "View 2 of 5" properly. Two sets of controls for one gallery is
+            noise in a screen reader. */}
+        {product.images.length > 1 ? (
+          <>
+            <button
+              type="button"
+              className="rd-gallery-arrow"
+              data-side="left"
+              tabIndex={-1}
+              aria-hidden="true"
+              onClick={() => goToShot(Math.max(0, shot - 1))}
+              disabled={shot === 0}
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              className="rd-gallery-arrow"
+              data-side="right"
+              tabIndex={-1}
+              aria-hidden="true"
+              onClick={() => goToShot(Math.min(product.images.length - 1, shot + 1))}
+              disabled={shot === product.images.length - 1}
+            >
+              →
+            </button>
+          </>
+        ) : null}
         </div>
 
         {product.images.length > 1 ? (
