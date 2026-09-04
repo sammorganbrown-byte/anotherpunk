@@ -84,11 +84,6 @@ type AtmosFrame = {
 
 const ATMOSPHERE: AtmosFrame[] = [
   { src: "/img/153-group-four-street.jpg", scale: 1.85 },
-  /* Replaces the old three-model car-park frame that was never usable (its
-     shirt read TOUNGE as a misprint rather than the real spelling). Four
-     distinct faces, the bodysuit reading as a bodysuit, and every wordmark
-     checked. */
-  { src: "/img/203-group-four-carpark.png", scale: 1.85 },
   { src: "/img/155-pair-shove.jpg", scale: 1.45 },
   // The one real photograph in the field, and the only person in it who
   // actually exists. It earns its place by being the odd one out: a phone

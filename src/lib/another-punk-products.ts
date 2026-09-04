@@ -538,10 +538,10 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        a back print reading "UNK NOWN". See MOCKUP-BRIEF.md. */
     images: [
       "/img/173-mesh-chest-real-print.png",
+      "/img/205-mesh-front-woman-vest.png",
       "/img/171-mesh-print-macro.jpg",
       "/img/07-mesh-walking-blur.jpg",
       "/img/191-mesh-front-woman.png",
-      "/img/193-mesh-front-bandeau.png",
       "/img/194-mesh-back.png",
     ],
     sizes: FOUR,
