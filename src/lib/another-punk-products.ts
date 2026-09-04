@@ -76,8 +76,22 @@ export type AnotherPunkProduct = {
   shopifyVariantIds: Partial<Record<ApSize, string>>;
 };
 
+/** Body copy for the five raw-hem tees, which carry no description of their
+ * own. It now sits directly under the title rather than below the buy button,
+ * so it is the first thing read after the name — which is why it leads with
+ * the cloth and the finish rather than with the printing.
+ *
+ * The raw hem is the detail worth spending words on: it is the thing that
+ * separates these from a blank with a graphic on it, and it is the one people
+ * ask about. Say what it actually is — an unfinished cut edge — rather than
+ * only calling it luxury, because a claim with a fact under it survives
+ * contact with the garment and a claim without one does not.
+ *
+ * NEVER describe any of this as screen-printed. It is printed to order by
+ * Tapstitch, and screen-print language would be a lie about the process. */
 export const DEFAULT_DESCRIPTION =
-  "340gsm. Ultra-heavyweight cotton with a proper lux hand-feel \u2014 it has real weight to it and hangs like it. Cut boxy. Raw hem. Graphic drawn by hand. Printed after you order. Not before.";
+  "340gsm ultra-heavyweight cotton, and the weight is the whole point \u2014 it holds its shape, hangs straight off the shoulder, and feels like a shirt that cost considerably more than it did. Cut boxy through the body, dropped a little at the shoulder. The hem is left raw: no cover-stitch, no rolled edge, just a clean cut line that softens a touch with every wash. Drawn by hand. Printed one at a time, after you order it.";
+
 export const DEFAULT_FIT =
   "Runs oversized. Your normal size for the fit shown. One down if you want it closer.";
 

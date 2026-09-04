@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   ANOTHER_PUNK_PRODUCTS,
   getAnotherPunkProduct,
@@ -58,6 +58,27 @@ function RedesignProduct() {
     product.sizes.includes("M") ? "M" : product.sizes[0],
   );
   const [shot, setShot] = useState(0);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  /* Which slide is under the viewport, derived from scrollLeft rather than
+     tracked separately — the scroll position is the truth once the finger is
+     involved, and a second source would drift out of step with it. */
+  const onTrackScroll = () => {
+    const el = trackRef.current;
+    if (!el) return;
+    const i = Math.round(el.scrollLeft / el.clientWidth);
+    setShot((prev) => (prev === i ? prev : i));
+  };
+
+  /* The numbered cells stay real controls. They scroll the track instead of
+     setting state directly, so there is one way the active slide changes and
+     the indicator can never disagree with what is on screen. */
+  const goToShot = (i: number) => {
+    const el = trackRef.current;
+    if (!el) return setShot(i);
+    const gentle = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    el.scrollTo({ left: i * el.clientWidth, behavior: gentle ? "auto" : "smooth" });
+  };
   const [lit, setLit] = useState(false);
   const [queued, setQueued] = useState(false);
 
@@ -78,15 +99,34 @@ function RedesignProduct() {
   return (
     <div className="rd-pdp">
       <div className="rd-pdp-media">
+        {/* A scroll-snap track rather than one <img> that swaps src, so the
+            photographs can be SWIPED on a phone. Done natively because a
+            touchstart/touchend handler cannot do the thing that makes a
+            gallery feel right: follow the finger, carry momentum, and rubber-
+            band at the ends. The browser does all of that for free, keeps
+            working when JS is still loading, and stays scrollable by trackpad
+            on a desktop. */}
         <div
-          className="rd-plate aspect-[4/3] w-full"
+          className="rd-gallery"
+          ref={trackRef}
+          onScroll={onTrackScroll}
           data-lit={lit}
           onMouseEnter={() => setLit(true)}
           onMouseLeave={() => setLit(false)}
           onFocus={() => setLit(true)}
           onBlur={() => setLit(false)}
         >
-          <img src={product.images[shot]} alt={`${product.title}, view ${shot + 1}`} />
+          {product.images.map((src, i) => (
+            <div className="rd-plate rd-gallery-slide aspect-[4/3]" key={src}>
+              <img
+                src={src}
+                alt={`${product.title}, view ${i + 1} of ${product.images.length}`}
+                /* The hero is what the page is for; the rest can wait until
+                   somebody actually swipes. */
+                loading={i === 0 ? "eager" : "lazy"}
+              />
+            </div>
+          ))}
         </div>
 
         {product.images.length > 1 ? (
@@ -95,7 +135,7 @@ function RedesignProduct() {
               <button
                 key={src}
                 type="button"
-                onClick={() => setShot(i)}
+                onClick={() => goToShot(i)}
                 aria-label={`View ${i + 1} of ${product.images.length}`}
                 aria-pressed={i === shot}
                 className="rd-cell"
@@ -114,6 +154,16 @@ function RedesignProduct() {
             JOB {String(idx).padStart(3, "0")} <span className="rd-key">/</span> SPEC
           </p>
           <RdPixelText as="h1" text={product.title.toUpperCase()} />
+          {/* Directly under the title, because it is the thing that answers
+              "what actually is this" and it was sitting below the buy button,
+              after the delivery note — read by nobody who had not already
+              decided. Falls back to DEFAULT_DESCRIPTION: the fallback existed
+              and was used for the link preview, but this element rendered an
+              empty string, so eleven of seventeen product pages carried no
+              description at all. */}
+          <p className="rd-log mt-5 max-w-[56ch]">
+            {product.description ?? DEFAULT_DESCRIPTION}
+          </p>
         </div>
 
         <dl className="flex flex-col gap-[3px]">
@@ -197,8 +247,6 @@ function RedesignProduct() {
         {/* Directly under the buy button, which is the moment the questions
             it answers actually occur to somebody. */}
         <RdDelivery />
-
-        <p className="rd-log max-w-[56ch]">{product.description ?? ""}</p>
 
         <div className="flex flex-wrap gap-5">
           <Link to="/" className="rd-link underline underline-offset-4">

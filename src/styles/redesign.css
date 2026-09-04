@@ -2080,3 +2080,49 @@ body:has(.rd-pdp) .rd-np {
 @media (min-width: 640px) {
   .rd-notfound { padding: 5rem 2rem; }
 }
+
+/* Product gallery: a native scroll-snap track, so the photographs can be
+   swiped on a phone.
+
+   Native rather than a JS gesture handler because the browser already does
+   the parts that make a gallery feel like a gallery — following the finger,
+   momentum, rubber-banding at the ends — and does them on the compositor,
+   which no touch handler can match. It also degrades well: with JS still
+   loading the images are already swipeable, and on a desktop the same track
+   takes a trackpad swipe. */
+.rd-gallery {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  /* No `scroll-behavior: smooth` here on purpose. Declared in CSS it applies
+     to EVERY scroll of this element, including a plain `scrollLeft = x`,
+     which then animates — and an animation that gets interrupted leaves the
+     track where it started. The numbered buttons below the photograph became
+     unreliable because of it. Smoothness is a property of that one deliberate
+     jump, so it is asked for in the scrollTo call instead, where it can also
+     be turned off for anyone who has asked for less motion. */
+  /* iOS momentum, and no vertical rubber-band fighting the page scroll. */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  /* The bar would sit across the photograph. The numbered cells underneath
+     already say which frame this is and how many there are. */
+  scrollbar-width: none;
+}
+.rd-gallery::-webkit-scrollbar {
+  display: none;
+}
+.rd-gallery-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+/* The duotone reveal used to key off data-lit on the plate itself. The
+   attribute now lives on the track, because hovering is a property of the
+   gallery rather than of one frame within it. */
+.rd-gallery[data-lit="true"] .rd-plate img {
+  filter: none;
+}
+.rd-gallery[data-lit="true"] .rd-plate::after {
+  opacity: 0;
+}
