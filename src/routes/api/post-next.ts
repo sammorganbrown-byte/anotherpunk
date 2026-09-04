@@ -78,7 +78,7 @@ export const Route = createFileRoute("/api/post-next")({
           );
         }
 
-        const next = due.find((p) => !alreadyPosted(p, published));
+        const next = nextToPublish(due, published);
         if (!next) {
           const left = POST_QUEUE.length - published.length;
           if (left <= 2) await warnQueueLow(left);
@@ -112,10 +112,47 @@ async function recentCaptions(igId: string, token: string): Promise<string[]> {
 /** Matches on the first line rather than the whole caption. A caption edited
  * on the phone after posting would otherwise look like a different post and
  * be published a second time. */
-function alreadyPosted(post: QueuedPost, captions: string[]): boolean {
-  const head = post.caption.split("\n")[0].trim();
-  if (!head) return false;
-  return captions.some((c) => c.trim().startsWith(head));
+/** How many posts on the grid open with this line. */
+function headOf(caption: string): string {
+  return caption.split("\n")[0].trim();
+}
+
+/** Decide which of the due posts to publish, by COUNTING rather than by
+ * asking "does this caption exist".
+ *
+ * ── WHY COUNTING ──────────────────────────────────────────────────────────
+ * The captions are deliberately just the product name and its spec line, so
+ * they REPEAT: six posts open with "Saucer", two with "The Jesus". Eighteen
+ * of twenty-five share an opening line with another post. An existence check
+ * therefore says "already posted" the moment the FIRST Saucer goes out, and
+ * the other five are skipped forever — silently, and reported as "everything
+ * due is already posted", which reads like the queue is healthy.
+ *
+ * So: count how many posts on the grid open with a given line, and treat that
+ * many of the queue's posts with that line as done. Six queued Saucers and
+ * two on the grid means the third is next. This is correct in both directions
+ * — it will not republish something already up, and it will not abandon a
+ * post just because a sibling shares its wording.
+ *
+ * Posts carrying `posted` never reach here; they are filtered out earlier and
+ * are the only signal a caption edit cannot break. */
+function nextToPublish(due: QueuedPost[], captions: string[]): QueuedPost | undefined {
+  const remaining = new Map<string, number>();
+  for (const c of captions) {
+    const h = headOf(c);
+    if (h) remaining.set(h, (remaining.get(h) ?? 0) + 1);
+  }
+  for (const post of due) {
+    const h = headOf(post.caption);
+    const seen = remaining.get(h) ?? 0;
+    if (seen > 0) {
+      // Already on the grid — account for it and move on.
+      remaining.set(h, seen - 1);
+      continue;
+    }
+    return post;
+  }
+  return undefined;
 }
 
 /** Builds a container, waits for Instagram to fetch the images, publishes.
