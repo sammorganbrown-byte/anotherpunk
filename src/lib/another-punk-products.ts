@@ -499,8 +499,26 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "Open-weave net · boxy",
     price: MESH_PRICE,
     cost: 17.47,
+    /* ── THE THREE GENERATED SHOTS ARE WRONG AND ARE BEING REPLACED ──────
+       Sam had one printed on 4 Sep. On the real garment the ink lands only
+       on the strands of the net: every hole stays open, and you can see
+       straight through the letters. All three mockups render the print as a
+       SOLID red shape, as though a vinyl decal had been laid over the mesh
+       and the holes filled in. The hero is the worst of them, and it is what
+       the grid, the cart and every shared link show.
+
+       That is a misrepresentation of the product rather than a stylistic
+       miss, and it is the sort that produces a return we pay postage on.
+       171-mesh-print-macro is a photograph of the actual shirt and is placed
+       SECOND, directly behind the hero, so anybody swiping sees the truth
+       before they buy. It stays even after the mockups are redone: it is the
+       only image here that is the real thing.
+
+       When regenerating: the artwork must be knocked through by the mesh,
+       not sitting on top of it. See MOCKUP-BRIEF.md. */
     images: [
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/47da1769-eb20-4e33-9204-60503c824ef5.png",
+      "/img/171-mesh-print-macro.jpg",
       "/img/07-mesh-walking-blur.jpg",
       "/img/27-mesh-chest.jpg",
     ],

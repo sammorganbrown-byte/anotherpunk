@@ -55,6 +55,38 @@ have blank ones reads as unfinished.
 | Crop Tank | 1 | 1 |
 | **Total new mockups** | **9** | **14** |
 
+## 1b. THE MESH IS WRONG AND MUST BE REDONE FIRST (4 Sep)
+
+Sam had one printed. **On the real garment the ink sits only on the strands
+of the net. Every hole stays open — you can see straight through the
+letters.** All three current mesh images render the print as a solid red
+shape, as though a vinyl decal were laid over the mesh with the holes filled.
+
+This is not a styling miss, it is the product looking like a different
+product, and the hero is the one the grid, the cart and every shared link
+use. **All 3 need regenerating**, on top of the back shot and the closeup.
+
+`171-mesh-print-macro.jpg` is Sam's own photograph of the real shirt and is
+now the second image on the product page, so a customer swiping sees the
+truth before paying. It stays after the mockups are redone: it is the only
+image of the actual garment we have.
+
+**How to brief it.** Do not ask for "printed on mesh" — that is what produced
+the solid shape. Say:
+
+> The artwork is knocked through by the mesh itself. Ink sits ONLY on the
+> threads of the net. Every hole in the fabric stays completely open inside
+> the letters, and the background is visible straight through them, so the
+> letterforms read as a dense field of red dots rather than as solid shapes.
+> No vinyl, no decal, no solid fill, no patch.
+
+Supply `171-mesh-print-macro.jpg` as the reference for how the print meets the
+fabric, and the wordmark artwork separately for the letterforms. Both, as
+always: a garment reference is not an artwork reference.
+
+Also check on the redo: the real mesh has **large open holes**. The current
+hero renders a fine, dense net whose chest panel reads almost solid.
+
 ## 2. Fabric closeups
 
 None exist except `11-macro-rawhem-ink.jpg`. On-body or macro, not a flat.
@@ -65,14 +97,14 @@ One per fabric, not per product — the fabric is a property of the blank:
 3. Snow-washed oversized, bone
 4. 300gsm Staple, white
 5. 300gsm Staple, black
-6. Mesh open-weave net
+6. Mesh open-weave net — **DONE**, `171-mesh-print-macro.jpg`, a real photo
 7. Leopard stretch jersey (pink)
 8. Big Pussy grey snow-leopard
 9. Crop tank plain black cotton
 10. Bodysuit mineral-washed rib
 11. Jersey striped jacquard
 
-**11 fabric closeups.**
+**11 fabric closeups, of which the mesh is already done** — so 10 to make.
 
 ## 3. Products that are thin on images
 
@@ -88,12 +120,13 @@ Two more each for the five on two images = **10**.
 
 | | |
 |---|---|
+| Mesh reshoot (wrong print, urgent) | 3 |
 | Back shots, option A | 9 |
 | Back shots, option B | 14 |
-| Fabric closeups | 11 |
+| Fabric closeups | 10 |
 | Filling out the thin products | 10 |
-| **Total, option A** | **30** |
-| **Total, option B** | **35** |
+| **Total, option A** | **32** |
+| **Total, option B** | **37** |
 
 ## Accuracy rules for the brief
 
