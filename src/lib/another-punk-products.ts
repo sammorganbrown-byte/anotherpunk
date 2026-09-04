@@ -395,14 +395,16 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     images: [
       "/img/147-anotherpunk-night-shopphone.jpg",
       "/img/146-anotherpunk-night-neon.jpg",
-      "/img/AP-real-front-black.jpg",
       "/img/181-snowwash-black-back.png",
     ],
-    /* Kept off the field. The flat packshot belongs on the product page and
-       nowhere else, and a back shot is reference rather than campaign: the
+    /* Kept off the field. A back shot is reference rather than campaign: the
        field is a mood board of people wearing the things, and a row of
-       identical shoulders reads as a fault in the page. */
-    notInField: ["/img/181-snowwash-black-back.png", "/img/AP-real-front-black.jpg"],
+       identical shoulders reads as a fault in the page.
+
+       The flat packshot that used to sit here is gone entirely, product page
+       included. It was the last flat lay in the range and Sam's rule on those
+       is standing: every image is on a body. */
+    notInField: ["/img/181-snowwash-black-back.png"],
     sizes: SIX,
     shopifyProductId: "15942019613003",
     shopifyVariantIds: {
