@@ -2126,3 +2126,12 @@ body:has(.rd-pdp) .rd-np {
 .rd-gallery[data-lit="true"] .rd-plate::after {
   opacity: 0;
 }
+
+/* The add-to-bag confirmation. Bordered rather than floating: it sits in the
+   flow directly under the button so it cannot cover the size selector or the
+   price, and on a phone it pushes the page rather than trapping a tap. */
+.rd-added {
+  border: 1px solid var(--rd-red);
+  padding: 0.85rem 1rem 1rem;
+  background: color-mix(in srgb, var(--rd-red) 8%, transparent);
+}

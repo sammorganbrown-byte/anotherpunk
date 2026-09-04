@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import Stripe from "stripe";
 import { getStripe, type CheckoutSessionMetadata } from "../../lib/stripe.server";
 import { decodeOrderLines } from "../../lib/order-lines";
+import { notifyOrder, notifyOrderFailure } from "../../lib/notify.server";
+import { getAnotherPunkProduct } from "../../lib/another-punk-products";
 import {
   createTapstitchOrder,
   submitTapstitchOrder,
@@ -158,6 +160,13 @@ export const Route = createFileRoute("/api/stripe-webhook")({
             typeof session.amount_total === "number" ? session.amount_total / 100 : undefined,
           );
           if (!result.id) {
+            await notifyOrderFailure({
+              stage: "Shopify returned no draft id",
+              detail: "The request was accepted but came back without an id, so nothing can be submitted.",
+              sessionId: session.id,
+              name: address.name,
+              email: address.email,
+            });
             return new Response("Shopify accepted the request but returned no draft id", {
               status: 500,
             });
@@ -171,13 +180,39 @@ export const Route = createFileRoute("/api/stripe-webhook")({
           try {
             await submitTapstitchOrder(result.id);
           } catch (err) {
-            return new Response(
-              `Draft ${result.id} created but not submitted: ${
-                err instanceof Error ? err.message : "unknown error"
-              }`,
-              { status: 500 },
-            );
+            const detail = err instanceof Error ? err.message : "unknown error";
+            await notifyOrderFailure({
+              stage: `draft ${result.id} created but not submitted to Tapstitch`,
+              detail,
+              sessionId: session.id,
+              name: address.name,
+              email: address.email,
+            });
+            return new Response(`Draft ${result.id} created but not submitted: ${detail}`, {
+              status: 500,
+            });
           }
+
+          /* The alert Sam actually needs, in the shop's own product names
+             rather than the Tapstitch blank names Shopify would use. Awaited
+             but never allowed to throw: a Resend outage must not turn a paid
+             and fulfilled order into a 500 that Stripe then retries. */
+          await notifyOrder({
+            lines: lines.map((l) => ({
+              title: getAnotherPunkProduct(l.slug)?.title ?? l.slug,
+              sizeLabel: l.sizeLabel,
+              qty: l.qty,
+            })),
+            name: address.name,
+            email: address.email,
+            city: address.city,
+            country: address.country,
+            total:
+              typeof session.amount_total === "number" ? session.amount_total / 100 : undefined,
+            currency: session.currency ?? undefined,
+            draftId: String(result.id),
+            sessionId: session.id,
+          });
 
           return new Response("ok", { status: 200 });
         } catch (err) {
@@ -185,10 +220,15 @@ export const Route = createFileRoute("/api/stripe-webhook")({
           // transient failure. A permanently invalid order will keep
           // retrying until someone looks — there's no dead-letter or
           // alerting wired up yet.
-          return new Response(
-            `Tapstitch order failed: ${err instanceof Error ? err.message : "unknown error"}`,
-            { status: 500 },
-          );
+          const detail = err instanceof Error ? err.message : "unknown error";
+          await notifyOrderFailure({
+            stage: "creating the Tapstitch order",
+            detail,
+            sessionId: session.id,
+            name: address.name,
+            email: address.email,
+          });
+          return new Response(`Tapstitch order failed: ${detail}`, { status: 500 });
         }
       },
     },

@@ -209,28 +209,59 @@ function RedesignProduct() {
         </div>
 
         {available ? (
-          <button
-            type="button"
-            className="rd-btn"
-            data-primary="true"
-            onClick={() => {
-              addItem(
-                {
-                  slug: product.slug,
-                  title: product.title,
-                  image: product.images[0],
-                  productType: "tapstitch",
-                  sizeLabel: size,
-                  price: product.price,
-                },
-                1,
-              );
-              setQueued(true);
-              window.setTimeout(() => setQueued(false), 1600);
-            }}
-          >
-            {queued ? "Queued ▮" : `Queue job — ${formatPrice(product.price)}`}
-          </button>
+          /* "Queue job" and "Queued ▮" read as a coding artefact rather than a
+             shop, which is exactly what Sam said when he saw it. The job-log
+             framing is good everywhere it is decoration and bad everywhere it
+             is the instruction: this button and the confirmation page are the
+             two places a stranger has to understand what is happening, and
+             both were written in the voice instead of in plain words. */
+          <div className="flex flex-col gap-3">
+            <button
+              type="button"
+              className="rd-btn"
+              data-primary="true"
+              onClick={() => {
+                addItem(
+                  {
+                    slug: product.slug,
+                    title: product.title,
+                    image: product.images[0],
+                    productType: "tapstitch",
+                    sizeLabel: size,
+                    price: product.price,
+                  },
+                  1,
+                );
+                setQueued(true);
+              }}
+            >
+              {`Add to bag — ${formatPrice(product.price)}`}
+            </button>
+
+            {/* Stays until it is dismissed rather than disappearing on a
+                timer. The old button reverted after 1.6 seconds, so the only
+                confirmation you got was gone before you looked up, and the
+                next step was never offered at all. */}
+            {queued ? (
+              <div className="rd-added" role="status">
+                <p className="rd-log">
+                  Added. {product.title}, size {size}.
+                </p>
+                <div className="mt-3 flex flex-wrap gap-3">
+                  <Link to="/cart" className="rd-btn" data-primary="true">
+                    Go to bag
+                  </Link>
+                  <button
+                    type="button"
+                    className="rd-btn"
+                    onClick={() => setQueued(false)}
+                  >
+                    Keep looking
+                  </button>
+                </div>
+              </div>
+            ) : null}
+          </div>
         ) : (
           <div>
             <button type="button" className="rd-btn" disabled>
