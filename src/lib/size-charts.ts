@@ -163,6 +163,25 @@ export const SIZE_CHARTS: Record<string, SizeChart> = {
       { size: "2XL", length: 73, shoulder: 33, chest: 38, sleeve: 14.5, waist: 33.5 },
     ],
   },
+  /* Staple, both colourways — Tapstitch "Unisex Oversized T-Shirt", item
+     RT0086, 300gsm.
+
+     NOT the "Boxy Oversized T-Shirt" table. That is item RT0080 at 400gsm —
+     the blank the Staple REPLACED, whose Shopify product (15971630580043) is
+     archived. Its numbers are shorter and wider (65-73cm long against 71-79)
+     and reading like the obvious match is exactly what makes it dangerous:
+     both are unisex oversized tees at S-2XL, and only the Shopify product
+     titles and fabric weights tell them apart. Confirmed against Shopify on
+     4 Sep before this was written. */
+  "15972281844043": {
+    rows: [
+      { size: "S", length: 71, shoulder: 50, chest: 53, sleeve: 22 },
+      { size: "M", length: 73, shoulder: 53, chest: 56, sleeve: 22.5 },
+      { size: "L", length: 75, shoulder: 56, chest: 59, sleeve: 23 },
+      { size: "XL", length: 77, shoulder: 59, chest: 62, sleeve: 23.5 },
+      { size: "2XL", length: 79, shoulder: 62, chest: 65, sleeve: 24 },
+    ],
+  },
   /* Mesh — Tapstitch "See-through Boxy Net T-Shirt". */
   "15943646740811": {
     rows: [

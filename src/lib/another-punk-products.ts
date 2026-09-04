@@ -541,10 +541,16 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     fieldRepeat: 2,
     slug: "big-pussy",
     title: "Big Pussy",
-    eyebrow: "Grey leopard · unisex boxy",
+    eyebrow: "Grey leopard · cropped · unisex",
     description:
-      "Grey snow-leopard print, washed and faded, on a boxy oversized cut with dropped shoulders. Slogan drawn by hand, printed big and red across the chest. Unisex.",
-    fit: "Boxy and oversized. Your normal size.",
+      "Grey snow-leopard print, washed and faded, on a boxy cropped cut. Slogan drawn by hand, printed big and red across the chest. Unisex.",
+    /* The only piece here that is NOT oversized, which is worth saying out
+       loud because everything around it is. Sam has one in hand: his partner
+       takes a medium in everything and the medium is a little tight. The
+       measurements agree — 58-66cm long against 71-79 on the Staple — so this
+       is a short, close cut and the old "boxy and oversized, your normal
+       size" was going to sell people a shirt that did not fit. */
+    fit: "Fitted and cropped. This one runs true to size — not oversized like the tees. It is a close fit, so if you are between sizes, or want any room, take the next size up.",
     // €40 rather than the €45 Shopify carried. At a cost of €14.69 that was
     // 3.06x — the steepest markup in the shop — where the house standard is
     // 2.72x, which lands almost exactly on €40.

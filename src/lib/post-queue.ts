@@ -30,6 +30,32 @@ export type QueuedPost = {
   caption: string;
   /** ISO date this is due. The cron posts the earliest thing that is due. */
   due: string;
+  /** Set once this has actually gone out. The cron then skips it outright,
+   * whatever the captions on the account say.
+   *
+   * ── WHY THIS EXISTS: A POST WENT OUT TWICE ────────────────────────────
+   * The duplicate check reads the account's recent captions and compares
+   * their first line against the queue's. That is sound right up until a
+   * caption is EDITED here after its post has gone out — the first line
+   * stops matching anything on the grid, and the cron concludes it was
+   * never published. On 3 Sep the queue was rewritten so every caption
+   * opens with the product name; "jesus" had already been posted under its
+   * old opening line, so it published a second time on 4 Sep.
+   *
+   * The original design said a local "sent" flag would only be the story we
+   * tell ourselves and that Instagram is the source of truth. That is still
+   * true about Instagram — but it assumed our captions were immutable, and
+   * they are not. So this flag is the belt and the caption check is the
+   * braces: the flag catches the case where our own text has moved, the
+   * caption check still catches a post published by any other route.
+   *
+   * TWO RULES, AND THE FIRST ONE IS THE IMPORTANT ONE.
+   * 1. NEVER edit the caption of a post that has already gone out. Instagram
+   *    will not let us edit the live one anyway, so all an edit here can do
+   *    is break the match.
+   * 2. If a post is ever published by hand, set this — otherwise the cron
+   *    will post it again the moment the caption is touched. */
+  posted?: string;
 };
 
 /** ── CAPTION CONVENTION ────────────────────────────────────────────────────
@@ -70,6 +96,12 @@ export const POST_QUEUE: QueuedPost[] = [
     images: ["35-jesus-night-rain.jpg", "23-jesus-chest.jpg", "74-jesus-kerb-night.jpg"],
     caption: "The Jesus\n340gsm. Washed black. Raw hem.\n\nanotherpunk.com",
     due: "2026-09-03",
+    /* Went out 3 Sep, then AGAIN on 4 Sep after the caption rewrite broke the
+       first-line match. Sam deleted the second one — which means the copy
+       still on the grid carries the OLD caption, so the first-line check will
+       keep failing and this would have posted a third time. This flag is what
+       stops that. */
+    posted: "2026-09-03",
   },
   {
     // The pair, front and back, both colourways. Only possible now the black
@@ -236,7 +268,7 @@ export const POST_QUEUE: QueuedPost[] = [
     // Also freed up by dropping the Cami. Given to the other new piece.
     id: "big-pussy",
     images: ["166-bigpussy-cat.jpg", "165-bigpussy-night.jpg"],
-    caption: "Big Pussy\nGrey leopard. Unisex boxy.\n\nanotherpunk.com",
+    caption: "Big Pussy\nGrey leopard. Cropped. Runs true to size.\n\nanotherpunk.com",
     due: "2026-10-20",
   },
   {

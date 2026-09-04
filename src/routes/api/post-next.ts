@@ -50,8 +50,12 @@ export const Route = createFileRoute("/api/post-next")({
         // Earliest thing that is due. Dates are compared as plain ISO strings,
         // which sorts correctly and avoids a timezone argument nobody needs.
         const today = new Date().toISOString().slice(0, 10);
+        // `posted` is checked FIRST and independently of Instagram, because
+        // it is the one signal a caption edit cannot invalidate. See the note
+        // on QueuedPost.posted — a post went out twice for exactly that
+        // reason.
         const due = [...POST_QUEUE]
-          .filter((p) => p.due <= today)
+          .filter((p) => !p.posted && p.due <= today)
           .sort((a, b) => a.due.localeCompare(b.due));
 
         if (due.length === 0) {
