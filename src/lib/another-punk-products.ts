@@ -132,6 +132,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/140-jersey-pink-chest-flash.jpg",
       "/img/141-jersey-pink-back-69.jpg",
       "/img/152-jersey-pair-night.jpg",
+      "/img/202-westwood-pink-shelter.png",
     ],
     // The pair shot belongs to both jerseys, so it would otherwise float in
     // the field twice — the one photograph on the homepage that visibly
@@ -231,7 +232,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/70-tonguebox-chest-flash.jpg",
       "/img/71-tonguebox-threequarter.jpg",
       "/img/72-tonguebox-night-neon.jpg",
-          "/img/178-rawhem-back-shared.png",
+      "/img/178-rawhem-back-shared.png",
+      "/img/201-tonguebox-crosswalk.png",
     ],
     sizes: FOUR,
     shopifyProductId: "15942008799563",
@@ -276,14 +278,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     price: TEE_PRICE,
     cost: 18.47,
     images: [
-      // The print is on the FRONT of this garment. Five shots here showed it
-      // across the BACK — 26-back-full, 04-threequarter-turn,
-      // 36-night-takeaway, 59-spin and 70-wide-negspace — which is a product
-      // that does not exist. Each remaining image was opened and checked
-      // rather than judged by filename. Files stay on disk.
       "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/4ca18e68-84f4-42c7-98a5-f5e547502ce2.png",
       "/img/53-dorothy-chest-crop.jpg",
-          "/img/178-rawhem-back-shared.png",
+      "/img/178-rawhem-back-shared.png",
+      "/img/199-dorothy-launderette.png",
+      "/img/200-dorothy-chest-crop.png",
     ],
     sizes: FOUR,
     shopifyProductId: "15942008963403",
@@ -454,6 +453,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/163-plainwhite-night-street.jpg",
       "/img/164-plainwhite-sleeve.jpg",
       "/img/183-staple-white-back.png",
+      "/img/195-staple-white-night.png",
+      "/img/196-staple-white-daylight.png",
     ],
     notInField: ["/img/163-plainwhite-night-street.jpg", "/img/164-plainwhite-sleeve.jpg"],
     sizes: FIVE,
@@ -483,6 +484,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/169-staple-black-street.jpg",
       "/img/170-staple-black-sleeve.jpg",
       "/img/184-staple-black-back.png",
+      "/img/197-staple-black-forecourt.png",
+      "/img/198-staple-black-profile.png",
     ],
     notInField: ["/img/169-staple-black-street.jpg", "/img/170-staple-black-sleeve.jpg"],
     sizes: FIVE,
@@ -538,6 +541,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/171-mesh-print-macro.jpg",
       "/img/07-mesh-walking-blur.jpg",
       "/img/191-mesh-front-woman.png",
+      "/img/193-mesh-front-bandeau.png",
+      "/img/194-mesh-back.png",
     ],
     sizes: FOUR,
     shopifyProductId: "15943646740811",
