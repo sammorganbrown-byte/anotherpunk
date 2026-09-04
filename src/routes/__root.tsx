@@ -19,7 +19,7 @@ import { CurrencyProvider } from "../lib/currency-context";
 import { RdPixelText } from "../components/redesign/rd-pixel-text";
 
 const LOGO_URL =
-  "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/00048e3d-cede-4c1a-a65e-222abb97d9a9.png";
+  "/img/229-ap-wordmark-logo.png";
 
 const TITLE = "Another Punk";
 const DESCRIPTION =

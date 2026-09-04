@@ -1,5 +1,5 @@
 const LOGO_URL =
-  "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/00048e3d-cede-4c1a-a65e-222abb97d9a9.png";
+  "/img/229-ap-wordmark-logo.png";
 
 // Infinite logo ticker. Renders the track TWICE back to back and animates
 // exactly -50% (see .ap-marquee-track in styles.css): since both halves are

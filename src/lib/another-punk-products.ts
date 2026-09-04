@@ -198,7 +198,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        If a back print is ever added to any of these, that product needs its
        own shot and must stop pointing here. */
     images: [
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/746fa1fe-5055-4a02-913a-aba6e38d07de.png",
+      "/img/219-batcountry-hero.png",
       "/img/24-bats-chest-redo.jpg",
       "/img/33-bats-night-neon.jpg",
       "/img/09-bats-wide-negativespace.jpg",
@@ -256,7 +256,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     price: TEE_PRICE,
     cost: 18.47,
     images: [
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/ddc73ac6-e5d5-4e0e-8d0e-87380496611f.png",
+      "/img/220-jesus-hero.png",
       "/img/23-jesus-chest.jpg",
       "/img/35-jesus-night-rain.jpg",
       "/img/61-jesus-walking-corridor.jpg",
@@ -282,7 +282,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     price: TEE_PRICE,
     cost: 18.47,
     images: [
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/4ca18e68-84f4-42c7-98a5-f5e547502ce2.png",
+      "/img/221-dorothy-hero.png",
       "/img/53-dorothy-chest-crop.jpg",
       "/img/178-rawhem-back-shared.png",
       "/img/200-dorothy-chest-crop.png",
@@ -306,7 +306,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     price: TEE_PRICE,
     cost: 18.47,
     images: [
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/e4e13de6-1f38-408d-bd58-c5588bb875d9.png",
+      "/img/222-saucer-hero.png",
       "/img/25-saucer-chest.jpg",
       "/img/05-saucer-profile.jpg",
       "/img/37-saucer-night-carpark.jpg",
@@ -333,7 +333,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     price: SAUCER_OVERSIZED_PRICE,
     cost: 15.07,
     images: [
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/6c8c1532-1749-44ec-8f53-395ff5643b92.png",
+      "/img/223-saucer-oversized-black-hero.png",
       "/img/28-bwblack-chest.jpg",
       "/img/38-bwblack-night-busshelter.jpg",
       "/img/43-bwblack-night-wide.jpg",
@@ -366,7 +366,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     price: SAUCER_OVERSIZED_PRICE,
     cost: 15.07,
     images: [
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/d2036219-e99b-4ceb-8597-37452d66dec3.png",
+      "/img/224-saucer-oversized-bone-hero.png",
       "/img/08-bwwhite-midturn.jpg",
       "/img/39-bwwhite-night-alley.jpg",
       "/img/54-bwwhite-chest-crop.jpg",
@@ -590,7 +590,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     price: WOMENS_PRICE,
     cost: 12.47,
     images: [
-      "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/7d1de5e3-2285-4b61-8580-1acba6248e3f.png",
+      "/img/225-leopardcrop-hero.png",
       "/img/06-leopard-threequarter-night.jpg",
       "/img/41-leopard-night-launderette.jpg",
       "/img/31-leopard-nightstreet.jpg",
@@ -738,11 +738,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
 /** Campaign and marketing imagery, used across the storefront. */
 export const AP_IMAGERY = {
   group:
-    "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/b79c334c-0fda-4a4b-88c8-be3ab40ea24e.png",
+    "/img/226-imagery-group.png",
   printMacro:
-    "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/fc6ac488-ea86-41b1-99ec-79dc0eec4f63.png",
+    "/img/227-imagery-printmacro.png",
   folded:
-    "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/c8282fe8-bb57-4715-97e5-1396e2a7e8d5.png",
+    "/img/228-imagery-folded.png",
   motion: "/img/07-mesh-walking-blur.jpg",
   hemDetail: "/img/11-macro-rawhem-ink.jpg",
   wide: "/img/09-bats-wide-negativespace.jpg",

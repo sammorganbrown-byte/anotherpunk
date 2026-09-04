@@ -10,7 +10,7 @@ import { pageMeta } from "../lib/seo";
 /** The official hand-painted wordmark — the brand mark, not a typeface.
  * Same asset the live site uses. */
 export const LOGO_URL =
-  "https://d2ol7oe51mr4n9.cloudfront.net/user_3HRrQejbudj6pI84kgTHMOExU4K/00048e3d-cede-4c1a-a65e-222abb97d9a9.png";
+  "/img/229-ap-wordmark-logo.png";
 
 /** Layout route for the whole site.
  *
