@@ -285,6 +285,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/53-dorothy-chest-crop.jpg",
       "/img/178-rawhem-back-shared.png",
       "/img/200-dorothy-chest-crop.png",
+      "/img/212-dorothy-forecourt.png",
     ],
     notInField: ["/img/178-rawhem-back-shared.png"],
     sizes: FOUR,
@@ -396,6 +397,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/147-anotherpunk-night-shopphone.jpg",
       "/img/146-anotherpunk-night-neon.jpg",
       "/img/181-snowwash-black-back.png",
+      "/img/211-anotherpunk-launderette.png",
     ],
     /* Kept off the field. A back shot is reference rather than campaign: the
        field is a mood board of people wearing the things, and a row of
@@ -465,7 +467,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/164-plainwhite-sleeve.jpg",
       "/img/183-staple-white-back.png",
       "/img/195-staple-white-night.png",
-      "/img/196-staple-white-daylight.png",
+      "/img/210-staple-white-daylight.png",
     ],
     notInField: [
       "/img/163-plainwhite-night-street.jpg",
@@ -498,14 +500,14 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     images: [
       "/img/169-staple-black-street.jpg",
       "/img/170-staple-black-sleeve.jpg",
-      "/img/184-staple-black-back.png",
+      "/img/209-staple-black-back.png",
       "/img/197-staple-black-forecourt.png",
       "/img/198-staple-black-profile.png",
     ],
     notInField: [
       "/img/169-staple-black-street.jpg",
       "/img/170-staple-black-sleeve.jpg",
-      "/img/184-staple-black-back.png",
+      "/img/209-staple-black-back.png",
     ],
     sizes: FIVE,
     shopifyProductId: "15972281844043",
