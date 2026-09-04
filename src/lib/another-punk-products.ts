@@ -132,7 +132,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/140-jersey-pink-chest-flash.jpg",
       "/img/141-jersey-pink-back-69.jpg",
       "/img/152-jersey-pair-night.jpg",
-      "/img/202-westwood-pink-shelter.png",
+      "/img/214-westwood-pink-fulllength.png",
+      "/img/218-westwood-pink-chest-raking.png",
     ],
     // The pair shot belongs to both jerseys, so it would otherwise float in
     // the field twice — the one photograph on the homepage that visibly
@@ -286,6 +287,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/178-rawhem-back-shared.png",
       "/img/200-dorothy-chest-crop.png",
       "/img/212-dorothy-forecourt.png",
+      "/img/215-dorothy-daylight.png",
     ],
     notInField: ["/img/178-rawhem-back-shared.png"],
     sizes: FOUR,
@@ -398,6 +400,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/146-anotherpunk-night-neon.jpg",
       "/img/181-snowwash-black-back.png",
       "/img/211-anotherpunk-launderette.png",
+      "/img/213-anotherpunk-chest-raking.png",
     ],
     /* Kept off the field. A back shot is reference rather than campaign: the
        field is a mood board of people wearing the things, and a row of
@@ -682,6 +685,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/168-tank-crop.jpg",
       "/img/189-croptank-front-bathroom.png",
       "/img/207-croptank-back-bathroom.png",
+      "/img/216-croptank-launderette.png",
+      "/img/217-croptank-chest-detail.png",
     ],
     notInField: ["/img/207-croptank-back-bathroom.png"],
     sizes: XS_TO_L,
