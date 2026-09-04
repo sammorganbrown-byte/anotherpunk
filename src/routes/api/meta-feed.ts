@@ -29,16 +29,29 @@ import { SITE, absoluteUrl } from "../../lib/seo";
  * Fields are Meta's required set for a commerce catalogue: id, title,
  * description, availability, condition, price, link, image_link, brand.
  *
- * ── TWO DELIBERATE OMISSIONS ──────────────────────────────────────────────
+ * ── ONE ROW PER SIZE, AND THAT IS NOT OPTIONAL ────────────────────────────
+ * This shipped as one row per product with no size, on the reasoning that a
+ * tag should land on the page carrying the size chart and the delivery terms
+ * rather than on a size selector Meta owns. That reasoning was fine and the
+ * decision was still wrong, because it is not ours to make: Meta requires a
+ * size on anything in the Clothing category and simply DOES NOT SHOW products
+ * that lack one. Every product was silently excluded from the shop, so there
+ * was nothing to tag and no error saying why.
+ *
+ * So: one row per purchasable size, grouped with `item_group_id` so Meta
+ * treats them as one product with a size selector rather than 81 separate
+ * shirts. `id` is slug-size and must stay stable, since Meta keys everything
+ * off it. Every row links to the same product page, which keeps the original
+ * intent intact — the size chart, the fit note and the delivery terms are
+ * still what a customer arrives at.
+ *
+ * Sizes come from `sizes`, which is the same array the product page renders,
+ * so a size that cannot be bought can never appear in the shop.
+ *
+ * ── ONE DELIBERATE OMISSION ───────────────────────────────────────────────
  * Products that cannot be fulfilled are left out entirely rather than listed
  * as out of stock. A tag is a buy button; offering one for something with no
  * Tapstitch route behind it takes money for a garment nobody can make.
- *
- * Sizes are not published as variants. Meta wants one row per purchasable
- * variant, which would mean 81 rows and a size selector Meta owns rather
- * than the product page. The tag should land on the page where the size
- * chart, the fit note and the delivery terms are — so one row per product,
- * and the choosing happens here.
  */
 
 const XML_ESCAPES: Record<string, string> = {
@@ -57,25 +70,34 @@ export const Route = createFileRoute("/api/meta-feed")({
   server: {
     handlers: {
       GET: async () => {
-        const items = ANOTHER_PUNK_PRODUCTS.filter(isFulfillable).map((p) => {
+        const items = ANOTHER_PUNK_PRODUCTS.filter(isFulfillable).flatMap((p) => {
           const description = p.description ?? p.eyebrow;
-          return [
-            "    <item>",
-            `      <g:id>${xml(p.slug)}</g:id>`,
-            `      <g:title>${xml(p.title)}</g:title>`,
-            `      <g:description>${xml(description)}</g:description>`,
-            `      <g:availability>in stock</g:availability>`,
-            `      <g:condition>new</g:condition>`,
-            `      <g:price>${p.price.toFixed(2)} EUR</g:price>`,
-            `      <g:link>${SITE}/product/${xml(p.slug)}</g:link>`,
-            `      <g:image_link>${xml(absoluteUrl(p.images[0]))}</g:image_link>`,
-            ...p.images
-              .slice(1, 11)
-              .map((img) => `      <g:additional_image_link>${xml(absoluteUrl(img))}</g:additional_image_link>`),
-            `      <g:brand>Another Punk</g:brand>`,
-            `      <g:google_product_category>Apparel &amp; Accessories &gt; Clothing</g:google_product_category>`,
-            "    </item>",
-          ].join("\n");
+          /* Only sizes with a real variant behind them. `sizes` is what the
+             product page offers, and shopifyVariantIds is what can actually
+             be ordered; anything in one but not the other would be a buy
+             button with nothing behind it. */
+          const sizes = p.sizes.filter((size) => p.shopifyVariantIds[size]);
+          return sizes.map((size) =>
+            [
+              "    <item>",
+              `      <g:id>${xml(p.slug)}-${xml(size)}</g:id>`,
+              `      <g:item_group_id>${xml(p.slug)}</g:item_group_id>`,
+              `      <g:title>${xml(p.title)}</g:title>`,
+              `      <g:description>${xml(description)}</g:description>`,
+              `      <g:size>${xml(size)}</g:size>`,
+              `      <g:availability>in stock</g:availability>`,
+              `      <g:condition>new</g:condition>`,
+              `      <g:price>${p.price.toFixed(2)} EUR</g:price>`,
+              `      <g:link>${SITE}/product/${xml(p.slug)}</g:link>`,
+              `      <g:image_link>${xml(absoluteUrl(p.images[0]))}</g:image_link>`,
+              ...p.images
+                .slice(1, 11)
+                .map((img) => `      <g:additional_image_link>${xml(absoluteUrl(img))}</g:additional_image_link>`),
+              `      <g:brand>Another Punk</g:brand>`,
+              `      <g:google_product_category>Apparel &amp; Accessories &gt; Clothing</g:google_product_category>`,
+              "    </item>",
+            ].join("\n"),
+          );
         });
 
         const body = [
