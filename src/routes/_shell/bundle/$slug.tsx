@@ -7,6 +7,7 @@ import { useCart } from "../../../lib/cart-context";
 import { useCurrency } from "../../../lib/currency-context";
 import { RdPixelText } from "../../../components/redesign/rd-pixel-text";
 import { RdDelivery } from "../../../components/redesign/rd-delivery";
+import { pageMeta } from "../../../lib/seo";
 
 export const Route = createFileRoute("/_shell/bundle/$slug")({
   loader: ({ params }) => {
@@ -14,6 +15,19 @@ export const Route = createFileRoute("/_shell/bundle/$slug")({
     if (!bundle) throw notFound();
     return { bundle };
   },
+  /* Bundles are the most-shared links here — a package deal is the thing
+     somebody sends a friend — and they were unfurling as a single jersey. */
+  head: ({ loaderData }) =>
+    loaderData?.bundle
+      ? {
+          meta: pageMeta({
+            title: `${loaderData.bundle.title} — Another Punk`,
+            image: loaderData.bundle.image,
+            imageAlt: loaderData.bundle.title,
+            path: `/bundle/${loaderData.bundle.slug}`,
+          }),
+        }
+      : {},
   component: BundlePage,
 });
 

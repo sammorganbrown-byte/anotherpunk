@@ -5,6 +5,7 @@ import { RdField } from "../components/redesign/rd-field";
 import { RdPlayer } from "../components/redesign/rd-player";
 import { RdCurrency } from "../components/redesign/rd-currency";
 import rdCss from "../styles/redesign.css?url";
+import { pageMeta } from "../lib/seo";
 
 /** The official hand-painted wordmark — the brand mark, not a typeface.
  * Same asset the live site uses. */
@@ -28,45 +29,24 @@ export const LOGO_URL =
  * and music player — they still render from __root.tsx for /classic, and are
  * simply not shown here.
  */
-/** One description, used by the search result and by every link unfurl.
+/** The site-wide defaults. Every child route that represents a specific
+ * thing — a product, a bundle, the shop — overrides these with its own via
+ * pageMeta() in lib/seo.ts. What is left here is the fallback for pages that
+ * are genuinely about the shop as a whole.
  *
- * Kept in a constant because it appears seven times below and a description
- * that disagrees with itself across Google and WhatsApp is the sort of thing
- * nobody notices until it is embarrassing. */
-const DESCRIPTION =
-  "Fourteen pieces. Printed to order, shipped worldwide. No warehouse, no dead stock, no sale rail.";
-
-/** Absolute, because Open Graph will not accept a relative image URL — the
- * exact rule that made six products unbuyable through Stripe. Same mistake,
- * different protocol. */
-const SITE = "https://www.anotherpunk.com";
+ * DESCRIPTION and SITE moved to lib/seo.ts so the policy pages, the product
+ * pages and this one cannot disagree. */
 
 export const Route = createFileRoute("/_shell")({
   head: () => ({
     meta: [
-      { title: "Another Punk" },
-      { name: "description", content: DESCRIPTION },
-      // Open Graph and Twitter, so a link pasted into Instagram, WhatsApp or
-      // anywhere else arrives as a photograph and a sentence rather than a
-      // bare URL. Worth more than it looks: for a shop whose reach is going
-      // to come from links being shared, the unfurl IS the shopfront, and
-      // until now every share showed nothing at all.
-      { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "Another Punk" },
-      { property: "og:title", content: "Another Punk" },
-      { property: "og:description", content: DESCRIPTION },
-      { property: "og:url", content: SITE },
-      { property: "og:image", content: `${SITE}/img/og-another-punk.jpg` },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
-      {
-        property: "og:image:alt",
-        content: "Two people at night in the Westwood 69 football jerseys, black and pink.",
-      },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Another Punk" },
-      { name: "twitter:description", content: DESCRIPTION },
-      { name: "twitter:image", content: `${SITE}/img/og-another-punk.jpg` },
+      ...pageMeta({
+        title: "Another Punk",
+        image: "/img/og-another-punk.jpg",
+        imageAlt:
+          "Two people at night in the Westwood 69 football jerseys, black and pink.",
+        path: "/",
+      }),
       { name: "theme-color", content: "#080807" },
     ],
     links: [{ rel: "stylesheet", href: rdCss }],

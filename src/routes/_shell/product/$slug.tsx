@@ -6,6 +6,7 @@ import {
   isFulfillable,
   TAPSTITCH_FULFILMENT_LIVE,
   type ApSize,
+  DEFAULT_DESCRIPTION,
 } from "../../../lib/another-punk-products";
 import { useCart } from "../../../lib/cart-context";
 import { useCurrency } from "../../../lib/currency-context";
@@ -13,6 +14,7 @@ import { SHIPPING_BASE, SHIPPING_PER_EXTRA_ITEM } from "../../../lib/shipping";
 import { RdDelivery } from "../../../components/redesign/rd-delivery";
 import { RdSizeChart } from "../../../components/redesign/rd-size-chart";
 import { RdPixelText } from "../../../components/redesign/rd-pixel-text";
+import { pageMeta } from "../../../lib/seo";
 
 export const Route = createFileRoute("/_shell/product/$slug")({
   loader: ({ params }) => {
@@ -20,6 +22,23 @@ export const Route = createFileRoute("/_shell/product/$slug")({
     if (!product) throw notFound();
     return product;
   },
+  /* Without this the page inherited _shell's meta, so every product link
+     pasted anywhere unfurled as the Westwood 69 jersey — the wrong garment
+     advertising itself on sixteen of seventeen products. images[0] is the
+     hero, which is chosen as the frame that reads the garment most clearly,
+     so it is exactly the right frame for a thumbnail too. */
+  head: ({ loaderData: product }) =>
+    product
+      ? {
+          meta: pageMeta({
+            title: `${product.title} — Another Punk`,
+            description: product.description ?? DEFAULT_DESCRIPTION,
+            image: product.images[0],
+            imageAlt: `${product.title}. ${product.eyebrow}.`,
+            path: `/product/${product.slug}`,
+          }),
+        }
+      : {},
   component: RedesignProduct,
 });
 

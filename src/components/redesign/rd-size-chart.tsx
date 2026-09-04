@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { AnotherPunkProduct } from "../../lib/another-punk-products";
 import { DEFAULT_FIT } from "../../lib/another-punk-products";
-import { SIZE_COLUMNS, getSizeChart, toInches } from "../../lib/size-charts";
+import { SIZE_COLUMNS, getSizeChart, toInches, DEFAULT_NOTE } from "../../lib/size-charts";
 
 /** Sizing, on the product page, beside the thing it decides.
  *
@@ -59,7 +59,7 @@ export function RdSizeChart({ product }: { product: AnotherPunkProduct }) {
             <div className="overflow-x-auto">
               <table className="rd-size-table">
                 <caption className="rd-label text-left">
-                  {chart?.note ?? "Measured flat, in centimetres."}
+                  {chart?.note ?? DEFAULT_NOTE}
                 </caption>
                 <thead>
                   <tr>

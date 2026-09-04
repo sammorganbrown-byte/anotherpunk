@@ -3,8 +3,21 @@ import { BUNDLES } from "../../lib/bundles";
 import { ANOTHER_PUNK_PRODUCTS } from "../../lib/another-punk-products";
 import { useCurrency } from "../../lib/currency-context";
 
-export const Route = createFileRoute("/_shell/shop")({ component: RedesignIndexView });
+import { pageMeta } from "../../lib/seo";
 
+export const Route = createFileRoute("/_shell/shop")({
+  /* The shop is the link most likely to be shared after a product page, and
+     it should show the range rather than one jersey. */
+  head: () => ({
+    meta: pageMeta({
+      title: "Shop — Another Punk",
+      image: "/img/og-another-punk.jpg",
+      imageAlt: "Another Punk garments.",
+      path: "/shop",
+    }),
+  }),
+  component: RedesignIndexView,
+});
 /** The plain index.
  *
  * The field is the store — this is the escape hatch: a straight grid, every
