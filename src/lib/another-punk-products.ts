@@ -679,9 +679,9 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/167-tank-alley.jpg",
       "/img/168-tank-crop.jpg",
       "/img/189-croptank-front-bathroom.png",
-      "/img/185-croptank-back.png",
+      "/img/207-croptank-back-bathroom.png",
     ],
-    notInField: ["/img/185-croptank-back.png"],
+    notInField: ["/img/207-croptank-back-bathroom.png"],
     sizes: XS_TO_L,
     shopifyProductId: "15972226695499",
     shopifyVariantIds: {
