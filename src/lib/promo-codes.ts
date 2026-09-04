@@ -70,9 +70,14 @@ const PROMO_CODES: PromoCode[] = [
   { code: "BIGPUSSY69", toCost: true, label: "Friends" },
 
   // ── LAUNCH CODE ──────────────────────────────────────────────────────────
-  // 20% off for the first week. SET `expires` TO ONE WEEK AFTER THE DAY YOU
-  // ACTUALLY ANNOUNCE — the date below is a placeholder, and the code simply
-  // stops working the morning after it.
+  // 20% off. NO EXPIRY, by Sam's instruction on 4 Sep: "FIRSTPUNK can expire
+  // when I say, no rush here, just keep it live."
+  //
+  // The `expires` field was removed rather than pushed further out. A date
+  // sitting here would kill the code silently on a morning nobody chose —
+  // the placeholder was 30 September, which would have taken it down in the
+  // middle of launch with no warning and no error, just a code that stopped
+  // working. Add the field back the day he names one.
   //
   // Not valid on the package deals, deliberately. At 20% off, a single tee
   // still nets around 38%, and Raw Hem Four 28%; His and Hers falls to 18%,
@@ -85,7 +90,6 @@ const PROMO_CODES: PromoCode[] = [
     code: "FIRSTPUNK",
     percentOff: 20,
     notOnBundles: true,
-    expires: "2026-09-30",
     label: "Launch",
   },
 ];

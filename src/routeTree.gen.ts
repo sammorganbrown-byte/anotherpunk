@@ -21,6 +21,7 @@ import { Route as ShellReturnsRouteImport } from './routes/_shell/returns'
 import { Route as ShellShippingRouteImport } from './routes/_shell/shipping'
 import { Route as ShellShopRouteImport } from './routes/_shell/shop'
 import { Route as ShellTermsRouteImport } from './routes/_shell/terms'
+import { Route as ApiMetaFeedRouteImport } from './routes/api/meta-feed'
 import { Route as ApiPostNextRouteImport } from './routes/api/post-next'
 import { Route as ApiRatesRouteImport } from './routes/api/rates'
 import { Route as ApiStripeWebhookRouteImport } from './routes/api/stripe-webhook'
@@ -92,6 +93,11 @@ const ShellTermsRoute = ShellTermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => ShellRoute,
 } as any)
+const ApiMetaFeedRoute = ApiMetaFeedRouteImport.update({
+  id: '/api/meta-feed',
+  path: '/api/meta-feed',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPostNextRoute = ApiPostNextRouteImport.update({
   id: '/api/post-next',
   path: '/api/post-next',
@@ -160,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/shipping': typeof ShellShippingRoute
   '/shop': typeof ShellShopRoute
   '/terms': typeof ShellTermsRoute
+  '/api/meta-feed': typeof ApiMetaFeedRoute
   '/api/post-next': typeof ApiPostNextRoute
   '/api/rates': typeof ApiRatesRoute
   '/api/stripe-webhook': typeof ApiStripeWebhookRoute
@@ -183,6 +190,7 @@ export interface FileRoutesByTo {
   '/shipping': typeof ShellShippingRoute
   '/shop': typeof ShellShopRoute
   '/terms': typeof ShellTermsRoute
+  '/api/meta-feed': typeof ApiMetaFeedRoute
   '/api/post-next': typeof ApiPostNextRoute
   '/api/rates': typeof ApiRatesRoute
   '/api/stripe-webhook': typeof ApiStripeWebhookRoute
@@ -209,6 +217,7 @@ export interface FileRoutesById {
   '/_shell/shipping': typeof ShellShippingRoute
   '/_shell/shop': typeof ShellShopRoute
   '/_shell/terms': typeof ShellTermsRoute
+  '/api/meta-feed': typeof ApiMetaFeedRoute
   '/api/post-next': typeof ApiPostNextRoute
   '/api/rates': typeof ApiRatesRoute
   '/api/stripe-webhook': typeof ApiStripeWebhookRoute
@@ -236,6 +245,7 @@ export interface FileRouteTypes {
     | '/shipping'
     | '/shop'
     | '/terms'
+    | '/api/meta-feed'
     | '/api/post-next'
     | '/api/rates'
     | '/api/stripe-webhook'
@@ -259,6 +269,7 @@ export interface FileRouteTypes {
     | '/shipping'
     | '/shop'
     | '/terms'
+    | '/api/meta-feed'
     | '/api/post-next'
     | '/api/rates'
     | '/api/stripe-webhook'
@@ -284,6 +295,7 @@ export interface FileRouteTypes {
     | '/_shell/shipping'
     | '/_shell/shop'
     | '/_shell/terms'
+    | '/api/meta-feed'
     | '/api/post-next'
     | '/api/rates'
     | '/api/stripe-webhook'
@@ -301,6 +313,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   ShellRoute: typeof ShellRouteWithChildren
   AdminRoute: typeof AdminRoute
+  ApiMetaFeedRoute: typeof ApiMetaFeedRoute
   ApiPostNextRoute: typeof ApiPostNextRoute
   ApiRatesRoute: typeof ApiRatesRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
@@ -397,6 +410,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/terms'
       preLoaderRoute: typeof ShellTermsRouteImport
       parentRoute: typeof ShellRoute
+    }
+    '/api/meta-feed': {
+      id: '/api/meta-feed'
+      path: '/api/meta-feed'
+      fullPath: '/api/meta-feed'
+      preLoaderRoute: typeof ApiMetaFeedRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/post-next': {
       id: '/api/post-next'
@@ -513,6 +533,7 @@ const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   ShellRoute: ShellRouteWithChildren,
   AdminRoute: AdminRoute,
+  ApiMetaFeedRoute: ApiMetaFeedRoute,
   ApiPostNextRoute: ApiPostNextRoute,
   ApiRatesRoute: ApiRatesRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,

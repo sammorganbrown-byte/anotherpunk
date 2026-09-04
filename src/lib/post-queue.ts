@@ -163,6 +163,12 @@ export const POST_QUEUE: QueuedPost[] = [
     caption:
       "Sam. Punkiest Punk.\n\nSelf-appointed title. There were no other nominations.\n\nEvery graphic here started as ink on paper, on that floor. Drawn first. Printed second.\n\nHe draws them, packs them and answers the emails. Usually the same day.\n\nanotherpunk.com",
     due: "2026-09-12",
+    /* RETIRED 4 Sep. Sam posted a founder photo to Instagram by hand that
+       day with a better caption, written from his own words: twelve years a
+       designer, turns out he always just wanted to do t-shirts. This one
+       said the same thing less well, and two founder posts eight days apart
+       is too many. Marked posted so the cron skips it permanently. */
+    posted: "2026-09-04",
   },
   {
     // Moved off the front. Still the funniest thing here, just not the
