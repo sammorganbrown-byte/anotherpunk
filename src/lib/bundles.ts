@@ -131,11 +131,20 @@ export const BUNDLES: Bundle[] = [
     price: 175,
     image: "/img/11-macro-rawhem-ink.jpg",
     description:
-      "Any four of the five heavyweight raw-hem tees, each in its own size. Shipping included.",
-    pitch: "Four of the five. Pick the four. Forty euros off and nothing to pay for postage.",
+      "Any four of the heavyweight raw-hem tees, each in its own size. Take four different ones or four of the same. Shipping included.",
+    pitch: "Any four. Forty euros off and nothing to pay for postage.",
     choices: RAW_HEM,
     count: 4,
-    distinct: true,
+    /* Duplicates allowed, changed 4 Sep. This used to force four different
+       designs, which greyed out a tee the moment it was picked in another
+       slot — confusing to look at, and it refused a thing people genuinely
+       want: two of the shirt they actually came for.
+
+       There was never a fulfilment or margin reason for it. All five
+       raw-hem tees cost the same 18.47 to make, so four of one prices out
+       exactly like one of each. It was a tidiness rule, and tidiness is not
+       worth a blocked sale. */
+    distinct: false,
   },
 ];
 

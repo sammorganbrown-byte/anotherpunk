@@ -125,10 +125,10 @@ function BundlePage() {
       <div className="rd-bundle-slots">
         {picks.map((pick, i) => {
           const product = pick.slug ? getAnotherPunkProduct(pick.slug) : undefined;
-          // In a distinct bundle a design taken by another slot is offered
-          // but disabled, rather than hidden — a list that changes length as
-          // you fill it in is disorienting, and seeing what is gone is part
-          // of understanding the choice.
+          /* Only bundles marked `distinct` grey anything out, and none
+             currently are. Kept rather than deleted because the rule is a
+             property of the bundle, not of this page: a future pack that
+             genuinely must be one-of-each gets it for free. */
           const takenElsewhere = (slug: string) =>
             bundle.distinct && picks.some((p, j) => j !== i && p.slug === slug);
 
