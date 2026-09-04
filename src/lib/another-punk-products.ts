@@ -333,6 +333,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/43-bwblack-night-wide.jpg",
       "/img/57-bwblack-chest-night.jpg",
       "/img/66-bwblack-skate-kick.jpg",
+      "/img/181-snowwash-black-back.png",
     ],
     sizes: SIX,
     shopifyProductId: "15972246094155",
@@ -363,6 +364,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/39-bwwhite-night-alley.jpg",
       "/img/54-bwwhite-chest-crop.jpg",
       "/img/64-bwwhite-dance.jpg",
+      "/img/182-snowwash-bone-back.png",
     ],
     sizes: SIX,
     // Same Shopify product as the black colourway above, different colour
@@ -386,29 +388,10 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     price: ANOTHER_PUNK_PRICE,
     cost: 12.47,
     images: [
-      // REAL GARMENT PHOTOS, from the Shopify product this maps to.
-      //
-      // The campaign mockups that were here (21-wordmark-*, 03-wordmark-*,
-      // 62-wordmark-*, 77-wordmark-*) were generated from the Brand1
-      // reference, which is the washed black tee with a RAW DISTRESSED HEM.
-      // This product is Shopify's "Snow Washed Oversized Cotton T-Shirt" —
-      // a clean-hem blank. So those shots showed a garment the customer
-      // would not receive, and had to come out.
-      //
-      // These packshots are plainer than the rest of the range. Replace them
-      // with campaign shots built from a reference element made from THIS
-      // garment, not the raw-hem one.
-      // 145-anotherpunk-chest-flash pulled on sight — headless torso, arms
-      // dead at the sides, no attitude in it at all. File kept on disk.
-      // Two night-street shots, different corners. Both were generated from
-      // the raw-distressed-hem reference and both were nearly binned for it —
-      // but neither actually rendered a torn hem, so both show the clean-hem
-      // garment this product really is. Checked, not assumed.
       "/img/147-anotherpunk-night-shopphone.jpg",
       "/img/146-anotherpunk-night-neon.jpg",
       "/img/AP-real-front-black.jpg",
-      // AP-real-back-black pulled: a blank back with nothing printed on it.
-      // It shows the customer no more than an empty tee would. File kept.
+      "/img/181-snowwash-black-back.png",
     ],
     // The flat packshot earns its place on the product page and nowhere else.
     notInField: ["/img/AP-real-front-black.jpg"],
@@ -467,7 +450,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // specific to a white product — the same flats would read fine on a black
     // one — and it is the reason this piece is carried entirely by
     // photographs of it being worn.
-    images: ["/img/163-plainwhite-night-street.jpg", "/img/164-plainwhite-sleeve.jpg"],
+    images: [
+      "/img/163-plainwhite-night-street.jpg",
+      "/img/164-plainwhite-sleeve.jpg",
+      "/img/183-staple-white-back.png",
+    ],
     notInField: ["/img/163-plainwhite-night-street.jpg", "/img/164-plainwhite-sleeve.jpg"],
     sizes: FIVE,
     shopifyProductId: "15972281844043",
@@ -492,7 +479,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     fit: "Boxy and oversized. Your normal size.",
     price: 35,
     cost: 9.93,
-    images: ["/img/169-staple-black-street.jpg", "/img/170-staple-black-sleeve.jpg"],
+    images: [
+      "/img/169-staple-black-street.jpg",
+      "/img/170-staple-black-sleeve.jpg",
+      "/img/184-staple-black-back.png",
+    ],
     notInField: ["/img/169-staple-black-street.jpg", "/img/170-staple-black-sleeve.jpg"],
     sizes: FIVE,
     shopifyProductId: "15972281844043",
@@ -546,6 +537,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/173-mesh-chest-real-print.png",
       "/img/171-mesh-print-macro.jpg",
       "/img/07-mesh-walking-blur.jpg",
+      "/img/191-mesh-front-woman.png",
     ],
     sizes: FOUR,
     shopifyProductId: "15943646740811",
@@ -574,6 +566,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/31-leopard-nightstreet.jpg",
       "/img/75-leopard-night-busstop.jpg",
       "/img/76-leopard-midturn.jpg",
+      "/img/186-leopardcrop-back.png",
+      "/img/187-leopardcrop-bed.png",
     ],
     sizes: ["S", "M", "L", "XL", "2XL"],
     shopifyProductId: "15942025118027",
@@ -621,6 +615,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/177-bigpussy-launderette.png",
       "/img/165-bigpussy-night.jpg",
       "/img/166-bigpussy-cat.jpg",
+      "/img/190-bigpussy-knot-corridor.png",
+      "/img/192-bigpussy-back.png",
     ],
     sizes: FIVE,
     shopifyProductId: "15972229841227",
@@ -652,7 +648,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // and a lone €22 reads as a mistake rather than a decision.
     price: 25,
     cost: 8.93,
-    images: ["/img/167-tank-alley.jpg", "/img/168-tank-crop.jpg"],
+    images: [
+      "/img/167-tank-alley.jpg",
+      "/img/168-tank-crop.jpg",
+      "/img/189-croptank-front-bathroom.png",
+      "/img/185-croptank-back.png",
+    ],
     sizes: XS_TO_L,
     shopifyProductId: "15972226695499",
     shopifyVariantIds: {
@@ -670,12 +671,6 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     price: BODYSUIT_PRICE,
     cost: 14.93,
     images: [
-      // HERO is the one-piece shot on purpose. Every shot with it tucked into
-      // trousers reads as an ordinary fitted tee in the shop grid, which is
-      // the one thing a bodysuit tile cannot do.
-      // The shots that actually read as a bodysuit lead. Most of the rest show
-      // it worn under trousers, where it looks like a fitted tee — accurate,
-      // but it does not tell a customer what they are buying.
       "/img/130-bodysuit-onepiece-standing.jpg",
       "/img/151-bodysuit-tight-cut.jpg",
       "/img/150-bodysuit-back-turn.jpg",
@@ -688,6 +683,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/96-bodysuit-stairwell.jpg",
       "/img/122-bodysuit-fireescape.jpg",
       "/img/97-bodysuit-wide-negspace.jpg",
+      "/img/188-bodysuit-front-flash.png",
     ],
     description:
       "Mineral-washed ribbed cotton. Fitted through the body, short sleeve, high-cut leg. Graphic drawn by hand, printed in red.",
