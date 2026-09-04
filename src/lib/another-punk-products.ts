@@ -90,7 +90,7 @@ export type AnotherPunkProduct = {
  * NEVER describe any of this as screen-printed. It is printed to order by
  * Tapstitch, and screen-print language would be a lie about the process. */
 export const DEFAULT_DESCRIPTION =
-  "340gsm ultra-heavyweight cotton, and the weight is the whole point \u2014 it holds its shape, hangs straight off the shoulder, and feels like a shirt that cost considerably more than it did. Cut boxy through the body, dropped a little at the shoulder. The hem is left raw: no cover-stitch, no rolled edge, just a clean cut line that softens a touch with every wash. Drawn by hand. Printed one at a time, after you order it.";
+  "340gsm ultra-heavyweight cotton, proper lux hand-feel. Boxy through the body, hem cut raw. Drawn by hand, printed after you order.";
 
 export const DEFAULT_FIT =
   "Runs oversized. Your normal size for the fit shown. One down if you want it closer.";
@@ -436,7 +436,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Staple — White",
     eyebrow: "White · 300gsm · sleeve print",
     description:
-      "300gsm cotton \u2014 heavy enough to hang properly, light enough to actually wear. Cut boxy and oversized, ribbed crew collar. Blank front, blank back, one small mark on the sleeve. Because a wardrobe full of loud shirts still needs a staple.",
+      "300gsm cotton, heavy enough to hang and light enough to wear. Boxy and oversized, ribbed crew. Blank front, blank back, one mark on the sleeve.",
     fit: "Boxy and oversized. Your normal size.",
     price: 35,
     cost: 9.93,
@@ -474,7 +474,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Staple — Black",
     eyebrow: "Black · 300gsm · sleeve print",
     description:
-      "300gsm cotton \u2014 heavy enough to hang properly, light enough to actually wear. Cut boxy and oversized, ribbed crew collar. Blank front, blank back, one small mark on the sleeve. Because a wardrobe full of loud shirts still needs a staple.",
+      "300gsm cotton, heavy enough to hang and light enough to wear. Boxy and oversized, ribbed crew. Blank front, blank back, one mark on the sleeve.",
     fit: "Boxy and oversized. Your normal size.",
     price: 35,
     cost: 9.93,
@@ -493,7 +493,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
     slug: "mesh",
     description:
-      "Open-weave net. Cut boxy. Sheer on purpose. Graphic drawn by hand, printed straight onto the mesh. Wear it over something. Or don't.",
+      "Open-weave net, sheer on purpose. Boxy through the body. Drawn by hand, printed straight onto the mesh.",
     fit: "Boxy and loose. Your normal size.",
     title: "Mesh",
     eyebrow: "Open-weave net · boxy",
@@ -557,14 +557,14 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Big Pussy",
     eyebrow: "Grey leopard · cropped · unisex",
     description:
-      "Grey snow-leopard print, washed and faded, on a boxy cropped cut. Slogan drawn by hand, printed big and red across the chest. Unisex.",
+      "Grey snow-leopard, washed and faded. Cropped and close through the body, not oversized. Slogan drawn by hand, large across the chest.",
     /* The only piece here that is NOT oversized, which is worth saying out
        loud because everything around it is. Sam has one in hand: his partner
        takes a medium in everything and the medium is a little tight. The
        measurements agree — 58-66cm long against 71-79 on the Staple — so this
        is a short, close cut and the old "boxy and oversized, your normal
        size" was going to sell people a shirt that did not fit. */
-    fit: "Fitted and cropped. This one runs true to size — not oversized like the tees. It is a close fit, so if you are between sizes, or want any room, take the next size up.",
+    fit: "Fitted and cropped, not oversized like the tees. It runs close, so take the next size up if you are between sizes or want any room.",
     // €40 rather than the €45 Shopify carried. At a cost of €14.69 that was
     // 3.06x — the steepest markup in the shop — where the house standard is
     // 2.72x, which lands almost exactly on €40.
@@ -593,8 +593,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Crop Tank",
     eyebrow: "Black · cropped · wide strap",
     description:
-      "Cropped tank in plain black cotton. Fitted through the body, wide scoop neck, broad straps rather than spaghetti. The mark across the chest, drawn by hand and printed in red.",
-    fit: "Fitted and cropped. Runs small — size up if you are between.",
+      "Cropped tank in plain black cotton. Fitted through the body, wide scoop neck, broad straps. The mark across the chest, in red.",
+    fit: "Fitted and cropped. Runs small, so size up if you are between.",
     // €25 rather than the €20 Shopify carried. At a cost of €8.25 that was
     // 2.42x against a house standard of 2.72x, which works out at €22.44 —
     // rounded up to €25 because every other price here is a multiple of five
