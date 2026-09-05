@@ -309,7 +309,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     images: [
       "/img/235-dorothy-grey-launderette.png",
       "/img/221-dorothy-hero.png",
-      "/img/53-dorothy-chest-crop.jpg",
+      "/img/243-dorothy-grey-chest.png",
       "/img/200-dorothy-chest-crop.png",
       "/img/212-dorothy-forecourt.png",
       "/img/215-dorothy-daylight.png",
