@@ -1,5 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ANOTHER_PUNK_PRODUCTS, isFulfillable } from "../../lib/another-punk-products";
+import {
+  ANOTHER_PUNK_PRODUCTS,
+  isFulfillable,
+  DEFAULT_DESCRIPTION,
+} from "../../lib/another-punk-products";
 import { SITE, absoluteUrl } from "../../lib/seo";
 
 /** Product feed for Meta Commerce Manager, which is what makes Instagram
@@ -71,7 +75,13 @@ export const Route = createFileRoute("/api/meta-feed")({
     handlers: {
       GET: async () => {
         const items = ANOTHER_PUNK_PRODUCTS.filter(isFulfillable).flatMap((p) => {
-          const description = p.description ?? p.eyebrow;
+          /* Same fallback the product page uses. This read `?? p.eyebrow`,
+             which meant the five tees showed Meta "340gsm · washed grey ·
+             raw hem" — a spec label, not a description — while the page
+             they link to showed the real copy. Two descriptions of one
+             product, and the worse one on the surface a stranger sees
+             first. */
+          const description = p.description ?? DEFAULT_DESCRIPTION;
           /* Only sizes with a real variant behind them. `sizes` is what the
              product page offers, and shopifyVariantIds is what can actually
              be ordered; anything in one but not the other would be a buy
