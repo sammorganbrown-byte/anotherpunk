@@ -102,7 +102,7 @@ export type Bundle = {
  * assumption that retail price was the declared value. It is not.
  * ────────────────────────────────────────────────────────────────────────── */
 
-/** The five washed distressed-hem tees. Sam described this pack as "the 4 raw
+/** The five heavyweight raw-hem tees. Sam described this pack as "the 4 raw
  * hem shirts" — there are five, so it is sold as any four of the five, which
  * is the better product anyway: choosing is part of the appeal, and it does
  * not strand whichever design would have been left out. */
@@ -125,10 +125,15 @@ export const BUNDLES: Bundle[] = [
     distinct: false,
   },
   /* ── RAW HEM FOUR IS WITHDRAWN, 5 SEP ───────────────────────────────────
-     Pulled at Sam's request when the blank changed. The pack was built on
-     the Snow Wash Raw-Hem tee at 340gsm and 18.47 to make; those five
-     designs now print on a 240gsm distressed-hem blank at 14.69, so both
-     halves of the deal moved at once — what it costs and what it is.
+     Pulled at Sam's request on 5 Sep, when the tees briefly moved to a
+     240gsm blank at 14.69 and the pack's economics stopped matching.
+
+     THE REASON HAS SINCE EXPIRED. Later the same day they returned to Snow
+     Wash Raw-Hem at 340gsm and 18.47, in Washed Cement Gray. That is the
+     exact cloth and the exact cost the 175 was solved against, so the price
+     is sound again and the only thing standing between this and going live
+     is Sam saying so. The images would need swapping to grey first: the
+     pack's hero is the black raw-hem ink macro.
 
      The entry is kept here, commented out, rather than deleted. Its price
      and its rules took a long time to get right: 175 for four, shipping
@@ -147,7 +152,7 @@ export const BUNDLES: Bundle[] = [
     price: 175,
     image: "/img/11-macro-rawhem-ink.jpg",
     description:
-      "Any four of the washed distressed-hem tees, each in its own size. Take four different ones or four of the same. Shipping included.",
+      "Any four of the heavyweight raw-hem tees, each in its own size. Take four different ones or four of the same. Shipping included.",
     pitch: "Any four. Forty euros off and nothing to pay for postage.",
     choices: RAW_HEM,
     count: 4,

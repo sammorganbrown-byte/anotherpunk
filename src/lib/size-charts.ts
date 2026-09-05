@@ -92,59 +92,51 @@ export const SIZE_CHARTS: Record<string, SizeChart> = {
       { size: "2XL", length: 66, shoulder: 61, chest: 68, sleeve: 22 },
     ],
   },
-  /* The five tees — Tapstitch "Vintage Wash Boxy Distressed Hem T-shirt",
-     item RT0077, 240gsm. Read off Tapstitch on 5 Sep, the day the blank
-     changed.
+  /* The five tees — Tapstitch "Snow Wash Raw-Hem Boxy T-shirt", item RT0058,
+     340gsm, in Washed Cement Gray. These are the original blank's own
+     figures, restored when the colour change brought RT0058 back; the shirt
+     is unchanged apart from the dye, so the measurements are too.
 
-     One table, five Shopify products, exactly as the old raw-hem blank was
-     handled: these are all printed on the same shirt, which is why they all
-     cost 14.69. Repeated per id rather than aliased, so if one design ever
-     moves to a different blank only that entry changes.
-
-     Note the run reaches 2XL. The blank this replaced stopped at XL. */
-  "15975454835019": {
+     Back to four rows: this blank stops at XL. The 240gsm blank it briefly
+     moved to reached 2XL, and that size went away again with it. */
+  "15975474004299": {
     rows: [
-      { size: "S", length: 61, shoulder: 55, chest: 61, sleeve: 20 },
-      { size: "M", length: 64, shoulder: 56.5, chest: 63, sleeve: 20.5 },
-      { size: "L", length: 67, shoulder: 58, chest: 65, sleeve: 21 },
-      { size: "XL", length: 70, shoulder: 59.5, chest: 67, sleeve: 21.5 },
-      { size: "2XL", length: 73, shoulder: 61, chest: 69, sleeve: 22 },
+      { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
+      { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
+      { size: "L", length: 69, shoulder: 61, chest: 65, sleeve: 27.5 },
+      { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
     ],
   },
-  "15975453720907": {
+  "15975475216715": {
     rows: [
-      { size: "S", length: 61, shoulder: 55, chest: 61, sleeve: 20 },
-      { size: "M", length: 64, shoulder: 56.5, chest: 63, sleeve: 20.5 },
-      { size: "L", length: 67, shoulder: 58, chest: 65, sleeve: 21 },
-      { size: "XL", length: 70, shoulder: 59.5, chest: 67, sleeve: 21.5 },
-      { size: "2XL", length: 73, shoulder: 61, chest: 69, sleeve: 22 },
+      { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
+      { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
+      { size: "L", length: 69, shoulder: 61, chest: 65, sleeve: 27.5 },
+      { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
     ],
   },
-  "15975453425995": {
+  "15975477739851": {
     rows: [
-      { size: "S", length: 61, shoulder: 55, chest: 61, sleeve: 20 },
-      { size: "M", length: 64, shoulder: 56.5, chest: 63, sleeve: 20.5 },
-      { size: "L", length: 67, shoulder: 58, chest: 65, sleeve: 21 },
-      { size: "XL", length: 70, shoulder: 59.5, chest: 67, sleeve: 21.5 },
-      { size: "2XL", length: 73, shoulder: 61, chest: 69, sleeve: 22 },
+      { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
+      { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
+      { size: "L", length: 69, shoulder: 61, chest: 65, sleeve: 27.5 },
+      { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
     ],
   },
-  "15975454376267": {
+  "15975478788427": {
     rows: [
-      { size: "S", length: 61, shoulder: 55, chest: 61, sleeve: 20 },
-      { size: "M", length: 64, shoulder: 56.5, chest: 63, sleeve: 20.5 },
-      { size: "L", length: 67, shoulder: 58, chest: 65, sleeve: 21 },
-      { size: "XL", length: 70, shoulder: 59.5, chest: 67, sleeve: 21.5 },
-      { size: "2XL", length: 73, shoulder: 61, chest: 69, sleeve: 22 },
+      { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
+      { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
+      { size: "L", length: 69, shoulder: 61, chest: 65, sleeve: 27.5 },
+      { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
     ],
   },
-  "15975453098315": {
+  "15975479345483": {
     rows: [
-      { size: "S", length: 61, shoulder: 55, chest: 61, sleeve: 20 },
-      { size: "M", length: 64, shoulder: 56.5, chest: 63, sleeve: 20.5 },
-      { size: "L", length: 67, shoulder: 58, chest: 65, sleeve: 21 },
-      { size: "XL", length: 70, shoulder: 59.5, chest: 67, sleeve: 21.5 },
-      { size: "2XL", length: 73, shoulder: 61, chest: 69, sleeve: 22 },
+      { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
+      { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
+      { size: "L", length: 69, shoulder: 61, chest: 65, sleeve: 27.5 },
+      { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
     ],
   },
   /* Westwood 69, both colourways — Tapstitch "Unisex Striped Boxy Soccer

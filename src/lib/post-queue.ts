@@ -70,7 +70,7 @@ export type QueuedPost = {
  *
  * Middots become full stops. The shop's eyebrow reads "Washed black · raw
  * hem" and the brand's voice does not use middots, so it lands here as
- * "Washed black. Distressed hem."
+ * "Washed grey. Raw hem."
  *
  * Shop titles carry a variant suffix — "Saucer — Oversized, Black" — which
  * exists to disambiguate a grid and reads as clutter under a photograph. The
@@ -94,7 +94,7 @@ export const POST_QUEUE: QueuedPost[] = [
     // joke is the wrong first impression for a shop nobody knows yet.
     id: "jesus",
     images: ["35-jesus-night-rain.jpg", "23-jesus-chest.jpg", "74-jesus-kerb-night.jpg"],
-    caption: "The Jesus\n240gsm. Washed black. Distressed hem.\n\nanotherpunk.com",
+    caption: "The Jesus\n340gsm. Washed grey. Raw hem.\n\nanotherpunk.com",
     due: "2026-09-03",
     /* Went out 3 Sep, then AGAIN on 4 Sep after the caption rewrite broke the
        first-line match. Sam deleted the second one — which means the copy
@@ -193,7 +193,7 @@ export const POST_QUEUE: QueuedPost[] = [
   {
     id: "dorothy",
     images: ["59-dorothy-spin.jpg", "53-dorothy-chest-crop.jpg"],
-    caption: "Surrender Dorothy\n240gsm. Washed black. Distressed hem.\n\nanotherpunk.com",
+    caption: "Surrender Dorothy\n340gsm. Washed grey. Raw hem.\n\nanotherpunk.com",
     due: "2026-09-22",
   },
   {
@@ -204,13 +204,13 @@ export const POST_QUEUE: QueuedPost[] = [
       "70-tonguebox-chest-flash.jpg",
       "71-tonguebox-threequarter.jpg",
     ],
-    caption: "Tongue Box\n240gsm. Washed black. Distressed hem.\n\nanotherpunk.com",
+    caption: "Tongue Box\n340gsm. Washed grey. Raw hem.\n\nanotherpunk.com",
     due: "2026-09-24",
   },
   {
     id: "bats-neon",
     images: ["33-bats-night-neon.jpg", "24-bats-chest-redo.jpg", "44-bats-jump-flash.jpg"],
-    caption: "Bat Country\n240gsm. Washed black. Distressed hem.\n\nanotherpunk.com",
+    caption: "Bat Country\n340gsm. Washed grey. Raw hem.\n\nanotherpunk.com",
     due: "2026-09-26",
   },
   {
@@ -231,7 +231,7 @@ export const POST_QUEUE: QueuedPost[] = [
   {
     id: "saucer-carpark",
     images: ["37-saucer-night-carpark.jpg", "25-saucer-chest.jpg"],
-    caption: "Saucer\n240gsm. Washed black. Distressed hem.\n\nanotherpunk.com",
+    caption: "Saucer\n340gsm. Washed grey. Raw hem.\n\nanotherpunk.com",
     due: "2026-10-03",
   },
   {
@@ -249,7 +249,7 @@ export const POST_QUEUE: QueuedPost[] = [
   {
     id: "sprint",
     images: ["60-bats-sprint-night.jpg"],
-    caption: "Bat Country\n240gsm. Washed black. Distressed hem.\n\nanotherpunk.com",
+    caption: "Bat Country\n340gsm. Washed grey. Raw hem.\n\nanotherpunk.com",
     due: "2026-10-10",
   },
   {
@@ -286,13 +286,13 @@ export const POST_QUEUE: QueuedPost[] = [
   {
     id: "corridor",
     images: ["61-jesus-walking-corridor.jpg", "03-wordmark-chest-raking.jpg"],
-    caption: "The Jesus\n240gsm. Washed black. Distressed hem.\n\nanotherpunk.com",
+    caption: "The Jesus\n340gsm. Washed grey. Raw hem.\n\nanotherpunk.com",
     due: "2026-10-24",
   },
   {
     id: "saucer-turn",
     images: ["63-saucer-turn.jpg", "05-saucer-profile.jpg"],
-    caption: "Saucer\n240gsm. Washed black. Distressed hem.\n\nanotherpunk.com",
+    caption: "Saucer\n340gsm. Washed grey. Raw hem.\n\nanotherpunk.com",
     due: "2026-10-27",
   },
   {
