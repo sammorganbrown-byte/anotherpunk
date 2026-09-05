@@ -83,9 +83,12 @@ export type AnotherPunkProduct = {
  * So the black images are not wrong, they are early. The rule is where they
  * are allowed to appear:
  *
- *   PRODUCT PAGES must show grey. That is what ships today, and a black
- *   shirt on the page with a grey one in the parcel is the gap a customer
- *   photographs.
+ *   PRODUCT PAGES must show grey, and ONLY grey. That is what ships today,
+ *   and a black shirt on the page with a grey one in the parcel is the gap a
+ *   customer photographs. Sam pulled the last black frames on 2026-09-05
+ *   ("remove all of the black shots from product pages - just for now"), so
+ *   the five galleries run short on purpose until more grey is shot. Adding
+ *   a black frame back to fill a thin gallery re-opens the gap.
  *
  *   THE FIELD, THE GROUP SHOTS AND THE POST QUEUE may keep black. They are
  *   campaign imagery rather than a description of what arrives, they cost
@@ -221,13 +224,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        own shot and must stop pointing here. */
     images: [
       "/img/233-bats-grey-night.png",
-      "/img/219-batcountry-hero.png",
-      "/img/239-bats-grey-chest.png",
-      "/img/33-bats-night-neon.jpg",
-      "/img/09-bats-wide-negativespace.jpg",
-      "/img/44-bats-jump-flash.jpg",
-      "/img/58-bats-chest-daylight.jpg",
-      "/img/60-bats-sprint-night.jpg",
+      "/img/244-bats-grey-full.png",
       "/img/237-rawhem-grey-back-shared.png",
     ],
     notInField: ["/img/237-rawhem-grey-back-shared.png"],
@@ -256,9 +253,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     images: [
       "/img/236-tonguebox-grey-daylight.png",
       "/img/232-tonguebox-grey-crosswalk.png",
-      "/img/242-tonguebox-grey-chest.png",
-      "/img/71-tonguebox-threequarter.jpg",
-      "/img/72-tonguebox-night-neon.jpg",
+      "/img/245-tonguebox-grey-full.png",
       "/img/237-rawhem-grey-back-shared.png",
     ],
     notInField: ["/img/237-rawhem-grey-back-shared.png"],
@@ -281,11 +276,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     cost: 18.47,
     images: [
       "/img/234-jesus-grey-forecourt.png",
-      "/img/220-jesus-hero.png",
       "/img/240-jesus-grey-chest.png",
-      "/img/35-jesus-night-rain.jpg",
-      "/img/61-jesus-walking-corridor.jpg",
-      "/img/74-jesus-kerb-night.jpg",
       "/img/237-rawhem-grey-back-shared.png",
     ],
     notInField: ["/img/237-rawhem-grey-back-shared.png"],
@@ -308,11 +299,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     cost: 18.47,
     images: [
       "/img/235-dorothy-grey-launderette.png",
-      "/img/221-dorothy-hero.png",
       "/img/243-dorothy-grey-chest.png",
-      "/img/200-dorothy-chest-crop.png",
-      "/img/212-dorothy-forecourt.png",
-      "/img/215-dorothy-daylight.png",
       "/img/237-rawhem-grey-back-shared.png",
     ],
     notInField: ["/img/237-rawhem-grey-back-shared.png"],
@@ -332,13 +319,8 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     price: TEE_PRICE,
     cost: 18.47,
     images: [
-      "/img/238-saucer-grey-carpark.png",
-      "/img/222-saucer-hero.png",
-      "/img/241-saucer-grey-chest.png",
-      "/img/05-saucer-profile.jpg",
-      "/img/37-saucer-night-carpark.jpg",
-      "/img/56-saucer-chest-raking.jpg",
-      "/img/63-saucer-turn.jpg",
+      "/img/247-saucer-grey-night.png",
+      "/img/246-saucer-grey-full.png",
       "/img/237-rawhem-grey-back-shared.png",
     ],
     notInField: ["/img/237-rawhem-grey-back-shared.png"],

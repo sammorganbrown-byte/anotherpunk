@@ -79,7 +79,6 @@ function RedesignProduct() {
     const gentle = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     el.scrollTo({ left: i * el.clientWidth, behavior: gentle ? "auto" : "smooth" });
   };
-  const [lit, setLit] = useState(false);
   const [queued, setQueued] = useState(false);
 
   const available = isFulfillable(product);
@@ -111,11 +110,6 @@ function RedesignProduct() {
           className="rd-gallery"
           ref={trackRef}
           onScroll={onTrackScroll}
-          data-lit={lit}
-          onMouseEnter={() => setLit(true)}
-          onMouseLeave={() => setLit(false)}
-          onFocus={() => setLit(true)}
-          onBlur={() => setLit(false)}
         >
           {product.images.map((src, i) => (
             <div className="rd-plate rd-gallery-slide aspect-[4/3]" key={src}>

@@ -442,31 +442,16 @@ body:has([data-ap-rd]) {
   background: var(--rd-void-2);
   overflow: hidden;
 }
+/* The photographs run straight, no grade. There used to be a red duotone
+   wash here that lifted off on hover — the print colour applied to the
+   photograph rather than sitting next to it. It cost more than it bought:
+   the garment is sold on the exact tone of its wash, and a colour-blend
+   overlay is the one effect that cannot show that. Removed 2026-09-05. */
 .rd-plate img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: grayscale(1) contrast(1.22) brightness(0.86);
-  transition: filter 0.25s linear;
-}
-.rd-plate[data-lit="true"] img {
-  filter: none;
-}
-/* Red duotone wash, lifted off on hover — the print colour applied to the
-   photograph rather than sitting next to it. */
-.rd-plate::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--rd-red);
-  mix-blend-mode: color;
-  opacity: 0.32;
-  pointer-events: none;
-  transition: opacity 0.25s linear;
-}
-.rd-plate[data-lit="true"]::after {
-  opacity: 0;
 }
 
 .rd-marq {
@@ -2117,16 +2102,6 @@ body:has(.rd-pdp) .rd-np {
   scroll-snap-align: center;
   scroll-snap-stop: always;
 }
-/* The duotone reveal used to key off data-lit on the plate itself. The
-   attribute now lives on the track, because hovering is a property of the
-   gallery rather than of one frame within it. */
-.rd-gallery[data-lit="true"] .rd-plate img {
-  filter: none;
-}
-.rd-gallery[data-lit="true"] .rd-plate::after {
-  opacity: 0;
-}
-
 /* The add-to-bag confirmation. Bordered rather than floating: it sits in the
    flow directly under the button so it cannot cover the size selector or the
    price, and on a phone it pushes the page rather than trapping a tap. */
