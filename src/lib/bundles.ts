@@ -102,7 +102,7 @@ export type Bundle = {
  * assumption that retail price was the declared value. It is not.
  * ────────────────────────────────────────────────────────────────────────── */
 
-/** The five heavyweight raw-hem tees. Sam described this pack as "the 4 raw
+/** The five washed distressed-hem tees. Sam described this pack as "the 4 raw
  * hem shirts" — there are five, so it is sold as any four of the five, which
  * is the better product anyway: choosing is part of the appeal, and it does
  * not strand whichever design would have been left out. */
@@ -124,6 +124,22 @@ export const BUNDLES: Bundle[] = [
     // to be one of each.
     distinct: false,
   },
+  /* ── RAW HEM FOUR IS WITHDRAWN, 5 SEP ───────────────────────────────────
+     Pulled at Sam's request when the blank changed. The pack was built on
+     the Snow Wash Raw-Hem tee at 340gsm and 18.47 to make; those five
+     designs now print on a 240gsm distressed-hem blank at 14.69, so both
+     halves of the deal moved at once — what it costs and what it is.
+
+     The entry is kept here, commented out, rather than deleted. Its price
+     and its rules took a long time to get right: 175 for four, shipping
+     folded in, duplicates allowed, and the reasoning for each is in the
+     history. Retyping that from memory later is how a good number gets
+     replaced with a worse one.
+
+     To bring it back: uncomment, then re-check the price against the new
+     cost. Four at 14.69 plus postage is a different sum from four at 18.47,
+     and 175 was solved for the old one.
+
   {
     slug: "raw-hem-four",
     title: "Raw Hem Four",
@@ -131,21 +147,13 @@ export const BUNDLES: Bundle[] = [
     price: 175,
     image: "/img/11-macro-rawhem-ink.jpg",
     description:
-      "Any four of the heavyweight raw-hem tees, each in its own size. Take four different ones or four of the same. Shipping included.",
+      "Any four of the washed distressed-hem tees, each in its own size. Take four different ones or four of the same. Shipping included.",
     pitch: "Any four. Forty euros off and nothing to pay for postage.",
     choices: RAW_HEM,
     count: 4,
-    /* Duplicates allowed, changed 4 Sep. This used to force four different
-       designs, which greyed out a tee the moment it was picked in another
-       slot — confusing to look at, and it refused a thing people genuinely
-       want: two of the shirt they actually came for.
-
-       There was never a fulfilment or margin reason for it. All five
-       raw-hem tees cost the same 18.47 to make, so four of one prices out
-       exactly like one of each. It was a tidiness rule, and tidiness is not
-       worth a blocked sale. */
     distinct: false,
   },
+  ─────────────────────────────────────────────────────────────────────── */
 ];
 
 export function getBundle(slug: string): Bundle | undefined {

@@ -92,52 +92,27 @@ export const SIZE_CHARTS: Record<string, SizeChart> = {
       { size: "2XL", length: 66, shoulder: 61, chest: 68, sleeve: 22 },
     ],
   },
-  /* The five raw-hem tees — Tapstitch "Snow Wash Raw-Hem Boxy T-shirt". One
-     table, five Shopify products: Bat Country, Tongue Box, The Jesus,
-     Surrender Dorothy and Saucer are all printed on this same 340gsm blank,
-     which is why they all cost 18.47 and share DEFAULT_DESCRIPTION. Repeated
-     per id rather than aliased, so that if one of them ever moves to a
-     different blank only that entry changes. */
-  "15942009225547": {
-    rows: [
-      { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
-      { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
-      { size: "L", length: 69, shoulder: 61, chest: 65, sleeve: 27.5 },
-      { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
-    ],
-  },
-  "15942008799563": {
-    rows: [
-      { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
-      { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
-      { size: "L", length: 69, shoulder: 61, chest: 65, sleeve: 27.5 },
-      { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
-    ],
-  },
-  "15942008832331": {
-    rows: [
-      { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
-      { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
-      { size: "L", length: 69, shoulder: 61, chest: 65, sleeve: 27.5 },
-      { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
-    ],
-  },
-  "15942008963403": {
-    rows: [
-      { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
-      { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
-      { size: "L", length: 69, shoulder: 61, chest: 65, sleeve: 27.5 },
-      { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
-    ],
-  },
-  "15942009356619": {
-    rows: [
-      { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
-      { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
-      { size: "L", length: 69, shoulder: 61, chest: 65, sleeve: 27.5 },
-      { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
-    ],
-  },
+  /* ── THE FIVE TEES HAVE NO CHART, AND THAT IS CORRECT FOR NOW ───────────
+     They moved on 5 Sep from Snow Wash Raw-Hem (RT0058, 340gsm) to Vintage
+     Wash Boxy Distressed Hem (RT0077, 240gsm). The old table was keyed to
+     the old Shopify ids, so it stopped applying the moment they were
+     repointed — which is exactly the behaviour wanted. A different blank has
+     different measurements, and carrying the old numbers across would have
+     been the worst outcome: a table that looks authoritative and describes a
+     shirt nobody receives.
+
+     getSizeChart returns undefined for these now, so the product page shows
+     the fit note and no table. Read the new figures off the Tapstitch page
+     for RT0077 and add them here, keyed by the new ids:
+
+       15975454835019  Bat Country
+       15975453720907  Tongue Box
+       15975453425995  The Jesus
+       15975454376267  Surrender Dorothy
+       15975453098315  Saucer
+
+     NOTE THE SIZE RUN CHANGED TOO. The old blank was S-XL; this one goes to
+     2XL, so there are five rows per table rather than four. */
 
   /* Westwood 69, both colourways — Tapstitch "Unisex Striped Boxy Soccer
      Jersey". */
