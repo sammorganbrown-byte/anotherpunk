@@ -76,6 +76,27 @@ export type AnotherPunkProduct = {
   shopifyVariantIds: Partial<Record<ApSize, string>>;
 };
 
+/* ── BLACK IS COMING BACK. DO NOT DELETE THE BLACK IMAGERY ────────────────
+ * The five tees are grey because Snow Wash Raw-Hem in BLACK sold out, not
+ * because the black was retired. Sam expects it back.
+ *
+ * So the black images are not wrong, they are early. The rule is where they
+ * are allowed to appear:
+ *
+ *   PRODUCT PAGES must show grey. That is what ships today, and a black
+ *   shirt on the page with a grey one in the parcel is the gap a customer
+ *   photographs.
+ *
+ *   THE FIELD, THE GROUP SHOTS AND THE POST QUEUE may keep black. They are
+ *   campaign imagery rather than a description of what arrives, they cost
+ *   real credits to make, and they become accurate again the day black is
+ *   restocked.
+ *
+ * When black returns it is a colourway, not a replacement: the same RT0058
+ * blank in a second colour, which means new Shopify products and variant
+ * ids again. Do not assume the grey ids carry over.
+ * ───────────────────────────────────────────────────────────────────────── */
+
 /** Body copy for the five tees that carry no description of their own.
  *
  * ── THE BLANK WENT AWAY AND CAME BACK, IN GREY ────────────────────────────
@@ -189,7 +210,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed grey · raw hem",
     price: TEE_PRICE,
     cost: 18.47,
-    /* 178 is the SHARED back shot for all five raw-hem tees. The backs of
+    /* 237 is the SHARED back shot for all five raw-hem tees. The backs of
        these are genuinely identical — plain washed black, no print, raw torn
        hem — so five separate photographs would be five copies of the same
        information. Sam approved reusing one. It goes LAST in each gallery:
@@ -201,15 +222,15 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     images: [
       "/img/233-bats-grey-night.png",
       "/img/219-batcountry-hero.png",
-      "/img/24-bats-chest-redo.jpg",
+      "/img/239-bats-grey-chest.png",
       "/img/33-bats-night-neon.jpg",
       "/img/09-bats-wide-negativespace.jpg",
       "/img/44-bats-jump-flash.jpg",
       "/img/58-bats-chest-daylight.jpg",
       "/img/60-bats-sprint-night.jpg",
-      "/img/178-rawhem-back-shared.png",
+      "/img/237-rawhem-grey-back-shared.png",
     ],
-    notInField: ["/img/178-rawhem-back-shared.png"],
+    notInField: ["/img/237-rawhem-grey-back-shared.png"],
     sizes: FOUR,
     shopifyProductId: "15975479345483",
     shopifyVariantIds: {
@@ -235,12 +256,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     images: [
       "/img/236-tonguebox-grey-daylight.png",
       "/img/232-tonguebox-grey-crosswalk.png",
-      "/img/70-tonguebox-chest-flash.jpg",
+      "/img/242-tonguebox-grey-chest.png",
       "/img/71-tonguebox-threequarter.jpg",
       "/img/72-tonguebox-night-neon.jpg",
-      "/img/178-rawhem-back-shared.png",
+      "/img/237-rawhem-grey-back-shared.png",
     ],
-    notInField: ["/img/178-rawhem-back-shared.png"],
+    notInField: ["/img/237-rawhem-grey-back-shared.png"],
     sizes: FOUR,
     shopifyProductId: "15975474004299",
     shopifyVariantIds: {
@@ -261,13 +282,13 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     images: [
       "/img/234-jesus-grey-forecourt.png",
       "/img/220-jesus-hero.png",
-      "/img/23-jesus-chest.jpg",
+      "/img/240-jesus-grey-chest.png",
       "/img/35-jesus-night-rain.jpg",
       "/img/61-jesus-walking-corridor.jpg",
       "/img/74-jesus-kerb-night.jpg",
-      "/img/178-rawhem-back-shared.png",
+      "/img/237-rawhem-grey-back-shared.png",
     ],
-    notInField: ["/img/178-rawhem-back-shared.png"],
+    notInField: ["/img/237-rawhem-grey-back-shared.png"],
     sizes: FOUR,
     shopifyProductId: "15975477739851",
     shopifyVariantIds: {
@@ -289,12 +310,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       "/img/235-dorothy-grey-launderette.png",
       "/img/221-dorothy-hero.png",
       "/img/53-dorothy-chest-crop.jpg",
-      "/img/178-rawhem-back-shared.png",
       "/img/200-dorothy-chest-crop.png",
       "/img/212-dorothy-forecourt.png",
       "/img/215-dorothy-daylight.png",
+      "/img/237-rawhem-grey-back-shared.png",
     ],
-    notInField: ["/img/178-rawhem-back-shared.png"],
+    notInField: ["/img/237-rawhem-grey-back-shared.png"],
     sizes: FOUR,
     shopifyProductId: "15975478788427",
     shopifyVariantIds: {
@@ -311,15 +332,16 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     price: TEE_PRICE,
     cost: 18.47,
     images: [
+      "/img/238-saucer-grey-carpark.png",
       "/img/222-saucer-hero.png",
-      "/img/25-saucer-chest.jpg",
+      "/img/241-saucer-grey-chest.png",
       "/img/05-saucer-profile.jpg",
       "/img/37-saucer-night-carpark.jpg",
       "/img/56-saucer-chest-raking.jpg",
       "/img/63-saucer-turn.jpg",
-      "/img/178-rawhem-back-shared.png",
+      "/img/237-rawhem-grey-back-shared.png",
     ],
-    notInField: ["/img/178-rawhem-back-shared.png"],
+    notInField: ["/img/237-rawhem-grey-back-shared.png"],
     sizes: FOUR,
     shopifyProductId: "15975475216715",
     shopifyVariantIds: {
