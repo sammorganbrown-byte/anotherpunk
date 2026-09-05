@@ -232,12 +232,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // — a customer scrolling to image four and finding a different spelling
     // is worse than a product with three photographs.
     images: [
+      "/img/232-tonguebox-grey-crosswalk.png",
       "/img/70-tonguebox-chest-flash.jpg",
       "/img/71-tonguebox-threequarter.jpg",
       "/img/72-tonguebox-night-neon.jpg",
       "/img/178-rawhem-back-shared.png",
-      "/img/230-tonguebox-crosswalk-240.png",
-      "/img/231-macro-distressed-hem.png",
     ],
     notInField: ["/img/178-rawhem-back-shared.png"],
     sizes: FOUR,
