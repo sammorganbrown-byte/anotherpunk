@@ -199,6 +199,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        If a back print is ever added to any of these, that product needs its
        own shot and must stop pointing here. */
     images: [
+      "/img/233-bats-grey-night.png",
       "/img/219-batcountry-hero.png",
       "/img/24-bats-chest-redo.jpg",
       "/img/33-bats-night-neon.jpg",
@@ -232,6 +233,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // — a customer scrolling to image four and finding a different spelling
     // is worse than a product with three photographs.
     images: [
+      "/img/236-tonguebox-grey-daylight.png",
       "/img/232-tonguebox-grey-crosswalk.png",
       "/img/70-tonguebox-chest-flash.jpg",
       "/img/71-tonguebox-threequarter.jpg",
@@ -257,6 +259,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     price: TEE_PRICE,
     cost: 18.47,
     images: [
+      "/img/234-jesus-grey-forecourt.png",
       "/img/220-jesus-hero.png",
       "/img/23-jesus-chest.jpg",
       "/img/35-jesus-night-rain.jpg",
@@ -283,6 +286,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     price: TEE_PRICE,
     cost: 18.47,
     images: [
+      "/img/235-dorothy-grey-launderette.png",
       "/img/221-dorothy-hero.png",
       "/img/53-dorothy-chest-crop.jpg",
       "/img/178-rawhem-back-shared.png",
