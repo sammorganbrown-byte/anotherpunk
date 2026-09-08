@@ -53,6 +53,22 @@ try {
   try { unlinkSync(tmp); } catch {}
 }
 
+/* Size charts are keyed by Shopify PRODUCT ID, so they silently detach the
+   moment a product id changes — which is exactly what happened when Tapstitch
+   added Washed White by creating new products. The catalogue was repointed,
+   the charts were not, and five product pages lost their measurements without
+   anything failing. Load them here so that can never be invisible again. */
+const chartSrc = resolve(root, "src/lib/size-charts.ts");
+const chartTmp = resolve(root, "node_modules/.ap-size-charts.mjs");
+const { code: chartCode } = await transform(readFileSync(chartSrc, "utf8"), { loader: "ts", format: "esm" });
+writeFileSync(chartTmp, chartCode);
+let SIZE_CHARTS;
+try {
+  ({ SIZE_CHARTS } = await import(pathToFileURL(chartTmp).href));
+} finally {
+  try { unlinkSync(chartTmp); } catch {}
+}
+
 const env = Object.fromEntries(
   readFileSync(resolve(root, ".env.local"), "utf8")
     .split("\n").filter((l) => l.includes("=") && !l.trim().startsWith("#"))
@@ -117,6 +133,13 @@ for (const p of ANOTHER_PUNK_PRODUCTS) {
 
   for (const size of Object.keys(vids)) {
     if (!sizes.includes(size)) warn(slug, `variant mapped for ${size}, which is not in sizes — dead entry`);
+  }
+
+  /* A garment page with no measurements is a garment page that cannot answer
+     the only question anyone asks about an oversized tee. Critical, not a
+     warning: money can be taken for a size the buyer had no way to check. */
+  if (!SIZE_CHARTS[String(pid)]) {
+    crit(slug, `no size chart for product ${pid} — the page shows no measurements`);
   }
 }
 

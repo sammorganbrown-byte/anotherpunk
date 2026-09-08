@@ -93,13 +93,20 @@ export const SIZE_CHARTS: Record<string, SizeChart> = {
     ],
   },
   /* The five tees — Tapstitch "Snow Wash Raw-Hem Boxy T-shirt", item RT0058,
-     340gsm, in Washed Cement Gray. These are the original blank's own
-     figures, restored when the colour change brought RT0058 back; the shirt
-     is unchanged apart from the dye, so the measurements are too.
+     340gsm, now carrying Washed Cement Gray AND Washed White on one product
+     each. One chart serves both colourways because it is one garment in two
+     dyes.
+
+     KEYED BY SHOPIFY PRODUCT ID, which is a trap: when Tapstitch added white
+     it did so by creating NEW products rather than adding an option, so every
+     id here changed and the five tees silently lost their size charts until
+     these keys were repointed. If a product id ever changes again, this file
+     has to move with it. shopify-health.mjs now fails on an entry with no
+     chart so it cannot go unnoticed a second time.
 
      Back to four rows: this blank stops at XL. The 240gsm blank it briefly
      moved to reached 2XL, and that size went away again with it. */
-  "15975474004299": {
+  "15983648538955": {
     rows: [
       { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
       { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
@@ -107,7 +114,7 @@ export const SIZE_CHARTS: Record<string, SizeChart> = {
       { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
     ],
   },
-  "15975475216715": {
+  "15983656108363": {
     rows: [
       { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
       { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
@@ -115,7 +122,7 @@ export const SIZE_CHARTS: Record<string, SizeChart> = {
       { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
     ],
   },
-  "15975477739851": {
+  "15983651029323": {
     rows: [
       { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
       { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
@@ -123,7 +130,7 @@ export const SIZE_CHARTS: Record<string, SizeChart> = {
       { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
     ],
   },
-  "15975478788427": {
+  "15983638184267": {
     rows: [
       { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
       { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
@@ -131,7 +138,7 @@ export const SIZE_CHARTS: Record<string, SizeChart> = {
       { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
     ],
   },
-  "15975479345483": {
+  "15983643132235": {
     rows: [
       { size: "S", length: 65, shoulder: 57, chest: 61, sleeve: 25.5 },
       { size: "M", length: 67, shoulder: 59, chest: 63, sleeve: 26.5 },
