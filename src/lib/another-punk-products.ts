@@ -248,10 +248,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       The generated worn shot LEADS. Sam does not want a flat lay first:
-       "I dont like the flat lay" (2026-09-08), same call he made on the
-       black jersey ghost shot. Every listing sells on a body. The Tapstitch
-       packshot stays second as the honest record of the garment.
+       Three frames: studio worn shot, night-flash shot, then the Tapstitch
+       packshot LAST. Sam does not want a flat lay first — "I dont like the
+       flat lay" (2026-09-08), same call he made on the black jersey ghost
+       shot. Every listing sells on a body; the packshot is the honest
+       record of the garment for anyone who swipes that far.
 
        Four earlier rounds of worn mockups were all wrong in a different way:
        too long, then the print at 60% scale, then hollow outlined lettering
@@ -276,7 +277,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/253-bats-white-worn.png", "/img/248-bats-white-front.png"],
+    images: ["/img/253-bats-white-worn.png", "/img/258-bats-white-night.png", "/img/248-bats-white-front.png"],
     sizes: FOUR,
     shopifyProductId: "15983643132235",
     shopifyVariantIds: {
@@ -320,10 +321,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       The generated worn shot LEADS. Sam does not want a flat lay first:
-       "I dont like the flat lay" (2026-09-08), same call he made on the
-       black jersey ghost shot. Every listing sells on a body. The Tapstitch
-       packshot stays second as the honest record of the garment.
+       Three frames: studio worn shot, night-flash shot, then the Tapstitch
+       packshot LAST. Sam does not want a flat lay first — "I dont like the
+       flat lay" (2026-09-08), same call he made on the black jersey ghost
+       shot. Every listing sells on a body; the packshot is the honest
+       record of the garment for anyone who swipes that far.
 
        Four earlier rounds of worn mockups were all wrong in a different way:
        too long, then the print at 60% scale, then hollow outlined lettering
@@ -348,7 +350,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/254-tonguebox-white-worn.png", "/img/249-tonguebox-white-front.png"],
+    images: ["/img/254-tonguebox-white-worn.png", "/img/259-tonguebox-white-night.png", "/img/249-tonguebox-white-front.png"],
     sizes: FOUR,
     shopifyProductId: "15983648538955",
     shopifyVariantIds: {
@@ -386,10 +388,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       The generated worn shot LEADS. Sam does not want a flat lay first:
-       "I dont like the flat lay" (2026-09-08), same call he made on the
-       black jersey ghost shot. Every listing sells on a body. The Tapstitch
-       packshot stays second as the honest record of the garment.
+       Three frames: studio worn shot, night-flash shot, then the Tapstitch
+       packshot LAST. Sam does not want a flat lay first — "I dont like the
+       flat lay" (2026-09-08), same call he made on the black jersey ghost
+       shot. Every listing sells on a body; the packshot is the honest
+       record of the garment for anyone who swipes that far.
 
        Four earlier rounds of worn mockups were all wrong in a different way:
        too long, then the print at 60% scale, then hollow outlined lettering
@@ -414,7 +417,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/255-jesus-white-worn.png", "/img/250-jesus-white-front.png"],
+    images: ["/img/255-jesus-white-worn.png", "/img/260-jesus-white-night.png", "/img/250-jesus-white-front.png"],
     sizes: FOUR,
     shopifyProductId: "15983651029323",
     shopifyVariantIds: {
@@ -452,10 +455,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       The generated worn shot LEADS. Sam does not want a flat lay first:
-       "I dont like the flat lay" (2026-09-08), same call he made on the
-       black jersey ghost shot. Every listing sells on a body. The Tapstitch
-       packshot stays second as the honest record of the garment.
+       Three frames: studio worn shot, night-flash shot, then the Tapstitch
+       packshot LAST. Sam does not want a flat lay first — "I dont like the
+       flat lay" (2026-09-08), same call he made on the black jersey ghost
+       shot. Every listing sells on a body; the packshot is the honest
+       record of the garment for anyone who swipes that far.
 
        Four earlier rounds of worn mockups were all wrong in a different way:
        too long, then the print at 60% scale, then hollow outlined lettering
@@ -480,7 +484,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/256-dorothy-white-worn.png", "/img/251-dorothy-white-front.png"],
+    images: ["/img/256-dorothy-white-worn.png", "/img/261-dorothy-white-night.png", "/img/251-dorothy-white-front.png"],
     sizes: FOUR,
     shopifyProductId: "15983638184267",
     shopifyVariantIds: {
@@ -516,10 +520,11 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       The generated worn shot LEADS. Sam does not want a flat lay first:
-       "I dont like the flat lay" (2026-09-08), same call he made on the
-       black jersey ghost shot. Every listing sells on a body. The Tapstitch
-       packshot stays second as the honest record of the garment.
+       Three frames: studio worn shot, night-flash shot, then the Tapstitch
+       packshot LAST. Sam does not want a flat lay first — "I dont like the
+       flat lay" (2026-09-08), same call he made on the black jersey ghost
+       shot. Every listing sells on a body; the packshot is the honest
+       record of the garment for anyone who swipes that far.
 
        Four earlier rounds of worn mockups were all wrong in a different way:
        too long, then the print at 60% scale, then hollow outlined lettering
@@ -542,7 +547,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/257-saucer-white-worn.png", "/img/252-saucer-white-front.png"],
+    images: ["/img/257-saucer-white-worn.png", "/img/262-saucer-white-night.png", "/img/252-saucer-white-front.png"],
     sizes: FOUR,
     shopifyProductId: "15983656108363",
     shopifyVariantIds: {
