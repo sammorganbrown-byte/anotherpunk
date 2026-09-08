@@ -796,14 +796,20 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Big Pussy",
     eyebrow: "Grey leopard · cropped · unisex",
     description:
-      "Grey snow-leopard, washed and faded. Cropped and close through the body, not oversized. Slogan drawn by hand, large across the chest.",
-    /* The only piece here that is NOT oversized, which is worth saying out
-       loud because everything around it is. Sam has one in hand: his partner
-       takes a medium in everything and the medium is a little tight. The
-       measurements agree — 58-66cm long against 71-79 on the Staple — so this
-       is a short, close cut and the old "boxy and oversized, your normal
-       size" was going to sell people a shirt that did not fit. */
-    fit: "Fitted and cropped, not oversized like the tees. It runs close, so take the next size up if you are between sizes or want any room.",
+      "Grey snow-leopard, washed and faded. Boxy and cropped. Short in the body, roomy through the chest. Slogan drawn by hand, large across the chest.",
+    /* CORRECTED 2026-09-08. This said "fitted, runs close, take the next size
+       up" on the strength of a medium that was tight on Sam's partner — but
+       the shirt she wore was the PINK Leopard Crop, not this one. The note
+       was attached to the wrong product and pointed the wrong way.
+
+       The measurements are unambiguous: 62cm half-chest is 124cm around,
+       identical to the Westwood jersey and within 2cm of the raw-hem tees,
+       both of which are sold as boxy and oversized in your normal size. It is
+       not close-fitting anywhere. What it is, is SHORT — 60cm against 67cm on
+       the tees. Cropped is a length, not a tightness, and reading one as the
+       other is what produced the error. Telling someone to size up on a
+       124cm chest would have shipped them a tent. */
+    fit: "Boxy and cropped. Short in the body, roomy through the chest, so take your normal size. It is the shortest thing here, not the tightest.",
     // €40 rather than the €45 Shopify carried. At a cost of €14.69 that was
     // 3.06x — the steepest markup in the shop — where the house standard is
     // 2.72x, which lands almost exactly on €40.
