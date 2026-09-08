@@ -248,10 +248,21 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       Worn shot first, real Tapstitch packshot second. The shared grey back
-       shot must NOT be reused here, and Tapstitch's own white back is white on
-       white and reads as an empty frame, so there is no back shot for white
-       until one is worth shipping. */
+       PACKSHOT ONLY, AND THAT IS DELIBERATE. This is the real Tapstitch
+       photograph of the real garment. Four rounds of generated worn mockups
+       were tried and every one was wrong in a different way: too long, then
+       the print at 60% scale, then hollow outlined lettering with black ink
+       added, then invented text reading "MADE BY" and "ANOTHER ARNA-LHEA"
+       across the Dorothy print.
+
+       The pattern is that a white garment gives the model nothing to separate
+       print from fabric, so it reinterprets the artwork instead of copying it.
+       A real photograph of the real shirt beats a generated one that keeps
+       inventing words we do not print. Do not add generated worn shots here
+       without checking the print at full size first.
+
+       No back shot: Tapstitch's own white back is white on white and reads as
+       an empty frame. */
     slug: "bat-country-white",
     quote: "We can't stop here. This is bat country.",
     quoteSource: "Fear and Loathing in Las Vegas, 1998",
@@ -260,10 +271,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: [
-      "/img/253-bats-white-street.png",
-      "/img/248-bats-white-front.png",
-    ],
+    images: ["/img/248-bats-white-front.png"],
     sizes: FOUR,
     shopifyProductId: "15983643132235",
     shopifyVariantIds: {
@@ -307,10 +315,21 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       Worn shot first, real Tapstitch packshot second. The shared grey back
-       shot must NOT be reused here, and Tapstitch's own white back is white on
-       white and reads as an empty frame, so there is no back shot for white
-       until one is worth shipping. */
+       PACKSHOT ONLY, AND THAT IS DELIBERATE. This is the real Tapstitch
+       photograph of the real garment. Four rounds of generated worn mockups
+       were tried and every one was wrong in a different way: too long, then
+       the print at 60% scale, then hollow outlined lettering with black ink
+       added, then invented text reading "MADE BY" and "ANOTHER ARNA-LHEA"
+       across the Dorothy print.
+
+       The pattern is that a white garment gives the model nothing to separate
+       print from fabric, so it reinterprets the artwork instead of copying it.
+       A real photograph of the real shirt beats a generated one that keeps
+       inventing words we do not print. Do not add generated worn shots here
+       without checking the print at full size first.
+
+       No back shot: Tapstitch's own white back is white on white and reads as
+       an empty frame. */
     slug: "tongue-box-white",
     quote: "I better adjust my tongue box.",
     quoteSource: "Barbarella, 1968",
@@ -319,10 +338,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: [
-      "/img/254-tonguebox-white-doorway.png",
-      "/img/249-tonguebox-white-front.png",
-    ],
+    images: ["/img/249-tonguebox-white-front.png"],
     sizes: FOUR,
     shopifyProductId: "15983648538955",
     shopifyVariantIds: {
@@ -360,10 +376,21 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       Worn shot first, real Tapstitch packshot second. The shared grey back
-       shot must NOT be reused here, and Tapstitch's own white back is white on
-       white and reads as an empty frame, so there is no back shot for white
-       until one is worth shipping. */
+       PACKSHOT ONLY, AND THAT IS DELIBERATE. This is the real Tapstitch
+       photograph of the real garment. Four rounds of generated worn mockups
+       were tried and every one was wrong in a different way: too long, then
+       the print at 60% scale, then hollow outlined lettering with black ink
+       added, then invented text reading "MADE BY" and "ANOTHER ARNA-LHEA"
+       across the Dorothy print.
+
+       The pattern is that a white garment gives the model nothing to separate
+       print from fabric, so it reinterprets the artwork instead of copying it.
+       A real photograph of the real shirt beats a generated one that keeps
+       inventing words we do not print. Do not add generated worn shots here
+       without checking the print at full size first.
+
+       No back shot: Tapstitch's own white back is white on white and reads as
+       an empty frame. */
     slug: "the-jesus-white",
     quote: "Nobody fucks with the Jesus.",
     quoteSource: "The Big Lebowski, 1998",
@@ -372,10 +399,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: [
-      "/img/255-jesus-white-wall.png",
-      "/img/250-jesus-white-front.png",
-    ],
+    images: ["/img/250-jesus-white-front.png"],
     sizes: FOUR,
     shopifyProductId: "15983651029323",
     shopifyVariantIds: {
@@ -413,10 +437,21 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       Worn shot first, real Tapstitch packshot second. The shared grey back
-       shot must NOT be reused here, and Tapstitch's own white back is white on
-       white and reads as an empty frame, so there is no back shot for white
-       until one is worth shipping. */
+       PACKSHOT ONLY, AND THAT IS DELIBERATE. This is the real Tapstitch
+       photograph of the real garment. Four rounds of generated worn mockups
+       were tried and every one was wrong in a different way: too long, then
+       the print at 60% scale, then hollow outlined lettering with black ink
+       added, then invented text reading "MADE BY" and "ANOTHER ARNA-LHEA"
+       across the Dorothy print.
+
+       The pattern is that a white garment gives the model nothing to separate
+       print from fabric, so it reinterprets the artwork instead of copying it.
+       A real photograph of the real shirt beats a generated one that keeps
+       inventing words we do not print. Do not add generated worn shots here
+       without checking the print at full size first.
+
+       No back shot: Tapstitch's own white back is white on white and reads as
+       an empty frame. */
     slug: "surrender-dorothy-white",
     quote: "Surrender Dorothy.",
     quoteSource: "After Hours, 1985",
@@ -425,10 +460,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: [
-      "/img/256-dorothy-white-scooter.png",
-      "/img/251-dorothy-white-front.png",
-    ],
+    images: ["/img/251-dorothy-white-front.png"],
     sizes: FOUR,
     shopifyProductId: "15983638184267",
     shopifyVariantIds: {
@@ -464,20 +496,28 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       Worn shot first, real Tapstitch packshot second. The shared grey back
-       shot must NOT be reused here, and Tapstitch's own white back is white on
-       white and reads as an empty frame, so there is no back shot for white
-       until one is worth shipping. */
+       PACKSHOT ONLY, AND THAT IS DELIBERATE. This is the real Tapstitch
+       photograph of the real garment. Four rounds of generated worn mockups
+       were tried and every one was wrong in a different way: too long, then
+       the print at 60% scale, then hollow outlined lettering with black ink
+       added, then invented text reading "MADE BY" and "ANOTHER ARNA-LHEA"
+       across the Dorothy print.
+
+       The pattern is that a white garment gives the model nothing to separate
+       print from fabric, so it reinterprets the artwork instead of copying it.
+       A real photograph of the real shirt beats a generated one that keeps
+       inventing words we do not print. Do not add generated worn shots here
+       without checking the print at full size first.
+
+       No back shot: Tapstitch's own white back is white on white and reads as
+       an empty frame. */
     slug: "saucer-white",
     title: "Saucer — White",
     description: WHITE_DESCRIPTION,
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: [
-      "/img/257-saucer-white-corner.png",
-      "/img/252-saucer-white-front.png",
-    ],
+    images: ["/img/252-saucer-white-front.png"],
     sizes: FOUR,
     shopifyProductId: "15983656108363",
     shopifyVariantIds: {
