@@ -248,12 +248,10 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       One image on purpose. This is the real Tapstitch packshot of the white
-       garment, and per the Crop Tank note a listing with no picture of what
-       you are actually buying is worse than no listing. The shared grey back
-       shot must NOT be reused here, and Tapstitch's white back is white on
-       white and reads as an empty frame — so front only until there are
-       mockups. */
+       Worn shot first, real Tapstitch packshot second. The shared grey back
+       shot must NOT be reused here, and Tapstitch's own white back is white on
+       white and reads as an empty frame, so there is no back shot for white
+       until one is worth shipping. */
     slug: "bat-country-white",
     quote: "We can't stop here. This is bat country.",
     quoteSource: "Fear and Loathing in Las Vegas, 1998",
@@ -262,7 +260,10 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/248-bats-white-front.png"],
+    images: [
+      "/img/253-bats-white-street.png",
+      "/img/248-bats-white-front.png",
+    ],
     sizes: FOUR,
     shopifyProductId: "15983643132235",
     shopifyVariantIds: {
@@ -306,12 +307,10 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       One image on purpose. This is the real Tapstitch packshot of the white
-       garment, and per the Crop Tank note a listing with no picture of what
-       you are actually buying is worse than no listing. The shared grey back
-       shot must NOT be reused here, and Tapstitch's white back is white on
-       white and reads as an empty frame — so front only until there are
-       mockups. */
+       Worn shot first, real Tapstitch packshot second. The shared grey back
+       shot must NOT be reused here, and Tapstitch's own white back is white on
+       white and reads as an empty frame, so there is no back shot for white
+       until one is worth shipping. */
     slug: "tongue-box-white",
     quote: "I better adjust my tongue box.",
     quoteSource: "Barbarella, 1968",
@@ -320,7 +319,10 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/249-tonguebox-white-front.png"],
+    images: [
+      "/img/254-tonguebox-white-doorway.png",
+      "/img/249-tonguebox-white-front.png",
+    ],
     sizes: FOUR,
     shopifyProductId: "15983648538955",
     shopifyVariantIds: {
@@ -358,12 +360,10 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       One image on purpose. This is the real Tapstitch packshot of the white
-       garment, and per the Crop Tank note a listing with no picture of what
-       you are actually buying is worse than no listing. The shared grey back
-       shot must NOT be reused here, and Tapstitch's white back is white on
-       white and reads as an empty frame — so front only until there are
-       mockups. */
+       Worn shot first, real Tapstitch packshot second. The shared grey back
+       shot must NOT be reused here, and Tapstitch's own white back is white on
+       white and reads as an empty frame, so there is no back shot for white
+       until one is worth shipping. */
     slug: "the-jesus-white",
     quote: "Nobody fucks with the Jesus.",
     quoteSource: "The Big Lebowski, 1998",
@@ -372,7 +372,10 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/250-jesus-white-front.png"],
+    images: [
+      "/img/255-jesus-white-wall.png",
+      "/img/250-jesus-white-front.png",
+    ],
     sizes: FOUR,
     shopifyProductId: "15983651029323",
     shopifyVariantIds: {
@@ -410,12 +413,10 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       One image on purpose. This is the real Tapstitch packshot of the white
-       garment, and per the Crop Tank note a listing with no picture of what
-       you are actually buying is worse than no listing. The shared grey back
-       shot must NOT be reused here, and Tapstitch's white back is white on
-       white and reads as an empty frame — so front only until there are
-       mockups. */
+       Worn shot first, real Tapstitch packshot second. The shared grey back
+       shot must NOT be reused here, and Tapstitch's own white back is white on
+       white and reads as an empty frame, so there is no back shot for white
+       until one is worth shipping. */
     slug: "surrender-dorothy-white",
     quote: "Surrender Dorothy.",
     quoteSource: "After Hours, 1985",
@@ -424,7 +425,10 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/251-dorothy-white-front.png"],
+    images: [
+      "/img/256-dorothy-white-scooter.png",
+      "/img/251-dorothy-white-front.png",
+    ],
     sizes: FOUR,
     shopifyProductId: "15983638184267",
     shopifyVariantIds: {
@@ -460,19 +464,20 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       One image on purpose. This is the real Tapstitch packshot of the white
-       garment, and per the Crop Tank note a listing with no picture of what
-       you are actually buying is worse than no listing. The shared grey back
-       shot must NOT be reused here, and Tapstitch's white back is white on
-       white and reads as an empty frame — so front only until there are
-       mockups. */
+       Worn shot first, real Tapstitch packshot second. The shared grey back
+       shot must NOT be reused here, and Tapstitch's own white back is white on
+       white and reads as an empty frame, so there is no back shot for white
+       until one is worth shipping. */
     slug: "saucer-white",
     title: "Saucer — White",
     description: WHITE_DESCRIPTION,
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/252-saucer-white-front.png"],
+    images: [
+      "/img/257-saucer-white-corner.png",
+      "/img/252-saucer-white-front.png",
+    ],
     sizes: FOUR,
     shopifyProductId: "15983656108363",
     shopifyVariantIds: {
