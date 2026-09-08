@@ -248,21 +248,23 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       PACKSHOT ONLY, AND THAT IS DELIBERATE. This is the real Tapstitch
-       photograph of the real garment. Four rounds of generated worn mockups
-       were tried and every one was wrong in a different way: too long, then
-       the print at 60% scale, then hollow outlined lettering with black ink
-       added, then invented text reading "MADE BY" and "ANOTHER ARNA-LHEA"
-       across the Dorothy print.
+       The real Tapstitch packshot leads, then one generated worn shot.
 
-       The pattern is that a white garment gives the model nothing to separate
-       print from fabric, so it reinterprets the artwork instead of copying it.
-       A real photograph of the real shirt beats a generated one that keeps
-       inventing words we do not print. Do not add generated worn shots here
-       without checking the print at full size first.
+       Four earlier rounds of worn mockups were all wrong in a different way:
+       too long, then the print at 60% scale, then hollow outlined lettering
+       with black ink added, then invented text reading "MADE BY" and
+       "ANOTHER ARNA-LHEA" across the Dorothy print. The cause was not the
+       colour. It was that no Higgsfield reference element existed for the
+       white garments, so the prompt described the artwork in words and the
+       model reinterpreted it. The grey mockups had elements the whole time.
+
+       Fixed by building AP-*-White elements from these packshots and
+       generating with <<<element_id>>> placeholders. Any future white shot
+       must go through those elements — never a written description, never
+       the flat PNG.
 
        No back shot: Tapstitch's own white back is white on white and reads as
-       an empty frame. */
+       an empty frame, and these tees are front-print only. */
     slug: "bat-country-white",
     quote: "We can't stop here. This is bat country.",
     quoteSource: "Fear and Loathing in Las Vegas, 1998",
@@ -271,7 +273,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/248-bats-white-front.png"],
+    images: ["/img/248-bats-white-front.png", "/img/253-bats-white-worn.png"],
     sizes: FOUR,
     shopifyProductId: "15983643132235",
     shopifyVariantIds: {
@@ -315,21 +317,23 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       PACKSHOT ONLY, AND THAT IS DELIBERATE. This is the real Tapstitch
-       photograph of the real garment. Four rounds of generated worn mockups
-       were tried and every one was wrong in a different way: too long, then
-       the print at 60% scale, then hollow outlined lettering with black ink
-       added, then invented text reading "MADE BY" and "ANOTHER ARNA-LHEA"
-       across the Dorothy print.
+       The real Tapstitch packshot leads, then one generated worn shot.
 
-       The pattern is that a white garment gives the model nothing to separate
-       print from fabric, so it reinterprets the artwork instead of copying it.
-       A real photograph of the real shirt beats a generated one that keeps
-       inventing words we do not print. Do not add generated worn shots here
-       without checking the print at full size first.
+       Four earlier rounds of worn mockups were all wrong in a different way:
+       too long, then the print at 60% scale, then hollow outlined lettering
+       with black ink added, then invented text reading "MADE BY" and
+       "ANOTHER ARNA-LHEA" across the Dorothy print. The cause was not the
+       colour. It was that no Higgsfield reference element existed for the
+       white garments, so the prompt described the artwork in words and the
+       model reinterpreted it. The grey mockups had elements the whole time.
+
+       Fixed by building AP-*-White elements from these packshots and
+       generating with <<<element_id>>> placeholders. Any future white shot
+       must go through those elements — never a written description, never
+       the flat PNG.
 
        No back shot: Tapstitch's own white back is white on white and reads as
-       an empty frame. */
+       an empty frame, and these tees are front-print only. */
     slug: "tongue-box-white",
     quote: "I better adjust my tongue box.",
     quoteSource: "Barbarella, 1968",
@@ -338,7 +342,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/249-tonguebox-white-front.png"],
+    images: ["/img/249-tonguebox-white-front.png", "/img/254-tonguebox-white-worn.png"],
     sizes: FOUR,
     shopifyProductId: "15983648538955",
     shopifyVariantIds: {
@@ -376,21 +380,23 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       PACKSHOT ONLY, AND THAT IS DELIBERATE. This is the real Tapstitch
-       photograph of the real garment. Four rounds of generated worn mockups
-       were tried and every one was wrong in a different way: too long, then
-       the print at 60% scale, then hollow outlined lettering with black ink
-       added, then invented text reading "MADE BY" and "ANOTHER ARNA-LHEA"
-       across the Dorothy print.
+       The real Tapstitch packshot leads, then one generated worn shot.
 
-       The pattern is that a white garment gives the model nothing to separate
-       print from fabric, so it reinterprets the artwork instead of copying it.
-       A real photograph of the real shirt beats a generated one that keeps
-       inventing words we do not print. Do not add generated worn shots here
-       without checking the print at full size first.
+       Four earlier rounds of worn mockups were all wrong in a different way:
+       too long, then the print at 60% scale, then hollow outlined lettering
+       with black ink added, then invented text reading "MADE BY" and
+       "ANOTHER ARNA-LHEA" across the Dorothy print. The cause was not the
+       colour. It was that no Higgsfield reference element existed for the
+       white garments, so the prompt described the artwork in words and the
+       model reinterpreted it. The grey mockups had elements the whole time.
+
+       Fixed by building AP-*-White elements from these packshots and
+       generating with <<<element_id>>> placeholders. Any future white shot
+       must go through those elements — never a written description, never
+       the flat PNG.
 
        No back shot: Tapstitch's own white back is white on white and reads as
-       an empty frame. */
+       an empty frame, and these tees are front-print only. */
     slug: "the-jesus-white",
     quote: "Nobody fucks with the Jesus.",
     quoteSource: "The Big Lebowski, 1998",
@@ -399,7 +405,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/250-jesus-white-front.png"],
+    images: ["/img/250-jesus-white-front.png", "/img/255-jesus-white-worn.png"],
     sizes: FOUR,
     shopifyProductId: "15983651029323",
     shopifyVariantIds: {
@@ -437,21 +443,23 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       PACKSHOT ONLY, AND THAT IS DELIBERATE. This is the real Tapstitch
-       photograph of the real garment. Four rounds of generated worn mockups
-       were tried and every one was wrong in a different way: too long, then
-       the print at 60% scale, then hollow outlined lettering with black ink
-       added, then invented text reading "MADE BY" and "ANOTHER ARNA-LHEA"
-       across the Dorothy print.
+       The real Tapstitch packshot leads, then one generated worn shot.
 
-       The pattern is that a white garment gives the model nothing to separate
-       print from fabric, so it reinterprets the artwork instead of copying it.
-       A real photograph of the real shirt beats a generated one that keeps
-       inventing words we do not print. Do not add generated worn shots here
-       without checking the print at full size first.
+       Four earlier rounds of worn mockups were all wrong in a different way:
+       too long, then the print at 60% scale, then hollow outlined lettering
+       with black ink added, then invented text reading "MADE BY" and
+       "ANOTHER ARNA-LHEA" across the Dorothy print. The cause was not the
+       colour. It was that no Higgsfield reference element existed for the
+       white garments, so the prompt described the artwork in words and the
+       model reinterpreted it. The grey mockups had elements the whole time.
+
+       Fixed by building AP-*-White elements from these packshots and
+       generating with <<<element_id>>> placeholders. Any future white shot
+       must go through those elements — never a written description, never
+       the flat PNG.
 
        No back shot: Tapstitch's own white back is white on white and reads as
-       an empty frame. */
+       an empty frame, and these tees are front-print only. */
     slug: "surrender-dorothy-white",
     quote: "Surrender Dorothy.",
     quoteSource: "After Hours, 1985",
@@ -460,7 +468,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/251-dorothy-white-front.png"],
+    images: ["/img/251-dorothy-white-front.png", "/img/256-dorothy-white-worn.png"],
     sizes: FOUR,
     shopifyProductId: "15983638184267",
     shopifyVariantIds: {
@@ -496,28 +504,30 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
        both colourways on one product — so the product id repeats and only the
        variant ids differ. Same arrangement as saucer-oversized black/bone.
 
-       PACKSHOT ONLY, AND THAT IS DELIBERATE. This is the real Tapstitch
-       photograph of the real garment. Four rounds of generated worn mockups
-       were tried and every one was wrong in a different way: too long, then
-       the print at 60% scale, then hollow outlined lettering with black ink
-       added, then invented text reading "MADE BY" and "ANOTHER ARNA-LHEA"
-       across the Dorothy print.
+       The real Tapstitch packshot leads, then one generated worn shot.
 
-       The pattern is that a white garment gives the model nothing to separate
-       print from fabric, so it reinterprets the artwork instead of copying it.
-       A real photograph of the real shirt beats a generated one that keeps
-       inventing words we do not print. Do not add generated worn shots here
-       without checking the print at full size first.
+       Four earlier rounds of worn mockups were all wrong in a different way:
+       too long, then the print at 60% scale, then hollow outlined lettering
+       with black ink added, then invented text reading "MADE BY" and
+       "ANOTHER ARNA-LHEA" across the Dorothy print. The cause was not the
+       colour. It was that no Higgsfield reference element existed for the
+       white garments, so the prompt described the artwork in words and the
+       model reinterpreted it. The grey mockups had elements the whole time.
+
+       Fixed by building AP-*-White elements from these packshots and
+       generating with <<<element_id>>> placeholders. Any future white shot
+       must go through those elements — never a written description, never
+       the flat PNG.
 
        No back shot: Tapstitch's own white back is white on white and reads as
-       an empty frame. */
+       an empty frame, and these tees are front-print only. */
     slug: "saucer-white",
     title: "Saucer — White",
     description: WHITE_DESCRIPTION,
     eyebrow: "340gsm · washed white · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    images: ["/img/252-saucer-white-front.png"],
+    images: ["/img/252-saucer-white-front.png", "/img/257-saucer-white-worn.png"],
     sizes: FOUR,
     shopifyProductId: "15983656108363",
     shopifyVariantIds: {
