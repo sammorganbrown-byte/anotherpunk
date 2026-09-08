@@ -745,7 +745,15 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     slug: "leopard-crop",
     description:
       "Lightweight stretch jersey. Pink leopard. Cut short and close through the body. Slogan drawn by hand, printed in red.",
-    fit: "Fitted and cropped. This one runs true to size. Not oversized like the tees.",
+    /* RUNS SMALL, confirmed by Sam 2026-09-08. This previously said "runs
+       true to size", which was the wrong way round on the one product where
+       being wrong costs someone a shirt they cannot wear.
+
+       The measurements back him up and it is not close: 34cm half-chest on a
+       medium is 68cm around, against 62cm half — 124cm around — on the grey
+       Big Pussy. They read as the same kind of garment on the page and are
+       nothing like the same size. */
+    fit: "Fitted and cropped, and it runs small. Size up. A medium fits like a small, so take the next size unless you want it tight.",
     title: "Leopard Crop",
     eyebrow: "Pink leopard · cropped",
     // Priced below the rest of the range on request, it's a lighter
