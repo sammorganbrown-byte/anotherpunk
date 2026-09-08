@@ -212,7 +212,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Bat Country",
     eyebrow: "340gsm · washed grey · raw hem",
     price: TEE_PRICE,
-    cost: 18.47,
+    cost: 18.36,
     /* 237 is the SHARED back shot for all five raw-hem tees. The backs of
        these are genuinely identical — plain washed black, no print, raw torn
        hem — so five separate photographs would be five copies of the same
@@ -229,12 +229,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     ],
     notInField: ["/img/237-rawhem-grey-back-shared.png"],
     sizes: FOUR,
-    shopifyProductId: "15975479345483",
+    shopifyProductId: "15983643132235",
     shopifyVariantIds: {
-      S: "58366405542219",
-      M: "58366405574987",
-      L: "58366405607755",
-      XL: "58366405640523",
+      S: "58407769080139",
+      M: "58407769112907",
+      L: "58407769145675",
+      XL: "58407769178443",
     },
   },
   {
@@ -244,7 +244,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Tongue Box",
     eyebrow: "340gsm · washed grey · raw hem",
     price: TEE_PRICE,
-    cost: 18.47,
+    cost: 18.36,
     // Reshot 2026-09-01. Every previous image showed the garment misspelled
     // TOUNGE; the artwork was corrected and these three are the only shots of
     // the real product. The old five are still on disk but must not be listed
@@ -258,12 +258,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     ],
     notInField: ["/img/237-rawhem-grey-back-shared.png"],
     sizes: FOUR,
-    shopifyProductId: "15975474004299",
+    shopifyProductId: "15983648538955",
     shopifyVariantIds: {
-      S: "58366391779659",
-      M: "58366391812427",
-      L: "58366391845195",
-      XL: "58366391877963",
+      S: "58407780647243",
+      M: "58407780680011",
+      L: "58407780712779",
+      XL: "58407780745547",
     },
   },
   {
@@ -273,7 +273,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "The Jesus",
     eyebrow: "340gsm · washed grey · raw hem",
     price: TEE_PRICE,
-    cost: 18.47,
+    cost: 18.36,
     images: [
       "/img/234-jesus-grey-forecourt.png",
       "/img/240-jesus-grey-chest.png",
@@ -281,12 +281,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     ],
     notInField: ["/img/237-rawhem-grey-back-shared.png"],
     sizes: FOUR,
-    shopifyProductId: "15975477739851",
+    shopifyProductId: "15983651029323",
     shopifyVariantIds: {
-      S: "58366402789707",
-      M: "58366402822475",
-      L: "58366402855243",
-      XL: "58366402888011",
+      S: "58407798636875",
+      M: "58407798669643",
+      L: "58407798702411",
+      XL: "58407798735179",
     },
   },
   {
@@ -296,7 +296,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Surrender Dorothy",
     eyebrow: "340gsm · washed grey · raw hem",
     price: TEE_PRICE,
-    cost: 18.47,
+    cost: 18.36,
     images: [
       "/img/235-dorothy-grey-launderette.png",
       "/img/243-dorothy-grey-chest.png",
@@ -304,12 +304,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     ],
     notInField: ["/img/237-rawhem-grey-back-shared.png"],
     sizes: FOUR,
-    shopifyProductId: "15975478788427",
+    shopifyProductId: "15983638184267",
     shopifyVariantIds: {
-      S: "58366404723019",
-      M: "58366404755787",
-      L: "58366404788555",
-      XL: "58366404821323",
+      S: "58407758266699",
+      M: "58407758299467",
+      L: "58407758332235",
+      XL: "58407758365003",
     },
   },
   {
@@ -317,7 +317,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     title: "Saucer",
     eyebrow: "340gsm · washed grey · raw hem",
     price: TEE_PRICE,
-    cost: 18.47,
+    cost: 18.36,
     images: [
       "/img/247-saucer-grey-night.png",
       "/img/246-saucer-grey-full.png",
@@ -325,12 +325,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     ],
     notInField: ["/img/237-rawhem-grey-back-shared.png"],
     sizes: FOUR,
-    shopifyProductId: "15975475216715",
+    shopifyProductId: "15983656108363",
     shopifyVariantIds: {
-      S: "58366396596555",
-      M: "58366396629323",
-      L: "58366396662091",
-      XL: "58366396694859",
+      S: "58407805747531",
+      M: "58407805780299",
+      L: "58407805813067",
+      XL: "58407805845835",
     },
   },
   {
