@@ -304,4 +304,14 @@ export const POST_QUEUE: QueuedPost[] = [
     caption: "Raw hem.\nOn every tee.\n\nanotherpunk.com",
     due: "2026-10-29",
   },
+  {
+    id: "hoodie",
+    images: [
+      "263-hoodie-street-daylight.png",
+      "264-hoodie-woman-night-flash.png",
+      "265-hoodie-pair-wall.png",
+    ],
+    caption: "Another Punk Hoodie\n420gsm. Acid-washed black.\n\nanotherpunk.com",
+    due: "2026-10-31",
+  },
 ];

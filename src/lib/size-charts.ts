@@ -146,6 +146,19 @@ export const SIZE_CHARTS: Record<string, SizeChart> = {
       { size: "XL", length: 71, shoulder: 63, chest: 67, sleeve: 28.5 },
     ],
   },
+  /* Hoodie — Tapstitch "Snow Washed Loose Cotton Hoodie", 420gsm. Copied from
+     the size table Tapstitch writes into the Shopify description. 3XL sleeve
+     is 62 cm, the same as 2XL, in their table as published. */
+  "16009646735691": {
+    rows: [
+      { size: "S", length: 70, shoulder: 56.5, chest: 60, sleeve: 56 },
+      { size: "M", length: 72, shoulder: 58, chest: 62, sleeve: 57.5 },
+      { size: "L", length: 74, shoulder: 59.5, chest: 64, sleeve: 59 },
+      { size: "XL", length: 76, shoulder: 61, chest: 66, sleeve: 60.5 },
+      { size: "2XL", length: 78, shoulder: 62.5, chest: 68, sleeve: 62 },
+      { size: "3XL", length: 79, shoulder: 64, chest: 71, sleeve: 62 },
+    ],
+  },
   /* Westwood 69, both colourways — Tapstitch "Unisex Striped Boxy Soccer
      Jersey". */
   "15966414274891": {

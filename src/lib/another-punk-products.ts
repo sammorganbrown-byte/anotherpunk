@@ -148,6 +148,12 @@ export const MESH_PRICE = 45;
 export const JERSEY_PRICE = 40;
 export const WOMENS_PRICE = 35;
 export const BODYSUIT_PRICE = 40;
+/** The hoodie costs €24.24 to make, a third more than the tees. Shopify
+ * carries it at €50, which nets about 40%. €62 would clear the 50% every
+ * other price here is solved for; Sam set €60, which nets about 48% on the
+ * tees' shipping figure. A heavy hoodie may cost more to post than a tee,
+ * which would pull that down. */
+export const HOODIE_PRICE = 60;
 
 export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
   {
@@ -652,6 +658,39 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
       XL: "58204707389771",
       "2XL": "58204707422539",
       "3XL": "58204707455307",
+    },
+  },
+  {
+    slug: "hoodie",
+    title: "Another Punk Hoodie",
+    eyebrow: "420gsm · acid-washed black · hooded",
+    description:
+      "420gsm heavyweight cotton, acid-washed black. Loose and oversized, dropped shoulders, kangaroo pocket, ribbed cuffs and hem. The mark across the chest, in red. Drawn by hand, printed after you order.",
+    fit: "Loose and oversized. Your normal size for the fit shown. One down if you want it closer.",
+    price: HOODIE_PRICE,
+    cost: 24.24,
+    /* Five worn shots, men and women, generated through the AP-Hoodie-Black
+       reference element built from Tapstitch's own front and back renders.
+       No flat lay, per the standing rule. The back is plain, so the back shot
+       is reference rather than campaign and stays out of the field. */
+    images: [
+      "/img/263-hoodie-street-daylight.png",
+      "/img/264-hoodie-woman-night-flash.png",
+      "/img/265-hoodie-pair-wall.png",
+      "/img/266-hoodie-chest-flash.png",
+      "/img/267-hoodie-back-turn.png",
+    ],
+    notInField: ["/img/267-hoodie-back-turn.png"],
+    sizes: SIX,
+    // Tapstitch "Snow Washed Loose Cotton Hoodie", one colour (Black Beauty).
+    shopifyProductId: "16009646735691",
+    shopifyVariantIds: {
+      S: "58510575305035",
+      M: "58510575337803",
+      L: "58510575370571",
+      XL: "58510575403339",
+      "2XL": "58510575436107",
+      "3XL": "58510575468875",
     },
   },
   {
