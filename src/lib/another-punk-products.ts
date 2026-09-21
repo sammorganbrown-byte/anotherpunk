@@ -107,18 +107,21 @@ export type AnotherPunkProduct = {
  * Vintage Wash Distressed Hem (RT0077, 240gsm) when black went out of stock,
  * and returned to RT0058 the same day in Washed Cement Gray.
  *
- * So the heavy-cloth argument is true again and the copy says so. The one
- * thing that is NOT the same is the colour: every word here says grey, and
- * the mockups had to be reshot for it, because a black shirt on the page and
- * a grey shirt in the parcel is the kind of gap a customer photographs.
+ * So the heavy-cloth argument is true again and the copy says so.
+ *
+ * COLOUR: black again from 2026-09-21. The five tees went grey on 5 Sep only
+ * because RT0058 black was out of stock; it came back and Sam wanted black
+ * and white online, grey off. Keep this copy, the eyebrow and the photos in
+ * step — a black shirt on the page and a grey one in the parcel is the kind
+ * of gap a customer photographs.
  *
  * NEVER describe any of this as screen-printed. It is printed to order by
  * Tapstitch, and screen-print language would be a lie about the process. */
 export const DEFAULT_DESCRIPTION =
-  "340gsm ultra-heavyweight cotton, proper lux hand-feel. Washed cement grey, boxy through the body, hem cut raw. Drawn by hand, printed after you order.";
+  "340gsm ultra-heavyweight cotton, proper lux hand-feel. Washed black, boxy through the body, hem cut raw. Drawn by hand, printed after you order.";
 
-/** The raw-hem tees now come in two colourways on one Shopify product each.
- * DEFAULT_DESCRIPTION names the grey explicitly, so white needs its own —
+/** The raw-hem tees come in black and white on one Shopify product each.
+ * DEFAULT_DESCRIPTION names the black explicitly, so white needs its own —
  * the copy is otherwise identical because the garment is. */
 export const WHITE_DESCRIPTION =
   "340gsm ultra-heavyweight cotton, proper lux hand-feel. Washed white, boxy through the body, hem cut raw. Drawn by hand, printed after you order.";
@@ -222,31 +225,43 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     quote: "We can't stop here. This is bat country.",
     quoteSource: "Fear and Loathing in Las Vegas, 1998",
     title: "Bat Country",
-    eyebrow: "340gsm · washed grey · raw hem",
+    eyebrow: "340gsm · washed black · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
-    /* 237 is the SHARED back shot for all five raw-hem tees. The backs of
-       these are genuinely identical — plain washed black, no print, raw torn
-       hem — so five separate photographs would be five copies of the same
-       information. Sam approved reusing one. It goes LAST in each gallery:
+    /* 178 is the SHARED back shot for all five raw-hem tees in black. The
+       backs are genuinely identical — plain washed black, no print, raw hem —
+       so five photographs would be five copies of one fact. It goes LAST:
        it answers "what does the back look like" for anyone who swipes that
        far, without displacing a frame that sells the shirt.
+
+       BLACK again from 2026-09-21. RT0058 in Washed Black came back into
+       stock and Sam wanted black and white online, grey off. Every frame
+       here predates the 5 Sep blank switch, so it shows this exact garment —
+       not the 240gsm distressed-hem blank the tees briefly moved to (230 and
+       231 show that one and are deliberately left out). 53-dorothy-chest-crop
+       is also out: it shows bare midriff under the hem, which is the crop-top
+       failure this shirt is not.
 
        If a back print is ever added to any of these, that product needs its
        own shot and must stop pointing here. */
     images: [
-      "/img/233-bats-grey-night.png",
-      "/img/244-bats-grey-full.png",
-      "/img/237-rawhem-grey-back-shared.png",
+      "/img/219-batcountry-hero.png",
+      "/img/33-bats-night-neon.jpg",
+      "/img/24-bats-chest-redo.jpg",
+      "/img/44-bats-jump-flash.jpg",
+      "/img/60-bats-sprint-night.jpg",
+      "/img/58-bats-chest-daylight.jpg",
+      "/img/09-bats-wide-negativespace.jpg",
+      "/img/178-rawhem-back-shared.png",
     ],
-    notInField: ["/img/237-rawhem-grey-back-shared.png"],
+    notInField: ["/img/178-rawhem-back-shared.png"],
     sizes: FOUR,
-    shopifyProductId: "15983643132235",
+    shopifyProductId: "16017876222283",
     shopifyVariantIds: {
-      S: "58407769080139",
-      M: "58407769112907",
-      L: "58407769145675",
-      XL: "58407769178443",
+      S: "58550596239691",
+      M: "58550596272459",
+      L: "58550596305227",
+      XL: "58550596337995",
     },
   },
   {
@@ -285,12 +300,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     cost: 18.36,
     images: ["/img/253-bats-white-worn.png", "/img/258-bats-white-night.png", "/img/248-bats-white-front.png"],
     sizes: FOUR,
-    shopifyProductId: "15983643132235",
+    shopifyProductId: "16017876222283",
     shopifyVariantIds: {
-      S: "58407769211211",
-      M: "58407769243979",
-      L: "58407769276747",
-      XL: "58407769309515",
+      S: "58550596108619",
+      M: "58550596141387",
+      L: "58550596174155",
+      XL: "58550596206923",
     },
   },
   {
@@ -298,7 +313,7 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     quote: "I better adjust my tongue box.",
     quoteSource: "Barbarella, 1968",
     title: "Tongue Box",
-    eyebrow: "340gsm · washed grey · raw hem",
+    eyebrow: "340gsm · washed black · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
     // Reshot 2026-09-01. Every previous image showed the garment misspelled
@@ -307,19 +322,19 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     // — a customer scrolling to image four and finding a different spelling
     // is worse than a product with three photographs.
     images: [
-      "/img/236-tonguebox-grey-daylight.png",
-      "/img/232-tonguebox-grey-crosswalk.png",
-      "/img/245-tonguebox-grey-full.png",
-      "/img/237-rawhem-grey-back-shared.png",
+      "/img/70-tonguebox-chest-flash.jpg",
+      "/img/71-tonguebox-threequarter.jpg",
+      "/img/72-tonguebox-night-neon.jpg",
+      "/img/178-rawhem-back-shared.png",
     ],
-    notInField: ["/img/237-rawhem-grey-back-shared.png"],
+    notInField: ["/img/178-rawhem-back-shared.png"],
     sizes: FOUR,
-    shopifyProductId: "15983648538955",
+    shopifyProductId: "16017875272011",
     shopifyVariantIds: {
-      S: "58407780647243",
-      M: "58407780680011",
-      L: "58407780712779",
-      XL: "58407780745547",
+      S: "58550588932427",
+      M: "58550588965195",
+      L: "58550588997963",
+      XL: "58550589030731",
     },
   },
   {
@@ -358,12 +373,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     cost: 18.36,
     images: ["/img/254-tonguebox-white-worn.png", "/img/259-tonguebox-white-night.png", "/img/249-tonguebox-white-front.png"],
     sizes: FOUR,
-    shopifyProductId: "15983648538955",
+    shopifyProductId: "16017875272011",
     shopifyVariantIds: {
-      S: "58407780778315",
-      M: "58407780811083",
-      L: "58407780843851",
-      XL: "58407780876619",
+      S: "58550588801355",
+      M: "58550588834123",
+      L: "58550588866891",
+      XL: "58550588899659",
     },
   },
   {
@@ -371,22 +386,25 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     quote: "Nobody fucks with the Jesus.",
     quoteSource: "The Big Lebowski, 1998",
     title: "The Jesus",
-    eyebrow: "340gsm · washed grey · raw hem",
+    eyebrow: "340gsm · washed black · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
     images: [
-      "/img/234-jesus-grey-forecourt.png",
-      "/img/240-jesus-grey-chest.png",
-      "/img/237-rawhem-grey-back-shared.png",
+      "/img/220-jesus-hero.png",
+      "/img/35-jesus-night-rain.jpg",
+      "/img/74-jesus-kerb-night.jpg",
+      "/img/61-jesus-walking-corridor.jpg",
+      "/img/23-jesus-chest.jpg",
+      "/img/178-rawhem-back-shared.png",
     ],
-    notInField: ["/img/237-rawhem-grey-back-shared.png"],
+    notInField: ["/img/178-rawhem-back-shared.png"],
     sizes: FOUR,
-    shopifyProductId: "15983651029323",
+    shopifyProductId: "16017875140939",
     shopifyVariantIds: {
-      S: "58407798636875",
-      M: "58407798669643",
-      L: "58407798702411",
-      XL: "58407798735179",
+      S: "58550587425099",
+      M: "58550587457867",
+      L: "58550587490635",
+      XL: "58550587523403",
     },
   },
   {
@@ -425,12 +443,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     cost: 18.36,
     images: ["/img/255-jesus-white-worn.png", "/img/260-jesus-white-night.png", "/img/250-jesus-white-front.png"],
     sizes: FOUR,
-    shopifyProductId: "15983651029323",
+    shopifyProductId: "16017875140939",
     shopifyVariantIds: {
-      S: "58407798767947",
-      M: "58407798800715",
-      L: "58407798833483",
-      XL: "58407798866251",
+      S: "58550587294027",
+      M: "58550587326795",
+      L: "58550587359563",
+      XL: "58550587392331",
     },
   },
   {
@@ -438,22 +456,24 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     quote: "Surrender Dorothy.",
     quoteSource: "After Hours, 1985",
     title: "Surrender Dorothy",
-    eyebrow: "340gsm · washed grey · raw hem",
+    eyebrow: "340gsm · washed black · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
     images: [
-      "/img/235-dorothy-grey-launderette.png",
-      "/img/243-dorothy-grey-chest.png",
-      "/img/237-rawhem-grey-back-shared.png",
+      "/img/221-dorothy-hero.png",
+      "/img/212-dorothy-forecourt.png",
+      "/img/215-dorothy-daylight.png",
+      "/img/200-dorothy-chest-crop.png",
+      "/img/178-rawhem-back-shared.png",
     ],
-    notInField: ["/img/237-rawhem-grey-back-shared.png"],
+    notInField: ["/img/178-rawhem-back-shared.png"],
     sizes: FOUR,
-    shopifyProductId: "15983638184267",
+    shopifyProductId: "16017876582731",
     shopifyVariantIds: {
-      S: "58407758266699",
-      M: "58407758299467",
-      L: "58407758332235",
-      XL: "58407758365003",
+      S: "58550598959435",
+      M: "58550598992203",
+      L: "58550599024971",
+      XL: "58550599057739",
     },
   },
   {
@@ -492,33 +512,37 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     cost: 18.36,
     images: ["/img/256-dorothy-white-worn.png", "/img/261-dorothy-white-night.png", "/img/251-dorothy-white-front.png"],
     sizes: FOUR,
-    shopifyProductId: "15983638184267",
+    shopifyProductId: "16017876582731",
     shopifyVariantIds: {
-      S: "58407758397771",
-      M: "58407758430539",
-      L: "58407758463307",
-      XL: "58407758496075",
+      S: "58550598828363",
+      M: "58550598861131",
+      L: "58550598893899",
+      XL: "58550598926667",
     },
   },
   {
     slug: "saucer",
     title: "Saucer",
-    eyebrow: "340gsm · washed grey · raw hem",
+    eyebrow: "340gsm · washed black · raw hem",
     price: TEE_PRICE,
     cost: 18.36,
     images: [
-      "/img/247-saucer-grey-night.png",
-      "/img/246-saucer-grey-full.png",
-      "/img/237-rawhem-grey-back-shared.png",
+      "/img/222-saucer-hero.png",
+      "/img/37-saucer-night-carpark.jpg",
+      "/img/25-saucer-chest.jpg",
+      "/img/56-saucer-chest-raking.jpg",
+      "/img/05-saucer-profile.jpg",
+      "/img/63-saucer-turn.jpg",
+      "/img/178-rawhem-back-shared.png",
     ],
-    notInField: ["/img/237-rawhem-grey-back-shared.png"],
+    notInField: ["/img/178-rawhem-back-shared.png"],
     sizes: FOUR,
-    shopifyProductId: "15983656108363",
+    shopifyProductId: "16017874551115",
     shopifyVariantIds: {
-      S: "58407805747531",
-      M: "58407805780299",
-      L: "58407805813067",
-      XL: "58407805845835",
+      S: "58550579691851",
+      M: "58550579724619",
+      L: "58550579757387",
+      XL: "58550579790155",
     },
   },
   {
@@ -555,12 +579,12 @@ export const ANOTHER_PUNK_PRODUCTS: AnotherPunkProduct[] = [
     cost: 18.36,
     images: ["/img/257-saucer-white-worn.png", "/img/262-saucer-white-night.png", "/img/252-saucer-white-front.png"],
     sizes: FOUR,
-    shopifyProductId: "15983656108363",
+    shopifyProductId: "16017874551115",
     shopifyVariantIds: {
-      S: "58407805878603",
-      M: "58407805911371",
-      L: "58407805944139",
-      XL: "58407805976907",
+      S: "58550579560779",
+      M: "58550579593547",
+      L: "58550579626315",
+      XL: "58550579659083",
     },
   },
   {

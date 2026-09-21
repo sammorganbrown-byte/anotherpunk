@@ -132,8 +132,12 @@ export const BUNDLES: Bundle[] = [
      Wash Raw-Hem at 340gsm and 18.47, in Washed Cement Gray. That is the
      exact cloth and the exact cost the 175 was solved against, so the price
      is sound again and the only thing standing between this and going live
-     is Sam saying so. The images would need swapping to grey first: the
-     pack's hero is the black raw-hem ink macro.
+     is Sam saying so.
+
+     21 SEP: the image blocker is gone too. The tees were grey from 5 Sep,
+     which made the pack's black raw-hem hero wrong; RT0058 black came back
+     in stock and the tees are black again, so the hero now matches the
+     garment. Nothing left but Sam's yes.
 
      The entry is kept here, commented out, rather than deleted. Its price
      and its rules took a long time to get right: 175 for four, shipping
