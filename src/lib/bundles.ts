@@ -106,7 +106,11 @@ export type Bundle = {
  * hem shirts" — there are five, so it is sold as any four of the five, which
  * is the better product anyway: choosing is part of the appeal, and it does
  * not strand whichever design would have been left out. */
-const RAW_HEM = ["bat-country", "tongue-box", "the-jesus", "surrender-dorothy", "saucer"];
+const RAW_HEM = [
+  "bat-country", "tongue-box", "the-jesus", "surrender-dorothy", "saucer",
+  "bat-country-white", "tongue-box-white", "the-jesus-white",
+  "surrender-dorothy-white", "saucer-white",
+];
 
 export const BUNDLES: Bundle[] = [
   {
@@ -124,31 +128,25 @@ export const BUNDLES: Bundle[] = [
     // to be one of each.
     distinct: false,
   },
-  /* ── RAW HEM FOUR IS WITHDRAWN, 5 SEP ───────────────────────────────────
-     Pulled at Sam's request on 5 Sep, when the tees briefly moved to a
-     240gsm blank at 14.69 and the pack's economics stopped matching.
+  /* ── RAW HEM FOUR — LIVE AGAIN 21 SEP ──────────────────────────────────
+     Withdrawn 5 Sep when the tees briefly moved to a 240gsm blank at 14.69
+     and the pack's economics stopped matching. Back at Sam's say-so once
+     RT0058 black returned: the same 340gsm cloth and 18.36-18.47 cost the
+     175 was solved against, and the black raw-hem hero matches the garment
+     again.
 
-     THE REASON HAS SINCE EXPIRED. Later the same day they returned to Snow
-     Wash Raw-Hem at 340gsm and 18.47, in Washed Cement Gray. That is the
-     exact cloth and the exact cost the 175 was solved against, so the price
-     is sound again and the only thing standing between this and going live
-     is Sam saying so.
+     The sum: four tees at 50 is 200, plus the 21 a four-tee order pays to
+     ship (9 base, 4 per extra item), is 221. At 175 the saving is 46, which
+     is what the badge computes and what the pitch now says. The pitch used
+     to say "forty" — written when four cost 15 to ship, before shipping
+     became its own line on 1 Sep. The pitch HARD-CODES this number: if
+     TEE_PRICE or shipping moves, change it here too or the page shows two
+     different savings.
 
-     21 SEP: the image blocker is gone too. The tees were grey from 5 Sep,
-     which made the pack's black raw-hem hero wrong; RT0058 black came back
-     in stock and the tees are black again, so the hero now matches the
-     garment. Nothing left but Sam's yes.
-
-     The entry is kept here, commented out, rather than deleted. Its price
-     and its rules took a long time to get right: 175 for four, shipping
-     folded in, duplicates allowed, and the reasoning for each is in the
-     history. Retyping that from memory later is how a good number gets
-     replaced with a worse one.
-
-     To bring it back: uncomment, then re-check the price against the new
-     cost. Four at 14.69 plus postage is a different sum from four at 18.47,
-     and 175 was solved for the old one.
-
+     Choices cover black AND white. The copy promises "any four of the
+     heavyweight raw-hem tees", and since 8 Sep white is one of them — same
+     garment, same price, same cost. Leaving white out would make that
+     sentence false the moment someone went looking for a white one. */
   {
     slug: "raw-hem-four",
     title: "Raw Hem Four",
@@ -157,12 +155,11 @@ export const BUNDLES: Bundle[] = [
     image: "/img/11-macro-rawhem-ink.jpg",
     description:
       "Any four of the heavyweight raw-hem tees, each in its own size. Take four different ones or four of the same. Shipping included.",
-    pitch: "Any four. Forty euros off and nothing to pay for postage.",
+    pitch: "Any four. Forty-six euros off and nothing to pay for postage.",
     choices: RAW_HEM,
     count: 4,
     distinct: false,
   },
-  ─────────────────────────────────────────────────────────────────────── */
 ];
 
 export function getBundle(slug: string): Bundle | undefined {
@@ -178,7 +175,7 @@ export function bundleFullPrice(bundle: Bundle, slugs: string[]): number {
  *
  * Quoted against buying the same garments in one order rather than in
  * separate ones, which is the honest comparison — someone buying four tees
- * at once already pays €15 rather than €36 to ship them, and claiming the
+ * at once already pays €21 rather than €36 to ship them, and claiming the
  * bigger number as a saving would be a lie by arithmetic. */
 export function bundleSaving(bundle: Bundle, slugs: string[]): number {
   return bundleFullPrice(bundle, slugs) + computeShipping(bundle.count) - bundle.price;
