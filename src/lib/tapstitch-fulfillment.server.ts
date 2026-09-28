@@ -161,9 +161,27 @@ async function shopifyFetch(path: string, init: RequestInit = {}): Promise<Respo
 // --- Orders ----------------------------------------------------------------
 
 type ShopifyDraftOrderResponse = {
-  draft_order?: { id: number; name: string };
+  draft_order?: {
+    id: number;
+    name: string;
+    /** Read back to prove the country survived the write — see the note on
+     * the shipping_address payload below. */
+    shipping_address?: { country_code?: string | null } | null;
+  };
   errors?: unknown;
 };
+
+/** Removes a draft. Only used to clean up a draft that came back wrong, so a
+ * Stripe redelivery cannot find it and submit it. Failure to delete is
+ * swallowed: the caller is already throwing, and the alert it raises is more
+ * useful than a second error about the tidy-up. */
+async function deleteDraft(id: number): Promise<void> {
+  try {
+    await shopifyFetch(`/draft_orders/${id}.json`, { method: "DELETE" });
+  } catch {
+    /* reported by the caller's throw */
+  }
+}
 
 /** Creates a HELD Shopify draft order. Tapstitch's app cannot see a draft,
  * so nothing is produced until submitTapstitchOrder completes it.
@@ -180,6 +198,18 @@ export async function createTapstitchOrder(
 ): Promise<{ id: string }> {
   if (lines.length === 0) {
     throw new Error("createTapstitchOrder called with no line items.");
+  }
+
+  /* An absent country used to be sent as an empty string, which Shopify
+     accepted and then filled in from the shop's own address. Refusing here
+     turns a parcel quietly posted to the wrong country into a held draft and
+     an alert, which is recoverable by hand. */
+  const country = address.country.trim().toUpperCase();
+  if (!/^[A-Z]{2}$/.test(country)) {
+    throw new Error(
+      `Refusing to place an order with no usable country — got ${JSON.stringify(address.country)}. ` +
+        "Shopify fills a blank country in from the shop's own address, which posts the parcel to Portugal.",
+    );
   }
 
   // Redeliveries are normal, not exceptional — so this runs before anything
@@ -263,7 +293,25 @@ export async function createTapstitchOrder(
         city: address.city,
         province: address.stateOrCounty ?? "",
         zip: address.postalCode,
-        country_code: address.country.toUpperCase(),
+        // ── `country`, NOT `country_code`. THIS SHIPPED A PARCEL TO THE
+        // WRONG COUNTRY ─────────────────────────────────────────────────
+        // The draft-order REST API ignores country_code on write. It does
+        // not error and it does not warn: the draft simply stores country
+        // null. Completing that draft then fills the blank in from the
+        // SHOP's own address, geocodes it, and overwrites any province that
+        // does not belong to the country it just invented.
+        //
+        // So order #1007 — 306/480 Albion Street, Brunswick West, VIC 3055,
+        // Australia — became Brunswick West, LISBOA 3055, PORTUGAL, and was
+        // produced and posted that way. Verified against the live API: sent
+        // country_code "AU" and the draft stored null; sent country "AU" and
+        // it stored Australia/AU and resolved VIC to Victoria on its own.
+        //
+        // It hid for seven orders because the shop is in Lisbon, so the
+        // country Shopify invented was right every time until somebody
+        // outside Portugal ordered. Every one of the 18 countries this site
+        // sells to would have been relabelled Portugal the same way.
+        country: country,
       },
       // Don't let Shopify email the customer — they already got a receipt
       // from this site's own Stripe checkout.
@@ -280,6 +328,24 @@ export async function createTapstitchOrder(
   if (!response.ok || !data.draft_order) {
     throw new Error(`Shopify draft order failed (${response.status}): ${JSON.stringify(data)}`);
   }
+
+  /* Prove the country survived the write, because the bug above was invisible
+     from this side: the request succeeded, the draft existed, and the field
+     had simply been dropped. Reading it back from the response that created
+     it costs nothing and is the only thing that would have caught it.
+
+     The bad draft is DELETED rather than left behind. A Stripe redelivery
+     looks for an existing draft by tag and submits what it finds, so leaving
+     it would hand the retry a draft with the wrong address to complete. */
+  const stored = (data.draft_order.shipping_address?.country_code ?? "").toUpperCase();
+  if (stored !== country) {
+    await deleteDraft(data.draft_order.id);
+    throw new Error(
+      `Shopify stored country ${JSON.stringify(stored)} for an address sent as ${JSON.stringify(country)} — ` +
+        "draft deleted rather than submitted. The order is paid and must be placed by hand.",
+    );
+  }
+
   return { id: String(data.draft_order.id) };
 }
 

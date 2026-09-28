@@ -112,16 +112,22 @@ export const Route = createFileRoute("/api/stripe-webhook")({
           }
         ).collected_information?.shipping_details;
         const shipping = collected ?? session.shipping_details;
+        /* ?? only catches null and undefined, so an empty string from Stripe
+           went straight through every fallback below as if it were a real
+           value — and an empty country is the one Shopify silently replaces
+           with the shop's own. Fall back on blank and whitespace too. */
+        const orElse = (value: string | null | undefined, fallback: string): string =>
+          typeof value === "string" && value.trim() ? value : fallback;
         const address: ShippingAddress = shipping?.address
           ? {
-              name: shipping.name ?? metadata.name,
+              name: orElse(shipping.name, metadata.name),
               email: metadata.email,
-              address: shipping.address.line1 ?? metadata.address,
+              address: orElse(shipping.address.line1, metadata.address),
               addressLine2: shipping.address.line2 ?? undefined,
-              city: shipping.address.city ?? metadata.city,
-              stateOrCounty: shipping.address.state ?? undefined,
-              postalCode: shipping.address.postal_code ?? metadata.postalCode,
-              country: shipping.address.country ?? metadata.country,
+              city: orElse(shipping.address.city, metadata.city),
+              stateOrCounty: orElse(shipping.address.state, metadata.stateOrCounty) || undefined,
+              postalCode: orElse(shipping.address.postal_code, metadata.postalCode),
+              country: orElse(shipping.address.country, metadata.country),
             }
           : {
               name: metadata.name,
